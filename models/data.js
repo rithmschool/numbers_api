@@ -1,6 +1,8 @@
 exports.trivia = {
 	1: 'triva for 1',
 	2: 'triva for 2',
+	5: 'trivia for 5',
+	15: 'trivia for 15',
 };
 
 exports.year = {
@@ -18,5 +20,5 @@ exports.date = {
 	'1/2': 'jan 2',
 	'1/3': 'jan 3',
 	'1/4': 'jan 4',
-	'2/1': 'feb 1'
+	'2/1': 'feb 1',
 };

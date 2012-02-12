@@ -30,8 +30,8 @@ function randomChoice(array) {
 }
 
 function getRandomApiNum(type, options) {
-	// FIXME Should make an effort to return the random number that actually has
-	// an associated fact
+	// TODO Should make an effort to return the random number that actually has
+	// an associated fact?
 
 	if (type === 'date') {
 		return randDayOfYear();
@@ -74,16 +74,50 @@ function getDefaultMsg(number, type) {
 	return randomChoice(defaultMsgs);
 }
 
+// Mapping of meaning to query param value name
+var NOT_FOUND = {
+	DEFAULT: 'default',
+	CEIL: 'ceil',
+	FLOOR: 'floor',
+};
+
+// Query parameter keys
+var	QUERY_NOT_FOUND = 'notfound';
+var QUERY_DEFAULT = 'default';
+
+// Keys of each of the data mappings for use in binary search (unfortunately,
+// _.map() on objects returns an array instead of an object). Pads with negative
+// and positive infinity sentinels.
+// PRE: data is sorted
+var dataKeys = (function() {
+	var ret = {};
+	_.each(data, function(value, key) {
+		ret[key] = _.flatten([-Infinity,
+			_.map(_.keys(value), function(val) { return parseInt(val, 10); }),
+		Infinity]);
+		value['-Infinity'] = 'negative infinity';
+		value['Infinity'] = 'infinity';
+	});
+	return ret;
+})();
+
 /**
  * @param number: If type is 'date', then number should be a date.
  * @param type: Currently supporting {trivia,date,math,year}
+ * @param options:
+ *	- default: message to return if no fact for that number
+ *	- notfound: behaviour if no fact for that #:
+ *		- floor: return largest available number less than or equal to number
+ *		- ceil: return smallest available number greater than or equal to number
+ *		- default: return a canned message that works with the flow of other messages,
+ *			or the given default message if one is provided.
  */
 exports.getFact = function(number, type, options) {
-	// TODO query options
 
 	// Default query param options
-	_.defaults(options, {
-	});
+	var defaults = {};
+	defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
+	_.defaults(options, defaults);
 
 	if (number === 'random') {
 		number = getRandomApiNum(type, options);
@@ -93,12 +127,18 @@ exports.getFact = function(number, type, options) {
 		number = '' + (number.getMonth() + 1) + '/' + number.getDate();
 	}
 
-	// TODO Better error handling
-	// FIXME might return undefined
+	// TODO Better error handling (for out of dates), and for number is an invalid
+	// number or NaN
 
 	var ret = data[type][number];
 	if (ret === undefined) {
-		return options['default'] || getDefaultMsg(number, type);
+		if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
+			return options[QUERY_DEFAULT] || getDefaultMsg(number, type);
+		} else {
+			var index = _.sortedIndex(dataKeys[type], parseInt(number,10));
+			if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
+			return data[type][dataKeys[type][index]];
+		}
 	} else {
 		return ret;
 	}
