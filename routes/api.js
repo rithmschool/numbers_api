@@ -11,9 +11,7 @@ function apiResponse(response, str) {
 }
 
 function factResponse(fact, req, res, num) {
-	// TODO process query param here
-
-	apiResponse(res, fact.getFact(num, req.param('type', 'trivia'), {}));
+	apiResponse(res, fact.getFact(num, req.param('type', 'trivia'), req.query));
 }
 
 exports.route = function(app, fact) {
@@ -29,8 +27,7 @@ exports.route = function(app, fact) {
 	});
 
 	app.get('/random/:type?', function(req, res) {
-		// TODO There's a bit of code duplication here
-		apiResponse(res, fact.getRandomFact(req.param('type', 'trivia'), {}));
+		factResponse(fact, req, res, 'random');
 	});
 
 };
