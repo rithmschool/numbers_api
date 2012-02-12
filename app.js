@@ -41,8 +41,7 @@ app.configure('production', function(){
 router.route(app, fact);
 
 app.get('/', function(req, res) {
-	// TODO rename asdf.html
-	return res.render('asdf.html');
+	return res.render('index.html');
 });
 
 // Main

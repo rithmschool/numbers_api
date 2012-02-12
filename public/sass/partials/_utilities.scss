@@ -1,0 +1,37 @@
+// Put general mixins here --------------------------------------
+
+@mixin reset-box {
+	padding: 0;
+	border: 0;
+	margin: 0;
+}
+
+@mixin reset-box-horizontal {
+	padding: { left: 0; right: 0; };
+	border: { left: 0; right: 0; };
+	margin: { left: 0; right: 0; };
+}
+
+@mixin reset-box-vertical {
+	padding: { top: 0; bottom: 0; };
+	border: { top: 0; bottom: 0; };
+	margin: { top: 0; bottom: 0; };
+}
+
+// TODO: Do this in javascript since it's not possibe to automatically get text. Also behavior is glitchy.
+@mixin reflect($text) {
+	position: relative;
+	&:before, &:after {
+		display: block;
+		position: absolute;
+		bottom: -0.8em;
+		left: 0;
+		right: 0;
+	}
+	&:before {
+		@include scaleY(-1);
+		opacity: 0.3;
+		content: $text;
+	}
+}
+

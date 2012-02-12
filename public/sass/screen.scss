@@ -1,0 +1,284 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "partials/normalize";
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+//@import "compass/reset";
+//@import "compass_twitter_bootstrap";
+
+// Layout ------------------------------------
+$element-border-radius: 5px;
+$section-border-radius: 10px;
+$example-height: 5em;
+$url-height: 1.5em;
+
+// Colors -----------------------------------------
+$title-color-one: red;
+$title-color-two: green;
+
+$color-one: #3ce884;
+$color-two: #f3f0a1;
+$color-three: #e6a45a;
+$color-four: #dd5525;
+$color-five: #8c2212;
+
+// Custom fonts ----------------------------------
+
+@font-face {
+	font-family: pastel_crayon;
+	src: url('/font/pastel_crayon.ttf');
+}
+
+@font-face {
+	font-family: pointy;
+	src: url('/font/pointy.ttf');
+}
+
+@font-face {
+	font-family: museo_slab;
+	src: url('/font/Museo_Slab_300.otf');
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: museo_slab;
+	src: url('/font/Museo_Slab_700.otf');
+	font-weight: bold;
+}
+
+@font-face {
+	font-family: museo_sans;
+	src: url('/font/MuseoSansRounded-300.otf');
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: museo_sans;
+	src: url('/font/MuseoSansRounded-700.otf');
+	font-weight: bold;
+}
+
+// CSS ----------------------------------------
+
+body {
+	@include background(image-url("/img/background.png"));
+	background-color: #ffffff;
+	width: 960px;
+	margin-left: auto;
+	margin-right: auto;
+	border: red 1px solid;
+	font-family: museo_sans;
+	font-weight: normal;
+	.container {
+		overflow: hidden;
+	}
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: museo_slab;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.logo {
+	margin: 0;
+	padding: 0;
+	color: $title-color-one;
+	text-transform: uppercase;
+	font-family: pastel_crayon;
+	font-weight: bold;
+	font-size: 6em;
+	.highlight {
+		@include border-radius($element-border-radius);
+		background-color: yellow;
+		//margin: -9999px;
+	}
+	#second-word {
+		color: $title-color-two;
+	}
+}
+
+.tagline {
+	@include text-shadow(rgba(#000, 0.2) 1px 1px 0);
+	font-size: 1.5em;
+	color: #1d7ccc;
+	font-weight: bold;
+}
+
+section {
+	@include border-radius($section-border-radius);
+	margin: 20px;
+	padding: 20px;
+	display: inline-block;
+	clear: both;
+	&:nth-child(odd) {
+		background-color: rgba(25, 200, 25, 0.5);
+		float: left;
+	}
+	&:nth-child(even) {
+		background-color: rgba(200, 200, 25, 0.5);
+		float: right;
+	}
+}
+
+#usage-outer {
+	position: relative;
+}
+#usage {
+	.example {
+		margin: 10px;
+		width: 250px;
+		display: inline-block;
+		.inner-example {
+			width: 250px;
+			height: 125px;
+			display: inline-block;
+			vertical-align: top;
+
+			a {
+				@include border-radius($element-border-radius $element-border-radius 0 0);
+				margin-top: 0;
+				margin-bottom: 0;
+				display: block;
+				background-color: #191919;
+				color: #ccc6a8;
+				border: #080 1px solid;
+				text-decoration: none;
+				padding: ($url-height - 1) / 2;
+			}
+			p {
+				@include border-radius(0 0 $element-border-radius $element-border-radius);
+				margin-top: 0;
+				margin-bottom: 0;
+				color: #c2b468;
+				background-color: #2e2e2e;
+				border: #080 1px solid;
+				border-top: 0;
+				padding: 5px;
+				height: $example-height;
+			}
+		}
+	}
+}
+
+#sandbox-outer {
+	position: relative;
+}
+#sandbox {
+	.arrow {
+		@include background(image-url("/img/arrow.png"));
+		@include transform(rotate(90deg) scale(0.6));
+		width: 301px;
+		height: 266px;
+		position: absolute;
+		top: -60px;
+		left: -300px;
+	}
+	#outer-search {
+		height: 200px;
+		#search {
+			float: left;
+			overflow: hidden;
+			height: 100%;
+
+			form {
+				@include clearfix;
+				padding: 0px;
+				margin-bottom: 10px;
+
+				label {
+					@include border-radius($element-border-radius);
+					color: #999;
+					padding: 5px;
+					margin: 0;
+					border: 1px solid green;
+					float: left;
+					display: inline-block;
+					vertical-align: middle;
+					background-color: #dafafa;
+
+					span {
+						font-size: 20px;
+						height: 40px;
+						line-height: 40px;
+					}
+
+					input {
+						@include border-radius(0 $element-border-radius $element-border-radius 0);
+						font-size: 20px;
+						height: 40px;
+						line-height: 40px;
+						margin: 0;
+						padding: 0;
+						padding-left: 5px;
+					}
+				}
+			}
+			#search-result {
+				border: 1px solid blue;
+				background-color: #dabada;
+				border: #080 1px solid;
+				padding: 5px;
+				@include border-radius($element-border-radius);
+				margin-top: 5px;
+				margin-bottom: 5px;
+				height: 100px;
+			}
+		}
+		#search-examples {
+			@include border-radius($element-border-radius);
+			border: 1px solid blue;
+			float: left;
+			margin-left: 5px;
+			padding-left: 5px;
+			padding-right: 5px;
+			h3 {
+				margin-top: 0;
+				padding-top: 0;
+			}
+			ul {
+				list-style-type: none;
+				padding-left: 0;
+				li {
+					padding-top: 2px;
+					padding-bottom: 2px;
+				}
+			}
+		}
+	}
+}
+
+#reference-outer {
+	position: relative;
+}
+#reference {
+	.arrow {
+		@include background(image-url("/img/arrow.png"));
+		@include transform(rotate(300deg) scale(0.6) scaleX(-1));
+		width: 301px;
+		height: 266px;
+		position: absolute;
+		top: -120px;
+		right: -300px;
+	}
+}
+
+footer {
+	background-color: #33aaaa;
+	height: 100px;
+	@include border-radius($section-border-radius $section-border-radius 0 0);
+	display: table;
+	width: 100%;
+}
+footer ul {
+	display: table-row;
+	list-style-type: none;
+}
+footer ul li {
+	display: table-cell;
+	text-align: center;
+}
