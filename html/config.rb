@@ -1,5 +1,5 @@
 # Require any additional compass plugins here.
-@import "compass_twitter_bootstrap";
+require 'compass_twitter_bootstrap'
 
 # Set this to the root of your project when deployed:
 http_path = "/"
