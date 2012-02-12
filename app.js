@@ -2,7 +2,7 @@
 // Module dependencies.
 
 var express = require('express');
-var	fact = require('./models/fact.js');
+var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
 
 var app = module.exports = express.createServer();
