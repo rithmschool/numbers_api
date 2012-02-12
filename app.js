@@ -1,10 +1,9 @@
 
-/**
- * Module dependencies.
- */
+// Module dependencies.
 
-var express = require('express')
-  , routes = require('./routes');
+var express = require('express');
+var	fact = require('./models/fact.js');
+var router = require('./routes/api.js');
 
 var app = module.exports = express.createServer();
 
@@ -39,8 +38,11 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/asdf', routes.asdf);
-app.get('/', routes.home);
+router.route(app, fact);
+app.get('/', function(req, res) {
+	// TODO rename asdf.html
+	return res.render('asdf.html');
+});
 
 app.listen(3000);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
