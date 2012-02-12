@@ -5,13 +5,9 @@
  * layer of indirection also lets us add other logic here.
  */
 
-// TODO Get rid of this function if not needed
-function apiResponse(response, str) {
-	response.send('' + str, {'Content-Type': 'text/plain'}, 200);
-}
-
 function factResponse(fact, req, res, num) {
-	apiResponse(res, fact.getFact(num, req.param('type', 'trivia'), req.query));
+	var factStr = fact.getFact(num, req.param('type', 'trivia'), req.query);
+	res.send('' + factStr, {'Content-Type': 'text/plain'}, 200);
 }
 
 exports.route = function(app, fact) {
