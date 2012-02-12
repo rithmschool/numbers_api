@@ -23,7 +23,7 @@ function clamp(min, max, num) {
 }
 
 function getRandomApiNum(type, options) {
-	// TODO Should make an effort to return the random number that actually has
+	// FIXME Should make an effort to return the random number that actually has
 	// an associated fact
 
 	console.log(JSON.stringify(options));
@@ -42,7 +42,6 @@ function getRandomApiNum(type, options) {
 	var min = Math.max(parseInt(options.min, 10) || 0, default_min);
 	var max = Math.max(parseInt(options.max, 10) || default_max, min);
 
-	// TODO Should max be exclusive?
 	return randInt(min, max + 1);
 }
 
@@ -50,23 +49,23 @@ function getRandomApiNum(type, options) {
  * @param number: If type is 'date', then number should be a date.
  */
 exports.getFact = function(number, type, options) {
-	// TODO Parse options
+	// TODO query options
 
 	if (number === 'random') {
 		number = getRandomApiNum(type, options);
 	}
 
 	if (type === 'date') {
+		number = '' + (number.getMonth() + 1) + '/' + number.getDay();
+	}
 
+	// TODO Better error handling
+	// FIXME might return undefined
+
+	var ret = data[type][number];
+	if (ret === undefined) {
+		return 'None found for type ' + type + ' of number ' + number;
 	} else {
-		// TODO Better error handling
-
-		// FIXME might return undefined
-		var ret = data[type][number];
-		if (ret === undefined) {
-			return 'None found for type ' + type + ' of number ' + number;
-		} else {
-			return ret;
-		}
+		return ret;
 	}
 };

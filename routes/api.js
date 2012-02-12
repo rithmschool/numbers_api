@@ -13,10 +13,10 @@ function factResponse(fact, req, res, num) {
 exports.route = function(app, fact) {
 
 	app.get('/:num([0-9]+)/:type(year|trivia|math)?', function(req, res) {
-		factResponse(fact, req, res, req.param('num'));
+		factResponse(fact, req, res, parseInt(req.param('num'), 10));
 	});
 
-	app.get('/:month([0-9]+)/:day([0-9]+)', function(req, res) {
+	app.get('/:month([0-9]+)/:day([0-9]+)/:type(date)?', function(req, res) {
 		var dayOfYear = new Date(0, req.param('month') - 1, req.param('day'));
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
