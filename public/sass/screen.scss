@@ -10,6 +10,8 @@
 //@import "compass_twitter_bootstrap";
 
 // Layout ------------------------------------
+$body-width: 960px;
+$section-margin: 20px;
 $element-border-radius: 10px;
 $section-border-radius: 10px;
 $example-height: 5em;
@@ -66,7 +68,7 @@ $color-five: #8c2212;
 body {
 	@include background(image-url("/img/background.png"));
 	background-color: #ffffff;
-	width: 960px;
+	width: $body-width;
 	margin-left: auto;
 	margin-right: auto;
 	border: red 1px solid;
@@ -111,7 +113,7 @@ h1, h2, h3, h4, h5, h6 {
 
 section {
 	@include border-radius($section-border-radius);
-	margin: 20px;
+	margin: $section-margin;
 	padding: 20px;
 	display: inline-block;
 	clear: both;
@@ -123,15 +125,24 @@ section {
 		background-color: rgba(200, 200, 25, 0.5);
 		float: right;
 	}
+	h2 {
+		text-align: center;
+	}
 }
 
 #usage-outer {
+	text-align: center;
 	position: relative;
+	margin-left: $section-margin;
+	margin-left: $section-margin;
+	padding-left: 0px;
+	padding-right: 0px;
+	width: $body-width - 2 * $section-margin;
 }
 #usage {
 	.example {
-		margin: 10px;
 		width: 250px;
+		margin: 20px;
 		display: inline-block;
 		.inner-example {
 			width: 250px;
@@ -176,7 +187,7 @@ section {
 		height: 266px;
 		position: absolute;
 		top: -60px;
-		left: -300px;
+		left: -250px;
 	}
 	#outer-search {
 		#search {
@@ -184,7 +195,8 @@ section {
 			overflow: hidden;
 			height: 100%;
 			// TODO: remove harcode
-			width: 492px;
+			margin-left: 20px;
+			margin-right: 20px;
 
 			#search-box {
 				@include clearfix;
@@ -243,9 +255,10 @@ section {
 		}
 		#search-examples {
 			@include border-radius($element-border-radius);
-			border: 1px solid blue;
+			background-color: rgb(225, 175, 225);
 			float: left;
-			margin-left: 5px;
+			margin-left: 20px;
+			margin-right: 20px;
 			padding-left: 5px;
 			padding-right: 5px;
 			h3 {
