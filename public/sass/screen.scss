@@ -67,15 +67,17 @@ $color-five: #8c2212;
 
 body {
 	@include background(image-url("/img/background.png"));
-	background-color: #ffffff;
-	width: $body-width;
-	margin-left: auto;
-	margin-right: auto;
-	border: red 1px solid;
-	font-family: museo_sans;
-	font-weight: normal;
-	.container {
-		overflow: hidden;
+	#body-inner {
+		font-family: museo_sans;
+		font-weight: normal;
+		background-color: rgba(255, 255, 255, 0.75);
+		.container {
+			border: red 1px solid;
+			margin-left: auto;
+			margin-right: auto;
+			width: $body-width;
+			overflow: hidden;
+		}
 	}
 }
 
