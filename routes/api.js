@@ -6,8 +6,13 @@
  */
 
 function factResponse(fact, req, res, num) {
-	var factStr = fact.getFact(num, req.param('type', 'trivia'), req.query);
-	res.send('' + factStr, {'Content-Type': 'text/plain'}, 200);
+	var factStr = '' + fact.getFact(num, req.param('type', 'trivia'), req.query);
+
+	if (req.param('callback')) {  // JSONP
+		res.json(factStr)
+	} else {
+		res.send(factStr, {'Content-Type': 'text/plain'}, 200);
+	}
 }
 
 exports.route = function(app, fact) {

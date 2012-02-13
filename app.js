@@ -18,6 +18,7 @@ var allowCrossDomain = function(req, res, next) {
 app.configure(function(){
   app.set('views', __dirname + '/public');
   app.set('view options', {layout: false});
+	app.enable('jsonp callback');
 
 	// make a custom html template: http://stackoverflow.com/questions/4529586/render-basic-html-view-in-node-js-express
 	app.register('.html', {
