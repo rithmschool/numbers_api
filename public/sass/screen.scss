@@ -179,16 +179,18 @@ section {
 		left: -300px;
 	}
 	#outer-search {
-		height: 200px;
 		#search {
 			float: left;
 			overflow: hidden;
 			height: 100%;
+			// TODO: remove harcode
+			width: 492px;
 
-			form {
+			#search-box {
 				@include clearfix;
 				padding: 0px;
 				margin-bottom: 10px;
+				width: 100%;
 
 				label {
 					@include border-radius($element-border-radius);
@@ -225,14 +227,18 @@ section {
 				}
 			}
 			#search-result {
+				@include border-radius($element-border-radius);
 				border: 1px solid blue;
 				background-color: #dabada;
 				border: #080 1px solid;
 				padding: 5px;
-				@include border-radius($element-border-radius);
 				margin-top: 5px;
 				margin-bottom: 5px;
 				height: 100px;
+
+				&.error {
+					color: red;
+				}
 			}
 		}
 		#search-examples {
