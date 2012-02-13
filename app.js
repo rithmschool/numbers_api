@@ -10,7 +10,7 @@ var app = module.exports = express.createServer();
 // Configuration and middleware
 
 app.configure(function(){
-  app.set('views', __dirname + '/views');
+  app.set('views', __dirname + '/public');
   app.set('view options', {layout: false});
 
 	// make a custom html template: http://stackoverflow.com/questions/4529586/render-basic-html-view-in-node-js-express
