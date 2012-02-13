@@ -9,6 +9,12 @@ var app = module.exports = express.createServer();
 
 // Configuration and middleware
 
+// CORS middleware -- http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
+var allowCrossDomain = function(req, res, next) {
+	res.header('Access-Control-Allow-Origin', '*');
+	next();
+};
+
 app.configure(function(){
   app.set('views', __dirname + '/public');
   app.set('view options', {layout: false});
@@ -24,6 +30,7 @@ app.configure(function(){
 
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(allowCrossDomain);
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
@@ -37,13 +44,6 @@ app.configure('production', function(){
 });
 
 // Routes
-
-// Enable cross-origin resource sharing: http://enable-cors.org/#how-expressJS
-app.all('/', function(req, res, next) {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-	next();
-});
 
 router.route(app, fact);
 
