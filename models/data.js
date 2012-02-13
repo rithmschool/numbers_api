@@ -1010,7 +1010,7 @@ exports.year = {
 		201: 'Osroene becomes the first state which adopts Christianity as its official religion (per New International Encyclopedia)',
 		202: 'Rome establishes medical licenses, awarded only to trained physicians who have passed examinations. Medical societies and civic hospitals are set up, and laws are passed to govern the behavior of medical students. They are prohibited from visiting brothels',
 		203: 'Emperor Septimius Severus rebuilds Byzantium.',
-		204: 'A trade recession in the Leptis Magna region (Africa) is alleviated by emperor Septimius Severus, he buys up the country\'s olive oil for free distribution in Rome.',
+		204: 'A trade recession in the Leptis Magna region (Africa) is alleviated by emperor Septimius Severus, he buys up the country\'s olive oil for free distribution in Rome',
 		205: 'Hadrian\'s Wall is restored, after heavy raids by Caledonian tribes had overrun much of northern Britain',
 		207: 'Cao Cao defeats the Wuhuan tribes at the Battle of White Wolf Mountain, sending the Wuhuan into decline',
 		208: 'Emperor Septimius Severus leads an expedition (20,000 men) in Britannia, crosses Hadrian\'s Wall and moves through eastern Scotland. The Roman army pushes the Caledonians back to the River Tay and Severus signs a peace treaty. He repairs the Antonine Wall (his repairs are sometimes called the Severan Wall)',
