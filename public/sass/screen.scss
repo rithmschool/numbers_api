@@ -10,7 +10,7 @@
 //@import "compass_twitter_bootstrap";
 
 // Layout ------------------------------------
-$element-border-radius: 5px;
+$element-border-radius: 10px;
 $section-border-radius: 10px;
 $example-height: 5em;
 $url-height: 1.5em;
@@ -209,12 +209,18 @@ section {
 
 					input {
 						@include border-radius(0 $element-border-radius $element-border-radius 0);
+						@include box-shadow(inset 0px 0px 0px 2px #aaaaaa);
 						font-size: 20px;
 						height: 40px;
-						line-height: 40px;
+						border: 0;
 						margin: 0;
+						outline: none;
 						padding: 0;
 						padding-left: 5px;
+
+						&:focus, &:active {
+							background-color: #99dd99;
+						}
 					}
 				}
 			}
@@ -244,8 +250,17 @@ section {
 				list-style-type: none;
 				padding-left: 0;
 				li {
-					padding-top: 2px;
-					padding-bottom: 2px;
+					padding: 5px;
+
+					a {
+						text-decoration: none;
+					}
+
+					&.selected {
+						@include border-radius(2px);
+						@include box-shadow(0px 0px 0px 2px #aaaaaa);
+						background-color: #99dd99;
+					}
 				}
 			}
 		}
