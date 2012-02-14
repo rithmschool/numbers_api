@@ -21,6 +21,22 @@
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico">
 
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-29155677-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
   </head>
 
   <body>
@@ -32,12 +48,10 @@
 
 			<h1 class="logo">Numbers<span id="second-word">API</span></h1>
 
-			<span class="tagline"><p>The fastest way to access interesting information about different numbers.</p></span>
+			<span class="tagline"><p>An API to query interesting facts about numbers.</p></span>
 
 			<section id="usage-outer">
 				<div id="usage">
-					<h2>Usage Examples</h2>
-
 					<!-- TODO: Use JS to fetch results from backend -->
 					<div id="examples">
 						<div class="example">
@@ -76,7 +90,6 @@
 			<section id="sandbox-outer">
 			<div id="sandbox">
 				<div class="arrow"></div>
-				<h2>Sandbox</h2>
 				<div id="outer-search">
 					<div id="search">
 						<div id="search-box">
@@ -115,13 +128,6 @@
 
     </div> <!-- /container -->
 
-		<footer>
-			<ul>
-				<li>About</li>
-				<li>Technologies</li>
-				<li>Contact</li>
-			</ul>
-		</footer>
 
     <!-- Le javascript
     ================================================== -->
