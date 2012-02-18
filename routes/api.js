@@ -1,3 +1,4 @@
+var _ = require('underscore');
 
 /*
  * This is basically our "controllers" that's just an adapter between the URL
@@ -10,6 +11,9 @@ function factResponse(fact, req, res, num) {
 
 	if (req.param('callback')) {  // JSONP
 		res.json(factStr)
+	} else if (req.param('write') !== undefined) {
+		var script = 'document.write("' + _.escape(factStr) + '");';
+		res.send(script, {'Content-Type': 'text/javascript'}, 200);
 	} else {
 		res.send(factStr, {'Content-Type': 'text/plain'}, 200);
 	}
