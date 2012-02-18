@@ -25,9 +25,8 @@ $color-three: #165b78;
 $color-four: #253a44;
 $color-five: #01212f;
 
-$color-border: $color-two;
-
 $section-opacity: 0.5;
+$background-opacity: 0.9;
 
 // Mixins ------------------------------------------
 @mixin header-shadow {
@@ -98,34 +97,38 @@ $section-opacity: 0.5;
 body {
 	@include background(image-url("/img/background.png"));
 	#body-inner {
-		font-family: museo_sans;
-		font-weight: normal;
-		background-color: rgba($color-three, 0.9);
-		//background-color: #1A6A8B;
+		background-color: rgba($color-three, $background-opacity);
 		.container {
-			border: red 1px solid;
+			//border: red 1px solid;
+			// TODO: consider double layer of opacity for foreground/background effect
+			//background-color: rgba($color-three, $background-opacity);
+			width: $body-width;
 			margin-left: auto;
 			margin-right: auto;
-			width: $body-width;
 			overflow: hidden;
 		}
 	}
 }
 
-h1, h2, h3, h4, h5, h6, p, a, div, span {
-	color: $color-one;
-}
-
 h1, h2, h3, h4, h5, h6 {
 	@include header-shadow;
-	font-family: museo_slab;
+	letter-spacing: 3px;
+	font-family: museo_sans;
 	font-weight: bold;
+	color: $color-one;
 	text-transform: uppercase;
+}
+
+p, a, div, span {
+	font-family: Palatino, Georgia, Verdana;
+	font-weight: normal;
+	color: $color-one;
 }
 
 .logo {
 	@include text-shadow($color-one 2px 2px 3px);
-	margin: 0;
+	margin: 0px;
+	margin-left: 20px;
 	padding: 0;
 	color: $color-five;
 	text-transform: uppercase;
@@ -135,11 +138,15 @@ h1, h2, h3, h4, h5, h6 {
 	#second-word {
 		@include text-shadow($color-five 2px 2px 3px);
 		color: $color-one;
+		font-family: inherit;
+		font-weight: inherit;
 	}
 }
 
 .tagline {
 	@include header-shadow;
+	margin: 0px;
+	margin-left: 20px;
 	font-size: 1.5em;
 	font-weight: bold;
 }
