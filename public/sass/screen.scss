@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p, a, div, span, label {
 	@include text-shadow(#000000 0px 1px 0px);
-	font-family: Palatino, 'Lucida Grande', Verdana, serif;//Georgia, serif;
+	font-family: 'Minion Pro', Palatino, 'Lucida Grande', Verdana, serif;
 	font-weight: normal;
 	letter-spacing: 1px;
 	color: $color-one;
@@ -189,6 +189,7 @@ section {
 
 			a {
 				@include box-top;
+				display: block;
 				margin-top: 0;
 				margin-bottom: 0;
 				display: block;
@@ -313,6 +314,7 @@ section {
 					padding: 5px;
 
 					a {
+						display: block;
 						text-decoration: none;
 					}
 
