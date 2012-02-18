@@ -19,6 +19,8 @@ $url-height: 1.5em;
 
 // Colors -----------------------------------------
 // Light to dark
+$color-background: #1e6ea0;
+
 $color-one: #c8e4f0;
 $color-two: #83cff0;
 $color-three: #165b78;
@@ -94,15 +96,14 @@ $background-opacity: 0.9;
 body {
 	@include background(image-url("/img/background.png"));
 	#body-inner {
-		background-color: rgba($color-three, $background-opacity);
+		background-color: rgba($color-background, $background-opacity);
 		.container {
-			//border: red 1px solid;
 			// TODO: consider double layer of opacity for foreground/background effect
 			//background-color: rgba($color-three, $background-opacity);
 			width: $body-width;
 			margin-left: auto;
 			margin-right: auto;
-			overflow: hidden;
+			//overflow: hidden;
 		}
 	}
 }
@@ -157,12 +158,6 @@ section {
 	display: inline-block;
 	clear: both;
 	background-color: rgba($color-five, $section-opacity);
-	&:nth-child(odd) {
-		float: left;
-	}
-	&:nth-child(even) {
-		float: right;
-	}
 	h1 {
 		text-align: center;
 	}
@@ -210,25 +205,27 @@ section {
 
 #sandbox-outer {
 	position: relative;
+	float: right;
 }
 #sandbox {
 	.arrow {
 		@include background(image-url("/img/arrow.png"));
-		@include transform(rotate(90deg) scale(0.6));
+		@include transform(rotate(47deg) scale(0.6));
 		width: 301px;
 		height: 266px;
 		position: absolute;
 		top: -60px;
 		left: -250px;
-		#sandbox-text {
-			@include transform(rotate(-40deg));
-			writing-mode: lr-tb;
-			font-size: 30px;
-			font-weight: bold;
-			top: 100px;
-			left: 80px;
-			position: absolute;
-		}
+	}
+	#sandbox-text {
+		@include transform(rotate(-9deg));
+		writing-mode: lr-tb;
+		font-size: 70px;
+		font-family: pastel_crayon;
+		font-weight: bold;
+		top: -16px;
+		left: -364px;
+		position: absolute;
 	}
 	#outer-search {
 		#search {
