@@ -12,21 +12,37 @@
 // Layout ------------------------------------
 $body-width: 960px;
 $section-margin: 20px;
-$element-border-radius: 10px;
+$element-border-radius: 5px;
 $section-border-radius: 10px;
 $example-height: 5em;
 $url-height: 1.5em;
 
 // Colors -----------------------------------------
-$title-color-one: red;
-$title-color-two: green;
-
 // Light to dark
 $color-one: #7c9db6;
 $color-two: #6794b6;
 $color-three: #2e526d;
 $color-four: #0f2f47;
 $color-five: #2e4352;
+
+$color-border: $color-two;
+
+$section-opacity: 0.5;
+
+// Mixins ------------------------------------------
+@mixin header-shadow {
+	@include text-shadow(rgba(#000000, 0.2) 2px 2px 3px);
+}
+
+@mixin element-box {
+	@include border-radius($element-border-radius);
+	@include box-shadow(2px 2px 10px 2px $color-five);
+}
+
+@mixin section-box {
+	@include border-radius($section-border-radius);
+	@include box-shadow(3px 3px 10px 3px $color-five);
+}
 
 // Custom fonts ----------------------------------
 
@@ -69,9 +85,10 @@ $color-five: #2e4352;
 body {
 	@include background(image-url("/img/background.png"));
 	#body-inner {
+		color: $color-three;
 		font-family: museo_sans;
 		font-weight: normal;
-		background-color: rgba(255, 255, 255, 0.8);
+		background-color: rgba(#ffffff, 0.8);//rgba(255, 255, 255, 0.8);
 		.container {
 			border: red 1px solid;
 			margin-left: auto;
@@ -82,8 +99,8 @@ body {
 	}
 }
 
-
 h1, h2, h3, h4, h5, h6 {
+	@include header-shadow;
 	font-family: museo_slab;
 	font-weight: bold;
 	text-transform: uppercase;
@@ -92,43 +109,37 @@ h1, h2, h3, h4, h5, h6 {
 .logo {
 	margin: 0;
 	padding: 0;
-	color: $title-color-one;
+	color: $color-five;
 	text-transform: uppercase;
 	font-family: pastel_crayon;
 	font-weight: bold;
 	font-size: 6em;
-	.highlight {
-		@include border-radius($element-border-radius);
-		background-color: yellow;
-		//margin: -9999px;
-	}
 	#second-word {
-		color: $title-color-two;
+		color: $color-one;
 	}
 }
 
 .tagline {
-	@include text-shadow(rgba(#000, 0.2) 1px 1px 0);
+	@include header-shadow;
 	font-size: 1.5em;
-	color: #1d7ccc;
+	color: $color-three;//#1d7ccc;
 	font-weight: bold;
 }
 
 section {
-	@include border-radius($section-border-radius);
+	@include section-box;
 	margin: $section-margin;
 	padding: 20px;
 	display: inline-block;
 	clear: both;
+	background-color: rgba($color-one, $section-opacity);
 	&:nth-child(odd) {
-		background-color: rgba(25, 200, 25, 0.5);
 		float: left;
 	}
 	&:nth-child(even) {
-		background-color: rgba(200, 200, 25, 0.5);
 		float: right;
 	}
-	h2 {
+	h1 {
 		text-align: center;
 	}
 }
@@ -155,22 +166,22 @@ section {
 
 			a {
 				@include border-radius($element-border-radius $element-border-radius 0 0);
+				@include box-shadow(3px 3px 10px 3px $color-three);
 				margin-top: 0;
 				margin-bottom: 0;
 				display: block;
-				background-color: #191919;
-				color: #ccc6a8;
-				border: #080 1px solid;
+				background-color: $color-five;
+				color: $color-one;
+				border-bottom: $color-one 1px solid;
 				text-decoration: none;
 				padding: ($url-height - 1) / 2;
 			}
 			p {
 				@include border-radius(0 0 $element-border-radius $element-border-radius);
+				@include box-shadow(3px 3px 10px 3px $color-three);
 				margin-top: 0;
 				margin-bottom: 0;
-				color: #c2b468;
-				background-color: #2e2e2e;
-				border: #080 1px solid;
+				background-color: $color-three;
 				border-top: 0;
 				padding: 5px;
 				height: $example-height;
@@ -200,23 +211,25 @@ section {
 			// TODO: remove harcode
 			margin-left: 20px;
 			margin-right: 20px;
+			padding-left: 10px;
+			padding-right: 10px;
 
 			#search-box {
 				@include clearfix;
+				@include element-box;
 				padding: 0px;
 				margin-bottom: 10px;
 				width: 100%;
 
 				label {
-					@include border-radius($element-border-radius);
-					color: #999;
+					//@include border-radius($element-border-radius);
+					background-color: $color-one;
+					color: $color-three;
 					padding: 5px;
 					margin: 0;
-					border: 1px solid green;
 					float: left;
 					display: inline-block;
 					vertical-align: middle;
-					background-color: #dafafa;
 
 					span {
 						font-size: 20px;
@@ -226,26 +239,26 @@ section {
 
 					input {
 						@include border-radius(0 $element-border-radius $element-border-radius 0);
-						@include box-shadow(inset 0px 0px 0px 2px #aaaaaa);
+						//background-color: $color-two;
 						font-size: 20px;
 						height: 40px;
-						border: 0;
+						border: 1px solid $color-five;
 						margin: 0;
 						outline: none;
 						padding: 0;
 						padding-left: 5px;
 
 						&:focus, &:active {
-							background-color: #99dd99;
+							//background-color: $color-one;
 						}
 					}
 				}
 			}
 			#search-result {
-				@include border-radius($element-border-radius);
-				border: 1px solid blue;
-				background-color: #dabada;
-				border: #080 1px solid;
+				@include element-box;
+				background-color: $color-one;
+				color: $color-one;
+				background-color: $color-three;
 				padding: 5px;
 				margin-top: 5px;
 				margin-bottom: 5px;
@@ -257,8 +270,8 @@ section {
 			}
 		}
 		#search-examples {
-			@include border-radius($element-border-radius);
-			background-color: rgb(225, 175, 225);
+			@include element-box;
+			background-color: $color-one;
 			float: left;
 			margin-left: 20px;
 			margin-right: 20px;
@@ -276,12 +289,16 @@ section {
 
 					a {
 						text-decoration: none;
+						color: $color-three;
 					}
 
 					&.selected {
 						@include border-radius(2px);
-						@include box-shadow(0px 0px 0px 2px #aaaaaa);
-						background-color: #99dd99;
+						//@include box-shadow(0px 0px 0px 2px #aaaaaa);
+						background-color: $color-three;
+						a {
+							color: $color-one;
+						}
 					}
 				}
 			}
