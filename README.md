@@ -17,7 +17,7 @@ http://numbersapi.com/128/math
 &rArr; <script src="/128/math?write=1"></script>
 
 http://numbersapi.com/42/trivia
-=&gt; <script src="/128/math?write=1"></script>
+&rArr; <script src="/128/math?write=1"></script>
 
 http://numbersapi.com/2/29/date
 &rArr; <script src="/2/29/date?write=1"></script>
@@ -25,8 +25,6 @@ http://numbersapi.com/2/29/date
 http://numbersapi.com/random/year
 &rArr; <script src="/random/year?write=1"></script>
 </pre>
-
-TODO: collapsible examples in php, node.js, python, ruby
 
 ### jQuery
 HTML:
@@ -77,3 +75,4 @@ http://numbersapi.com/1234567890987654321/year
 - default
 - max & min
 - callback
+- sentence structure

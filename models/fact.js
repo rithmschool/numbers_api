@@ -79,6 +79,7 @@ var NOT_FOUND = {
 	DEFAULT: 'default',
 	CEIL: 'ceil',
 	FLOOR: 'floor',
+	MISSING: '404',  // TODO
 };
 
 // Query parameter keys
@@ -131,15 +132,16 @@ exports.getFact = function(number, type, options) {
 	// number or NaN
 
 	var ret = data[type][number];
-	if (ret === undefined) {
-		if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
-			return options[QUERY_DEFAULT] || getDefaultMsg(number, type);
-		} else {
-			var index = _.sortedIndex(dataKeys[type], parseInt(number,10));
-			if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-			return data[type][dataKeys[type][index]];
-		}
-	} else {
+	if (ret !== undefined) {
 		return ret;
+	}
+
+	// Handle the case of number not found
+	if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
+		return options[QUERY_DEFAULT] || getDefaultMsg(number, type);
+	} else {
+		var index = _.sortedIndex(dataKeys[type], parseInt(number,10));
+		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
+		return data[type][dataKeys[type][index]];
 	}
 };
