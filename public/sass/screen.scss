@@ -334,24 +334,6 @@ section {
 	padding-bottom: 0px;
 }
 #api {
-	.arrow {
-		@include background(image-url("/img/arrow.png"));
-		@include transform(rotate(300deg) scale(0.6) scaleX(-1));
-		width: 301px;
-		height: 266px;
-		position: absolute;
-		top: -100px;
-		right: -300px;
-		#api-text {
-			@include transform(rotate(-37deg) scaleX(-1));
-			writing-mode: lr-tb;
-			font-size: 30px;
-			font-weight: bold;
-			top: 110px;
-			left: 30px;
-			position: absolute;
-		}
-	}
 }
 
 footer {
