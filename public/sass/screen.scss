@@ -249,7 +249,8 @@ section {
 					display: table-cell;
 					width: 1px;
 					height: inherit;
-					padding: 5px;
+					white-space: nowrap;
+					padding: 8px;
 					margin: 0px;
 					vertical-align: middle;
 					line-height: 40px;
@@ -259,7 +260,8 @@ section {
 					display: table-cell;
 					height: inherit;
 					margin: 0px;
-					padding: 7px;
+					padding: 8px;
+					padding-left: 0px;
 					border: 0px;
 					input {
 						@include border-radius(0 $element-border-radius $element-border-radius 0);
