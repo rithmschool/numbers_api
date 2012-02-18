@@ -23,6 +23,14 @@ $(function() {
     update_result(url);
   }
 
+  function update_history(hash) {
+    if (window.history) {
+      window.history.replaceState({}, null, '#' + hash);
+    } else {
+      window.location.hash = hash;
+    }
+  }
+
   (function() {
     var hash = window.location.hash;
     if (hash) {
@@ -33,16 +41,20 @@ $(function() {
 
   var $prev_selected = undefined;
   $('#search-examples a').click(function(e) {
+    e.stopPropagation();
+
     var $this = $(this);
-    var url = $this.attr('href');
-    url = url.substring(1, url.length);
+    var hash = $this.attr('href');
+    hash = hash.substring(1, hash.length);
     if ($prev_selected) {
       $prev_selected.removeClass('selected');
     }
     var $parent = $this.parent();
     $parent.addClass('selected');
-    $('#search-text').val(url);
-    update_query(url);
+    $('#search-text').val(hash);
+
+    update_history(hash);
+    update_query(hash);
 
     $prev_selected = $parent;
   });
@@ -52,9 +64,9 @@ $(function() {
     var code = e.keyCode || e.which;
     if (code == 13) {
       var $this = $(this);
-      var url = $this.val();
-      window.location.hash = url;
-      update_result(url);
+      var hash = $this.val();
+      update_history(hash);
+      update_result(hash);
     }
   });
 });
