@@ -18,14 +18,20 @@ $example-height: 5em;
 $url-height: 1.5em;
 
 // Colors -----------------------------------------
-// Light to dark
-$color-background: #1e6ea0;
 
-$color-one: #c8e4f0;
-$color-two: #83cff0;
-$color-three: #165b78;
-$color-four: #253a44;
-$color-five: #01212f;
+// Light to dark
+
+//$color-one: #c8e4f0;
+//$color-two: #83cff0;
+//$color-three: #165b78;
+//$color-four: #253a44;
+//$color-five: #01212f;
+
+$color-one: #cce4f4;
+$color-two: #86c9f4;
+$color-three: #1e6da0;
+$color-four: #314a5b;
+$color-five: #02273f;
 
 $section-opacity: 0.5;
 $background-opacity: 0.9;
@@ -96,7 +102,7 @@ $background-opacity: 0.9;
 body {
 	@include background(image-url("/img/background.png"));
 	#body-inner {
-		background-color: rgba($color-background, $background-opacity);
+		background-color: rgba($color-three, $background-opacity);
 		.container {
 			// TODO: consider double layer of opacity for foreground/background effect
 			//background-color: rgba($color-three, $background-opacity);
