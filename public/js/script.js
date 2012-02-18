@@ -27,7 +27,6 @@ $(function() {
     var hash = window.location.hash;
     if (hash) {
       hash = hash.substring(1, hash.length);
-      console.log('hash: ', hash);
       update_query(hash);
     }
   })();
