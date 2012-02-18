@@ -19,11 +19,11 @@ $url-height: 1.5em;
 
 // Colors -----------------------------------------
 // Light to dark
-$color-one: #7c9db6;
-$color-two: #6794b6;
-$color-three: #2e526d;
-$color-four: #0f2f47;
-$color-five: #2e4352;
+$color-one: #c8e4f0;
+$color-two: #83cff0;
+$color-three: #165b78;
+$color-four: #253a44;
+$color-five: #01212f;
 
 $color-border: $color-two;
 
@@ -31,7 +31,7 @@ $section-opacity: 0.5;
 
 // Mixins ------------------------------------------
 @mixin header-shadow {
-	@include text-shadow(rgba(#000000, 0.2) 2px 2px 3px);
+	@include text-shadow($color-five 2px 2px 3px);
 }
 
 @mixin element-box {
@@ -42,6 +42,19 @@ $section-opacity: 0.5;
 @mixin section-box {
 	@include border-radius($section-border-radius);
 	@include box-shadow(3px 3px 10px 3px $color-five);
+}
+
+@mixin box-top {
+	@include border-radius($element-border-radius $element-border-radius 0 0);
+	@include box-shadow(2px 2px 10px 2px $color-five);
+	background-color: $color-five;
+	border-bottom: $color-one 1px solid;
+}
+
+@mixin box-bottom {
+	@include border-radius(0 0 $element-border-radius $element-border-radius);
+	@include box-shadow(2px 2px 10px 2px $color-five);
+	background-color: $color-three;
 }
 
 // Custom fonts ----------------------------------
@@ -85,10 +98,10 @@ $section-opacity: 0.5;
 body {
 	@include background(image-url("/img/background.png"));
 	#body-inner {
-		color: $color-three;
 		font-family: museo_sans;
 		font-weight: normal;
-		background-color: rgba(#ffffff, 0.8);
+		background-color: rgba($color-three, 0.9);
+		//background-color: #1A6A8B;
 		.container {
 			border: red 1px solid;
 			margin-left: auto;
@@ -99,6 +112,10 @@ body {
 	}
 }
 
+h1, h2, h3, h4, h5, h6, p, a, div, span {
+	color: $color-one;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	@include header-shadow;
 	font-family: museo_slab;
@@ -107,6 +124,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .logo {
+	@include text-shadow($color-one 2px 2px 3px);
 	margin: 0;
 	padding: 0;
 	color: $color-five;
@@ -115,6 +133,7 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 	font-size: 6em;
 	#second-word {
+		@include text-shadow($color-five 2px 2px 3px);
 		color: $color-one;
 	}
 }
@@ -122,7 +141,6 @@ h1, h2, h3, h4, h5, h6 {
 .tagline {
 	@include header-shadow;
 	font-size: 1.5em;
-	color: $color-three;//#1d7ccc;
 	font-weight: bold;
 }
 
@@ -132,7 +150,7 @@ section {
 	padding: 20px;
 	display: inline-block;
 	clear: both;
-	background-color: rgba($color-one, $section-opacity);
+	background-color: rgba($color-five, $section-opacity);
 	&:nth-child(odd) {
 		float: left;
 	}
@@ -164,24 +182,17 @@ section {
 			vertical-align: top;
 
 			a {
-				@include border-radius($element-border-radius $element-border-radius 0 0);
-				@include box-shadow(3px 3px 10px 3px $color-three);
+				@include box-top;
 				margin-top: 0;
 				margin-bottom: 0;
 				display: block;
-				background-color: $color-five;
-				color: $color-one;
-				border-bottom: $color-one 1px solid;
 				text-decoration: none;
 				padding: ($url-height - 1) / 2;
 			}
 			p {
-				@include border-radius(0 0 $element-border-radius $element-border-radius);
-				@include box-shadow(3px 3px 10px 3px $color-three);
-				color: $color-one;
+				@include box-bottom;
 				margin-top: 0;
 				margin-bottom: 0;
-				background-color: $color-three;
 				border-top: 0;
 				padding: 5px;
 				height: $example-height;
@@ -214,93 +225,80 @@ section {
 	}
 	#outer-search {
 		#search {
+			$width: 451px;
 			float: left;
 			overflow: hidden;
 			height: 100%;
-			width: 436px;
 			// TODO: remove hardcode
-			margin-left: 20px;
+			width: $width;
+			margin-left: 0px;
 			margin-right: 20px;
 			padding-left: 10px;
 			padding-right: 10px;
 
 			#search-box {
-				@include clearfix;
-				@include border-radius($element-border-radius $element-border-radius 0 0);
-				@include box-shadow(3px 3px 10px 3px $color-three);
+				@include box-top;
+				display: table;
 				padding: 0px;
-				//margin-bottom: 10px;
-				border-bottom: $color-one 1px solid;
+				width: $width - 1;
+				height: 40px;
+				font-size: 20px;
 
 				label {
-					background-color: $color-five;
-					color: $color-one;
+					@include clearfix;
+					display: table-cell;
+					width: 1px;
+					height: inherit;
 					padding: 5px;
-					margin: 0;
-					float: left;
-					display: inline-block;
+					margin: 0px;
 					vertical-align: middle;
+					line-height: 40px;
+				}
 
-					span {
-						font-size: 20px;
-						height: 40px;
-						line-height: 40px;
-					}
-
+				span {
+					display: table-cell;
+					height: inherit;
+					margin: 0px;
+					padding: 7px;
+					border: 0px;
 					input {
 						@include border-radius(0 $element-border-radius $element-border-radius 0);
-						font-size: 20px;
-						height: 40px;
-						border: 1px solid $color-five;
-						margin: 0;
+						width: 100%;
+						padding: 0px;
+						margin: 0px;
+						border: 0px;
 						outline: none;
-						padding: 0;
-						padding-left: 5px;
-
-						//&:focus, &:active {
-						//}
+						line-height: 40px;
 					}
 				}
 			}
 			#search-result {
-				@include border-radius(0 0 $element-border-radius $element-border-radius);
-				@include box-shadow(3px 3px 10px 3px $color-three);
-				background-color: $color-one;
-				color: $color-one;
-				background-color: $color-three;
+				@include box-bottom;
 				padding: 10px;
-				//margin-top: 5px;
 				margin-top: 0px;
 				margin-bottom: 5px;
 				height: 100px;
 
-				&.error {
-					color: $color-one;
-				}
+				//&.error {
+				//	color: $color-one;
+				//}
 			}
 		}
 		#search-examples {
-			color: $color-one;
 			float: left;
-			margin-left: 20px;
-			margin-right: 20px;
+			margin-left: 0px;
+			margin-right: 0px;
 			padding-left: 5px;
 			padding-right: 5px;
 			h3 {
-				@include border-radius($element-border-radius $element-border-radius 0 0);
-				@include box-shadow(3px 3px 10px 3px $color-three);
-				border-bottom: $color-one 1px solid;
-				background-color: $color-five;
-				color: $color-one;
+				@include box-top;
 				margin-top: 0px;
 				margin-bottom: 0px;
 				padding: 5px;
 			}
 			ul {
-				@include border-radius(0 0 $element-border-radius $element-border-radius);
-				@include box-shadow(3px 3px 10px 3px $color-three);
+				@include box-bottom;
 				margin-top: 0px;
-				background-color: $color-three;
 				list-style-type: none;
 				padding-left: 0;
 				li {
@@ -308,7 +306,6 @@ section {
 
 					a {
 						text-decoration: none;
-						color: $color-one;
 					}
 
 					&.selected {
