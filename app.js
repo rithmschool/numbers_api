@@ -5,7 +5,7 @@ var express = require('express');
 var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
 var mustache = require('mustache');
-var markdown = require('markdown').markdown;
+var markdown = require('discount');
 var fs = require('fs');
 
 // From http://bitdrift.com/post/2376383378/using-mustache-templates-in-express
@@ -73,7 +73,7 @@ app.get('/', function(req, res) {
 	// just reading a file... (what's the RIGHT way of doing this)
 	fs.readFile('README.md', 'utf-8', function(err, data) {
 		res.render('index.html', {
-			locals: { docs: markdown.toHTML(data) },
+			locals: { docs: markdown.parse(data) },
 			partials: {}
 		});
 	});
