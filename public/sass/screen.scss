@@ -88,7 +88,7 @@ body {
 		color: $color-three;
 		font-family: museo_sans;
 		font-weight: normal;
-		background-color: rgba(#ffffff, 0.8);//rgba(255, 255, 255, 0.8);
+		background-color: rgba(#ffffff, 0.8);
 		.container {
 			border: red 1px solid;
 			margin-left: auto;
@@ -155,7 +155,7 @@ section {
 }
 #usage {
 	.example {
-		width: 250px;
+		width: 260px;
 		margin: 20px;
 		display: inline-block;
 		.inner-example {
@@ -179,6 +179,7 @@ section {
 			p {
 				@include border-radius(0 0 $element-border-radius $element-border-radius);
 				@include box-shadow(3px 3px 10px 3px $color-three);
+				color: $color-one;
 				margin-top: 0;
 				margin-bottom: 0;
 				background-color: $color-three;
@@ -202,13 +203,22 @@ section {
 		position: absolute;
 		top: -60px;
 		left: -250px;
+		#sandbox-text {
+			@include transform(rotate(-40deg));
+			writing-mode: lr-tb;
+			font-size: 30px;
+			font-weight: bold;
+			top: 100px;
+			left: 80px;
+			position: absolute;
+		}
 	}
 	#outer-search {
 		#search {
 			float: left;
 			overflow: hidden;
 			height: 100%;
-			// TODO: remove harcode
+			// TODO: remove hardcode
 			margin-left: 20px;
 			margin-right: 20px;
 			padding-left: 10px;
@@ -306,18 +316,27 @@ section {
 	}
 }
 
-#reference-outer {
+#api-outer {
 	position: relative;
 }
-#reference {
+#api {
 	.arrow {
 		@include background(image-url("/img/arrow.png"));
 		@include transform(rotate(300deg) scale(0.6) scaleX(-1));
 		width: 301px;
 		height: 266px;
 		position: absolute;
-		top: -120px;
+		top: -100px;
 		right: -300px;
+		#api-text {
+			@include transform(rotate(-37deg) scaleX(-1));
+			writing-mode: lr-tb;
+			font-size: 30px;
+			font-weight: bold;
+			top: 110px;
+			left: 30px;
+			position: absolute;
+		}
 	}
 }
 
