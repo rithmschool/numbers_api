@@ -11,11 +11,11 @@ compass:
 
 # Stops any running node server
 stop:
-	sudo pkill node
+	sudo pkill node || true
 
 # Starts a production node server
 start: stop
-	NODE_ENV=production nohup node app.js &
+	NODE_PATH=/usr/local/lib/node_modules NODE_ENV=production nohup node app.js &
 
 # Transfer files to the server
 transfer: compass
