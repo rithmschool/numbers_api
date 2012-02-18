@@ -4,6 +4,31 @@
 var express = require('express');
 var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
+var mustache = require('mustache');
+var markdown = require('markdown').markdown;
+var fs = require('fs');
+
+// From http://bitdrift.com/post/2376383378/using-mustache-templates-in-express
+var mustacheTemplate = {
+	compile: function (source, options) {
+		if (typeof source == 'string') {
+			return function(options) {
+				options.locals = options.locals || {};
+				options.partials = options.partials || {};
+				if (options.body) // for express.js > v1.0
+					locals.body = options.body;
+				return mustache.to_html(
+						source, options.locals, options.partials);
+			};
+		} else {
+			return source;
+		}
+	},
+	render: function (template, options) {
+		template = this.compile(template, options);
+		return template(options);
+	}
+};
 
 var app = module.exports = express.createServer();
 
@@ -20,14 +45,7 @@ app.configure(function(){
   app.set('view options', {layout: false});
 	app.enable('jsonp callback');
 
-	// make a custom html template: http://stackoverflow.com/questions/4529586/render-basic-html-view-in-node-js-express
-	app.register('.html', {
-		compile: function(str, options){
-			return function(locals){
-				return str;
-			};
-		}
-	});
+	app.register('.html', mustacheTemplate);
 
   app.use(express.bodyParser());
   app.use(express.methodOverride());
@@ -48,8 +66,17 @@ app.configure('production', function(){
 
 router.route(app, fact);
 
+// TODO: Precompile this template. Should also probably use a .mustache filename
+// extension.
 app.get('/', function(req, res) {
-	return res.render('index.html');
+	// TODO: There's gotta be a way of using Express to get the template and not
+	// just reading a file... (what's the RIGHT way of doing this)
+	fs.readFile('README.md', 'utf-8', function(err, data) {
+		res.render('index.html', {
+			locals: { docs: markdown.toHTML(data) },
+			partials: {}
+		});
+	});
 });
 
 // Main

@@ -3,7 +3,7 @@ all: local
 # Run a local node.js server for development
 local:
 	compass watch public/ &
-	node app.js
+	nodemon app.js
 
 # Compiles compass
 compass:
