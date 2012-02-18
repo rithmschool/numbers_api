@@ -63,6 +63,8 @@ $background-opacity: 0.9;
 
 // Custom fonts ----------------------------------
 
+// TODO: Get rid of unneeded fonts
+
 @font-face {
 	font-family: pastel_crayon;
 	src: url('/font/pastel_crayon.ttf');
@@ -340,8 +342,31 @@ section {
 	padding-bottom: 0px;
 }
 #api {
+  pre, code {
+    font-family: Monaco, monospace;
+    font-size: 14px;
+    background-color: rgba($color-five, 0.5);
+  }
+  code {
+    line-height: 1.5em;
+    padding: 0 0.3em;
+    @include border-radius(0.2em);
+  }
+  pre code {
+    background-color: transparent;
+    border: none;
+    line-height: 1em;
+    padding: 0;
+    @include border-radius(0);
+  }
+  pre {
+    padding: 10px 10px 10px 20px;
+    border-left: 8px solid rgba($color-five, 0.5);
+    @include border-radius(0 $element-border-radius $element-border-radius 0);
+  }
 }
 
+// TODO: Improve this (border line at top?)
 footer {
 	background-color: #33aaaa;
 	height: 100px;

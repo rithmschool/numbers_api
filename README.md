@@ -4,28 +4,26 @@ An API to query interesting facts about numbers.
 
 ### Plaintext
 
-Just hit `http://numbersapi.com/`**`number`**`/`**`type`** to get a plain text response, where
+Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code> to get a plain text response, where
 
 - **`type`** is one of `trivia`, `math`, `date`, or `year`
 - **`number`** is
-    - an integer (eg. `0`, `42`, `1337`), except if
+    - an integer (eg. `0`, `42`, `1337`)
     - the keyword `random`
-    - **`type`** is `date`, then **`number`** specifies a day of year in the form **`month`**/**`day`** (eg. `2/29`, `1/01`, `04/1`)
-
-TODO: formatting for `<code>` and `<pre>` blocks.
+    - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/01`, `04/1`), if **`type`** is `date`
 
 <pre>
-    http://numbersapi.com/128/math
-    <strong>==&gt;</strong> <script src="/128/math?write=1"></script>
+http://numbersapi.com/128/math
+&rArr; <script src="/128/math?write=1"></script>
 
-    http://numbersapi.com/42/trivia
-    <strong>==&gt;</strong> <script src="/128/math?write=1"></script>
+http://numbersapi.com/42/trivia
+=&gt; <script src="/128/math?write=1"></script>
 
-    http://numbersapi.com/2/29/date
-    <strong>==&gt;</strong> <script src="/2/29/date?write=1"></script>
+http://numbersapi.com/2/29/date
+&rArr; <script src="/2/29/date?write=1"></script>
 
-    http://numbersapi.com/random/year
-    <strong>==&gt;</strong> <script src="/random/year?write=1"></script>
+http://numbersapi.com/random/year
+&rArr; <script src="/random/year?write=1"></script>
 </pre>
 
 TODO: collapsible examples in php, node.js, python, ruby
@@ -66,6 +64,14 @@ Include the query field `write` to have the response text wrapped in `document.w
     </p>
 
 ## Options Reference
+
+### Default
+The value of the `default` query field specifies the text to return if there's no corresponding fact for the requested number.
+
+<pre>
+http://numbersapi.com/1234567890987654321/year
+&rArr; <script src="/1234567890987654321/year?write=1"></script>
+</pre>
 
 - notfound
 - default
