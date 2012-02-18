@@ -2,16 +2,14 @@ $(function() {
 
   // TODO: mvc to keep url, selected example, search text, and result in sync
 
-  function update_result(url) {
+  function update_result(url, $result) {
     $.ajax({
       url: url,
       success: function(data) {
-        var $result = $('#search-result');
         $result.text(data);
         $result.removeClass('error');
       },
       error: function() {
-        var $result = $('#search-result');
         $result.text("Invalid url.");
         $result.addClass('error');
       }
@@ -20,7 +18,7 @@ $(function() {
 
   function update_query(url) {
     $('#search-text').val(url);
-    update_result(url);
+    update_result(url, $('#search-result'));
   }
 
   function update_history(hash) {
@@ -31,6 +29,16 @@ $(function() {
     }
   }
 
+  // Load the examples using the api backend
+  (function() {
+    $('.example').each(function(index, element) {
+      var $div = $(element).find('div');
+      var href = $div.find('a').attr('href');
+      update_result(href, $div.find('p'));
+    });
+  })();
+
+  // Read any hash from the url set the sandbox input to use this value
   (function() {
     var hash = window.location.hash;
     if (hash) {
@@ -66,7 +74,7 @@ $(function() {
       var $this = $(this);
       var hash = $this.val();
       update_history(hash);
-      update_result(hash);
+      update_result(hash, $('#search-result'));
     }
   });
 });
