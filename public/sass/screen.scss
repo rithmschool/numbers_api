@@ -29,9 +29,6 @@ $section-opacity: 0.5;
 $background-opacity: 0.9;
 
 // Mixins ------------------------------------------
-@mixin header-shadow {
-	@include text-shadow($color-five 2px 2px 3px);
-}
 
 @mixin element-box {
 	@include border-radius($element-border-radius);
@@ -111,17 +108,19 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	@include header-shadow;
-	letter-spacing: 3px;
+	@include text-shadow($color-five 2px 2px 3px);
 	font-family: museo_sans;
 	font-weight: bold;
+	letter-spacing: 3px;
 	color: $color-one;
 	text-transform: uppercase;
 }
 
-p, a, div, span {
-	font-family: Palatino, Georgia, Verdana;
+p, a, div, span, label {
+	@include text-shadow(#000000 0px 1px 0px);
+	font-family: Palatino, 'Lucida Grande', Verdana, serif;//Georgia, serif;
 	font-weight: normal;
+	letter-spacing: 1px;
 	color: $color-one;
 }
 
@@ -144,7 +143,7 @@ p, a, div, span {
 }
 
 .tagline {
-	@include header-shadow;
+	@include text-shadow($color-five 2px 2px 3px);
 	margin: 0px;
 	margin-left: 20px;
 	font-size: 1.5em;
@@ -320,6 +319,7 @@ section {
 					&.selected {
 						background-color: $color-one;
 						a {
+							@include text-shadow(transparent 0px 0px 0px);
 							color: $color-three;
 						}
 					}
