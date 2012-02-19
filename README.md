@@ -38,7 +38,7 @@ JavaScript:
         $('#number').text(data);
     });
 
-We can make a direct cross-origin request without resorting to JSONP since [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing) is enabled. See [JSFiddle]().
+You can make a direct cross-origin request without resorting to JSONP since [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing) is enabled. See this in action on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
 <h3 id="jsonp">JSONP</h3>
 ...is supported with the query field `callback`:
@@ -54,16 +54,20 @@ We can make a direct cross-origin request without resorting to JSONP since [CORS
     </script>
     <script src="http://numbersapi.com/42/math?callback=showNumber"></script>
 
+See this in action on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
+
 ### HTML Embedding
 TODO: What about just having the 'callback' field with no value?
 Include the query field `write` to have the response text wrapped in `document.write()`. This allows you to stick a single `<script>` where the contents should go on your HTML page.
 
     In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
 
+See this in action on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
+
 ## Options Reference
 
 ### Notfound
-The `notfound` field tells us what we to do if the number is not found. You can give us
+The `notfound` field tells us what to do if the number is not found. You can give us
 
 - `default` to return one of our pre-written missing messages, or a message you supply with the [`default`](#default) query field. This is the default behaviour.
     <pre>http://numbersapi.com/314159265358979
