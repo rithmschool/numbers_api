@@ -1147,6 +1147,7 @@ exports.year = {
 		299: 'Galerius commissions the Arch of Galerius in Thessaloniki (Greece). The structure is built to celebrate the war and victory over the Sassanid Persians',
 		300: 'The elephant becomes extinct in North Africa (approximate date)',
 }
+*/
 
 exports.trivia = {
 		114: 'the number of chapters in the Quran',
@@ -1206,4 +1207,3 @@ exports.trivia = {
 		295: 'the numerical designation of seven circumfrental or half-circumfrental routes of Interstate 95 in the United States',
 		300: 'a perfect score in bowling, achieved by rolling strikes in all ten frames (a total of twelve strikes)',
 }
-*/
