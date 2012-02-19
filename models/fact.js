@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var util = require('util');
 var data = require('./data.js');
 
 // TODO: There are a bunch of utils functions here that could be offshored
@@ -132,6 +133,9 @@ exports.getFact = function(number, type, options) {
 	// number or NaN
 
 	var ret = data[type][number];
+  if (util.isArray(ret)) {
+    ret = randomChoice(ret);
+  }
 	if (ret !== undefined) {
 		return ret;
 	}

@@ -1,10 +1,49 @@
-exports.date = {
-	'1/1': 'january 1',
-	'1/2': 'jan 2',
-	'1/3': 'jan 3',
-	'1/4': 'jan 4',
-	'2/1': 'feb 1',
-};
+var _ = require('underscore');
+var fs = require('fs');
+
+function reader(out, path, ignore) {
+  // TODO: use aray for ignore
+  ignore = ignore || {};
+  // TODO: more reliable checking if file is data file
+  var files = fs.readdirSync(path);
+
+  console.log('files: ', files);
+
+  _.each(files, function(file) {
+    // TODO: add encoding argument
+    // TODO: fix directory so it's relative to directory of this file
+    try {
+      data = fs.readFileSync(path + file);
+    } catch (e) {
+      console.error('Exception while reading file ', path + file, ': ', e.message);
+    }
+
+    var numbers = JSON.parse(data);
+    _.each(numbers, function(categories, number_key) {
+      if (!(number_key in out)) {
+        out[number_key] = [];
+      }
+      var o = out[number_key];
+
+      _.each(categories, function(category, category_key) {
+        if (category_key in ignore) {
+          return;
+        }
+        _.each(category, function(element) {
+          o[o.length] = element;
+        });
+      });
+    });
+  });
+}
+
+exports.date = {};
+var date_path = 'models/date/';
+reader(exports.date, date_path, {'birth': true, 'death': true});
+
+exports.year = {};
+var year_path = 'models/year/';
+reader(exports.year, year_path, {'birth': true, 'death': true});
 
 exports.math = {
 		0: '0 is the additive identity.',
@@ -958,6 +997,7 @@ exports.math = {
 		1001: '1001 is the smallest palindromic product of 3 consecutive primes.',
 }
 
+/*
 exports.year = {
 		129: 'Emperor Hadrian continues his voyages, now inspecting Caria, Cappadocia and Syria',
 		130: 'Claudius Ptolemaeus tabulates angles of refraction for several media',
@@ -1166,3 +1206,4 @@ exports.trivia = {
 		295: 'the numerical designation of seven circumfrental or half-circumfrental routes of Interstate 95 in the United States',
 		300: 'a perfect score in bowling, achieved by rolling strikes in all ten frames (a total of twelve strikes)',
 }
+*/
