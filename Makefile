@@ -4,7 +4,7 @@ all: local
 
 # Run a local node.js server for development
 local:
-	compass watch public/ &
+	compass watch --trace public/ &
 	NODE_PATH=/usr/local/lib/node_modules nodemon app.js
 
 # Compiles compass

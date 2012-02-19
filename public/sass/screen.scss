@@ -102,16 +102,16 @@ $background-opacity: 0.9;
 // CSS ----------------------------------------
 
 body {
-	@include background(image-url("/img/background.png"));
+  @include background($color-three);  // Fallback
+  @include background(rgba($color-three, $background-opacity));  // Fallback
+  @include background(linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), image-url("/img/background.png"));
 	#body-inner {
-		background-color: rgba($color-three, $background-opacity);
+    @include background(url(/img/graph-paper.png));
 		.container {
 			// TODO: consider double layer of opacity for foreground/background effect
-			//background-color: rgba($color-three, $background-opacity);
 			width: $body-width;
 			margin-left: auto;
 			margin-right: auto;
-			//overflow: hidden;
 		}
 	}
 }
@@ -126,10 +126,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, a, div, span, label {
-	@include text-shadow(#000000 0px 1px 0px);
+  @include text-shadow(#000000 0px 1px 0px);
 	font-family: Palatino, 'Lucida Grande', Verdana, serif;
 	font-weight: normal;
-	letter-spacing: 1px;
+	//letter-spacing: 1px;
 	color: $color-one;
 }
 
