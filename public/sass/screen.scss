@@ -35,29 +35,30 @@ $color-five: #02273f;
 
 $section-opacity: 0.5;
 $background-opacity: 0.9;
+$main-margin: 20%;
 
 // Mixins ------------------------------------------
 
 @mixin element-box {
 	@include border-radius($element-border-radius);
-	@include box-shadow(2px 2px 10px 2px $color-five);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
 }
 
 @mixin section-box {
 	@include border-radius($section-border-radius);
-	@include box-shadow(3px 3px 10px 3px $color-five);
+	//@include box-shadow(3px 3px 10px 3px $color-five);
 }
 
 @mixin box-top {
 	@include border-radius($element-border-radius $element-border-radius 0 0);
-	@include box-shadow(2px 2px 10px 2px $color-five);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
 	background-color: $color-five;
 	border-bottom: $color-one 1px solid;
 }
 
 @mixin box-bottom {
 	@include border-radius(0 0 $element-border-radius $element-border-radius);
-	@include box-shadow(2px 2px 10px 2px $color-five);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
 	background-color: $color-three;
 }
 
@@ -109,7 +110,7 @@ body {
     @include background(url(/img/graph-paper.png));
 		.container {
 			// TODO: consider double layer of opacity for foreground/background effect
-			width: $body-width;
+      width: $body-width;
 			margin-left: auto;
 			margin-right: auto;
 		}
@@ -129,34 +130,39 @@ p, a, div, span, label {
   @include text-shadow(#000000 0px 1px 0px);
 	font-family: Palatino, 'Lucida Grande', Verdana, serif;
 	font-weight: normal;
+	font-size: 18px;
 	//letter-spacing: 1px;
 	color: $color-one;
 }
 
 .logo {
-	@include text-shadow($color-one 2px 2px 3px);
+	@include text-shadow($color-one 0px 0px 10px, $color-one 0 0 60px);
 	margin: 0px;
 	margin-left: 20px;
 	padding: 0;
+	padding-top: 20px;
 	color: $color-five;
 	text-transform: uppercase;
-	font-family: pastel_crayon;
-	font-weight: bold;
-	font-size: 6em;
+  //font-family: pastel_crayon;
+  font-family: museo_sans;
+  font-weight: bold;
+	font-size: 5em;
 	#second-word {
-		@include text-shadow($color-five 2px 2px 3px);
+    //@include text-shadow($color-five 0px 0px 10px, $color-five 0px 0px 50px);
+    @include text-shadow($color-five 0px 0px 10px);
 		color: $color-one;
 		font-family: inherit;
-		font-weight: inherit;
+    font-weight: normal;
+		font-size: inherit;
 	}
 }
 
 .tagline {
-	@include text-shadow($color-five 2px 2px 3px);
+  @include text-shadow($color-five 0px 0px 5px);
 	margin: 0px;
 	margin-left: 20px;
 	font-size: 1.5em;
-	font-weight: bold;
+	//font-weight: bold;
 }
 
 section {
@@ -231,8 +237,8 @@ section {
 		font-size: 70px;
 		font-family: pastel_crayon;
 		font-weight: bold;
-		top: -16px;
-		left: -364px;
+		top: -26px;
+		left: -324px;
 		position: absolute;
 	}
 	#outer-search {
@@ -252,7 +258,7 @@ section {
 				@include box-top;
 				display: table;
 				padding: 0px;
-				width: $width - 1;
+				width: $width;
 				height: 40px;
 				font-size: 20px;
 
