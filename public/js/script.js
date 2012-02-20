@@ -1,49 +1,95 @@
+(function() {
+
+// TODO: mvc to keep url, selected example, search text, and result in sync
+//		 +1 (david)
+
+// TODO: Share a file with the node.js server of common utilities and
+//     algorithms
+
+var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+function dateToDayOfYear(date) {
+	var day = 0;
+	for (var i = 0; i < date.getMonth(); ++i) {
+		day += MONTH_DAYS[i];
+	}
+	return day + date.getDate();
+}
+
+var NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
+function getNumFromUrl(url) {
+	var matches = NUM_FROM_URL_REGEX.exec(url);
+	if (matches[2]) {
+		// The number is a date, convert to day of year
+		return dateToDayOfYear(new Date(2004, matches[1] - 1, matches[2]));
+	} else {
+		return parseInt(matches[1], 10);
+	}
+}
+
+function update_result(url, $result) {
+	$.ajax({
+		url: url,
+		success: function(data) {
+			$result.text(data);
+			$result.removeClass('error');
+		},
+		error: function() {
+			$result.text("Invalid url.");
+			$result.addClass('error');
+		}
+	});
+}
+
+function update_query(url) {
+	if ($('#search-text').val() !== url) {
+		$('#search-text').val(url);
+	}
+	update_result(url, $('#search-result'));
+}
+
+function update_history(hash) {
+	if (window.history) {
+		window.history.replaceState({}, null, '#' + hash);
+	} else {
+		window.location.hash = hash;
+	}
+}
+
+function update_counter(url) {
+	$('#counter').counter('set', getNumFromUrl(url));
+}
+
+function update_all(url) {
+	update_counter(url);
+	update_history(url);
+	update_query(url);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// Main execution: what gets executed on DOM ready
 $(function() {
 
-  // TODO: mvc to keep url, selected example, search text, and result in sync
-
-  function update_result(url, $result) {
-    $.ajax({
-      url: url,
-      success: function(data) {
-        $result.text(data);
-        $result.removeClass('error');
-      },
-      error: function() {
-        $result.text("Invalid url.");
-        $result.addClass('error');
-      }
-    });
-  }
-
-  function update_query(url) {
-    $('#search-text').val(url);
-    update_result(url, $('#search-result'));
-  }
-
-  function update_history(hash) {
-    if (window.history) {
-      window.history.replaceState({}, null, '#' + hash);
-    } else {
-      window.location.hash = hash;
-    }
-  }
+	// Initialize rolling counter widget
+	$('#counter').counter({
+		width: 30,
+		height: 40,
+		numDigits: 4,
+		showSides: false
+	});
 
   // Load the examples using the api backend
-  (function() {
-    $('.example').each(function(index, element) {
-      var $div = $(element).find('div');
-      var href = $div.find('a').attr('href');
-      update_result(href, $div.find('p'));
-    });
-  })();
+	$('.example').each(function(index, element) {
+		var $div = $(element).find('div');
+		var href = $div.find('a').attr('href');
+		update_result(href, $div.find('p'));
+	});
 
   // Read any hash from the url set the sandbox input to use this value
   (function() {
     var hash = window.location.hash;
     if (hash) {
-      hash = hash.substring(1, hash.length);
-      update_query(hash);
+      update_all(hash.substring(1, hash.length));
     }
   })();
 
@@ -61,8 +107,7 @@ $(function() {
     $parent.addClass('selected');
     $('#search-text').val(hash);
 
-    update_history(hash);
-    update_query(hash);
+		update_all(hash);
 
     $prev_selected = $parent;
   });
@@ -71,19 +116,9 @@ $(function() {
   $('#search-text').keypress(function(e) {
     var code = e.keyCode || e.which;
     if (code == 13) {
-      var $this = $(this);
-      var hash = $this.val();
-      update_history(hash);
-      update_result(hash, $('#search-result'));
+      update_all($(this).val());
     }
   });
-
-	// Initialize counter widget
-	$('#counter').counter({
-		width: 30,
-		height: 40,
-		numDigits: 4
-	});
 });
 
 /*
@@ -97,3 +132,5 @@ $(document).ready(function() {
   });
 });
 */
+
+})();

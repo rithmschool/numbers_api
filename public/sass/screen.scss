@@ -253,6 +253,25 @@ section {
 		position: absolute;
 		text-shadow: none;
 	}
+	#counter {
+	  display: inline-block;
+		//border: 5px solid rgba($color-five, 0.5);
+    @include border-radius($element-border-radius $element-border-radius);
+
+    .counter-container {
+      background: $color-four;
+    }
+    .counter-digit {
+      font-weight: bold;
+      font-family: museo_sans, "Lucida Grande", Helvetica, sans-serif;
+      color: $color-five;
+      text-shadow: none;
+      background-color: $color-one;
+    }
+    .counter-mask {
+      @include background(linear-gradient(top, $color-two 0%, rgba($color-one,0) 50%, $color-two 100%));
+    }
+  }
 	#outer-search {
 		#search {
 			$width: 451px;

@@ -45,7 +45,8 @@
 				numDigits: 5,
 				digitHeight: 40,
 				digitWidth: 30,
-				easing: 'easeInOutCubic'
+				easing: 'easeInOutCubic',
+				showSides: true
 			}, options);
 
 			var $this = $(this);
@@ -57,7 +58,7 @@
 				data.$digit = [];
 
 				// Set up the surrounding container divs
-				var containerWidth = (settings.digitWidth + 1) * settings.numDigits + 1;
+				var containerWidth = (settings.digitWidth + 1) * settings.numDigits + (settings.showSides ? 1 : -1);
 				var container = $('<div>').appendTo($this).css({
 					overflow: 'hidden',
 					position: 'relative',
@@ -82,7 +83,7 @@
 						lineHeight: settings.digitHeight + 'px',
 						width: settings.digitWidth,
 						position: 'absolute',
-						right: i * settings.digitWidth + i + 1,
+						right: i * settings.digitWidth + i + (settings.showSides ? 1 : 0),
 						display: 'inline-block',
 						fontSize: settings.digitWidth,
 						textAlign: 'center',
