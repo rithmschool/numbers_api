@@ -45,7 +45,7 @@
 				numDigits: 5,
 				digitHeight: 40,
 				digitWidth: 30,
-				easing: 'easeInOutCubic',
+				easing: 'swing',
 				showSides: true,
 				controls: true,
 				buttonHeight: 20,
@@ -71,14 +71,14 @@
 					marginBottom: containerVerticalMargin,
 					padding: '0',
 					overflow: 'visible'
-				}).addClass(NAME + '-container');
+				}).addClass(NAME + '-container-outer');
 
 				var $inner = $('<div>').css({
 					overflow: 'hidden',
 					height: settings.digitHeight,
 					width: containerWidth,
 					position: 'relative'
-				}).appendTo($container);
+				}).addClass(NAME + '-container-inner').appendTo($container);
 
 				// TODO: Don't hard-code the z-index
 				// Add a div to be used as a gradient overlay mask

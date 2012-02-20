@@ -91,8 +91,8 @@ $(function() {
 
 	// Initialize rolling counter widget
 	$('#counter').counter({
-		width: 30,
-		height: 40,
+		digitWidth: 32,
+		digitHeight: 46,
 		numDigits: 4,
 		showSides: false
 	}).bind('counterChanged', function(eventObject, newVal) {

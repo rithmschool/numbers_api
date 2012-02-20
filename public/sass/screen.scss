@@ -181,14 +181,14 @@ a {
 .tagline {
   @include text-shadow($color-five 0px 0px 5px);
 	margin: 0px;
-	font-size: 1.5em;
-	//font-weight: bold;
+	font-size: 1.6em;
+  font-style: italic;
 }
 
 section {
 	@include section-box;
 	margin: $section-margin 0 $section-margin 0;
-	padding: 30px 20px 30px 20px;
+	padding: 30px 30px 10px 20px;
 	display: inline-block;
 	clear: both;
 	background-color: rgba($color-five, $section-opacity);
@@ -264,11 +264,49 @@ section {
 	}
 	#counter {
 	  display: inline-block;
-		//border: 5px solid rgba($color-five, 0.5);
+    //border: 5px solid rgba($color-five, 0.5);
+		margin-top: -20px;
+		padding: 3px 0px;
     @include border-radius($element-border-radius $element-border-radius);
 
-    .counter-container {
+    .counter-container-outer {
       background: $color-four;
+
+      .counter-button {
+        opacity: 0.0;
+        background: $color-five;
+        color: $color-two;
+        text-shadow: none;
+        @include user-select(none);
+        @include transition(all 0.3s ease-out, text-shadow 0.3s ease-out);
+        &.counter-button-up {
+          @include background(linear-gradient(top, rgba($color-five, 0.5), $color-five));
+          @include border-radius($element-border-radius $element-border-radius 0 0);
+        }
+        &.counter-button-down {
+          @include background(linear-gradient(top, $color-five, rgba($color-five, 0.5)));
+          @include border-radius(0 0 $element-border-radius $element-border-radius);
+        }
+      }
+      &:hover .counter-button {
+        opacity: 0.7;
+      }
+      .counter-button:hover {
+        opacity: 1.0;
+        @include box-shadow(0 0 5px $color-one);
+        cursor: pointer;
+      }
+      .counter-button:active {
+        background-color: $color-three;
+        cursor: pointer;
+      }
+      .counter-container-inner {
+        @include box-shadow(0 0 10px rgba($color-two, 0.5));
+        @include transition(all ease-out 0.3s);
+        &:hover {
+          @include box-shadow(0 0 20px $color-one);
+        }
+      }
     }
     .counter-digit {
       font-weight: bold;
@@ -279,34 +317,6 @@ section {
     }
     .counter-mask {
       @include background(linear-gradient(top, $color-two 0%, rgba($color-one,0) 50%, $color-two 100%));
-    }
-    .counter-button {
-      opacity: 0.1;
-      background: $color-five;
-      color: $color-two;
-      text-shadow: none;
-      @include user-select(none);
-      @include transition(opacity 0.3s ease-out, text-shadow 0.3s ease-out);
-      &.counter-button-up {
-        @include background(linear-gradient(top, rgba($color-five, 0.5), $color-five));
-        @include border-radius($element-border-radius $element-border-radius 0 0);
-      }
-      &.counter-button-down {
-        @include background(linear-gradient(top, $color-five, rgba($color-five, 0.5)));
-        @include border-radius(0 0 $element-border-radius $element-border-radius);
-      }
-    }
-    .counter-container:hover .counter-button {
-      opacity: 0.7;
-    }
-    .counter-container .counter-button:hover {
-      opacity: 1.0;
-      @include box-shadow(0 0 5px $color-one);
-      cursor: pointer;
-    }
-    .counter-container .counter-button:active {
-      background-color: $color-three;
-      cursor: pointer;
     }
   }
 	#outer-search {
@@ -327,7 +337,8 @@ section {
 				@include box-top;
 				display: table;
 				padding: 0px;
-				width: $width;
+				padding-right: 3px;
+				width: $width - 3;
 				height: $search-box-height;
         font-size: 18px;
 
@@ -396,7 +407,8 @@ section {
 				padding: 10px;
 				margin-top: 0px;
 				margin-bottom: 5px;
-				height: 100px;
+				// TODO: Remove hardcode
+				height: 160px;
 
 				//&.error {
 				//	color: $color-one;
@@ -407,34 +419,45 @@ section {
 			float: left;
 			margin-left: 0px;
 			margin-right: 0px;
-			padding-left: 5px;
-			padding-right: 5px;
 			h3 {
 				@include box-top;
 				margin-top: 0px;
 				margin-bottom: 0px;
 				padding: 5px;
+        text-align: center;
 			}
 			ul {
 				@include box-bottom;
 				margin-top: 0px;
 				list-style-type: none;
 				padding-left: 0;
+        text-align: center;
 				li {
 					padding: 5px;
+          @include transition(all ease-out 0.3s);
+
+          &:last-child {
+            @include border-radius(0 0 $element-border-radius $element-border-radius);
+          }
 
 					a {
 						display: block;
-						text-decoration: none;
+            @include text-shadow(none);
 					}
 
-					&.selected {
-						background-color: $color-one;
-						a {
-							@include text-shadow(transparent 0px 0px 0px);
-							color: $color-three;
-						}
-					}
+					&:hover {
+            background-color: rgba($color-one, 0.5);
+            a {
+              color: $color-five;
+            }
+          }
+
+					//&.selected {
+						//background-color: $color-one;
+						//a {
+							//color: $color-three;
+						//}
+					//}
 				}
 			}
 		}
