@@ -105,7 +105,7 @@ def crawl():
 			if year % ENTRIES_PER_FILE == 0 or year == year_end:
 				range_end = int(math.ceil(float(year) / ENTRIES_PER_FILE)) * ENTRIES_PER_FILE
 				range_begin = range_end - ENTRIES_PER_FILE + 1
-				file_name = 'year/year_{0}_{1}.txt'.format(range_begin, range_end)
+				file_name = 'year/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
 				print 'Writing to file: ', file_name
 				try:
 					f = open(file_name, 'w')

@@ -119,7 +119,7 @@ def crawl():
 				if counter % ENTRIES_PER_FILE == 0 or (month == 12 and day == 31):
 					range_end = int(math.ceil(float(counter) / ENTRIES_PER_FILE)) * ENTRIES_PER_FILE
 					range_begin = range_end - ENTRIES_PER_FILE + 1
-					file_name = 'date/date_{0}_{1}.txt'.format(range_begin, range_end)
+					file_name = 'date/raw/wikipdia_{0}_{1}.txt'.format(range_begin, range_end)
 					print 'Writing to file: ', file_name
 					try:
 						f = open(file_name, 'w')

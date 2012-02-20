@@ -72,20 +72,18 @@ function reader(out, path, ignore) {
 }
 
 exports.date = {};
-var date_path = 'models/date/';
-reader(exports.date, date_path, {'birth': true, 'death': true});
+reader(exports.date, 'models/date/norm/');
+//reader(exports.date, date_path, {'birth': true, 'death': true});
 
 exports.year = {};
-var year_path = 'models/year/';
-reader(exports.year, year_path, {'birth': true, 'death': true});
+reader(exports.year, 'models/year/norm/');
 
 exports.trivia = {};
 var trivia_path = 'models/trivia/';
-reader(exports.trivia, trivia_path, {});
+reader(exports.trivia, 'models/trivia/norm/', {});
 
 exports.math = {};
-var math_path = 'models/math/';
-reader(exports.math, math_path, {});
+reader(exports.math, 'models/math/norm/', {});
 
 console.log('success: ', success, ' failure: ', failure, ' ratio: ', success/(success + failure));
 

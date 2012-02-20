@@ -145,7 +145,7 @@ def crawl():
 				range_end = int(math.ceil(float(number) / ENTRIES_PER_FILE)) * ENTRIES_PER_FILE
 				range_begin = range_end - ENTRIES_PER_FILE + 1
 
-				file_name = 'math/math_{0}_{1}.txt'.format(range_begin, range_end)
+				file_name = 'math/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
 				print 'Writing to file: ', file_name
 				f = open(file_name, 'w')
 				try:
@@ -159,7 +159,7 @@ def crawl():
 					f.close()
 					math_facts = {}
 
-				file_name = 'trivia/trivia_{0}_{1}.txt'.format(range_begin, range_end)
+				file_name = 'trivia/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
 				print 'Writing to file: ', file_name
 				f = open(file_name, 'w')
 				try:
