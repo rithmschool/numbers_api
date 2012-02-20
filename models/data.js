@@ -1,7 +1,6 @@
 var _ = require('underscore');
 var fs = require('fs');
 
-
 var success = 0;
 var failure = 0;
 function reader(out, path, ignore) {
@@ -16,13 +15,25 @@ function reader(out, path, ignore) {
     // TODO: add encoding argument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      data = fs.readFileSync(path + file);
+      var data = fs.readFileSync(path + file);
     } catch (e) {
       console.error('Exception while reading file ', path + file, ': ', e.message);
+      return;
     }
 
-    var numbers = JSON.parse(data);
+    try {
+      var numbers = JSON.parse(data);
+    } catch (e) {
+      console.error('Exception while parsing file', path + file, ': ',  e.message);
+      return;
+    }
+
     _.each(numbers, function(number_data, number_key) {
+
+      if (!(number_key in out)) {
+        out[number_key] = [];
+      }
+      var o = out[number_key];
 
       function filter(element) {
         if (element.length < 100) {
@@ -35,15 +46,25 @@ function reader(out, path, ignore) {
       }
 
       if (typeof number_data === 'string') {
-        out[number_key] = [number_data];
+        if (filter(number_data)) {
+          o[o.length] = number_data;
+        }
       } else if (number_data instanceof Array) {
-        out[number_key] = _.filter(number_data, filter);
+        _.each(number_data, function(element) {
+          if (filter(element)) {
+            o[o.length] = element;
+          }
+        });
       } else {
         _.each(number_data, function(category, category_key) {
           if (category_key in ignore) {
             return;
           }
-          out[number_key] = _.filter(category, filter);
+          _.each(category, function(element) {
+            if (filter(element)) {
+              o[o.length] = element;
+            }
+          });
         });
       }
     });
