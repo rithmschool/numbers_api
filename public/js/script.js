@@ -139,7 +139,9 @@ $(function() {
     if (code == 13) {
       update_all($(this).val());
     }
-  });
+  }).change(function(e) {
+		$('#search-link').prop('href', $(this).val());
+	});
 });
 
 /*
