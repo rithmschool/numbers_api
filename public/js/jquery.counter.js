@@ -46,7 +46,9 @@
 				digitHeight: 40,
 				digitWidth: 30,
 				easing: 'easeInOutCubic',
-				showSides: true
+				showSides: true,
+				controls: true,
+				buttonHeight: 20,
 			}, options);
 
 			var $this = $(this);
@@ -59,27 +61,38 @@
 
 				// Set up the surrounding container divs
 				var containerWidth = (settings.digitWidth + 1) * settings.numDigits + (settings.showSides ? 1 : -1);
-				var container = $('<div>').appendTo($this).css({
-					overflow: 'hidden',
+				var containerVerticalMargin = (settings.controls ? settings.buttonHeight : 0);
+				var $container = data.$container = $('<div>').appendTo($this).css({
 					position: 'relative',
 					height: settings.digitHeight,
 					width: containerWidth,
 					margin: '0',
-					padding: '0'
+					marginTop: containerVerticalMargin,
+					marginBottom: containerVerticalMargin,
+					padding: '0',
+					overflow: 'visible'
 				}).addClass(NAME + '-container');
 
+				var $inner = $('<div>').css({
+					overflow: 'hidden',
+					height: settings.digitHeight,
+					width: containerWidth,
+					position: 'relative'
+				}).appendTo($container);
+
 				// TODO: Don't hard-code the z-index
+				// Add a div to be used as a gradient overlay mask
 				$('<div>').css({
 					position: 'absolute',
 					width: containerWidth,
 					height: settings.digitHeight,
 					zIndex: 10
-				}).addClass(NAME + '-mask').appendTo(container);
+				}).addClass(NAME + '-mask').appendTo($inner);
 
 				// Add the digit text
 				var digits = new Array(100 + 1).join('0 1 2 3 4 5 6 7 8 9 ');
 				for (var i = 0; i < settings.numDigits; ++i) {
-					data.$digit[i] = $('<div>').appendTo(container).css({
+					data.$digit[i] = $('<div>').appendTo($inner).css({
 						lineHeight: settings.digitHeight + 'px',
 						width: settings.digitWidth,
 						position: 'absolute',
@@ -94,10 +107,41 @@
 
 				$this.data(NAME, data);
 				this[NAME]('_centerOn', settings.val);
+
+				if (settings.controls) {
+					this[NAME]('addControls');
+				}
 			}
 
 			// TODO: Events
 			//$(window).bind('resize.tooltip', methods.reposition);
+
+			return this;
+		},
+
+		addControls: function() {
+			var data = this.data(NAME);
+			var padding = 3;
+			var height = data.buttonHeight - padding;
+			var tops = [ -(padding + height), data.digitHeight + padding ];
+			var html = [ '&#9650', '&#9660' ];
+			var classes = [ NAME + '-button-up', NAME + '-button-down' ];
+			var onClick = [ $.proxy(methods.increment, this), $.proxy(methods.decrement, this) ];
+
+			for (var i = 0; i < 2; ++i) {
+				$('<div>').css({
+					position: 'absolute',
+					top: tops[i],
+					width: data.$container.width(),
+					textAlign: 'center',
+					fontSize: height * 0.6,
+					lineHeight: height + 'px',
+					height: height
+				}).html(html[i])
+					.addClass(NAME + '-button ' + classes[i])
+					.click(onClick[i])
+					.appendTo(data.$container);
+			}
 		},
 
 		destroy: function() {
@@ -118,11 +162,14 @@
 		},
 
 		set: function(val) {
+			if (val == null) return;
 			var data = this.data(NAME);
 			val = val % Math.pow(10, data.numDigits);
 			var oldVal = data.val;
 			var diff = oldVal - val;
 			var movingDiff = Math.abs(diff);
+			if (movingDiff <= EPSILON) return;
+
 			var diffNumDigits = getNumDigits(Math.abs(diff));
 			var valDigits = getNumDigits(data.val);
 			var negHeight = -data.digitHeight;
@@ -137,17 +184,24 @@
 			// queued up, but should just go directly to the end value
 
 			for (var i = 0; i < data.numDigits; ++i) {
+				var oldDigit = getDigitAt(oldVal, i);
 				var newDigit = getDigitAt(val, i);
 				var newRow;
 				if (movingDiff < 0.9) {
 					newRow = 500 + newDigit;
+					// TODO: This is so ugly, think about not needing to special case
+					if (oldDigit === 9 && newDigit === 0) {
+						newRow += 10;
+					} else if (oldDigit === 0 && newDigit === 9) {
+						newRow -= 10;
+					}
 				} else {
 					var direction = diff > 0 ? -1 : 1;
-					var tens = (500 + getDigitAt(oldVal, i) + direction * Math.min(450, movingDiff)) / 10;
-					newRow = Math.floor(tens) * 10 + newDigit;
+					var tens = (500 + oldDigit + direction * Math.min(450, movingDiff)) / 10;
+					newRow = Math.floor(tens + EPSILON) * 10 + newDigit;
 				}
 
-				$digit[i].animate({
+				$digit[i].stop().animate({
 					top: newRow * negHeight
 				}, duration, data.easing, (function(digit) {
 					return function() {
@@ -159,6 +213,7 @@
 			}
 
 			data.val = val;
+			this.trigger(NAME + 'Changed', val);
 
 			return this;
 		},

@@ -18,12 +18,30 @@ function dateToDayOfYear(date) {
 var NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
 function getNumFromUrl(url) {
 	var matches = NUM_FROM_URL_REGEX.exec(url);
+	if (!matches) return null;
+
 	if (matches[2]) {
 		// The number is a date, convert to day of year
 		return dateToDayOfYear(new Date(2004, matches[1] - 1, matches[2]));
 	} else {
 		return parseInt(matches[1], 10);
 	}
+}
+
+function changeUrlToNum(url, num) {
+	var matches = NUM_FROM_URL_REGEX.exec(url);
+	var needle = NUM_FROM_URL_REGEX;
+	if (!matches) {
+		needle = 'random';
+	}
+
+	if (url.match(/\/date/) || (matches && matches[2])) {
+		// number is a day of year, so convert to date and into m/d notation
+		var date = new Date(2004, 0);
+		date.setDate(num);
+		num = '' + (date.getMonth() + 1) + '/' + date.getDate();
+	}
+	return url.replace(needle, num);
 }
 
 function update_result(url, $result) {
@@ -76,6 +94,8 @@ $(function() {
 		height: 40,
 		numDigits: 4,
 		showSides: false
+	}).bind('counterChanged', function(eventObject, newVal) {
+		update_all(changeUrlToNum(window.location.hash.substr(1), newVal));
 	});
 
   // Load the examples using the api backend
@@ -89,7 +109,7 @@ $(function() {
   (function() {
     var hash = window.location.hash;
     if (hash) {
-      update_all(hash.substring(1, hash.length));
+      update_all(hash.substr(1));
     }
   })();
 
