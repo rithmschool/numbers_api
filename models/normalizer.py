@@ -4,6 +4,7 @@ import os
 import re
 import json
 import sys
+import traceback
 import num2eng
 
 reload(sys)
@@ -13,7 +14,6 @@ sys.setdefaultencoding('utf-8')
 #import time
 #import calendar
 #import sys
-#import traceback
 #from pprint import pprint
 
 ENTRIES_PER_FILE = 100
@@ -37,6 +37,47 @@ def normalize():
 	normalize_wikipedia_trivia()
 
 def normalize_wikipedia_date():
+	total = 0
+	success = 0
+	category = 'date'
+	category_raw_path = '{0}/{1}'.format(category, 'raw')
+	ignore_topics = ['birth', 'death']
+	for filename in os.listdir(category_raw_path):
+
+		if not filename.startswith('wikipedia_'):
+			continue
+
+		path = os.path.join(category_raw_path, filename)
+		f = open(path, 'r')
+		all_facts = json.load(f)
+		f.close()
+
+		all_flattened_facts = {}
+		for number, facts in all_facts.items():
+			all_flattened_facts[number] = []
+			for topic, topic_items in facts.items():
+				topic = topic.lower()
+				ignore = False
+				for ignore_topic in ignore_topics:
+					if topic in ignore_topic:
+						ignore = True
+						break
+				if ignore:
+					continue
+
+				for topic_item in topic_items:
+					all_flattened_facts[number].append(topic_item)
+
+		for flattened_facts in all_flattened_facts.values():
+			total += len(flattened_facts)
+
+		all_facts = normalize_wikipedia(all_flattened_facts)
+		all_facts = normalize_date(all_flattened_facts)
+		for facts in all_facts.values():
+			success += len(facts)
+		write_norm(all_facts, category, filename)
+
+	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 	pass
 
 def normalize_wikipedia_year():
@@ -55,13 +96,13 @@ def normalize_wikipedia_trivia():
 
 		path = os.path.join(category_raw_path, filename)
 		f = open(path, 'r')
-		facts = json.load(f)
+		all_facts = json.load(f)
 		f.close()
 
 		all_flattened_facts = {}
-		for number, number_facts in facts.items():
+		for number, facts in all_facts.items():
 			all_flattened_facts[number] = []
-			for topic, topic_items in number_facts.items():
+			for topic, topic_items in facts.items():
 				topic = topic.lower()
 				ignore = False
 				for ignore_topic in ignore_topics:
@@ -77,10 +118,11 @@ def normalize_wikipedia_trivia():
 		for flattened_facts in all_flattened_facts.values():
 			total += len(flattened_facts)
 
-		all_normalized_facts = normalize_wikipedia(all_flattened_facts)
-		for normalized_facts in all_normalized_facts.values():
-			success += len(normalized_facts)
-		write_norm(all_normalized_facts, category, filename)
+		all_facts = normalize_wikipedia(all_flattened_facts)
+		all_facts = normalize_number(all_facts)
+		for facts in all_facts.values():
+			success += len(facts)
+		write_norm(all_facts, category, filename)
 
 	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 
@@ -96,22 +138,64 @@ def normalize_wikipedia_math():
 
 		path = os.path.join(category_raw_path, filename)
 		f = open(path, 'r')
-		facts = json.load(f)
+		all_facts = json.load(f)
 		f.close()
-		for number_facts in facts.values():
-			total += len(number_facts)
+		for facts in all_facts.values():
+			total += len(facts)
 
-		all_normalized_facts = normalize_wikipedia(facts)
-		for normalized_facts in all_normalized_facts.values():
-			success += len(normalized_facts)
-		write_norm(all_normalized_facts, category, filename)
+		all_facts = normalize_wikipedia(all_facts)
+		all_facts = normalize_number(all_facts)
+		for facts in all_facts.values():
+			success += len(facts)
+		write_norm(all_facts, category, filename)
 
 	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 
-def normalize_wikipedia(facts):
+def normalize_date(all_facts):
 	all_normalized_facts = {}
+	for number, facts in all_facts.items():
+		if number not in all_normalized_facts:
+			all_normalized_facts[number] = []
+		for fact in facts:
 
-	for number, facts in facts.items():
+			if not fact:
+				continue
+
+			try:
+				# normalize sentence start
+				# should be of the format "<YEAR> - <FACT>"
+
+				# '\u2013' is a '-' (long dash) character
+				match = re.match(u'^(\d+) ?(BC)? ?\u2013 ?(.*)$', fact)
+				if not match:
+					continue
+
+				year = int(match.group(1))
+				# matching "BC" means it's a negative year
+				if match.group(2):
+					year = -year
+
+				# the <FACT> part
+				fact = match.group(3)
+				# TODO: handle more than just articles
+				if (fact.startswith('The'.format(number)) or
+						fact.startswith('A'.format(number)) or
+						fact.startswith('An'.format(number))):
+					fact = 'The day in {0} that {1}{2}'.format(year, fact[0].lower(), fact[1:])
+				else:
+					continue
+
+				all_normalized_facts[number].append(fact)
+
+			except:
+				print 'Error parsing {0}'.format(number)
+				traceback.print_exc(file=sys.stdout)
+
+	return all_normalized_facts
+
+def normalize_number(all_facts):
+	all_normalized_facts = {}
+	for number, facts in all_facts.items():
 		number = int(number)
 		if number not in all_normalized_facts:
 			all_normalized_facts[number] = []
@@ -120,65 +204,78 @@ def normalize_wikipedia(facts):
 			if not fact:
 				continue
 
+			try:
+				# normalize sentence start
+				# TODO: only keep if it does not contain number further in the sentence
+				# TODO: handle "In ..., # is ..."
+				word_number = num2eng.num2eng(number)
+				word_number = word_number.capitalize()
+				if (fact.startswith('{0} is'.format(number)) or
+						fact.startswith('{0} has'.format(number)) or
+						fact.startswith('It is') or
+						fact.startswith('It has')):
+					fact = re.sub('^\w+ ', '', fact)
+				elif (fact.startswith('The'.format(number)) or
+						fact.startswith('A'.format(number)) or
+						fact.startswith('An'.format(number))):
+					fact = '{0} {1}{2}'.format('Is', fact[0].lower(), fact[1:])
+				elif (fact.startswith('{0} is'.format(word_number)) or
+						fact.startswith('{0} has'.format(word_number))):
+					fact = fact[len(word_number)+1:]
+				else:
+					continue
+
+				all_normalized_facts[number].append(fact)
+
+			except:
+				print 'Error parsing {0}'.format(number)
+				traceback.print_exc(file=sys.stdout)
+
+	return all_normalized_facts
+
+def normalize_wikipedia(all_facts):
+	all_normalized_facts = {}
+
+	for key, facts in all_facts.items():
+		if key not in all_normalized_facts:
+			all_normalized_facts[key] = []
+		for fact in facts:
+
+			if not fact:
+				continue
+
 			original_fact = fact
+			try:
+				# strip leading and trailing whitespace
+				fact = fact.strip()
 
-			# strip leading and trailing whitespace
-			fact = fact.strip()
-
-			# capitalize beginning of sentence
-			fact = fact.capitalize()
-
-			# normalize sentence start
-			# TODO: only keep if it does not contain number further in the sentence
-			# TODO: handle "In ..., # is ..."
-			word_number = num2eng.num2eng(number)
-			word_number = word_number.capitalize()
-			if (fact.startswith('{0} is'.format(number)) or
-					fact.startswith('{0} has'.format(number)) or
-					fact.startswith('It is') or
-					fact.startswith('It has')):
-				fact = re.sub('^\w+ ', '', fact)
-			elif (fact.startswith('The'.format(number)) or
-					fact.startswith('A'.format(number)) or
-					fact.startswith('An'.format(number))):
-				fact = '{0} {1}{2}'.format('Is', fact[0].lower(), fact[1:])
-			elif (fact.startswith('{0} is'.format(word_number)) or
-					fact.startswith('{0} has'.format(word_number))):
-				fact = fact[len(word_number)+1:]
-			else:
-				continue
-
-			# remove "[<TEXT>]"
-			fact = re.sub('\[.*?\]', '', fact)
-
-			# ignore element if it contains : or \n as these indicate element is complex
-			if fact.find(':') >= 0 or fact.find('\n') >= 0:
-				continue
-
-			# capitalize first letter
-			if fact[0].isalpha():
+				# capitalize beginning of sentence
 				fact = fact.capitalize()
 
-			# capitalize first letter it is a letter
-			fact = fact.capitalize()
+				# remove "[<TEXT>]"
+				fact = re.sub('\[.*?\]', '', fact)
 
-			# add ending period if necessary
-			if fact[-1] != '.':
-				fact = '{0}.'.format(fact)
+				# ignore element if it contains : or \n as these indicate element is complex
+				if fact.find(':') >= 0 or fact.find('\n') >= 0:
+					continue
 
-			# only keep the first sentence if it has more than one sentence
-			match = re.match('^(.*?\.) [A-Z]', fact)
-			if match:
-				fact = match.group(1)
+				# add ending period if necessary
+				if fact[-1] != '.':
+					fact = '{0}.'.format(fact)
 
-			if len(fact) < 20 or len(fact) > 150:
-				continue
+				# only keep the first sentence if it has more than one sentence
+				match = re.match('^(.*?\.) [A-Z]', fact)
+				if match:
+					fact = match.group(1)
 
-			all_normalized_facts[number].append(fact)
+				if len(fact) < 20 or len(fact) > 150:
+					continue
 
-			if fact != original_fact:
-				# print diff
-				pass
+				all_normalized_facts[key].append(fact)
+
+			except:
+				print 'Error parsing key {0}: {1}'.format(key, original_fact)
+				traceback.print_exc(file=sys.stdout)
 
 	return all_normalized_facts
 
