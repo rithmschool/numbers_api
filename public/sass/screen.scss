@@ -116,7 +116,7 @@ body {
   @include background(rgba($color-three, $background-opacity));  // Fallback
   @include background(linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), image-url("/img/background.png"));
 	#body-inner {
-    @include background(url(/img/graph-paper.png));
+    @include background(url(/img/graph-paper-5.png));
 		.container {
 			// TODO: consider double layer of opacity for foreground/background effect
       width: $body-width;

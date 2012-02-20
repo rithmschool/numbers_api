@@ -62,6 +62,7 @@ function update_query(url) {
 	if ($('#search-text').val() !== url) {
 		$('#search-text').val(url);
 	}
+	$('#search-link').prop('href', url);
 	update_result(url, $('#search-result'));
 }
 
