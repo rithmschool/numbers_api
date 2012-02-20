@@ -16,6 +16,8 @@ stop:
 	sudo pkill node || true
 
 # Starts a production node server
+# TODO: Should use a deamon that monitors this process and automatically starts
+# 		on crash/reboot.
 start: stop
 	NODE_PATH=/usr/local/lib/node_modules NODE_ENV=production nohup node app.js &
 

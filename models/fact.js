@@ -133,7 +133,7 @@ exports.getFact = function(number, type, options) {
 	// number or NaN
 
 	var ret = data[type][number];
-  if (util.isArray(ret)) {
+  if (ret instanceof Array) {
     ret = randomChoice(ret);
   }
 	if (ret !== undefined) {

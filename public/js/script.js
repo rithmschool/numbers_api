@@ -77,6 +77,13 @@ $(function() {
       update_result(hash, $('#search-result'));
     }
   });
+
+	// Initialize counter widget
+	$('#counter').counter({
+		width: 30,
+		height: 40,
+		numDigits: 4
+	});
 });
 
 /*

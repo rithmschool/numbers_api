@@ -80,7 +80,7 @@ The `notfound` field tells us what to do if the number is not found. You can giv
 &rArr; <script src="http://numbersapi.com/18923?notfound=floor&write&standalone"></script></pre>
 - `ceil`, which is like `floor` but rounds up to the smallest number that has an associated fact.
     <pre>http://numbersapi.com/-12344/year?notfound=ceil&standalone
-&rArr; <script src="http://numbersapi.com/-12345/year?notfound=ceil&standalone"></script></pre>
+&rArr; <script src="http://numbersapi.com/-12345/year?notfound=ceil&standalone&write"></script></pre>
 
 
 <h3 id="default">Default</h3>
