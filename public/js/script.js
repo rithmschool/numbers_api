@@ -29,6 +29,7 @@ function getNumFromUrl(url) {
 }
 
 function changeUrlToNum(url, num) {
+	console.log(url);
 	var matches = NUM_FROM_URL_REGEX.exec(url);
 	var needle = NUM_FROM_URL_REGEX;
 	if (!matches) {
@@ -97,6 +98,8 @@ $(function() {
 		showSides: false
 	}).bind('counterChanged', function(eventObject, newVal) {
 		update_all(changeUrlToNum(window.location.hash.substr(1), newVal));
+	}).find('.counter-container-inner').click(function(eventObject) {
+		update_all($('#search-text').val());
 	});
 
   // Load the examples using the api backend

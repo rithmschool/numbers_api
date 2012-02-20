@@ -268,6 +268,7 @@ section {
 		margin-top: -20px;
 		padding: 3px 0px;
     @include border-radius($element-border-radius $element-border-radius);
+    $gradient-color: $color-three;
 
     .counter-container-outer {
       background: $color-four;
@@ -289,7 +290,7 @@ section {
         }
       }
       &:hover .counter-button {
-        opacity: 0.7;
+        opacity: 0.8;
       }
       .counter-button:hover {
         opacity: 1.0;
@@ -301,10 +302,14 @@ section {
         cursor: pointer;
       }
       .counter-container-inner {
-        @include box-shadow(0 0 10px rgba($color-two, 0.5));
+        @include box-shadow(0 0 10px rgba($gradient-color, 0.7));
         @include transition(all ease-out 0.3s);
         &:hover {
-          @include box-shadow(0 0 20px $color-one);
+          cursor: pointer;
+          @include box-shadow(0 0 15px $color-one);
+        }
+        &:active {
+          @include box-shadow(0 0 30px $color-one);
         }
       }
     }
@@ -316,7 +321,7 @@ section {
       background-color: $color-one;
     }
     .counter-mask {
-      @include background(linear-gradient(top, $color-two 0%, rgba($color-one,0) 50%, $color-two 100%));
+      @include background(linear-gradient(top, $gradient-color 0%, rgba($color-one,0) 50%, $gradient-color 100%));
     }
   }
 	#outer-search {
@@ -447,6 +452,7 @@ section {
 
 					&:hover {
             background-color: rgba($color-one, 0.5);
+            //@include background(radial-gradient(center, contain ellipse, $color-one 0%, rgba($color-one, 0) 100%));
             a {
               color: $color-five;
             }
