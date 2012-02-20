@@ -95,7 +95,7 @@ var dataKeys = (function() {
 	var ret = {};
 	_.each(data, function(value, key) {
 		ret[key] = _.flatten([-Infinity,
-			_.map(_.keys(value), function(val) { return parseInt(val, 10); }),
+			_.map(_.keys(value), function(val) { return parseFloat(val, 10); }),
 		Infinity]);
 		value['-Infinity'] = 'negative infinity';
 		value['Infinity'] = 'infinity';

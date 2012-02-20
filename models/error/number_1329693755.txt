@@ -1,0 +1,70 @@
+Found 69 errors:
+0: No math entries found for -1:
+1: No math entries found for 1:
+2: No math entries found for 7:
+3: No math entries found for 9:
+4: No math entries found for 19:
+5: No math entries found for 29:
+6: No math entries found for 42:
+7: No math entries found for 55:
+8: No math entries found for 56:
+9: No math entries found for 62:
+10: No trivia entries found for 62:
+11: No math entries found for 66:
+12: No math entries found for 99:
+13: No math entries found for 119:
+14: No math entries found for 153:
+15: No math entries found for 155:
+16: No math entries found for 200:
+17: No trivia entries found for 200:
+18: No math entries found for 205:
+19: No math entries found for 206:
+20: No trivia entries found for 210:
+21: No trivia entries found for 211:
+22: No math entries found for 213:
+23: No math entries found for 216:
+24: No math entries found for 217:
+25: No math entries found for 218:
+26: No trivia entries found for 218:
+27: No math entries found for 219:
+28: No math entries found for 222:
+29: No trivia entries found for 223:
+30: No trivia entries found for 229:
+31: No trivia entries found for 233:
+32: No trivia entries found for 234:
+33: Exception for 238: Error reading file 'http://en.wikipedia.org/wiki/238_(number)': failed to load HTTP resource:
+34: Exception for 244: Error reading file 'http://en.wikipedia.org/wiki/244_(number)': failed to load HTTP resource:
+35: No math entries found for 245:
+36: No trivia entries found for 245:
+37: No math entries found for 250:
+38: No trivia entries found for 250:
+39: No math entries found for 252:
+40: No trivia entries found for 252:
+41: No math entries found for 253:
+42: No trivia entries found for 253:
+43: No math entries found for 254:
+44: No trivia entries found for 254:
+45: No trivia entries found for 256:
+46: No trivia entries found for 257:
+47: No math entries found for 258:
+48: No trivia entries found for 258:
+49: Exception for 259: Error reading file 'http://en.wikipedia.org/wiki/259_(number)': failed to load HTTP resource:
+50: No math entries found for 260:
+51: No trivia entries found for 260:
+52: No math entries found for 261:
+53: No trivia entries found for 261:
+54: No math entries found for 262:
+55: No trivia entries found for 262:
+56: No trivia entries found for 263:
+57: No math entries found for 264:
+58: No trivia entries found for 264:
+59: No math entries found for 265:
+60: No trivia entries found for 265:
+61: Exception for 266: Error reading file 'http://en.wikipedia.org/wiki/266_(number)': failed to load HTTP resource:
+62: No math entries found for 267:
+63: No trivia entries found for 267:
+64: No math entries found for 268:
+65: No trivia entries found for 268:
+66: No math entries found for 273:
+67: Exception for 274: Error reading file 'http://en.wikipedia.org/wiki/274_(number)': failed to load HTTP resource:
+68: No math entries found for 276:

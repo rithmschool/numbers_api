@@ -1,6 +1,9 @@
 var _ = require('underscore');
 var fs = require('fs');
 
+
+var success = 0;
+var failure = 0;
 function reader(out, path, ignore) {
   // TODO: use aray for ignore
   ignore = ignore || {};
@@ -19,20 +22,30 @@ function reader(out, path, ignore) {
     }
 
     var numbers = JSON.parse(data);
-    _.each(numbers, function(categories, number_key) {
-      if (!(number_key in out)) {
-        out[number_key] = [];
-      }
-      var o = out[number_key];
+    _.each(numbers, function(number_data, number_key) {
 
-      _.each(categories, function(category, category_key) {
-        if (category_key in ignore) {
-          return;
+      function filter(element) {
+        if (element.length < 100) {
+          success++;
+          return true;
+        } else {
+          failure++;
+          return false;
         }
-        _.each(category, function(element) {
-          o[o.length] = element;
+      }
+
+      if (typeof number_data === 'string') {
+        out[number_key] = [number_data];
+      } else if (number_data instanceof Array) {
+        out[number_key] = _.filter(number_data, filter);
+      } else {
+        _.each(number_data, function(category, category_key) {
+          if (category_key in ignore) {
+            return;
+          }
+          out[number_key] = _.filter(category, filter);
         });
-      });
+      }
     });
   });
 }
@@ -45,6 +58,17 @@ exports.year = {};
 var year_path = 'models/year/';
 reader(exports.year, year_path, {'birth': true, 'death': true});
 
+exports.trivia = {};
+var trivia_path = 'models/trivia/';
+reader(exports.trivia, trivia_path, {});
+
+exports.math = {};
+var math_path = 'models/math/';
+reader(exports.math, math_path, {});
+
+console.log('success: ', success, ' failure: ', failure, ' ratio: ', success/(success + failure));
+
+/*
 exports.math = {
 		0: '0 is the additive identity.',
 		1: '1 is the multiplicative identity.',
@@ -997,7 +1021,6 @@ exports.math = {
 		1001: '1001 is the smallest palindromic product of 3 consecutive primes.',
 }
 
-/*
 exports.year = {
 		129: 'Emperor Hadrian continues his voyages, now inspecting Caria, Cappadocia and Syria',
 		130: 'Claudius Ptolemaeus tabulates angles of refraction for several media',
@@ -1147,7 +1170,6 @@ exports.year = {
 		299: 'Galerius commissions the Arch of Galerius in Thessaloniki (Greece). The structure is built to celebrate the war and victory over the Sassanid Persians',
 		300: 'The elephant becomes extinct in North Africa (approximate date)',
 }
-*/
 
 exports.trivia = {
 		114: 'the number of chapters in the Quran',
@@ -1207,3 +1229,4 @@ exports.trivia = {
 		295: 'the numerical designation of seven circumfrental or half-circumfrental routes of Interstate 95 in the United States',
 		300: 'a perfect score in bowling, achieved by rolling strikes in all ten frames (a total of twelve strikes)',
 }
+*/
