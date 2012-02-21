@@ -1,11 +1,7 @@
 var _ = require('underscore');
 var fs = require('fs');
 
-var success = 0;
-var failure = 0;
-function reader(out, path, ignore) {
-  // TODO: use aray for ignore
-  ignore = ignore || {};
+function reader(out, path, callback) {
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(path);
 
@@ -35,57 +31,62 @@ function reader(out, path, ignore) {
       }
       var o = out[number_key];
 
-      function filter(element) {
-        if (element.length < 100) {
-          success++;
-          return true;
-        } else {
-          failure++;
-          return false;
+      _.each(number_data, function(element) {
+        if (callback) {
+          callback(element);
         }
-      }
-
-      if (typeof number_data === 'string') {
-        if (filter(number_data)) {
-          o[o.length] = number_data;
-        }
-      } else if (number_data instanceof Array) {
-        _.each(number_data, function(element) {
-          if (filter(element)) {
-            o[o.length] = element;
-          }
-        });
-      } else {
-        _.each(number_data, function(category, category_key) {
-          if (category_key in ignore) {
-            return;
-          }
-          _.each(category, function(element) {
-            if (filter(element)) {
-              o[o.length] = element;
-            }
-          });
-        });
-      }
+        o[o.length] = element;
+      });
     });
   });
 }
 
 exports.date = {};
-reader(exports.date, 'models/date/norm/');
-//reader(exports.date, date_path, {'birth': true, 'death': true});
+reader(exports.date, 'models/date/norm/', function(element) {
+  var text = element.text;
+  text = text.substring(0, text.length-1);
+  if (element.pos !== 'NP') {
+    text = text[0].toLowerCase() + text.substring(1);
+  }
+  if (element.date) {
+    text = 'The day in ' + element.date + ' that ' + text;
+  } else {
+    text = 'The day that ' + text;
+  }
+  element.text = text + '.';
+});
 
 exports.year = {};
-reader(exports.year, 'models/year/norm/');
+reader(exports.year, 'models/year/norm/', function(element) {
+  var text = element.text;
+  text = text.substring(0, text.length-1);
+  if (element.pos !== 'NP') {
+    text = text[0].toLowerCase() + text.substring(1);
+  }
+  text = 'The year that ' + text;
+  if (element.date) {
+    text += ' on ' + element.date;
+  }
+  element.text = text + '.';
+});
 
 exports.trivia = {};
 var trivia_path = 'models/trivia/';
-reader(exports.trivia, 'models/trivia/norm/', {});
+reader(exports.trivia, 'models/trivia/norm/', function(element) {
+  var text = element.text;
+  text = text.substring(0, text.length-1);
+  element.text =  'Trivia: ' + text + '.';
+});
 
 exports.math = {};
-reader(exports.math, 'models/math/norm/', {});
-
-console.log('success: ', success, ' failure: ', failure, ' ratio: ', success/(success + failure));
+reader(exports.math, 'models/math/norm/', function(element) {
+  var text = element.text;
+  text = text.substring(0, text.length-1);
+  if (element.pos !== 'NP') {
+    text = text[0].toLowerCase() + text.substring(1);
+  }
+  element.text =  'Is ' + text + '.';
+});
 
 /*
 exports.math = {

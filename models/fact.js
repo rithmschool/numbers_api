@@ -135,10 +135,10 @@ exports.getFact = function(number, type, options) {
 	var ret = data[type][number];
   if (ret instanceof Array) {
     ret = randomChoice(ret);
+    if (ret !== undefined && 'text' in ret) {
+      return ret.text;
+    }
   }
-	if (ret !== undefined) {
-		return ret;
-	}
 
 	// Handle the case of number not found
 	if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
