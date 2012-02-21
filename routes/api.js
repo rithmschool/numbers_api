@@ -36,8 +36,6 @@ function dateToDayOfYear(date) {
 
 exports.route = function(app, fact) {
 	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
-    console.log('req', req.param('num'));
-    console.log('parse', parseInt(req.param('num'), 10));
 		factResponse(fact, req, res, parseInt(req.param('num'), 10));
 	});
 
