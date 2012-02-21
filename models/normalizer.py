@@ -37,10 +37,10 @@ def capitalize_head(str):
 	return str[0].upper() + str[1:]
 
 def normalize():
-	normalize_efriedma_math()
-	normalize_wikipedia_math()
-	normalize_wikipedia_trivia()
-	normalize_wikipedia_date()
+	#normalize_efriedma_math()
+	#normalize_wikipedia_math()
+	#normalize_wikipedia_trivia()
+	#normalize_wikipedia_date()
 	normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
