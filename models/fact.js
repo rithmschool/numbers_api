@@ -139,9 +139,6 @@ exports.getFact = function(number, type, options) {
 	defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
 	_.defaults(options, defaults);
 
-
-  console.log('number is', number);
-
 	if (number === 'random') {
 		number = getRandomApiNum(type, options);
 	}

@@ -26,6 +26,10 @@ function reader(out, path, callback) {
 
     _.each(numbers, function(number_data, number_key) {
 
+      if (!number_data || number_data.length === 0) {
+        return;
+      }
+
       if (!(number_key in out)) {
         out[number_key] = [];
       }
