@@ -29,7 +29,6 @@ function getNumFromUrl(url) {
 }
 
 function changeUrlToNum(url, num) {
-	console.log(url);
 	var matches = NUM_FROM_URL_REGEX.exec(url);
 	var needle = NUM_FROM_URL_REGEX;
 	if (!matches) {
@@ -48,8 +47,21 @@ function changeUrlToNum(url, num) {
 function update_result(url, $result) {
 	$.ajax({
 		url: url,
-		success: function(data) {
-			$result.text(data);
+		dataType: 'text',
+		success: function(data, httpStatus, xhr) {
+			var contentType = xhr.getResponseHeader('Content-Type');
+			if (contentType.indexOf('text/html') !== -1) {
+				return;
+			}
+
+			$result.empty();
+			$('<div class="result-fly-in-text">')
+				.text(data)
+				.hide()
+				.toggleClass('script', contentType.indexOf('text/javascript') !== -1)
+				.appendTo($result)
+				.fadeIn('fast');
+
 			$result.removeClass('error');
 		},
 		error: function() {
@@ -104,9 +116,9 @@ $(function() {
 
   // Load the examples using the api backend
 	$('.example').each(function(index, element) {
-		var $div = $(element).find('div');
+		var $div = $(element).find('.example-box');
 		var href = $div.find('a').attr('href');
-		update_result(href, $div.find('p'));
+		update_result(href, $div.find('.api-result'));
 	});
 
   // Read any hash from the url set the sandbox input to use this value

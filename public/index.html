@@ -5,7 +5,7 @@
     <title>Numbers API</title>
 		<!-- TODO: uncomment <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
     <meta name="description" content="API for accessing interesting information about numbers">
-    <meta name="author" content="Mack Duan">
+    <meta name="author" content="David Hu, Mack Duan">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
@@ -18,7 +18,7 @@
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="img/favicon.ico">
 
-    <!-- Google Analytics -->
+    <!-- Le Google Analytics -->
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -53,23 +53,25 @@
 					<div id="examples">
 						<div class="example">
 							<h3>Math</h3>
-							<div>
+							<div class="example-box">
 								<a href="5/math">numbersapi.com/5/math</a>
-								<p></p>
+                                <div class="api-result">
+                                    <div class=""></div>
+                                </div>
 							</div>
 						</div>
 						<div class="example">
 							<h3>Trivia</h3>
-							<div>
+							<div class="example-box">
 								<a href="42/trivia">numbersapi.com/42/trivia</a>
-								<p></p>
+                                <div class="api-result"></div>
 							</div>
 						</div>
 						<div class="example">
 							<h3>Date</h3>
-							<div>
+							<div class="example-box">
 								<a href="02/12/date">numbersapi.com/02/12/date</a>
-								<p></p>
+                                <div class="api-result"></div>
 						</div>
 					</div>
 				</div>
@@ -85,8 +87,10 @@
 							<label><a id="search-link">numbersapi.com/</a></label>
 							<span><input id="search-text" type="text" /></span>
 						</div>
-						<div id="search-result">
-							Enter a url or choose one of the examples from the right. The output will display here.
+						<div id="search-result" class="api-result">
+                            Enter a url or choose
+                                one of the examples from the right. The output
+                                will display here.
 						</div>
 					</div>
 					<div id="search-examples">
