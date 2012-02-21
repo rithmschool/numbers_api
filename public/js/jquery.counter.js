@@ -180,7 +180,7 @@
 			var valDigits = getNumDigits(data.val);
 			var negHeight = -data.digitHeight;
 			var $digit = data.$digit;
-			var duration = Math.min(2000, Math.log(1 + Math.abs(val - oldVal)) * 1000 * 0.3 + 200);
+			var duration = Math.min(1500, Math.log(1 + Math.abs(val - oldVal)) * 1000 * 0.3 + 200);
 
 			// TODO: Use easeInOutCubic as jQuery animation
 			// TODO: Allow user to customize animation time, or set a fixed time, or

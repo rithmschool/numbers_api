@@ -60,7 +60,7 @@ function update_result(url, $result) {
 				.hide()
 				.toggleClass('script', contentType.indexOf('text/javascript') !== -1)
 				.appendTo($result)
-				.fadeIn('fast');
+				.fadeIn(300);
 
 			var number = xhr.getResponseHeader('X-Numbers-API-Number');
 			$('#counter').counter('set', number, /* dontTriggerEvent */ true);

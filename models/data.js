@@ -24,6 +24,7 @@ function reader(out, path, callback) {
       return;
     }
 
+    // TODO: There should be a try/catch around this
     _.each(numbers, function(number_data, number_key) {
 
       if (!number_data || number_data.length === 0) {
@@ -36,6 +37,10 @@ function reader(out, path, callback) {
       var o = out[number_key];
 
       _.each(number_data, function(element) {
+				if (!element.text || !element.text.length) {
+					console.log('Skipping empty file (element.text is falsey)', path + file);
+					return;
+				}
         if (callback) {
           callback(element);
         }

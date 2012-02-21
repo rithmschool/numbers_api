@@ -3,12 +3,13 @@ all: local
 # TODO: Get node to recognize node_path is /usr/local/lib/node_modules
 
 # Run a local node.js server for development
-local:
+local: compass
 	compass watch --trace public/ &
 	NODE_PATH=/usr/local/lib/node_modules nodemon app.js
 
 # Compiles compass
 compass:
+	compass clean public/
 	compass compile public/
 
 # Stops any running node server
