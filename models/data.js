@@ -26,15 +26,22 @@ function reader(out, path, callback) {
 
     // TODO: There should be a try/catch around this
     _.each(numbers, function(number_data, number_key) {
-
-      if (!number_data || number_data.length === 0) {
+      float_key = parseFloat(number_key, 10);
+      if (isNaN(float_key)) {
+        console.log('Skipping invaid number_key', number_key, 'in file', path + file);
         return;
       }
 
-      if (!(number_key in out)) {
-        out[number_key] = [];
+      // TODO: handle this during normalization
+      if (!number_data || number_data.length === 0) {
+        // console.log('Skipping empty number_data for float_key', float_key, 'in file', path + file);
+        return;
       }
-      var o = out[number_key];
+
+      if (!(float_key in out)) {
+        out[float_key] = [];
+      }
+      var o = out[float_key];
 
       _.each(number_data, function(element) {
 				if (!element.text || !element.text.length) {

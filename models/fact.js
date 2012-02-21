@@ -106,18 +106,38 @@ var QUERY_DEFAULT = 'default';
 // Keys of each of the data mappings for use in binary search (unfortunately,
 // _.map() on objects returns an array instead of an object). Pads with negative
 // and positive infinity sentinels.
+// Stores both the number as well as string representation of number as number representation is needed.
+// Maybe this is not necessary, but too tired to think about it for now.
 // PRE: data is sorted
-var dataKeys = (function() {
+var dataPairs = (function() {
 	var ret = {};
-	_.each(data, function(value, key) {
-		ret[key] = _.flatten([-Infinity,
-			_.map(_.keys(value), function(val) { return parseFloat(val, 10); }),
-		Infinity]);
-		value['-Infinity'] = [{ text: 'negative infinity' }];
-		value['Infinity'] = [{ text: 'infinity' }];
+	_.each(data, function(numbers, category) {
+		ret[category] = _.sortBy(
+      _.flatten([
+        {'number': -Infinity, 'string': '-Infinity'},
+        _.map(_.keys(numbers), function(number) {
+          return {
+            'number': parseFloat(number, 10),
+            'string': number
+          };
+        }),
+        {'number': Infinity, 'string': 'Infinity'}
+      ]),
+      function(pair) { return pair.number; }
+    );
+		numbers['-Infinity'] = [{ text: 'negative infinity' }];
+		numbers['Infinity'] = [{ text: 'infinity' }];
 	});
 	return ret;
 })();
+// TODO: remove this, should be using dataPairs only. only reason this is here is because
+// _.sortedIndex() is working as expected. need to investigate
+var dataKeys = {}
+_.each(dataPairs, function(pairs, category) {
+  dataKeys[category] = _.map(pairs, function(pair) {
+    return pair.number;
+  });
+});
 
 /**
  * @param number: If type is 'date', then number should be day of year
@@ -153,8 +173,6 @@ exports.getFact = function(number, type, options) {
 	// TODO Better error handling (for out of dates), and for number is an invalid
 	// number or NaN
 
-	console.log('number is ' + number);
-
 	var ret = data[type][number];
   if (ret instanceof Array) {
     ret = randomChoice(ret);
@@ -173,9 +191,9 @@ exports.getFact = function(number, type, options) {
 			number: number,
 		}
 	} else {
-		var index = _.sortedIndex(dataKeys[type], parseInt(number,10));
+		var index = _.sortedIndex(dataKeys[type], number);
 		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-		var adjustedNum = dataKeys[type][index];
+		var adjustedNum = dataPairs[type][index].string
 		return {
 			text: randomChoice(data[type][adjustedNum]).text,
 			number: adjustedNum,
