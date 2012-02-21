@@ -1,6 +1,4 @@
-An API to query interesting facts about numbers.
-
-TODO: Change all script src urls to numbersapi.com
+Bring meaning to your metrics and stories to your dates with our API of interesting number facts.
 
 ## URL Structure
 Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code> to get a plain text response, where
@@ -12,9 +10,6 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
     - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/01`, `04/1`), if **`type`** is `date`
 
 <pre>
-http://numbersapi.com/128/math
-&rArr; <script src="http://numbersapi.com/128/math?write=1"></script>
-
 http://numbersapi.com/42/trivia
 &rArr; <script src="http://numbersapi.com/128/math?write=1"></script>
 
@@ -25,8 +20,8 @@ http://numbersapi.com/random/year
 &rArr; <script src="http://numbersapi.com/random/year?write=1"></script>
 </pre>
 
-## Usage Examples
 
+## Usage Examples
 
 ### jQuery
 HTML:
@@ -39,13 +34,13 @@ JavaScript:
         $('#number').text(data);
     });
 
-You can make a direct cross-origin request without resorting to JSONP since [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing) is enabled. See this in action on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
+Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). See this in action on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
 
 <h3 id="jsonp">JSONP</h3>
 ...is supported with the query field [`callback`](#callback):
 
-    <p>It turns out that 42 is also <span id="number"></span></p>
+    It turns out that 42 is also <span id="number"></span>
 
     <script>
         function showNumber(str) {
@@ -58,8 +53,7 @@ See this in action on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
 
 <h3 id="html-embedding">HTML Embedding</h3>
-TODO: What about just having the 'callback' field with no value?
-Include the query field `write` to have the response text wrapped in `document.write()`. This allows you to stick a single `<script>` where the contents should go on your HTML page.
+Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
     In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
 
@@ -84,7 +78,7 @@ The `notfound` field tells us what to do if the number is not found. You can giv
 
 
 <h3 id="default">Default</h3>
-The value of the `default` query field specifies the text to return if there's no corresponding fact for the requested number.
+The value of the `default` query field tells us what to return if we don't have a fact for the requested number.
 
 <pre>
 http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
@@ -93,7 +87,7 @@ http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
 
 
 <h3 id="callback">Callback</h3>
-To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. This function will be called with a single argument that is the response text.
+To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
 
 <pre>
 http://numbersapi.com/42/math?callback=showNumber
@@ -104,7 +98,7 @@ See the [JSONP usage example](#jsonp).
 
 
 <h3 id="write">Write</h3>
-Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). So, `?write` is equivalent to `?callback=document.write`.
+Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
 
 <pre>
 http://numbersapi.com/42/math?write
@@ -122,4 +116,4 @@ http://numbersapi.com/random?min=10&max=20
 &rArr; <script src="http://numbersapi.com/random?min=10&max=20&write"></script>
 </pre>
 
-TODO: sentence structure (data mining)
+TODO: make sentence structure work out (data mining)

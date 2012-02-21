@@ -6,6 +6,22 @@
 // TODO: Share a file with the node.js server of common utilities and
 //     algorithms
 
+function randInt(min, max) {
+	return Math.floor(Math.random() * (max - min) + min);
+}
+
+function clamp(min, max, num) {
+	return Math.max(min, Math.min(max, num));
+}
+
+function randomIndex(array) {
+	return randInt(0, array.length);
+}
+
+function randomChoice(array) {
+	return array[randInt(0, array.length)];
+}
+
 var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 function dateToDayOfYear(date) {
 	var day = 0;
@@ -104,17 +120,29 @@ function update_all(url) {
 // Main execution: what gets executed on DOM ready
 $(function() {
 
+	// Randomly pick a tagline to use
+	var taglines = $('.tagline').hide();
+	$(randomChoice(taglines)).show();
+
 	// Initialize rolling counter widget
-	$('#counter').counter({
-		digitWidth: 32,
-		digitHeight: 46,
-		numDigits: 4,
-		showSides: false
-	}).bind('counterChanged', function(eventObject, newVal) {
-		update_all(changeUrlToNum(window.location.hash.substr(1), newVal));
-	}).find('.counter-container-inner').click(function(eventObject) {
-		update_all($('#search-text').val());
-	});
+	$('#counter')
+		.counter({
+			digitWidth: 32,
+			digitHeight: 46,
+			numDigits: 4,
+			showSides: false
+		})
+		.bind('counterChanged', function(event, newVal) {
+			update_all(changeUrlToNum(window.location.hash.substr(1), newVal));
+		})
+		.find('.counter-container-inner')
+			.click(function(event) {
+				update_all($('#search-text').val());
+			})
+			.mousewheel(function(event, delta) {
+				$('#counter').counter(delta > 0 ? 'increment' : 'decrement');
+				event.preventDefault();
+			});
 
   // Load the examples using the api backend
 	$('.example').each(function(index, element) {
@@ -163,7 +191,6 @@ $(function() {
 	$('#counter').counter('decrement');
 			e.preventDefault();
 		}
-		console.log('code is', code);
   }).change(function(e) {
 		$('#search-link').prop('href', $(this).val());
 	});
