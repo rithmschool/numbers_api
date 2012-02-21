@@ -1,1 +1,1 @@
-{"0": [], "-1": []}
+{"0": [{"text": "Zero.", "self": true}], "-1": [{"text": "Signed zero.", "self": true}]}

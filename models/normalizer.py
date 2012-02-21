@@ -10,21 +10,15 @@ import num2eng
 import nltk
 from nltk.tag.simplify import simplify_wsj_tag
 
-#import StringIO
-#import time
-#import calendar
-#import sys
-#from pprint import pprint
-
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-def idx(obj, index):
+def idx(obj, index, default=None):
 	try:
 		element = obj[index]
 		return element
 	except IndexError:
-		return None
+		return default
 
 def get_words_tags(str):
 	text = nltk.word_tokenize(str)
@@ -43,7 +37,8 @@ def capitalize_head(str):
 	return str[0].upper() + str[1:]
 
 def normalize():
-	normalize_wikipedia_math()
+	normalize_efriedma_math()
+	#normalize_wikipedia_math()
 	#normalize_wikipedia_trivia()
 	#normalize_wikipedia_date()
 	#normalize_wikipedia_year()
@@ -114,9 +109,6 @@ def normalize_wikipedia_date():
 		for facts in all_facts.values():
 			total += len(facts)
 
-		for date in all_facts:
-			print 'date: ', date
-
 		all_facts = normalize_pre(all_facts)
 		all_facts = normalize_date(all_facts)
 		all_facts = normalize_post(all_facts)
@@ -128,15 +120,9 @@ def normalize_wikipedia_date():
 
 def normalize_date(all_facts):
 	all_normalized_facts = {}
-	count = 0
 	for number, facts in all_facts.items():
 		all_normalized_facts[number] = []
 		for fact in facts:
-			if len(all_normalized_facts) % 100 == 0:
-				print 'len:', len(all_normalized_facts)
-			if count % 100 == 0:
-				print 'count:', count
-			count += 1
 			try:
 				text = fact['text']
 
@@ -256,6 +242,58 @@ def normalize_wikipedia_trivia():
 
 	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 
+def normalize_efriedma_math():
+	total = 0
+	success = 0
+	category = 'math'
+	filename = 'efriedma.txt'
+
+	path = os.path.join(sys.path[0], category, 'raw', filename)
+	f = open(path, 'r')
+	temp_facts = json.load(f)
+	f.close()
+
+	all_facts = {}
+	for number, fact in temp_facts.items():
+		all_facts[number] = [{'text': fact}]
+	total = len(all_facts)
+
+	all_facts = normalize_pre(all_facts)
+	all_facts = normalize_efriedma(all_facts)
+	all_facts = normalize_post(all_facts)
+	for facts in all_facts.values():
+		success += len(facts)
+	write_norm(all_facts, category, filename)
+
+	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
+
+def normalize_efriedma(all_facts):
+	all_normalized_facts = {}
+	for number, facts in all_facts.items():
+		all_normalized_facts[number] = []
+		for fact in facts:
+			try:
+				text = fact['text']
+				# TODO: be smarter with parsing
+				text_lc = text.lower()
+				# match 'is <FACT>' and '= <FACT>'
+				match = re.match(r'^\s*(is |=\s*)([^\s].*)$', text, re.IGNORECASE)
+				if not match:
+					continue
+				text = match.group(2)
+
+				# manually set tag type of 'V', which is what nltk would return
+				# TODO: do this in a cleaner way
+				fact['pos'] = 'V'
+				fact['text'] = capitalize_head(text)
+				all_normalized_facts[number].append(fact)
+
+			except:
+				print 'Error parsing efriedma [{0}: {1}]'.format(number, fact['text'])
+				traceback.print_exc(file=sys.stdout)
+
+	return all_normalized_facts
+
 def normalize_wikipedia_math():
 	total = 0
 	success = 0
@@ -287,9 +325,6 @@ def normalize_wikipedia_math():
 	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 
 def normalize_number(all_facts):
-	counter_1 = 0
-	counter_2 = 0
-	counter_3 = 0
 	all_normalized_facts = {}
 	for number, facts in all_facts.items():
 		all_normalized_facts[number] = []
@@ -306,7 +341,7 @@ def normalize_number(all_facts):
 				word_number_len = len(get_words_tags(word_number))
 				if words_tags[0][1] =='DET':
 					offset = 0
-				elif text.startswith(word_number) and words_tags[word_number_len][1] =='V':
+				elif word_number and text.startswith(word_number) and words_tags[word_number_len][1] =='V':
 					offset = word_number_len + 1
 				elif (text.startswith(number) or words_tags[0][1] == 'PRO') and words_tags[1][1] == 'V':
 					offset = 2
@@ -317,18 +352,6 @@ def normalize_number(all_facts):
 					regexp += r'.*?\s'
 				text = re.sub(regexp, '', text)
 
-				# do not include facts if the number appears in the fact
-				text_lc = text.lower()
-				if text_lc.find(number) >= 0:
-					counter_1 += 1
-					continue
-				word_number_lc = word_number.lower()
-				if text_lc.find(word_number_lc) >= 0:
-					counter_2 += 1
-					continue
-
-				counter_3 += 1
-
 				fact['pos'] = words_tags[offset][1]
 				fact['text'] = capitalize_head(text)
 				all_normalized_facts[number].append(fact)
@@ -336,8 +359,6 @@ def normalize_number(all_facts):
 			except:
 				print 'Error parsing number [{0}: {1}]'.format(number, fact['text'])
 				#traceback.print_exc(file=sys.stdout)
-
-	print 'counters:', counter_1, counter_2, counter_3
 
 	return all_normalized_facts
 
@@ -355,13 +376,8 @@ def normalize_post(all_facts):
 				if text.find(':') >= 0 or text.find('\n') >= 0:
 					continue
 
-				## only keep the first sentence if it has more than one sentence
-				#match = re.match(r'^(.*?\.) [A-Z]', text)
-				#if match:
-				#	text = match.group(1)
-
-				if len(text) < 20 or len(text) > 150:
-					continue
+				#if len(text) < 20 or len(text) > 150:
+				#	continue
 
 				# capitalize beginning of sentence
 				text = capitalize_head(text)
@@ -369,6 +385,14 @@ def normalize_post(all_facts):
 				# add ending period if necessary
 				if text[-1] != '.':
 					text = text + '.'
+
+				# see if the number itself appears in the fact
+				text_lc = text.lower()
+				word_number_lc = num2eng.num2eng(int(number)).lower()
+				if text_lc.find(number) >= 0 or (word_number_lc and text_lc.find(word_number_lc) >= 0):
+					fact['self'] = True
+				else:
+					fact['self'] = False
 
 				fact['text'] = text
 				all_normalized_facts[number].append(fact)
