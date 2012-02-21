@@ -387,6 +387,7 @@ def normalize_post(all_facts):
 					text = text + '.'
 
 				# see if the number itself appears in the fact
+				# TODO: should use regexp for this matching to handle word boundary
 				text_lc = text.lower()
 				word_number_lc = num2eng.num2eng(int(number)).lower()
 				if text_lc.find(number) >= 0 or (word_number_lc and text_lc.find(word_number_lc) >= 0):

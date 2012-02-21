@@ -48,8 +48,15 @@ function reader(out, path, callback) {
 					console.log('Skipping empty file (element.text is falsey)', path + file);
 					return;
 				}
+        // check if fact contains the number itself and discard it
+        if (element.self) {
+          return;
+        }
         if (callback) {
           callback(element);
+        }
+        if (element.text.length < 20 || element.text.length > 100) {
+          return;
         }
         o[o.length] = element;
       });
