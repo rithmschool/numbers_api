@@ -60,7 +60,7 @@ Add `write` to your query string to have the response text wrapped in `document.
 Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 
-## Options Reference
+## Query Parameter Options
 
 
 ### Notfound
