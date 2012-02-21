@@ -2,6 +2,8 @@ var _ = require('underscore');
 var fs = require('fs');
 
 function reader(out, path, callback) {
+  return;
+
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(path);
 

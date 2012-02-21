@@ -4,13 +4,13 @@ all: local
 
 # Run a local node.js server for development
 local: compass
-	compass watch --trace public/ &
+	# compass watch --trace public/ &
 	NODE_PATH=/usr/local/lib/node_modules nodemon app.js
 
 # Compiles compass
 compass:
-	compass clean public/
-	compass compile public/
+	#compass clean public/
+	#compass compile public/
 
 # Stops any running node server
 stop:
@@ -29,5 +29,5 @@ transfer: compass
 # Deploy to the server: transfer files and restart node production server
 # See: http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine
 deploy: transfer
-	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &> deploy.log < /dev/null &'
+	ssh numbers@david-hu.com 'cd /home/numbers/www'
 	ssh numbers@david-hu.com 'cat /home/numbers/www/deploy.log'
