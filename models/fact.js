@@ -129,6 +129,7 @@ var dataKeys = (function() {
  *		- ceil: return smallest available number greater than or equal to number
  *		- default: return a canned message that works with the flow of other messages,
  *			or the given default message if one is provided.
+ * @return {Object} A map with fields 'number' and 'text'
  */
 exports.getFact = function(number, type, options) {
 
@@ -137,6 +138,14 @@ exports.getFact = function(number, type, options) {
 	defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
 	_.defaults(options, defaults);
 
+	if (!dataKeys[type]) {
+		// TODO: Set HTTP status code as well
+		return {
+			text: "ERROR: Invalid type.",
+			number: number,
+		};
+	}
+
 	if (number === 'random') {
 		number = getRandomApiNum(type, options);
 	}
@@ -144,20 +153,32 @@ exports.getFact = function(number, type, options) {
 	// TODO Better error handling (for out of dates), and for number is an invalid
 	// number or NaN
 
+	console.log('number is ' + number);
+
 	var ret = data[type][number];
   if (ret instanceof Array) {
     ret = randomChoice(ret);
     if (ret !== undefined && 'text' in ret) {
-      return ret.text;
+      return {
+				text: ret.text,
+				number: number,
+			};
     }
   }
 
 	// Handle the case of number not found
 	if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
-		return options[QUERY_DEFAULT] || getDefaultMsg(number, type);
+		return {
+			text: options[QUERY_DEFAULT] || getDefaultMsg(number, type),
+			number: number,
+		}
 	} else {
 		var index = _.sortedIndex(dataKeys[type], parseInt(number,10));
 		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-		return data[type][dataKeys[type][index]];
+		var adjustedNum = dataKeys[type][index];
+		return {
+			text: randomChoice(data[type][adjustedNum]).text,
+			number: adjustedNum,
+		};
 	}
 };

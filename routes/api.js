@@ -7,7 +7,12 @@ var _ = require('underscore');
  */
 
 function factResponse(fact, req, res, num) {
-	var factStr = '' + fact.getFact(num, req.param('type', 'trivia'), req.query);
+	var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
+	var factStr = '' + factObj.text;
+
+	// TODO: Maybe let the user turn off htis custom header? SHoudl definitely
+	// support JSON to return this crap and other cruft.
+	res.header('X-Numbers-API-Number', factObj.number);
 
 	if (req.param('callback')) {  // JSONP
 		res.json(factStr)

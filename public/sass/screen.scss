@@ -461,7 +461,6 @@ section {
 				padding-left: 0;
         text-align: center;
 				li {
-					padding: 5px;
           @include transition(all ease-out 0.3s);
 
           &:last-child {
@@ -470,6 +469,7 @@ section {
 
 					a {
 						display: block;
+            padding: 5px;
             @include text-shadow(none);
 					}
 

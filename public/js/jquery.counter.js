@@ -161,7 +161,13 @@
 			return this.data(NAME).val;
 		},
 
-		set: function(val) {
+		// TODO: dontTriggerEvent is a HACK HACK HACK (maybe it should also be
+		//		 shouldTriggerEvent)
+		//		 The issue here is update loops... bob calls set, which triggers the
+		//		 change event, and bob is also observing the counter, sees its
+		//		 value has changed, does something about it, and then ends up changing the
+		//		 counter again!!!!!
+		set: function(val, dontTriggerChange) {
 			if (val == null) return;
 			var data = this.data(NAME);
 			val = val % Math.pow(10, data.numDigits);
@@ -213,7 +219,9 @@
 			}
 
 			data.val = val;
-			this.trigger(NAME + 'Changed', val);
+			if (!dontTriggerChange) {
+				this.trigger(NAME + 'Changed', val);
+			}
 
 			return this;
 		},

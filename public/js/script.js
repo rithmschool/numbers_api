@@ -62,6 +62,9 @@ function update_result(url, $result) {
 				.appendTo($result)
 				.fadeIn('fast');
 
+			var number = xhr.getResponseHeader('X-Numbers-API-Number');
+			$('#counter').counter('set', number, /* dontTriggerEvent */ true);
+
 			$result.removeClass('error');
 		},
 		error: function() {
@@ -88,7 +91,7 @@ function update_history(hash) {
 }
 
 function update_counter(url) {
-	$('#counter').counter('set', getNumFromUrl(url));
+	$('#counter').counter('set', getNumFromUrl(url), false);
 }
 
 function update_all(url) {
