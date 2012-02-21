@@ -95,7 +95,6 @@ function update_counter(url) {
 }
 
 function update_all(url) {
-	update_counter(url);
 	update_history(url);
 	update_query(url);
 }

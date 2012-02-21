@@ -55,9 +55,9 @@ function getRandomApiNum(type, options) {
     return randomChoice(dataKeys[type]);
   } else {
     if (isNaN(min)) {
-      min = -Infinity
+      min = -Infinity;
     } else if (isNaN(max)) {
-      max = Infinity
+      max = Infinity;
     }
     // TODO: Use binary search here instead of O(n) linear search
     var valid_keys = _.filter(dataKeys[type], function(element) {
@@ -113,8 +113,8 @@ var dataKeys = (function() {
 		ret[key] = _.flatten([-Infinity,
 			_.map(_.keys(value), function(val) { return parseFloat(val, 10); }),
 		Infinity]);
-		value['-Infinity'] = 'negative infinity';
-		value['Infinity'] = 'infinity';
+		value['-Infinity'] = [{ text: 'negative infinity' }];
+		value['Infinity'] = [{ text: 'infinity' }];
 	});
 	return ret;
 })();
