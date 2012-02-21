@@ -10,16 +10,14 @@ import num2eng
 import nltk
 from nltk.tag.simplify import simplify_wsj_tag
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 #import StringIO
 #import time
 #import calendar
 #import sys
 #from pprint import pprint
 
-ENTRIES_PER_FILE = 100
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 def idx(obj, index):
 	try:
@@ -45,9 +43,9 @@ def capitalize_head(str):
 	return str[0].upper() + str[1:]
 
 def normalize():
-	#normalize_wikipedia_math()
+	normalize_wikipedia_math()
 	#normalize_wikipedia_trivia()
-	normalize_wikipedia_date()
+	#normalize_wikipedia_date()
 	#normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
@@ -289,6 +287,9 @@ def normalize_wikipedia_math():
 	print 'wikipedia {0}: success: {1}, total: {2}'.format(category, success, total)
 
 def normalize_number(all_facts):
+	counter_1 = 0
+	counter_2 = 0
+	counter_3 = 0
 	all_normalized_facts = {}
 	for number, facts in all_facts.items():
 		all_normalized_facts[number] = []
@@ -301,7 +302,6 @@ def normalize_number(all_facts):
 				word_number = num2eng.num2eng(int(number))
 				word_number = capitalize_head(word_number)
 				text = capitalize_head(text)
-				# remove hardcode, currently needed to speed things up
 				words_tags = get_words_tags(text)
 				word_number_len = len(get_words_tags(word_number))
 				if words_tags[0][1] =='DET':
@@ -317,6 +317,18 @@ def normalize_number(all_facts):
 					regexp += r'.*?\s'
 				text = re.sub(regexp, '', text)
 
+				# do not include facts if the number appears in the fact
+				text_lc = text.lower()
+				if text_lc.find(number) >= 0:
+					counter_1 += 1
+					continue
+				word_number_lc = word_number.lower()
+				if text_lc.find(word_number_lc) >= 0:
+					counter_2 += 1
+					continue
+
+				counter_3 += 1
+
 				fact['pos'] = words_tags[offset][1]
 				fact['text'] = capitalize_head(text)
 				all_normalized_facts[number].append(fact)
@@ -324,6 +336,8 @@ def normalize_number(all_facts):
 			except:
 				print 'Error parsing number [{0}: {1}]'.format(number, fact['text'])
 				#traceback.print_exc(file=sys.stdout)
+
+	print 'counters:', counter_1, counter_2, counter_3
 
 	return all_normalized_facts
 
@@ -372,5 +386,6 @@ def write_norm(facts, category, filename):
 	print 'dumping to file', path
 	f.close()
 
+# TODO: support normalizing specific files via command line arguments
 if __name__ == '__main__':
 	normalize()
