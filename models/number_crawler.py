@@ -21,15 +21,6 @@ def idx(obj, index):
 
 # TODO: support updating just specific years
 def crawl():
-	# lxml.parse seems faster than requests.get from testing
-	#r = requests.get('http://en.wikipedia.org/wiki/May_24')
-	#pprint(('status_code', r.status_code))
-	#pprint(('content_type', r.headers['content-type']))
-	#pprint(('text', r.text))
-	#tree = etree.parse(StringIO.StringIO(r.text), parser)
-
-	#parser = etree.HTMLParser()
-
 	errors = []
 	math_facts = {}
 	trivia_facts = {}
@@ -145,13 +136,14 @@ def crawl():
 				range_end = int(math.ceil(float(number) / ENTRIES_PER_FILE)) * ENTRIES_PER_FILE
 				range_begin = range_end - ENTRIES_PER_FILE + 1
 
-				file_name = 'math/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
-				print 'Writing to file: ', file_name
-				f = open(file_name, 'w')
+				relative_path = 'math/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
+				file_path = os.path.join(sys.path[0], relative_path)
+				print 'Writing to file: ', file_path
+				f = open(file_path, 'w')
 				try:
 					f.write(json.dumps(math_facts, sort_keys=False))
 				except Exception, e:
-					error = 'Exception writing to file {0}: {1}'.format(file_name, e)
+					error = 'Exception writing to file {0}: {1}'.format(file_path, e)
 					errors.append(error)
 					print error
 					traceback.print_exc(file=sys.stdout)
@@ -159,13 +151,13 @@ def crawl():
 					f.close()
 					math_facts = {}
 
-				file_name = 'trivia/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
-				print 'Writing to file: ', file_name
-				f = open(file_name, 'w')
+				file_path = 'trivia/raw/wikipedia_{0}_{1}.txt'.format(range_begin, range_end)
+				print 'Writing to file: ', file_path
+				f = open(file_path, 'w')
 				try:
 					f.write(json.dumps(trivia_facts, sort_keys=False))
 				except Exception, e:
-					error = 'Exception writing to file {0}: {1}'.format(file_name, e)
+					error = 'Exception writing to file {0}: {1}'.format(file_path, e)
 					errors.append(error)
 					print error
 					traceback.print_exc(file=sys.stdout)
@@ -185,12 +177,12 @@ def crawl():
 		message.write('{0}: {1}:\n'.format(i, errors[i]))
 	print message.getvalue()
 
-	file_name = 'error/number_{0}.txt'.format(int(time.time()))
-	f = open(file_name, 'w')
+	file_path = os.path,join(sys.path[0], 'error/number_{0}.txt'.format(int(time.time())))
+	f = open(file_path, 'w')
 	try:
 		f.write(message.getvalue())
 	except Exception, e:
-		print 'Exception writing to file {0}: {1}'.format(file_name, e)
+		print 'Exception writing to file {0}: {1}'.format(file_path, e)
 		traceback.print_exc(file=sys.stdout)
 	finally:
 		f.close()

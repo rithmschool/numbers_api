@@ -38,6 +38,7 @@ def capitalize_sentences(str):
 	splits = re.split(r'([.!?] *)', str)
 	return ''.join([split.capitalize() for split in splits])
 
+# capitalize first letter of str
 def capitalize_head(str):
 	if not str:
 		return str
@@ -46,7 +47,7 @@ def capitalize_head(str):
 def normalize():
 	#normalize_wikipedia_math()
 	#normalize_wikipedia_trivia()
-	#normalize_wikipedia_date()
+	normalize_wikipedia_date()
 	#normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
@@ -104,7 +105,7 @@ def normalize_wikipedia_date():
 	total = 0
 	success = 0
 	category = 'date'
-	category_raw_path = '{0}/{1}'.format(category, 'raw')
+	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
 		if not filename.startswith('wikipedia_'):
@@ -114,6 +115,9 @@ def normalize_wikipedia_date():
 		all_facts = flatten(path, ['birth', 'death'])
 		for facts in all_facts.values():
 			total += len(facts)
+
+		for date in all_facts:
+			print 'date: ', date
 
 		all_facts = normalize_pre(all_facts)
 		all_facts = normalize_date(all_facts)
@@ -153,14 +157,13 @@ def normalize_date(all_facts):
 				text = match.group(3)
 				# remove hardcode, currently needed to speed things up
 				words_tags = get_words_tags(text)
-				if words_tags[0][1] == 'DET' or words_tags[0][1] == 'NP':
-					pass
-				else:
+				if words_tags[0][1] != 'DET' and words_tags[0][1] != 'NP':
 					# print 'date match failed: [{0}: {1}]'.format(number, fact['text'])
 					continue
 
 				if year:
 					fact['year'] = year
+				fact['pos'] = words_tags[0][1]
 				fact['text'] = text
 				all_normalized_facts[number].append(fact)
 
@@ -174,8 +177,7 @@ def normalize_wikipedia_year():
 	total = 0
 	success = 0
 	category = 'year'
-
-	category_raw_path = '{0}/{1}'.format(category, 'raw')
+	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
 		if not filename.startswith('wikipedia_'):
@@ -236,7 +238,7 @@ def normalize_wikipedia_trivia():
 	total = 0
 	success = 0
 	category = 'trivia'
-	category_raw_path = '{0}/{1}'.format(category, 'raw')
+	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
 		if not filename.startswith('wikipedia_'):
@@ -260,7 +262,7 @@ def normalize_wikipedia_math():
 	total = 0
 	success = 0
 	category = 'math'
-	category_raw_path = '{0}/{1}'.format(category, 'raw')
+	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
 		if not filename.startswith('wikipedia_'):
@@ -364,8 +366,7 @@ def normalize_post(all_facts):
 	return all_normalized_facts
 
 def write_norm(facts, category, filename):
-	category_norm_path = '{0}/{1}'.format(category, 'norm')
-	path = os.path.join(category_norm_path, filename)
+	path = os.path.join(sys.path[0], category, 'norm', filename)
 	f = open(path, 'w')
 	json.dump(facts, f)
 	print 'dumping to file', path

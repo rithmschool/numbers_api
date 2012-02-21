@@ -26,29 +26,47 @@ function clamp(min, max, num) {
 	return Math.max(min, Math.min(max, num));
 }
 
+function randomIndex(array) {
+  return randInt(0, array.length);
+}
+
 function randomChoice(array) {
 	return array[randInt(0, array.length)];
 }
 
+// http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
+function randomProperty(obj, pre) {
+  var result;
+  var count = 0;
+  for (var prop in obj) {
+    if (obj.hasOwnProperty(prop)) {
+      if (Math.random() < 1/++count) {
+        result = prop;
+      }
+    }
+  }
+  return result;
+}
+
 function getRandomApiNum(type, options) {
-	// TODO Should make an effort to return the random number that actually has
-	// an associated fact?
-
-	if (type === 'date') {
-		return randDayOfYear();
-	}
-
-	var default_min = 1;
-	var default_max = {
-		'year': 2000,
-		'trivia': 300,
-		'math': 1000
-	}[type];
-
-	var min = Math.max(parseInt(options.min, 10) || 0, default_min);
-	var max = Math.max(parseInt(options.max, 10) || default_max, min);
-
-	return randInt(min, max + 1);
+  var min = parseInt(options.min, 10);
+  var max = parseInt(options.max, 10);
+  if (isNaN(min) && isNaN(max)) {
+    return randomChoice(dataKeys[type]);
+  } else {
+    if (isNaN(min)) {
+      min = -Infinity
+    } else if (isNaN(max)) {
+      max = Infinity
+    }
+    var valid_keys = [];
+    _.each(dataKeys, function(element) {
+      if (element >= min && element <= max) {
+        valid_keys[valid_keys.length] = element;
+      }
+    });
+    return randomChoice(valid_keys);
+  }
 }
 
 function getDefaultMsg(number, type) {
