@@ -103,7 +103,7 @@ var trivia_path = 'models/trivia/';
 reader(exports.trivia, 'models/trivia/norm/', function(element) {
   var text = element.text;
   text = text.substring(0, text.length-1);
-  element.text =  'Trivia: ' + text + '.';
+  element.text =  text + '.';
   return element;
 });
 
