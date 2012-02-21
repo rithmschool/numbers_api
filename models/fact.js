@@ -59,11 +59,9 @@ function getRandomApiNum(type, options) {
     } else if (isNaN(max)) {
       max = Infinity
     }
-    var valid_keys = [];
-    _.each(dataKeys, function(element) {
-      if (element >= min && element <= max) {
-        valid_keys[valid_keys.length] = element;
-      }
+    // TODO: Use binary search here instead of O(n) linear search
+    var valid_keys = _.filter(dataKeys[type], function(element) {
+      return element >= min && element <= max;
     });
     return randomChoice(valid_keys);
   }
