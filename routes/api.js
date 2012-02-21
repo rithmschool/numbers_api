@@ -19,14 +19,24 @@ function factResponse(fact, req, res, num) {
 	}
 }
 
-exports.route = function(app, fact) {
+// TODO: there's also a copy in public/js/script.js. create a single shared copy
+var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+function dateToDayOfYear(date) {
+  var day = 0;
+  for (var i = 0; i < date.getMonth(); ++i) {
+    day += MONTH_DAYS[i];
+  }
+  return day + date.getDate();
+}
 
-	app.get('/:num(-?[0-9]+)/:type(year|trivia|math)?', function(req, res) {
+exports.route = function(app, fact) {
+	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
 		factResponse(fact, req, res, parseInt(req.param('num'), 10));
 	});
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
-		var dayOfYear = new Date(0, req.param('month') - 1, req.param('day'));
+		var date = new Date(0, req.param('month') - 1, req.param('day'));
+    var dayOfYear = dateToDayOfYear(date);
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
 	});

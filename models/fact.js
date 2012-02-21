@@ -122,7 +122,7 @@ var dataKeys = (function() {
 })();
 
 /**
- * @param number: If type is 'date', then number should be a date.
+ * @param number: If type is 'date', then number should be day of year
  * @param type: Currently supporting {trivia,date,math,year}
  * @param options:
  *	- default: message to return if no fact for that number
@@ -139,12 +139,11 @@ exports.getFact = function(number, type, options) {
 	defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
 	_.defaults(options, defaults);
 
+
+  console.log('number is', number);
+
 	if (number === 'random') {
 		number = getRandomApiNum(type, options);
-	}
-
-	if (type === 'date') {
-		number = '' + (number.getMonth() + 1) + '/' + number.getDate();
 	}
 
 	// TODO Better error handling (for out of dates), and for number is an invalid
