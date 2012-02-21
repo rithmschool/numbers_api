@@ -115,14 +115,19 @@ function update_all(url) {
 	update_query(url);
 }
 
+function switchTagline() {
+	var taglines = $('.tagline').hide();
+	$(randomChoice(taglines)).fadeIn(1000);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Main execution: what gets executed on DOM ready
 $(function() {
 
 	// Randomly pick a tagline to use
-	var taglines = $('.tagline').hide();
-	$(randomChoice(taglines)).show();
+	switchTagline();
+	setInterval(switchTagline, 20 * 1000);
 
 	// Initialize rolling counter widget
 	$('#counter')

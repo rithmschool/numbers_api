@@ -522,7 +522,7 @@ section {
     @include border-radius(0 $element-border-radius $element-border-radius 0);
   }
   h2 {
-    border-top: 2px solid $color-one;
+    border-top: 2px solid rgba($color-one, 0.8);
     padding-top: 5px;
     margin-top: 60px;
   }
@@ -531,7 +531,6 @@ section {
   }
 }
 
-// TODO: Improve this (border line at top?)
 footer {
   margin-top: 60px;
 	@include background(linear-gradient(top, rgba($color-five, 0) 0%, rgba($color-five, 0.1) 20%, rgba($color-five, 0.8) 100%));

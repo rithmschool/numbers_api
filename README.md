@@ -34,7 +34,7 @@ JavaScript:
         $('#number').text(data);
     });
 
-Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). See this in action on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
+Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). Live demo on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
 
 <h3 id="jsonp">JSONP</h3>
@@ -49,7 +49,7 @@ Direct cross-origin requests like this are possible on browsers that support [CO
     </script>
     <script src="http://numbersapi.com/42/math?callback=showNumber"></script>
 
-See this in action on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
+Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
 
 <h3 id="html-embedding">HTML Embedding</h3>
@@ -57,7 +57,7 @@ Add `write` to your query string to have the response text wrapped in `document.
 
     In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
 
-See this in action on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
+Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 
 ## Options Reference
