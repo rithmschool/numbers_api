@@ -39,9 +39,9 @@ def capitalize_head(str):
 def normalize():
 	#normalize_efriedma_math()
 	#normalize_wikipedia_math()
-	#normalize_wikipedia_trivia()
+	normalize_wikipedia_trivia()
 	#normalize_wikipedia_date()
-	normalize_wikipedia_year()
+	#normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
 	f = open(path, 'r')
@@ -225,7 +225,9 @@ def normalize_wikipedia_trivia():
 	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
-		if not filename.startswith('wikipedia_'):
+		#if not filename.startswith('wikipedia_'):
+		#	continue
+		if filename.find('manual') < 0:
 			continue
 
 		path = os.path.join(category_raw_path, filename)
