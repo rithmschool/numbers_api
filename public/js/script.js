@@ -151,11 +151,19 @@ $(function() {
   });
 
   var $prev_selected = undefined;
-  $('#search-text').keypress(function(e) {
+  // Note: Using keydown instead of keypress to catch arrow key events
+  $('#search-text').keydown(function(e) {
     var code = e.keyCode || e.which;
-    if (code == 13) {
+    if (code == 13) {  // enter
       update_all($(this).val());
-    }
+    } else if (code === 38) {  // up arrow
+	$('#counter').counter('increment');
+	e.preventDefault();
+		} else if (code === 40) {  // down arrow
+	$('#counter').counter('decrement');
+			e.preventDefault();
+		}
+		console.log('code is', code);
   }).change(function(e) {
 		$('#search-link').prop('href', $(this).val());
 	});

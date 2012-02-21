@@ -207,7 +207,7 @@
 					newRow = Math.floor(tens + EPSILON) * 10 + newDigit;
 				}
 
-				$digit[i].stop().animate({
+				$digit[i].stop(true, true).animate({
 					top: newRow * negHeight
 				}, duration, data.easing, (function(digit) {
 					return function() {
