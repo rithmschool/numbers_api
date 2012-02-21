@@ -125,8 +125,8 @@ var dataPairs = (function() {
       ]),
       function(pair) { return pair.number; }
     );
-		numbers['-Infinity'] = [{ text: 'negative infinity' }];
-		numbers['Infinity'] = [{ text: 'infinity' }];
+		numbers['-Infinity'] = numbers['-Infinity'] || [{ text: 'negative infinity' }];
+		numbers['Infinity'] = numbers['Infinity'] || [{ text: 'infinity' }];
 	});
 	return ret;
 })();

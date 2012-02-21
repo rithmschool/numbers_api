@@ -52,7 +52,7 @@ Direct cross-origin requests like this are possible on browsers that support [CO
 Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
 
-<h3 id="html-embedding">HTML Embedding</h3>
+<h3 id="single-script-tag">Single Script Tag</h3>
 Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
     In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
@@ -105,7 +105,7 @@ http://numbersapi.com/42/math?write
 &rArr; document.write("42 is the 5th Catalan number.");
 </pre>
 
-See the [HTML embedding usage example](#html-embedding).
+See the [single script tag usage example](#single-script-tag).
 
 
 ### Min and Max
