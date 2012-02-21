@@ -62,5 +62,5 @@
 	"1e100": [{"text": "A googol.", "manual": true}],
 	"1.57e116": [{"text": "The number of distinguishable permutations of the V-Cube 6 (6x6x6 Rubik's Cube).", "manual": true}],
 	"1.95e160": [{"text": "The number of distinguishable permutations of the V-Cube 7 (7x7x7 Rubik's Cube).", "manual": true}],
-	"1e15071": [{"text": "The largest proven Leyland prime as of 2010.", "manual", true}]
+	"1e15071": [{"text": "The largest proven Leyland prime as of 2010.", "manual": true}]
 }

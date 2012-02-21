@@ -49,17 +49,20 @@ function reader(out, path, callback) {
 					return;
 				}
         // check if fact contains the number itself and discard it
-        if (element.self) {
-          return;
-        }
         if (callback) {
-          callback(element);
+          element = callback(element);
+        }
+        if (!element) {
+          return;
         }
         if (element.text.length < 20 || element.text.length > 100) {
           return;
         }
         o[o.length] = element;
       });
+      if (o.length === 0) {
+        delete out[float_key];
+      }
     });
   });
 }
@@ -77,6 +80,7 @@ reader(exports.date, 'models/date/norm/', function(element) {
     text = 'The day that ' + text;
   }
   element.text = text + '.';
+  return element;
 });
 
 exports.year = {};
@@ -91,6 +95,7 @@ reader(exports.year, 'models/year/norm/', function(element) {
     text += ' on ' + element.date;
   }
   element.text = text + '.';
+  return element;
 });
 
 exports.trivia = {};
@@ -99,16 +104,22 @@ reader(exports.trivia, 'models/trivia/norm/', function(element) {
   var text = element.text;
   text = text.substring(0, text.length-1);
   element.text =  'Trivia: ' + text + '.';
+  return element;
 });
 
 exports.math = {};
 reader(exports.math, 'models/math/norm/', function(element) {
+  // do not return results that contain the number itself
+  if (element.self) {
+    return null;
+  }
   var text = element.text;
   text = text.substring(0, text.length-1);
   if (element.pos !== 'NP') {
     text = text[0].toLowerCase() + text.substring(1);
   }
   element.text =  'Is ' + text + '.';
+  return element;
 });
 
 /*
