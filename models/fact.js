@@ -139,6 +139,34 @@ _.each(dataPairs, function(pairs, category) {
   });
 });
 
+function filterObj(obj, whitelist) {
+	var result = {};
+	_.each(obj, function(value, key, list) {
+		if (_.contains(whitelist, key)) {
+			result[key] = value;
+		}
+	});
+	return result;
+}
+
+// Not needed
+function extendWithWhitelist(obj, newObj, whitelist) {
+	_.each(newObj, function(value, key, list) {
+		if (key in whitelist) {
+			obj[key] = value;
+		}
+	});
+	return obj;
+}
+
+// This is a list of keys on the lowest-level fact objects that we will return
+// with the API
+var API_WHITELIST = [ 'text', 'year', 'date' ];
+
+function apiExtend(obj, newObj) {
+	return _.extend(filterObj(obj, API_WHITELIST), newObj);
+}
+
 /**
  * @param number: If type is 'date', then number should be day of year
  * @param type: Currently supporting {trivia,date,math,year}
@@ -163,6 +191,7 @@ exports.getFact = function(number, type, options) {
 		return {
 			text: "ERROR: Invalid type.",
 			number: number,
+			type: type,
 		};
 	}
 
@@ -177,10 +206,11 @@ exports.getFact = function(number, type, options) {
   if (ret instanceof Array) {
     ret = randomChoice(ret);
     if (ret !== undefined && 'text' in ret) {
-      return {
-				text: ret.text,
+      return apiExtend(ret, {
 				number: number,
-			};
+				found: true,
+				type: type,
+			});
     }
   }
 
@@ -189,14 +219,17 @@ exports.getFact = function(number, type, options) {
 		return {
 			text: options[QUERY_DEFAULT] || getDefaultMsg(number, type),
 			number: number,
+			found: false,
+			type: type,
 		}
 	} else {
 		var index = _.sortedIndex(dataKeys[type], number);
 		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-		var adjustedNum = dataPairs[type][index].string
-		return {
-			text: randomChoice(data[type][adjustedNum]).text,
+		var adjustedNum = dataPairs[type][index].string;
+		return apiExtend(randomChoice(data[type][adjustedNum]), {
 			number: adjustedNum,
-		};
+			found: false,
+			type: type,
+		});
 	}
 };

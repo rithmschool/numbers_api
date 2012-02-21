@@ -6,7 +6,7 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
 - **`type`** is one of `trivia`, `math`, `date`, or `year`. Defaults to `trivia` if omitted.
 - **`number`** is
     - an integer (eg. `0`, `42`, `1337`), or
-    - the keyword `random`, or
+    - the keyword `random`, for which we will try to return a random available fact, or
     - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/01`, `04/1`), if **`type`** is `date`
 
 <pre>
@@ -57,7 +57,7 @@ Add `write` to your query string to have the response text wrapped in `document.
 
     In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
 
-Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
+Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>.  Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 
 ## Query Parameter Options
@@ -115,5 +115,27 @@ Restrict the range of values returned to the inclusive range \[**`min`**, **`max
 http://numbersapi.com/random?min=10&max=20
 &rArr; <script src="http://numbersapi.com/random?min=10&max=20&write"></script>
 </pre>
+
+### Json
+Include the query parameter `json` to return the fact and associated meta-data as a JSON object, with the properties:
+
+- `text`: A string of the fact text itself.
+- `found`: Boolean of whether there was a fact for the requested number.
+- `number`: The floating-point number that the fact pertains to. This may be useful for, eg. a `/random` request or `notfound=floor`. For a date fact, this is the 1-indexed day of a leap year (eg. 61 would be March 1st).
+- `type`: String of the category of the returned fact.
+- `date` (sometimes): A day of year associated with some year facts, as a string.
+- `year` (sometimes): A year associated with some date facts, as a string.
+
+<pre>
+http://numbersapi.com/random/year?json
+&rArr; {
+    "text": "The year that the century's second and last solar transit of Venus occurs on June 6.",
+    "found": true,
+    "number": 2012,
+    "type": "year",
+    "date": "June 6"
+}
+</pre>
+
 
 TODO: make sentence structure work out (data mining)

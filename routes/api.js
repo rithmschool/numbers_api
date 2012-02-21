@@ -9,18 +9,25 @@ var _ = require('underscore');
 function factResponse(fact, req, res, num) {
 	var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
 	var factStr = '' + factObj.text;
+	var useJson = (req.param('json') !== undefined);
+	function factObjStr() {
+		return JSON.stringify(factObj, null, ' ');
+	}
 
-	// TODO: Maybe let the user turn off htis custom header? SHoudl definitely
-	// support JSON to return this crap and other cruft.
 	res.header('X-Numbers-API-Number', factObj.number);
 
 	if (req.param('callback')) {  // JSONP
-		res.json(factStr)
+		res.json(useJson ? factObj : factStr);
 	} else if (req.param('write') !== undefined) {
-		var script = 'document.write("' + _.escape(factStr) + '");';
+		var arg = useJson ? factObjStr() : '"' + _.escape(factStr) + '"';
+		var script = 'document.write(' + arg + ');';
 		res.send(script, {'Content-Type': 'text/javascript'}, 200);
 	} else {
-		res.send(factStr, {'Content-Type': 'text/plain'}, 200);
+		if (useJson) {
+			res.send(factObjStr(), { 'Content-Type': 'application/json' }, 200);
+		} else {
+			res.send(factStr, { 'Content-Type': 'text/plain' }, 200);
+		}
 	}
 }
 

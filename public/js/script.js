@@ -74,7 +74,7 @@ function update_result(url, $result) {
 			$('<div class="result-fly-in-text">')
 				.text(data)
 				.hide()
-				.toggleClass('script', contentType.indexOf('text/javascript') !== -1)
+				.toggleClass('script', contentType.indexOf('text/plain') === -1)
 				.appendTo($result)
 				.fadeIn(300);
 
