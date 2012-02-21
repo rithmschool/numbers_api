@@ -38,10 +38,10 @@ def capitalize_head(str):
 
 def normalize():
 	normalize_efriedma_math()
-	#normalize_wikipedia_math()
-	#normalize_wikipedia_trivia()
-	#normalize_wikipedia_date()
-	#normalize_wikipedia_year()
+	normalize_wikipedia_math()
+	normalize_wikipedia_trivia()
+	normalize_wikipedia_date()
+	normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
 	f = open(path, 'r')
@@ -366,7 +366,7 @@ def normalize_post(all_facts):
 	all_normalized_facts = {}
 
 	for number, facts in all_facts.items():
-		if number not in all_normalized_facts:
+		if facts:
 			all_normalized_facts[number] = []
 		for fact in facts:
 			try:
@@ -395,6 +395,7 @@ def normalize_post(all_facts):
 				else:
 					fact['self'] = False
 
+				fact['manual'] = False
 				fact['text'] = text
 				all_normalized_facts[number].append(fact)
 
