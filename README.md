@@ -10,8 +10,8 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
     - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/01`, `04/1`), if **`type`** is `date`
 
 <pre>
-http://numbersapi.com/42/trivia
-&rArr; <script src="http://numbersapi.com/128/math?write=1"></script>
+http://numbersapi.com/42
+&rArr; The result given by Google and Bing for the query "the answer to life the universe and everything".
 
 http://numbersapi.com/2/29/date
 &rArr; <script src="http://numbersapi.com/2/29/date?write=1"></script>
