@@ -124,7 +124,6 @@ $main-margin: 20%;
 
 body {
   @include background($color-three);  // Fallback
-  @include background(rgba($color-three, $background-opacity));  // Fallback
   @include background(linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), image-url("/img/background.png"));
   overflow-x: hidden;  // Won't work on IE6/7: http://stackoverflow.com/questions/2284562/absolutely-positioned-div-on-right-causing-scrollbar-when-the-left-doesnt
 	#body-inner {
@@ -207,7 +206,7 @@ section {
   position: relative;
   z-index: 5;
 	h1 {
-		//text-align: center;
+    text-align: center;
 	}
 }
 
@@ -546,6 +545,7 @@ section {
 	position: relative;
 	padding-top: 0px;
 	padding-bottom: 0px;
+  background-color: rgba($color-five, 0.0);
 }
 #api {
   pre, code {
