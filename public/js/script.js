@@ -1,10 +1,13 @@
 (function() {
 
-// TODO: mvc to keep url, selected example, search text, and result in sync
-//		 +1 (david)
 
 // TODO: Share a file with the node.js server of common utilities and
 //     algorithms
+
+
+// TODO: mvc to keep url, selected example, search text, and result in sync
+//		 +1 (david)
+var currentUrl = null;
 
 function randInt(min, max) {
 	return Math.floor(Math.random() * (max - min) + min);
@@ -70,16 +73,13 @@ function update_result(url, $result) {
 				return;
 			}
 
-			if ($result.find('.result-temporary-text').length === 0) {
-				$result.append('<div class="result-temporary-text">');
-			}
-
-			$result.find('.result-temporary-text')
-				.empty()
-				.hide()
+			var $text = $('#result-temporary-text');
+			$text
+				.css('opacity', 0)
 				.text(data)
 				.toggleClass('script', contentType.indexOf('text/plain') === -1)
-				.fadeIn(300);
+				.css('marginTop', $text.height() / -2)  // vertically centered (top 50% + abs position)
+				.animate({ opacity: 1.0 }, 300);
 
 			var number = xhr.getResponseHeader('X-Numbers-API-Number');
 			$('#counter').counter('set', number, /* dontTriggerEvent */ true);
@@ -87,8 +87,9 @@ function update_result(url, $result) {
 			$result.removeClass('error');
 		},
 		error: function() {
-			$result.find('.result-temporary-text')
-				.html('Invalid url :( <br>Maybe read the <a href="#api">API docs</a> below?');
+			$('#result-temporary-text')
+				.html('Uh oh, we don\'t understand that URL :( <br>' +
+							'Maybe read the <a href="#api">API docs</a> below?');
 			$result.addClass('error');
 		}
 	});
@@ -114,14 +115,25 @@ function update_counter(url) {
 	$('#counter').counter('set', getNumFromUrl(url), false);
 }
 
-function update_all(url) {
+function update_all(url, force) {
+	if (currentUrl === url && !force) return;
+	currentUrl = url;
 	update_history(url);
 	update_query(url);
 }
 
 function switchTagline() {
-	var taglines = $('.tagline').hide();
-	$(randomChoice(taglines)).fadeIn(1000);
+	$('#tagline')
+		.css('opacity', 0)
+		.html(randomChoice($('#tagline-alternates li')).innerHTML)
+		.animate({ opacity: 1.0 }, 1000);
+}
+
+function updateAllFromHash() {
+	var hash = window.location.hash;
+	if (hash) {
+		update_all(hash.substr(1));
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -130,8 +142,7 @@ function switchTagline() {
 $(function() {
 
 	// Randomly pick a tagline to use
-	switchTagline();
-	setInterval(switchTagline, 20 * 1000);
+	setInterval(switchTagline, 30 * 1000);
 
 	// Initialize rolling counter widget
 	$('#counter')
@@ -146,27 +157,24 @@ $(function() {
 		})
 		.find('.counter-container-inner')
 			.click(function(event) {
-				update_all($('#search-text').val());
+				update_all($('#search-text').val(), /* force */ true);
 			})
 			.mousewheel(function(event, delta) {
 				$('#counter').counter(delta > 0 ? 'increment' : 'decrement');
 				event.preventDefault();
 			});
 
-  // Load the examples using the api backend
-	$('.example').each(function(index, element) {
-		var $div = $(element).find('.example-box');
-		var href = $div.find('a').attr('href');
-		update_result(href, $div.find('.api-result'));
-	});
+  // Load the examples using the api backend. Don't to reduce load.
+	//$('.example').each(function(index, element) {
+		//var $div = $(element).find('.example-box');
+		//var href = $div.find('a').attr('href');
+		//update_result(href, $div.find('.api-result'));
+	//});
 
-  // Read any hash from the url set the sandbox input to use this value
-  (function() {
-    var hash = window.location.hash;
-    if (hash) {
-      update_all(hash.substr(1));
-    }
-  })();
+	// Listen for hash changes to keep UI in sync and on page load as well
+	$(window).on('hashchange', updateAllFromHash);
+	update_history('42');
+	setTimeout(updateAllFromHash, 0);
 
   var $prev_selected = undefined;
   $('#search-examples a').click(function(e) {
@@ -182,7 +190,7 @@ $(function() {
     $parent.addClass('selected');
     $('#search-text').val(hash);
 
-		update_all(hash);
+		update_all(hash, /* force */ true);
 
     $prev_selected = $parent;
   });
@@ -192,7 +200,7 @@ $(function() {
   $('#search-text').keydown(function(e) {
     var code = e.keyCode || e.which;
     if (code == 13) {  // enter
-      update_all($(this).val());
+      update_all($(this).val(), /* force */ true);
     } else if (code === 38) {  // up arrow
 	$('#counter').counter('increment');
 	e.preventDefault();

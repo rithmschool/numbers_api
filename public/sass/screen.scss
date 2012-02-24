@@ -189,7 +189,7 @@ a {
 	}
 }
 
-.tagline {
+#tagline {
   @include text-shadow($color-five 0px 0px 5px);
 	margin: 0px;
 	font-size: 1.6em;
@@ -265,6 +265,8 @@ section {
 	}
 }
 
+// TODO: Remove hardcode
+$sandbox-result-height: 102px;
 #sandbox-outer {
 	position: relative;
 	float: right;
@@ -294,7 +296,7 @@ section {
 	#counter {
 	  display: inline-block;
     //border: 5px solid rgba($color-five, 0.5);
-		margin-top: -10px;
+		margin-top: 5px;
 		margin-right: 12px;
 		padding: 3px 0px;
 		float: left;
@@ -441,12 +443,10 @@ section {
 			#search-result {
 				@include box-bottom;
 				position: relative;
-				padding: 10px;
 				margin-top: 0px;
 				margin-bottom: 5px;
-				//padding-top: 20px;
-				// TODO: Remove hardcode
-				//height: 100px;
+				padding: 0 10px;
+        height: $sandbox-result-height;
 
 				//&.error {
 				//	color: $color-one;
@@ -454,6 +454,11 @@ section {
 
 			  .script {
           @include code-font;
+        }
+        #result-temporary-text {
+          position: absolute;
+          top: 50%;
+          padding-right: 5px;
         }
 			}
 		}
@@ -521,7 +526,7 @@ section {
     top: -375px;
     height: 800px;
     position: absolute;
-    @include background(radial-gradient(center, closest-side circle, rgba($color-one, 0.20) 0%, rgba($color-one, 0.0) 100%));
+    @include background(radial-gradient(center, closest-side circle, rgba($color-one, 0.30) 0%, rgba($color-one, 0.0) 100%));
     @include transform(scale(1.5, 1.0));
     z-index: 0;
   }

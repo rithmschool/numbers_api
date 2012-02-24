@@ -46,28 +46,17 @@
                 <h1 class="logo">Numbers<span id="second-word">API</span></h1>
             </div>
 
-            <span class="tagline">
-                Bring meaning to your metrics and stories to your dates
-                (NOTE: We're still working on this and have not launched yet.)
+            <span id="tagline">
+                We're still working on this and have not launched yet. :)
             </span>
-            <!--<span class="tagline">-->
-                <!--Bring meaning to your metrics and stories to your dates-->
-            <!--</span>-->
-            <!--<span class="tagline" style="display:none">-->
-                <!--An API to query interesting facts about numbers-->
-            <!--</span>-->
-            <!--<span class="tagline" style="display:none">-->
-                <!--Bring your metrics and dates to life-->
-            <!--</span>-->
-            <!--<span class="tagline" style="display:none">-->
-                <!--Let your metrics tell tales with our API of number facts-->
-            <!--</span>-->
-            <!--<span class="tagline" style="display:none">-->
-                <!--What tales do your metrics tell?-->
-            <!--</span>-->
-            <!--<span class="tagline" style="display:none">-->
-                <!--Let your metrics tell tales and dates come to life-->
-            <!--</span>-->
+            <ul id="tagline-alternates" style="display: none">
+                <li> Bring meaning to your metrics and stories to your dates </li>
+                <li> An API to query interesting facts about numbers </li>
+                <li> Bring your metrics and dates to life </li>
+                <li> Let your metrics tell tales with our API of number facts </li>
+                <li> What tales do your metrics tell?  </li>
+                <li> Let your metrics tell tales and dates come to life </li>
+            </ul>
 
 			<section id="usage-outer">
 				<div id="usage">
@@ -75,24 +64,30 @@
 						<div class="example">
 							<h2>Math</h2>
 							<div class="example-box">
-								<a href="5/math">numbersapi.com/5/math</a>
+								<a href="#5/math">numbersapi.com/5/math</a>
                                 <div class="api-result">
-                                    <div class=""></div>
+                                    5 is the number of platonic solids.
                                 </div>
 							</div>
 						</div>
 						<div class="example">
 							<h2>Trivia</h2>
 							<div class="example-box">
-								<a href="42/trivia">numbersapi.com/42/trivia</a>
-                                <div class="api-result"></div>
+								<a href="#42">numbersapi.com/42</a>
+                                <div class="api-result">
+                                    42 is the number of little squares forming
+                                       the left side trail of Microsoft's
+                                       Windows 98 logo.
+                                   </div>
 							</div>
 						</div>
 						<div class="example">
 							<h2>Date</h2>
 							<div class="example-box">
-								<a href="02/12/date">numbersapi.com/02/12/date</a>
-                                <div class="api-result"></div>
+								<a href="#2/24/date">numbersapi.com/02/12/date</a>
+                                <div class="api-result">
+                                    TODO: This needs to be a fact of today's date.
+                                </div>
 						</div>
 					</div>
 				</div>
@@ -110,10 +105,7 @@
 						</div>
 						<div id="search-result" class="api-result">
                             <div id="counter"></div>
-                            <span class="result-temporary-text">
-                                Enter a url or choose
-                                one of the examples from the right. The output
-                                will display here.
+                            <span id="result-temporary-text">
                             </span>
 						</div>
 					</div>
