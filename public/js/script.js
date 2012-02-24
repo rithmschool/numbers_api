@@ -70,12 +70,15 @@ function update_result(url, $result) {
 				return;
 			}
 
-			$result.empty();
-			$('<div class="result-fly-in-text">')
-				.text(data)
+			if ($result.find('.result-temporary-text').length === 0) {
+				$result.append('<div class="result-temporary-text">');
+			}
+
+			$result.find('.result-temporary-text')
+				.empty()
 				.hide()
+				.text(data)
 				.toggleClass('script', contentType.indexOf('text/plain') === -1)
-				.appendTo($result)
 				.fadeIn(300);
 
 			var number = xhr.getResponseHeader('X-Numbers-API-Number');
@@ -84,7 +87,8 @@ function update_result(url, $result) {
 			$result.removeClass('error');
 		},
 		error: function() {
-			$result.text("Invalid url.");
+			$result.find('.result-temporary-text')
+				.html('Invalid url :( <br>Maybe read the <a href="#api">API docs</a> below?');
 			$result.addClass('error');
 		}
 	});

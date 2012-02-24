@@ -294,7 +294,9 @@ section {
 	  display: inline-block;
     //border: 5px solid rgba($color-five, 0.5);
 		margin-top: -20px;
+		margin-right: 12px;
 		padding: 3px 0px;
+		float: left;
     @include border-radius($element-border-radius $element-border-radius);
     $gradient-color: $color-three;
 
@@ -354,7 +356,7 @@ section {
   }
 	#outer-search {
 		#search {
-			$width: 451px;
+			$width: 551px;
 			float: left;
 			overflow: hidden;
 			height: 100%;
@@ -441,8 +443,9 @@ section {
 				padding: 10px;
 				margin-top: 0px;
 				margin-bottom: 5px;
+				padding-top: 20px;
 				// TODO: Remove hardcode
-				height: 160px;
+				//height: 100px;
 
 				//&.error {
 				//	color: $color-one;
