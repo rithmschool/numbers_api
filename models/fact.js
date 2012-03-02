@@ -73,7 +73,6 @@ function getDefaultMsg(number, type) {
 		'a plain old number',
 		'a boring number',
 		'a most unremarkable number',
-		'a number for which only Ramanujan could find an interesting property',
 	], function(val) { return '' + number + ' is ' + val; });
 
 	var defaultMsgs = {
