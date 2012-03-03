@@ -91,10 +91,14 @@ function getSentence(wantFragment, number, data, type) {
     }
     return text + '.';
   } else if (type === 'year') {
-    //var currentYear = (new Date()).getFullYear();
-    //if (number <= currentYear) {
-    text = '' + number + ' is the year that ' + text;
+    // TODO: consider different grammar for year in the past vs. year in the future
+    if (number < 0) {
+      text = '' + -number + ' BC is the year that ' + text;
+    } else {
+      text = '' + number + ' is the year that ' + text;
+    }
     if (data.date) {
+
       text += ' on ' + data.date;
     }
     return text + '.';
