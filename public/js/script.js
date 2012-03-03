@@ -72,8 +72,10 @@ function processWidgetText(text, type) {
 	if (lowered[lowered.length - 1] === '.') {
 		lowered = lowered.substr(0, lowered.length - 1);
 	}
-	// TODO: Get this to work properly
-	var verb = (type === 'date' ? 'was' : 'is');
+  lowered.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
+  lowered.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
+  // TODO: Get this to work properly
+  var verb = (type === 'date' ? 'was' : 'is');
 	return '<span class="boilerplate"> ' + verb + ' ' + '<span class="script">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
 }
 
