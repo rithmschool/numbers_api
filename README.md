@@ -113,7 +113,7 @@ Restrict the range of values returned to the inclusive range \[**`min`**, **`max
 
 <pre>
 http://numbersapi.com/random?min=10&max=20
-&rArr; <script src="http://numbersapi.com/random?min=10&max=20&write"></script>
+the number of provinces and territories in Canada.
 </pre>
 
 ### Json
