@@ -8,6 +8,12 @@ var mustache = require('mustache');
 var markdown = require('discount');
 var fs = require('fs');
 
+// fake number of viistors
+var BASE_VISITOR_TIME = new Date(1330560000000);
+var VISITOR_RATE = 1000*60*60*3; // 3 hours/visitor
+var lastVisitorTime = BASE_VISITOR_TIME;
+var numVisitors = 0;
+
 // From http://bitdrift.com/post/2376383378/using-mustache-templates-in-express
 var mustacheTemplate = {
 	compile: function (source, options) {
@@ -72,9 +78,17 @@ router.route(app, fact);
 app.get('/', function(req, res) {
 	// TODO: There's gotta be a way of using Express to get the template and not
 	// just reading a file... (what's the RIGHT way of doing this)
+  var currTime = (new Date()).getTime();
+  if ((currTime - lastVisitorTime) >= VISITOR_RATE) {
+    numVisitors += Math.round((currTime - lastVisitorTime) / VISITOR_RATE);
+    lastVisitorTime = currTime;
+  }
 	fs.readFile('README.md', 'utf-8', function(err, data) {
 		res.render('index.html', {
-			locals: { docs: markdown.parse(data) },
+			locals: {
+        docs: markdown.parse(data),
+        visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'ceil', fragment: true }),
+      },
 			partials: {}
 		});
 	});
