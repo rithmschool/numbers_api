@@ -63,6 +63,20 @@ function changeUrlToNum(url, num) {
 	return url.replace(needle, num);
 }
 
+function escapeForHtml(text) {
+	return $('<div>').text(text).html();
+}
+
+function processWidgetText(text, type) {
+	var lowered = text[0].toLowerCase() + text.substr(1);
+	if (lowered[lowered.length - 1] === '.') {
+		lowered = lowered.substr(0, lowered.length - 1);
+	}
+	// TODO: Get this to work properly
+	var verb = (type === 'date' ? 'was' : 'is');
+	return '<span class="boilerplate"> ' + verb + ' ' + '<span class="script">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
+}
+
 function update_result(url, $result) {
 	$.ajax({
 		url: url,
@@ -73,10 +87,14 @@ function update_result(url, $result) {
 				return;
 			}
 
+			if (contentType.indexOf('text/plain') !== -1) {
+				data = processWidgetText(data);
+			}
+
 			var $text = $('#result-temporary-text');
 			$text
 				.css('opacity', 0)
-				.text(data)
+				.html(data)
 				.toggleClass('script', contentType.indexOf('text/plain') === -1)
 				.css('marginTop', $text.height() / -2)  // vertically centered (top 50% + abs position)
 				.animate({ opacity: 1.0 }, 300);

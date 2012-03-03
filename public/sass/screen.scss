@@ -455,6 +455,9 @@ $sandbox-result-height: 102px;
 			  .script {
           @include code-font;
         }
+        .boilerplate {
+          //color: $color-four;
+        }
         #result-temporary-text {
           position: absolute;
           top: 50%;
