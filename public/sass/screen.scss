@@ -148,7 +148,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p, a, div, span, label, input {
   @include text-shadow(#000000 0px 1px 0px);
-	font-family: Palatino, 'Lucida Grande', Verdana, serif;
+	font-family: Palatino, 'Lucida Grande', Georgia, Verdana, serif;
 	font-weight: normal;
 	font-size: 18px;
 	//letter-spacing: 1px;
