@@ -98,7 +98,7 @@ function processWidgetText(dataJson) {
 	var prefix = 'is';
 	if (dataJson['type'] === 'date') {
 		verb = '';
-		var date = new Date(2004, 1, dataJson['number']);
+		var date = new Date(2004, 0, dataJson['number']);
 		prefix = dateToString(date) + ' was ';
 	}
 

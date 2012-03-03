@@ -73,7 +73,7 @@ function getDefaultMsg(number, type) {
 		'a plain old number',
 		'a boring number',
 		'a most unremarkable number',
-	], function(val) { return '' + number + ' is ' + val; });
+	], function(val) { return val; });
 
 	var defaultMsgs = {
 		'math': mathMsgs,

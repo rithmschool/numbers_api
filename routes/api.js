@@ -47,7 +47,7 @@ exports.route = function(app, fact) {
 	});
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
-		var date = new Date(0, req.param('month') - 1, req.param('day'));
+		var date = new Date(2004, req.param('month') - 1, req.param('day'));
     var dayOfYear = dateToDayOfYear(date);
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
