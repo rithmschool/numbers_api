@@ -55,12 +55,23 @@ Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 <h3 id="single-script-tag">Single Script Tag</h3>
 Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
-    In the year 2012, <script src="http://numbersapi.com/2012/year?write"></script>.
+    <script src="http://numbersapi.com/2012/year?write"></script>.
 
 Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>.  Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 
 ## Query Parameter Options
+
+<h3 id="fragment">Fragment</h3>
+Return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like "We now have more users than [fact as fragment]!".
+
+<pre>
+http://numbersapi.com/23/trivia?fragment
+&rArr; the number of times Julius Caesar was stabbed
+
+http://numbersapi.com/1969/year?fragment
+&rArr; an estimated 500 million people worldwide watch Neil Armstrong take his historic first steps on the Moon
+</pre>
 
 
 ### Notfound
@@ -70,11 +81,13 @@ The `notfound` field tells us what to do if the number is not found. You can giv
     <pre>http://numbersapi.com/314159265358979
 &rArr; 314159265358979 is a boring number.</pre>
 - `floor` to round down to the largest number that does have an associated fact, and return that fact.
-    <pre>http://numbersapi.com/18923?notfound=floor
-&rArr; 14500 is the number of unique English words occur in the King James Version of the Bible.</pre>
+    <pre>http://numbersapi.com/35353?notfound=floor
+&rArr; 35000 is the number of genes in a human being.</pre>
 - `ceil`, which is like `floor` but rounds up to the smallest number that has an associated fact.
     <pre>http://numbersapi.com/-12344/year?notfound=ceil
 &rArr; 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.</pre>
+
+Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page visits](#visitors).
 
 
 <h3 id="default">Default</h3>
