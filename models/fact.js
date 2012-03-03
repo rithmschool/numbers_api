@@ -83,19 +83,16 @@ function getSentence(fragment, number, data, type) {
     return '' + number + ' is ' + text + '.';
   } else if (type === 'date') {
     var date = new Date(2004, 0, number);
-    if (data.date) {
-      text = dateToString(date) + ' was the day in ' + data.date + ' that ' + text;
+    if (data.year) {
+      text = dateToString(date) + ' is the day in ' + data.year + ' that ' + text;
     } else {
-      text = dateToString(date) + ' was the day that ' + text;
+      text = dateToString(date) + ' is the day that ' + text;
     }
     return text + '.';
   } else if (type === 'year') {
-    var currentYear = (new Date()).getFullYear();
-    if (number <= currentYear) {
-      text = '' + number + ' was the year that ' + text;
-    } else {
-      text = '' + number + ' will be the year that ' + text;
-    }
+    //var currentYear = (new Date()).getFullYear();
+    //if (number <= currentYear) {
+    text = '' + number + ' is the year that ' + text;
     if (data.date) {
       text += ' on ' + data.date;
     }
