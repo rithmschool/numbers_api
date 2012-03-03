@@ -101,10 +101,23 @@ reader(exports.year, 'models/year/norm/', function(element) {
 exports.trivia = {};
 var trivia_path = 'models/trivia/';
 reader(exports.trivia, 'models/trivia/norm/', function(element) {
-  var text = element.text;
-  text = text.substring(0, text.length-1);
-  element.text =  text + '.';
-  return element;
+  // TODO: include back non-manual results
+  if (element.manual) {
+    var text = element.text;
+    var first_letter = text.charAt(0);
+    // uncapitalize the first letter. this should be okay for manual results since the first letter should be the word 'the'
+    if (first_letter === first_letter.toUpperCase()) {
+      text = first_letter.toLowerCase() + text.substring(1);
+    }
+    // add a period if it does not exist
+    if (text.substring(text.length-1) !== '.') {
+      text = text.substring(text.length-1);
+    }
+    element.text = text
+    return element;
+  } else {
+    return undefined;
+  }
 });
 
 exports.math = {};
