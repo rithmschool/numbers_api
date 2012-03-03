@@ -14,10 +14,10 @@ http://numbersapi.com/42
 &rArr; The result given by Google and Bing for the query "the answer to life the universe and everything".
 
 http://numbersapi.com/2/29/date
-&rArr; <script src="http://numbersapi.com/2/29/date?write=1"></script>
+&rArr; February 29 is the day in 1504 that Christopher Columbus uses his knowledge of a lunar eclipse to convince Native Americans to provide him with supplies.
 
 http://numbersapi.com/random/year
-&rArr; <script src="http://numbersapi.com/random/year?write=1"></script>
+&rArr; 2013 is the year that China will attempt its first unmanned Moon landing.
 </pre>
 
 
@@ -68,13 +68,13 @@ The `notfound` field tells us what to do if the number is not found. You can giv
 
 - `default` to return one of our pre-written missing messages, or a message you supply with the [`default`](#default) query field. This is the default behaviour.
     <pre>http://numbersapi.com/314159265358979
-&rArr; <script src="http://numbersapi.com/314159265358979?write=1"></script></pre>
+&rArr; 314159265358979 is a boring number.</pre>
 - `floor` to round down to the largest number that does have an associated fact, and return that fact.
-    <pre>http://numbersapi.com/18923?notfound=floor&standalone
-&rArr; <script src="http://numbersapi.com/18923?notfound=floor&write&standalone"></script></pre>
+    <pre>http://numbersapi.com/18923?notfound=floor
+&rArr; 14500 is the number of unique English words occur in the King James Version of the Bible.</pre>
 - `ceil`, which is like `floor` but rounds up to the smallest number that has an associated fact.
-    <pre>http://numbersapi.com/-12344/year?notfound=ceil&standalone
-&rArr; <script src="http://numbersapi.com/-12345/year?notfound=ceil&standalone&write"></script></pre>
+    <pre>http://numbersapi.com/-12344/year?notfound=ceil
+&rArr; 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.</pre>
 
 
 <h3 id="default">Default</h3>
@@ -113,7 +113,7 @@ Restrict the range of values returned to the inclusive range \[**`min`**, **`max
 
 <pre>
 http://numbersapi.com/random?min=10&max=20
-the number of provinces and territories in Canada.
+13 is the number of provinces and territories in Canada.
 </pre>
 
 ### Json
@@ -129,7 +129,7 @@ Include the query parameter `json` or set the HTTP header `Content-Type` to `app
 <pre>
 http://numbersapi.com/random/year?json
 &rArr; {
-    "text": "The year that the century's second and last solar transit of Venus occurs on June 6.",
+    "text": "2012 is the year that the century's second and last solar transit of Venus occurs on June 6.",
     "found": true,
     "number": 2012,
     "type": "year",
