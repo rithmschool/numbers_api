@@ -90,11 +90,11 @@ reader(exports.year, 'models/year/norm/', function(element) {
   if (element.pos !== 'NP') {
     text = text[0].toLowerCase() + text.substring(1);
   }
-  text = 'The year that ' + text;
+  text = 'the year that ' + text;
   if (element.date) {
     text += ' on ' + element.date;
   }
-  element.text = text + '.';
+  element.text = text;
   return element;
 });
 
@@ -105,7 +105,7 @@ reader(exports.trivia, 'models/trivia/norm/', function(element) {
   if (element.manual && element.text) {
     var text = element.text;
     var text_lc = text.toLowerCase();
-    if (text_lc.indexOf('the') !== 0 && text_lc.indexOf('number of') < 0) {
+    if (text_lc.indexOf('the ') !== 0 && text_lc.indexOf('number of ') < 0) {
       text = 'the number of ' + text;
     }
     var first_letter = text.charAt(0);
@@ -135,7 +135,7 @@ reader(exports.math, 'models/math/norm/', function(element) {
   if (element.pos !== 'NP') {
     text = text[0].toLowerCase() + text.substring(1);
   }
-  element.text =  'Is ' + text + '.';
+  element.text = text;
   return element;
 });
 
