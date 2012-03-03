@@ -82,10 +82,6 @@ function getParameterByName(query, name) {
 function processWidgetText(dataJson) {
 	var text = dataJson['text'];
 
-  if (dataJson['type'] !== 'date') {
-    text = 'is ' + text;
-  }
-
 	var htmlEscaped = '<span class="">' + escapeForHtml(text) + '</span>';
 
   htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
