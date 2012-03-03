@@ -8,7 +8,7 @@
 
          "self": false,
 
-         "text": "The atomic number of hydrogen."
+         "text": "The number of dimensions of a line."
 
       },
 
@@ -18,7 +18,7 @@
 
          "self": false,
 
-         "text": "The number of dimensions of a line."
+         "text": "the number of moons orbiting Earth"
 
       }
 
@@ -32,7 +32,7 @@
 
          "self": false,
 
-         "text": "a decade."
+         "text": "the number of years in a decade."
 
       },
 
@@ -42,7 +42,7 @@
 
          "self": false,
 
-         "text": "official inkblots in the Rorschach inkblot test."
+         "text": "the number of official inkblots in the Rorschach inkblot test."
 
       },
 
@@ -52,7 +52,7 @@
 
          "self": false,
 
-         "text": "letters used in the traditional Snellen chart."
+         "text": "the number of letters used in the traditional Snellen chart."
 
       },
 
@@ -62,7 +62,7 @@
 
          "self": false,
 
-         "text": "the Number of kingdoms in Five Dynasties and Ten Kingdoms Period."
+         "text": "the number of kingdoms in Five Dynasties and Ten Kingdoms Period."
 
       },
 
@@ -82,7 +82,7 @@
 
          "self": false,
 
-         "text": "Number of dots in a tetractys."
+         "text": "the Number of dots in a tetractys."
 
       },
 
@@ -126,7 +126,7 @@
 
          "self": false,
 
-         "text": "blessings a religious Jewish person is expected to utter daily."
+         "text": "the number of blessings a religious Jewish person is expected to utter daily."
 
       },
 
@@ -156,26 +156,6 @@
 
          "self": false,
 
-         "text": "The number of tiles in a standard Scrabble set for the languages, English, Arabic, Catalan, Czech, Danish, Esperanto, Finnish, Hungarian, Irish, Latin, Malaysian, Norwegian, Polish, Romanian, Slovak, Slovenian, Spanish, Swedish, Turkish."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "the HTTP status code indicating that the client should continue with its request."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of yards in an American football field (not including the end zones)."
 
       },
@@ -187,16 +167,6 @@
          "self": false,
 
          "text": "The number of runs required for a cricket batsman to score a century, a significant milestone."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of points required for a snooker cueist to score a century break, a significant milestone."
 
       },
 
@@ -230,7 +200,7 @@
 
          "self": false,
 
-         "text": "points on the stylized maple leaf on the Flag of Canada."
+         "text": "the number of points on the stylized maple leaf on the Flag of Canada."
 
       },
 
@@ -240,7 +210,7 @@
 
          "self": false,
 
-         "text": "sides on the Canadian one-dollar coin (a hendecagon, an eleven-sided polygon)."
+         "text": "the number of sides on the Canadian one-dollar coin (a hendecagon, an eleven-sided polygon)."
 
       },
 
@@ -250,7 +220,7 @@
 
          "self": false,
 
-         "text": "denominations of Canadian currency produced in large quantities."
+         "text": "the number of denominations of Canadian currency produced in large quantities."
 
       },
 
@@ -260,7 +230,7 @@
 
          "self": false,
 
-         "text": "legally distinct Crowns existing in the country, with the Monarch being represented separately in each province, as well as at the federal level."
+         "text": "the number of players on a soccer team on the field at a time as well as in a cricket team."
 
       },
 
@@ -270,7 +240,7 @@
 
          "self": false,
 
-         "text": "players on a soccer team on the field at a time as well as in a cricket team."
+         "text": "the number of players in a field hockey team."
 
       },
 
@@ -280,37 +250,7 @@
 
          "self": false,
 
-         "text": "players in a field hockey team."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "players in an American football team on the field at one time during play."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "the number of guns in a gun salute to U.S. Army, Air Force and Marine Corps Brigadier Generals."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of General Orders for Sentries in the Marine Corps and United States Navy."
+         "text": "the number of players in an American football team on the field at one time during play."
 
       },
 
@@ -330,7 +270,7 @@
 
          "self": false,
 
-         "text": "The approximate periodicity of a sunspot cycle."
+         "text": "The approximate periodicity of a sunspot cycle in years."
 
       }
 
@@ -364,7 +304,7 @@
 
          "self": false,
 
-         "text": "basic hues in the color wheel; 3 primary colors (red, yellow, blue), 3 secondary colors (orange, green & purple) and 6 tertiary colors."
+         "text": "the number of basic hues in the color wheel (3 primary colors (red, yellow, blue), 3 secondary colors (orange, green & purple) and 6 tertiary colors)."
 
       },
 
@@ -374,7 +314,7 @@
 
          "self": false,
 
-         "text": "months in a year."
+         "text": "the number of months in a year."
 
       },
 
@@ -384,7 +324,7 @@
 
          "self": false,
 
-         "text": "ounces in a troy pound (used for precious metals)."
+         "text": "the number of ounces in a troy pound (used for precious metals)."
 
       },
 
@@ -394,7 +334,7 @@
 
          "self": false,
 
-         "text": "constellations in the ecliptic (or signs of the zodiac)."
+         "text": "the number of constellations in the ecliptic (or signs of the zodiac)."
 
       },
 
@@ -404,7 +344,7 @@
 
          "self": false,
 
-         "text": "pence in a shilling in the former British currency system."
+         "text": "the number of pence in a shilling in the former British currency system."
 
       },
 
@@ -414,7 +354,7 @@
 
          "self": false,
 
-         "text": "the English number of greatest magnitude that has just one syllable."
+         "text": "the largest number that has just one syllable."
 
       },
 
@@ -424,7 +364,7 @@
 
          "self": false,
 
-         "text": "pairs of ribs normally in the human body."
+         "text": "the pairs of ribs normally in the human body."
 
       },
 
@@ -434,7 +374,7 @@
 
          "self": false,
 
-         "text": "people who have walked on Earth's moon."
+         "text": "the number of people who have walked on Earth's moon."
 
       }
 
@@ -448,17 +388,7 @@
 
          "self": false,
 
-         "text": "witches in a coven, traditionally."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "cards in a suit."
+         "text": "the number of unique ranks in a suit in a pack of cards."
 
       },
 
@@ -469,16 +399,6 @@
          "self": false,
 
          "text": "The number of colonies that formed the United States."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of guns in a gun salute to U.S. Army, Air Force and Marine Corps Major Generals, and Navy and Coast Guard Rear Admirals Upper Half."
 
       },
 
@@ -522,16 +442,6 @@
 
          "self": false,
 
-         "text": "The number of Stations of the Cross."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of muqatta'at in the Qur'an."
 
       },
@@ -552,7 +462,7 @@
 
          "self": false,
 
-         "text": "the earliest that the emancipation of minors can occur in the U.S."
+         "text": "the earliest age that the emancipation of minors can occur in the U.S."
 
       },
 
@@ -563,16 +473,6 @@
          "self": false,
 
          "text": "the minimum age at which one can work in many U.S states."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The approximate atomic weight of nitrogen."
 
       },
 
@@ -602,17 +502,7 @@
 
          "self": false,
 
-         "text": "In traditional British units of weight, the number of pounds in a stone."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of legs on a woodlouse, as well as on Hallucigenia."
+         "text": "the number of pounds in a stone in traditional British units of weight"
 
       },
 
@@ -676,16 +566,6 @@
 
          "self": false,
 
-         "text": "The number of guns in a gun salute to Army, Marine Corps, and Air Force Lieutenant Generals, and Navy and Coast Guard Vice Admirals."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of checkers each side has at the start of a backgammon game."
 
       },
@@ -716,33 +596,13 @@
 
          "self": false,
 
-         "text": "The number of minutes in one quarter of an hour; 15 minutes past or before an hour is often known as quarter past and quarter to, respectively."
+         "text": "The number of minutes in one quarter of an hour"
 
       }
 
    ],
 
    "16": [
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "the minimum age for being allowed an official beginners driver's license with parental consent in many U.S. states and in Canada."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "the age one can obtain a learner's permit."
-
-      },
 
       {
 
@@ -780,17 +640,7 @@
 
          "self": false,
 
-         "text": "The number of teams that qualified for the finals of the FIFA Women's World Cup from 1999 through 2011."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "personality types in the Myers-Briggs classification system."
+         "text": "the number of personality types in the Myers-Briggs classification system."
 
       }
 
@@ -814,7 +664,7 @@
 
          "self": false,
 
-         "text": "In the United Kingdom, the minimum driving age for a car or van."
+         "text": "the minimum driving age for a car or van in the United Kingdom."
 
       },
 
@@ -825,16 +675,6 @@
          "self": false,
 
          "text": "'the least random number' as described at MIT, according to hackers' lore."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of guns in a 17-gun salute to U.S. Army, Air Force and Marine Corps Generals, and Navy and Coast Guard Admirals."
 
       },
 
@@ -878,16 +718,6 @@
 
          "self": false,
 
-         "text": "chapters in the Bhagavad Gita, which is contained in the Mahabharata, which has 18 books."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of holes in a stipulated round of golf."
 
       },
@@ -918,7 +748,7 @@
 
          "self": false,
 
-         "text": "The number of the French department Cher and the Turkish province Bitlis."
+         "text": "the number of levels in hell in the Chinese mythos."
 
       },
 
@@ -928,17 +758,7 @@
 
          "self": false,
 
-         "text": "levels in hell in the Chinese mythos."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "bronze monks the Shaolin temple had in Chinese folklore."
+         "text": "the number of bronze monks the Shaolin temple had in Chinese folklore."
 
       }
 
@@ -952,7 +772,7 @@
 
          "self": false,
 
-         "text": "years very close to 235 lunations."
+         "text": "the number of years in 235 lunations."
 
       },
 
@@ -962,27 +782,7 @@
 
          "self": false,
 
-         "text": "Apostles of Bahá'u'lláh."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The TCP/IP port used for chargen."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The final year a person is a teenager."
+         "text": "the final year a person is a teenager."
 
       }
 
@@ -1006,7 +806,7 @@
 
          "self": false,
 
-         "text": "The first magic number."
+         "text": "The first magic number in physics."
 
       },
 
@@ -1016,17 +816,7 @@
 
          "self": false,
 
-         "text": "The atomic number of helium."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "starts in a a binary star system (a stellar system consisting of two stars orbiting around their center of mass)."
+         "text": "the number of stars in a binary star system (a stellar system consisting of two stars orbiting around their center of mass)."
 
       },
 
@@ -1037,46 +827,6 @@
          "self": false,
 
          "text": "The lowest channel of television in the United States, Canada, Argentina and Mexico on which television signals are broadcast."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In American football, a two-point conversion is a PAT where the ball crosses the goal line via run or pass."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In Association football, the scoring of two goals by one individual in a single match is referred to as a brace."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Brace is also used in hunting to refer to a pair."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "\"Two turtle doves\" is the gift on the second day of Christmas in the carol \"The Twelve Days of Christmas\"."
 
       }
 
@@ -1090,7 +840,7 @@
 
          "self": false,
 
-         "text": "questions in the popular party game Twenty Questions."
+         "text": "the number of questions in the popular party game Twenty Questions."
 
       },
 
@@ -1100,7 +850,7 @@
 
          "self": false,
 
-         "text": "ounces in Venti size coffees at Starbucks coffee shops."
+         "text": "the number of ounces in Venti size coffees at Starbucks coffee shops."
 
       },
 
@@ -1110,7 +860,7 @@
 
          "self": false,
 
-         "text": "baby teeth in the deciduous dentition."
+         "text": "the number of baby teeth in the deciduous dentition."
 
       }
 
@@ -1124,7 +874,7 @@
 
          "self": false,
 
-         "text": "points required to win a game in badminton and table tennis (before 2001)."
+         "text": "the number of points required to win a game in badminton and table tennis (before 2001)."
 
       },
 
@@ -1134,7 +884,7 @@
 
          "self": false,
 
-         "text": "The number of firings in a 21-gun salute honoring Royalty or leaders of countries."
+         "text": "the number of trump cards of the tarot deck if one does not consider The Fool to be a proper trump card."
 
       },
 
@@ -1144,27 +894,7 @@
 
          "self": false,
 
-         "text": "trump cards of the tarot deck if one does not consider The Fool to be a proper trump card."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The standard TCP/IP port number for FTP connection."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "demands which were sent to the Chinese government by the Japanese government of Okuma Shigenobu in 1915."
+         "text": "the number of demands which were sent to the Chinese government by the Japanese government of Okuma Shigenobu in 1915."
 
       }
 
@@ -1178,7 +908,7 @@
 
          "self": false,
 
-         "text": "letters in the Hebrew alphabet."
+         "text": "the number of letters in the Hebrew alphabet."
 
       },
 
@@ -1188,19 +918,10 @@
 
          "self": false,
 
-         "text": "chapters of the Revelation of John in the Bible."
+         "text": "the number of chapters of the Revelation of John in the Bible."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "verses in Surah \"Al Burooj\"(The Zodiac, or Constellations), in the Quran."
-
-      },
 
       {
 
@@ -1218,7 +939,7 @@
 
          "self": false,
 
-         "text": "stars in the Paramount Films logo."
+         "text": "the number of stars in the Paramount Films logo."
 
       },
 
@@ -1242,15 +963,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The standard port number for the Secure Shell protocol."
-
-      },
 
       {
 
@@ -1272,7 +984,7 @@
 
          "self": false,
 
-         "text": "In the film Vantage Point, minutes that all flashbacks take place before the assassination attempt on the president."
+         "text": "the number of minutes that all flashbacks take place before the assassination attempt on the president in the film Vantage Point."
 
       },
 
@@ -1282,7 +994,7 @@
 
          "self": false,
 
-         "text": "crosses on Calvary in the Monty Python film Life Of Brian."
+         "text": "the number of crosses on Calvary in the Monty Python film Life Of Brian."
 
       },
 
@@ -1292,7 +1004,7 @@
 
          "self": false,
 
-         "text": "times Julius Caesar was stabbed."
+         "text": "the number of times Julius Caesar was stabbed."
 
       },
 
@@ -1302,7 +1014,7 @@
 
          "self": false,
 
-         "text": "chromosomes normal human sex cells have."
+         "text": "the number of chromosomes normal human sex cells have."
 
       }
 
@@ -1430,15 +1142,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of chromium."
-
-      },
 
       {
 
@@ -1470,7 +1173,7 @@
 
          "self": false,
 
-         "text": "The number of points needed to win a set in volleyball under rally scoring rules (except for the fifth set), so long as the losing team's score is two less than the winning team's score (i.e., if the winning team scores 25 points, the losing team can have no more than 23 points)."
+         "text": "The number of points needed to win a set in volleyball under rally scoring rules."
 
       },
 
@@ -1504,15 +1207,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The usual TCP port for SMTP."
-
-      },
 
       {
 
@@ -1521,16 +1215,6 @@
          "self": false,
 
          "text": "The (critical) number of Florida electoral votes for the 2000 U.S. presidential election."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Doubs."
 
       }
 
@@ -1564,7 +1248,7 @@
 
          "self": false,
 
-         "text": "Often the number of episodes in a television program each year; this allows one new show per week for half the year, and one rerun per week for the rest of the year."
+         "text": "the number of episodes in a television program each year (usually)."
 
       },
 
@@ -1594,19 +1278,10 @@
 
          "self": false,
 
-         "text": "The number of bones in the normal human Foot and Ankle."
+         "text": "The number of bones in the normal human foot and ankle."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of iron."
-
-      },
 
       {
 
@@ -1628,7 +1303,7 @@
 
          "self": false,
 
-         "text": "The number of outs in a regulation baseball game for each team at all adult levels, including professional play, is 27."
+         "text": "The number of outs in a regulation baseball game for each team at all adult levels."
 
       },
 
@@ -1658,39 +1333,10 @@
 
          "self": false,
 
-         "text": "The current number of Amendments to the United States Constitution."
+         "text": "The current number of Amendments to the United States Constitution (2012 February)."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct-dial phone calls to South Africa."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Alternate name for The Hunt, a book by William Diehl."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Eure."
-
-      },
 
       {
 
@@ -1728,9 +1374,10 @@
 
          "self": false,
 
-         "text": "number of grains in some Buddhist rosary (108 divided by 4)."
+         "text": "the number of grains in some Buddhist rosary (108 divided by 4)."
 
       },
+
 
       {
 
@@ -1738,17 +1385,7 @@
 
          "self": false,
 
-         "text": "The atomic number of cobalt."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "moons of the planet Uranus."
+         "text": "the number of moons of the planet Uranus."
 
       }
 
@@ -1776,25 +1413,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The Saros number of the solar eclipse series which began on -1910 March 22 and ended on -630 April 28."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The Saros number of the lunar eclipse series which began on -1915 June 27 and ended on -581 September 6."
-
-      },
 
       {
 
@@ -1803,16 +1422,6 @@
          "self": false,
 
          "text": "The number of days in the shortest month of the Gregorian calendar, February (except in leap years, when there are twenty-nine)."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The common name for the parrot 'Barnardius zonarius semitorquatus', widely distributed in Western Australia and South Australia."
 
       },
 
@@ -1852,7 +1461,18 @@
 
          "self": false,
 
-         "text": "The number of the French department Eure-et-Loir."
+         "text": "the number of grams in an ounce (approximately), and used as such in the illegal drug trade."
+
+      },
+
+
+      {
+
+         "manual": true,
+
+         "self": false,
+
+         "text": "the number of days the curing time of concrete is classically considered to be."
 
       },
 
@@ -1862,47 +1482,7 @@
 
          "self": false,
 
-         "text": "Approximately the number of grams in an ounce, and used as such in the illegal drug trade."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic mass of silicon."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of nickel."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "days the curing time of concrete is classically considered to be."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "days in the average human menstrual cycle."
+         "text": "the number of days in the average human menstrual cycle."
 
       }
 
@@ -1916,39 +1496,10 @@
 
          "self": false,
 
-         "text": "The amount of attributes existing according to The Strokes in You Only Live Once."
+         "text": "The number of attributes existing according to The Strokes in You Only Live Once."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The designation of Interstate 29, a U. S. freeway that runs from Missouri to North Dakota."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department of Finistère."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of suras in the Qur'an that begin with muqatta'at."
-
-      },
 
       {
 
@@ -1970,35 +1521,8 @@
 
       },
 
-      {
 
-         "manual": true,
 
-         "self": false,
-
-         "text": "The retired jersey number of Rod Carew."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The Olympiad number of the 2008 Summer Olympics."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of CMS Baseball Star John \"Zach\" \"Jay-Z\" England."
-
-      },
 
       {
 
@@ -2010,15 +1534,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of copper."
-
-      },
 
       {
 
@@ -2026,7 +1541,7 @@
 
          "self": false,
 
-         "text": "days it takes Saturn to orbit the Sun."
+         "text": "the number of days it takes Saturn to orbit the Sun."
 
       },
 
@@ -2054,15 +1569,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Golden Goddesses of Hylian."
-
-      },
 
       {
 
@@ -2070,17 +1576,7 @@
 
          "self": false,
 
-         "text": "The number of the famous NASCAR stock car that Dale Earnhardt drove for nearly 20 years before his death in 2001."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "consecutive successful attempts in a hat trick in sports."
+         "text": "the number of consecutive successful attempts in a hat trick in sports."
 
       },
 
@@ -2120,7 +1616,7 @@
 
          "self": false,
 
-         "text": "is the number of words or phrases in a Tripartite motto."
+         "text": "the number of words or phrases in a Tripartite motto."
 
       },
 
@@ -2150,7 +1646,7 @@
 
          "self": false,
 
-         "text": "notes in a triad, the basic form of any chord."
+         "text": "the number of notes in a triad, the basic form of any chord."
 
       },
 
@@ -2160,9 +1656,10 @@
 
          "self": false,
 
-         "text": "semicircular canals a human ear has."
+         "text": "the number of semicircular canals a human ear has."
 
       },
+
 
       {
 
@@ -2170,17 +1667,7 @@
 
          "self": false,
 
-         "text": "the atomic number of lithium."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "spatial dimensions we perceive our universe to have."
+         "text": "the number of spatial dimensions we perceive our universe to have."
 
       }
 
@@ -2194,7 +1681,7 @@
 
          "self": false,
 
-         "text": "The number of days in the months April, June, September and November (and in unusual circumstances February—see February 30)."
+         "text": "The number of days in the months April, June, September and November (and in unusual circumstances February)."
 
       },
 
@@ -2228,25 +1715,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct dial phone calls to Greece."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The house number of 30 St Mary Axe (The Gherkin)."
-
-      },
 
       {
 
@@ -2264,29 +1733,10 @@
 
          "self": false,
 
-         "text": "The number of the French department Gard."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of variations in Bach's Goldberg Variations."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of zinc."
-
-      },
 
       {
 
@@ -2296,17 +1746,8 @@
 
          "text": "The number of uprights that formed the Sarsen Circle at Stonehenge, also the supposed number of holes forming the arrays of Y and Z Holes at Stonehenge."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of New Jersey Devils goalie, Martin Brodeur."
-
       }
+
 
    ],
 
@@ -2332,25 +1773,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct-dial phone calls to the Netherlands."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "A type of game played on a backgammon board."
-
-      },
 
       {
 
@@ -2360,27 +1783,8 @@
 
          "text": "The number of flavors of Baskin-Robbins ice cream and the shops are called 31 Ice Cream in Japan."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Haute-Garonne."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of gallium."
-
       }
+
 
    ],
 
@@ -2426,35 +1830,8 @@
 
       },
 
-      {
 
-         "manual": true,
 
-         "self": false,
-
-         "text": "ASCII and Unicode code point for space."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct dial phone calls to Belgium."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The caliber .32 ACP."
-
-      },
 
       {
 
@@ -2466,25 +1843,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Gers."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of germanium."
-
-      },
 
       {
 
@@ -2500,85 +1858,13 @@
 
    "33": [
 
-      {
 
-         "manual": true,
 
-         "self": false,
 
-         "text": "The number of a Sprint Cup car owned by Richard Childress Racing and currently driven by Clint Bowyer."
 
-      },
 
-      {
 
-         "manual": true,
 
-         "self": false,
-
-         "text": "Race number of Motorcycle racer Marco Melandri."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "On most occasions, the traditional number of racers in the Indianapolis 500."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "A song by The Smashing Pumpkins on their album, Mellon Collie and the Infinite Sadness."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The title of the first episode of the 2004 Battlestar Galactica television series in which the Cylons came every 33 minutes."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The jersey number of Tom Cruise's character in the 1983 film All The Right Moves."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct-dial phone calls to France."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number printed on all Rolling Rock beer labels."
-
-      },
 
       {
 
@@ -2590,15 +1876,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of arsenic."
-
-      },
 
       {
 
@@ -2614,15 +1891,6 @@
 
    "34": [
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The traffic code of Istanbul, Turkey."
-
-      },
 
       {
 
@@ -2630,43 +1898,15 @@
 
          "self": false,
 
-         "text": "The number of the French department Hérault."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The lucky number of Victor Pelevin's protagonist Stepan Mikhailov in the novel Numbers, published as part of DTT(NN) ."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of selenium."
+         "text": "The lucky number of Victor Pelevin's protagonist Stepan Mikhailov in the novel Numbers."
 
       }
+
 
    ],
 
    "35": [
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of bromine."
-
-      },
 
       {
 
@@ -2674,19 +1914,10 @@
 
          "self": false,
 
-         "text": "mm in the basic film gauge most commonly used for both analog photography and motion pictures."
+         "text": "the basic film gauge in mm most commonly used for both analog photography and motion pictures."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Licence Plate code of Izmir/Turkey."
-
-      },
 
       {
 
@@ -2702,25 +1933,7 @@
 
    "36": [
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "Retired number of former baseball players Robin Roberts of the Phillies and Gaylord Perry of the Giants."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Retired number of former basketball player Lloyd Neal of the Portland Trail Blazers."
-
-      },
 
       {
 
@@ -2738,49 +1951,12 @@
 
          "self": false,
 
-         "text": "The number of the French department Indre."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Perfect score on the ACT."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of krypton ."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Many early computers featured a 36-bit word length ."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "ASCII code for the symbol '$' ."
+         "text": "the perfect score on the ACT."
 
       }
+
+
+
 
    ],
 
@@ -2802,27 +1978,7 @@
 
          "self": false,
 
-         "text": "The number of the French department Indre-et-Loire."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of slots in European Roulette (numbered 0 through 36, the 00 is not used in European roulette as it is in American roulette)."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of rubidium."
 
       },
 
@@ -2876,29 +2032,10 @@
 
          "self": false,
 
-         "text": "The number of the French department Isère."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "surviving plays written by William Shakespeare."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of strontium."
+         "text": "the number of surviving plays written by William Shakespeare."
 
       }
+
 
    ],
 
@@ -2914,15 +2051,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The actual number of lashes given by the Sanhedrin to a person meted the punishment of 40 lashes."
-
-      },
 
       {
 
@@ -2934,25 +2062,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of statements on Anglican Church doctrine, Thirty-Nine Articles."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of yttrium."
-
-      },
 
       {
 
@@ -2992,37 +2102,9 @@
 
          "text": "The number of Scud missiles which Iraq fired at Israel during the Gulf War in 1991."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct-dialed phone calls to Italy."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Japanese Internet chat slang for \"thank you\" when written with numbers (3=san 9=kyu)."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Jura."
-
       }
+
+
 
    ],
 
@@ -3034,7 +2116,7 @@
 
          "self": false,
 
-         "text": "legs most furniture has"
+         "text": "the number of legs most furniture has"
 
       },
 
@@ -3054,9 +2136,13 @@
 
          "self": false,
 
-         "text": "It is the number of bits in a nibble, equivalent to half a byte."
+         "text": "the number of bits in a nibble, equivalent to half a byte."
 
       },
+
+
+
+
 
       {
 
@@ -3064,47 +2150,7 @@
 
          "self": false,
 
-         "text": "the sacred number of the Zia, an indigenous tribe located in the U.S. State of New Mexico."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In basketball, the number four is used to designate the Power Forward position, often referred to as \"The four spot\"."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In rowing, a four refers to a boat for four rowers, with or without coxswain."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In baseball scoring, number 4 is assigned to the second baseman."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of characters in a canonical four-character idiom."
+         "text": "The number of characters in a canonical four-character idiom in Chinese."
 
       },
 
@@ -3154,7 +2200,7 @@
 
          "self": false,
 
-         "text": "chambers the mammalian heart consists of."
+         "text": "the number of chambers the mammalian heart consists of."
 
       },
 
@@ -3164,19 +2210,10 @@
 
          "self": false,
 
-         "text": "human blood groups (A, B, O, AB)."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of beryllium."
+         "text": "the number of human blood groups (A, B, O, AB)."
 
       }
+
 
    ],
 
@@ -3188,29 +2225,11 @@
 
          "self": false,
 
-         "text": "In football (soccer), generally considered the number of points that a Premier League team (or, by extension, a team in any 20-team league with a standard home-and-away season) needs to avoid relegation."
+         "text": "the number of points that a Premier League team needs to avoid relegation in soccer."
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "In tennis, the number the third point gained in a game."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "A song by Dave Matthews Band."
-
-      },
 
       {
 
@@ -3222,25 +2241,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for direct dial international phone calls to Romania."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "\"40\", a 1983 song by U2 from their album War."
-
-      },
 
       {
 
@@ -3280,91 +2281,19 @@
 
          "text": "The number of weeks for an average term of pregnancy, counting from the woman’s last menstrual period."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of zirconium."
-
       }
+
 
    ],
 
    "41": [
 
-      {
 
-         "manual": true,
 
-         "self": false,
 
-         "text": "The name of an independent documentary about Nicholas O'Neill, the youngest victim of the Station nightclub fire."
 
-      },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "Charlton Heston's designation as a galley slave in the film Ben-Hur."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code number given to Tetsuo Shima by scientists in the manga and 1988 film Akira."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Jonathan Pryce's destination level for his apartment in Terry Gilliam's Brazil."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Billy Cole's jersey number in the Tony Scott film The Last Boy Scout."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The victim number that appears on Dr. Lucy Lynskey's forehead in the Peter Jackson film The Frighteners."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The distance in kilometers when Ripcord and Duke from the 2009 film G.I."
-
-      },
 
       {
 
@@ -3382,7 +2311,7 @@
 
          "self": false,
 
-         "text": "he number of soldiers in The Expendables (2010 film) tactor Eric Roberts laments to his subordinates about having been killed by star Sylvester Stallone in his escape from their island."
+         "text": "the number of soldiers in The Expendables (2010 film) tactor Eric Roberts laments to his subordinates about having been killed by star Sylvester Stallone in his escape from their island."
 
       },
 
@@ -3396,35 +2325,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The retired number of the back of the uniform worn by Hall of Famers Tom Seaver of the New York Mets and by Eddie Mathews of the Atlanta Braves."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "George W. Bush's nickname for his father, George H. W. Bush, the 41st President of the United States."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Loir-et-Cher."
-
-      },
 
       {
 
@@ -3442,7 +2343,7 @@
 
          "self": false,
 
-         "text": "The number of times Paul McCartney sings the phrase \"Let It Be\" in the Beatles #1 hit Let It Be."
+         "text": "The number of times Paul McCartney sings the phrase \"Let It Be\" in the Beatles' hit Let It Be."
 
       }
 
@@ -3450,15 +2351,6 @@
 
    "42": [
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of molybdenum."
-
-      },
 
       {
 
@@ -3470,25 +2362,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The jersey number of Jackie Robinson, which is the only number retired by all Major League Baseball teams."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The jersey number of basketball Hall of Famer and one of the 50 Greatest Players in NBA History James Worthy, small forward for the Los Angeles Lakers, who retired his jersey number in 1995."
-
-      },
 
       {
 
@@ -3516,19 +2390,10 @@
 
          "self": false,
 
-         "text": "US gallons in a barrel of oil."
+         "text": "the number of US gallons in a barrel of oil."
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The name of a Texan trick-taking game played with dominoes (see 42 (dominoes))."
-
-      },
 
       {
 
@@ -3546,7 +2411,7 @@
 
          "self": false,
 
-         "text": "Using the encoding A=1, B=2, C=3, etc., the sum of the codes of the letters in the words \"BIG BANG\"."
+         "text": "the sum of the codes of the letters in the words \"BIG BANG\" using the encoding A=1, B=2, C=3, etc."
 
       },
 
@@ -3564,15 +2429,6 @@
 
    "43": [
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number for Richard Petty's race car when he won his 7 Winston Cup Championships."
-
-      },
 
       {
 
@@ -3588,35 +2444,8 @@
 
    "44": [
 
-      {
 
-         "manual": true,
 
-         "self": false,
-
-         "text": "A number of football legends at Syracuse University, worn most notably by Jim Brown, Ernie Davis, Floyd Little, and Rob Konrad."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The code for international direct dial phone calls to the United Kingdom."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The largest number for which Wolfram Alpha offers a visual representation."
-
-      },
 
       {
 
@@ -3626,31 +2455,13 @@
 
          "text": "The number of candles in a box of Hanukkah candles."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of ruthenium."
-
       }
+
 
    ],
 
    "45": [
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of rhodium."
-
-      },
 
       {
 
@@ -3658,17 +2469,7 @@
 
          "self": false,
 
-         "text": "The number of the French department Loiret."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "In years of marriage, the sapphire wedding anniversary."
+         "text": "the sapphire wedding anniversary in years of marriage."
 
       }
 
@@ -3676,25 +2477,7 @@
 
    "46": [
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The total of books in the Old Testament, Catholic version, if the Book of Lamentations is counted as a book separate from the Book of Jeremiah."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number corresponding to the word \"ADAM\" where A=1, D=4, M=40 (on the analogy of the numeric values of letters in ancient alphabets, such as Hebrew and Greek)."
-
-      },
 
       {
 
@@ -3706,15 +2489,7 @@
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The name of a defensive scheme used in American football; see 46 defense."
-
-      },
 
       {
 
@@ -3722,49 +2497,11 @@
 
          "self": false,
 
-         "text": "The code for international direct dial phone calls to Sweden."
+         "text": "The number of samurai, out of 47, who carried out the attack in the historical Ako vendetta."
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of samurai, out of 47, who carried out the attack in the historical Ako vendetta; sometimes referred to as the 46 Ronins to discount the one samurai forced to turn back."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "46 is the number of the City Chevrolet and Superflo cars driven by Cole Trickle in the movie Days of Thunder."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Lot."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of palladium."
-
-      },
 
       {
 
@@ -3774,17 +2511,8 @@
 
          "text": "The number of human chromosomes."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The (decimal) value of the ASCII code for the period (full stop)."
-
       }
+
 
    ],
 
@@ -3796,7 +2524,17 @@
 
          "self": false,
 
-         "text": "The atomic number of silver is 47."
+         "text": "the number of El-Aurians Scotty manages to beam up before their ship is destroyed by the energy ribbon"
+
+      },
+
+      {
+
+         "manual": true,
+
+         "self": false,
+
+         "text": "the total numbers of balloons that a player can collect in Rareware's Nintendo 64 game Diddy Kong Racing"
 
       }
 
@@ -3804,55 +2542,9 @@
 
    "48": [
 
-      {
 
-         "manual": true,
 
-         "self": false,
 
-         "text": "The code for international direct dial phone calls to Poland."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The model number of the HP-48 S/SX/G/GX/G+/GII."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Lozère."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "A model of Harley-Davidson in the Sportster line."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of cadmium."
-
-      },
 
       {
 
@@ -3876,17 +2568,8 @@
 
          "text": "The number of days and night Siddhartha Gautama spent meditating as a holy man."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of indium."
-
       }
+
 
    ],
 
@@ -3908,29 +2591,11 @@
 
          "self": false,
 
-         "text": "basic \"pillars\" of Islam."
+         "text": "the number of basic \"pillars\" of Islam."
 
       },
 
-      {
 
-         "manual": true,
-
-         "self": false,
-
-         "text": "Members of The Nation of Gods and Earths, a primarily African American religious organization, call themselves the \"Five-Percenters\" because they believe that only 5% of mankind is truly enlightened."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of boron."
-
-      },
 
       {
 
@@ -3948,7 +2613,7 @@
 
          "self": false,
 
-         "text": "interlocked rings in the symbol of the Olympic Games, representing the number of inhabited continents represented by the Olympians (counting North America and South America as one continent)."
+         "text": "the number of interlocked rings in the symbol of the Olympic Games, representing the number of inhabited continents represented by the Olympians (counting North America and South America as one continent)."
 
       },
 
@@ -3972,15 +2637,6 @@
 
       },
 
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "An informal term for the British Security Service, MI5."
-
-      },
 
       {
 
@@ -3988,7 +2644,7 @@
 
          "self": false,
 
-         "text": "babies born in a quintuplet."
+         "text": "the number of babies born in a quintuplet."
 
       },
 
@@ -4092,7 +2748,7 @@
 
          "self": false,
 
-         "text": "In millimeters, the focal length of the normal lens in 35 mm photography."
+         "text": "the focal length in millimeters of the normal lens in 35 mm photography."
 
       },
 
@@ -4102,7 +2758,7 @@
 
          "self": false,
 
-         "text": "In years of marriage, the gold or \"golden\" wedding anniversary."
+         "text": "the gold or \"golden\" wedding anniversary in years of marriage."
 
       },
 
@@ -4114,61 +2770,16 @@
 
          "text": "The speed limit, in kilometers per hour, of Australian roads with unspecified limits."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The atomic number of tin."
-
       }
+
 
    ],
 
    "51": [
 
-      {
 
-         "manual": true,
 
-         "self": false,
 
-         "text": "The code for international direct dial phone calls to Peru."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Part of the title of a collection of stories by Lord Dunsany, Fifty-One Tales."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "A brand of pastis (anise liqueur) manufactured by Pernod Ricard."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "Year identifier used on motor vehicles registered in the UK between 1 September 2001 and 28 February 2002."
-
-      },
 
       {
 
@@ -4746,16 +3357,6 @@
 
          "text": "The minimum wind speed (mph) needed to issue a Severe Thunderstorm Warning."
 
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Nièvre."
-
       }
 
    ],
@@ -5234,16 +3835,6 @@
 
          "self": false,
 
-         "text": "The number of the French department Puy-de-Dôme."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
          "text": "The number of groats in a guinea in British pre-decimal currency."
 
       },
@@ -5369,16 +3960,6 @@
          "self": false,
 
          "text": "The number of classical arts listed in many Indian scriptures."
-
-      },
-
-      {
-
-         "manual": true,
-
-         "self": false,
-
-         "text": "The number of the French department Pyrénées-Atlantiques."
 
       },
 
