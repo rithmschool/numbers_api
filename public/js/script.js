@@ -229,7 +229,9 @@ $(function() {
 
 	// Listen for hash changes to keep UI in sync and on page load as well
 	$(window).on('hashchange', updateAllFromHash);
-	update_history('42');
+	if (!window.location.hash) {
+		update_history('42');
+	}
 	setTimeout(updateAllFromHash, 0);
 
   var $prev_selected = undefined;
