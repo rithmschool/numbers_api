@@ -67,37 +67,73 @@ function escapeForHtml(text) {
 	return $('<div>').text(text).html();
 }
 
-function processWidgetText(text, type) {
+// From http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
+function getParameterByName(query, name) {
+	name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+	var regexS = "[\\?&]" + name + "=([^&#]*)";
+	var regex = new RegExp(regexS);
+	var results = regex.exec(query);
+	if(results == null)
+		return "";
+	else
+		return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+var MONTH_NAMES = 'January February March April May June July August September October November December'.split(' ');
+function dateToString(date) {
+	return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
+}
+
+function processWidgetText(dataJson) {
+	var text = dataJson['text'];
+
+	// ensure initial lower case and ending period
 	var lowered = text[0].toLowerCase() + text.substr(1);
 	if (lowered[lowered.length - 1] === '.') {
 		lowered = lowered.substr(0, lowered.length - 1);
 	}
+
+  // Superscript/subscript formatting
   lowered.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
   lowered.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
-  // TODO: Get this to work properly
-  var verb = (type === 'date' ? 'was' : 'is');
-	return '<span class="boilerplate"> ' + verb + ' ' + '<span class="script">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
+
+	// Special date formatting for "January 1 was the day that..." (probably
+	// should TODO standalone)
+	var prefix = 'is';
+	if (dataJson['type'] === 'date') {
+		verb = '';
+		var date = new Date(2004, 1, dataJson['number']);
+		prefix = dateToString(date) + ' was ';
+	}
+
+	return '<span class="boilerplate"> ' + prefix + ' ' + '<span class="">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
 }
 
 function update_result(url, $result) {
+	// TODO: Do this properly by parsing keys of query string
+	//var queryRegex = /\?(.+)/.exec(url);
+	//var wantJson = (queryRegex && getParameterByName(queryRegex[1], 'json'));
+
+	var wantJson = (url.indexOf('json') !== -1);
+
 	$.ajax({
 		url: url,
-		dataType: 'text',
+		dataType: 'json',
+		headers: { 'Content-Type': 'application/json' },
 		success: function(data, httpStatus, xhr) {
 			var contentType = xhr.getResponseHeader('Content-Type');
 			if (contentType.indexOf('text/html') !== -1) {
 				return;
 			}
 
-			if (contentType.indexOf('text/plain') !== -1) {
-				data = processWidgetText(data);
-			}
+			var type = data['type'];
+			var factText = wantJson ? JSON.stringify(data, null, ' ') : processWidgetText(data);
 
 			var $text = $('#result-temporary-text');
 			$text
 				.css('opacity', 0)
-				.html(data)
-				.toggleClass('script', contentType.indexOf('text/plain') === -1)
+				.html(factText)
+				.toggleClass('script', wantJson)
 				.css('marginTop', $text.height() / -2)  // vertically centered (top 50% + abs position)
 				.animate({ opacity: 1.0 }, 300);
 
