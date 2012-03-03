@@ -93,10 +93,6 @@ function processWidgetText(dataJson) {
 		lowered = lowered.substr(0, lowered.length - 1);
 	}
 
-  // Superscript/subscript formatting
-  lowered.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
-  lowered.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
-
 	// Special date formatting for "January 1 was the day that..." (probably
 	// should TODO standalone)
 	var prefix = 'is';
@@ -106,7 +102,11 @@ function processWidgetText(dataJson) {
 		prefix = dateToString(date) + ' was ';
 	}
 
-	return '<span class="boilerplate"> ' + prefix + ' ' + '<span class="">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
+	var htmlEscaped = '<span class="boilerplate"> ' + prefix + ' ' + '<span class="">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
+
+  htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
+  htmlEscaped = htmlEscaped.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
+  return htmlEscaped;
 }
 
 function update_result(url, $result) {
