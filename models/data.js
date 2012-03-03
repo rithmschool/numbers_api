@@ -102,16 +102,20 @@ exports.trivia = {};
 var trivia_path = 'models/trivia/';
 reader(exports.trivia, 'models/trivia/norm/', function(element) {
   // TODO: include back non-manual results
-  if (element.manual) {
+  if (element.manual && element.text) {
     var text = element.text;
+    var text_lc = text.toLowerCase();
+    if (text_lc.indexOf('the') !== 0 && text_lc.indexOf('number of') < 0) {
+      text = 'the number of ' + text;
+    }
     var first_letter = text.charAt(0);
     // uncapitalize the first letter. this should be okay for manual results since the first letter should be the word 'the'
     if (first_letter === first_letter.toUpperCase()) {
       text = first_letter.toLowerCase() + text.substring(1);
     }
     // add a period if it does not exist
-    if (text.substring(text.length-1) !== '.') {
-      text = text.substring(text.length-1);
+    if (text.substring(text.length-1) === '.') {
+      text = text.substring(0, text.length-1);
     }
     element.text = text
     return element;

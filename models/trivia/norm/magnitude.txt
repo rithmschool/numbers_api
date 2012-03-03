@@ -10,7 +10,6 @@
 	"10": [{"text": "The number of fingers on a pair of human hands", "manual": true}],
 	"23": [{"text": "The number of enigma that plays a prominent role in the plot of The Illuminatus! Trilogy by Robert Shea and Robert Anton Wilson.", "manual": true}],
 	"26": [{"text": "The number of letters in the Latin-derived English alphabet.", "manual": true}],
-	"42": [{"text": "The number of Answer to the Ultimate Question of Life, the Universe, and Everything.", "manual": true}],
 	"47": [{"text": "The number of phonemes in English phonology in Received Pronunciation.", "manual": true}],
 	"100": [{"text": "The number of common administrative grouping unit of homesteads in Northern Europe and Great Britain.", "manual": true}],
 	"128": [{"text": "The number of characters in the ASCII character set.", "manual": true}],
