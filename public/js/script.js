@@ -79,33 +79,18 @@ function getParameterByName(query, name) {
 		return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-var MONTH_NAMES = 'January February March April May June July August September October November December'.split(' ');
-function dateToString(date) {
-	return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
-}
-
 function processWidgetText(dataJson) {
 	var text = dataJson['text'];
 
-	// ensure initial lower case and ending period
-	var lowered = text[0].toLowerCase() + text.substr(1);
-	if (lowered[lowered.length - 1] === '.') {
-		lowered = lowered.substr(0, lowered.length - 1);
-	}
+  if (dataJson['type'] !== 'date') {
+    text = 'is ' + text;
+  }
 
-	// Special date formatting for "January 1 was the day that..." (probably
-	// should TODO standalone)
-	var prefix = 'is';
-	if (dataJson['type'] === 'date') {
-		verb = '';
-		var date = new Date(2004, 0, dataJson['number']);
-		prefix = dateToString(date) + ' was ';
-	}
-
-	var htmlEscaped = '<span class="boilerplate"> ' + prefix + ' ' + '<span class="">' + escapeForHtml(lowered) + '</span><span class="boilerplate">.</span>';
+	var htmlEscaped = '<span class="">' + escapeForHtml(text) + '</span>';
 
   htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
   htmlEscaped = htmlEscaped.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
+
   return htmlEscaped;
 }
 

@@ -67,6 +67,42 @@ function getRandomApiNum(type, options) {
   }
 }
 
+var MONTH_NAMES = 'January February March April May June July August September October November December'.split(' ');
+function dateToString(date) {
+	return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
+}
+function getSentence(fragment, number, data, type) {
+  var text = data.text;
+  if (fragment !== undefined) {
+    return text;
+  }
+
+  if (type === 'math') {
+    return '' + number + ' is ' + text + '.';
+  } else if (type === 'trivia') {
+    return '' + number + ' is ' + text + '.';
+  } else if (type === 'date') {
+    var date = new Date(2004, 0, number);
+    if (data.date) {
+      text = dateToString(date) + ' was the day in ' + data.date + ' that ' + text;
+    } else {
+      text = dateToString(date) + ' was the day that ' + text;
+    }
+    return text + '.';
+  } else if (type === 'year') {
+    var currentYear = (new Date()).getFullYear();
+    if (number <= currentYear) {
+      text = '' + number + ' was the year that ' + text;
+    } else {
+      text = '' + number + ' will be the year that ' + text;
+    }
+    if (data.date) {
+      text += ' on ' + data.date;
+    }
+    return text + '.';
+  }
+}
+
 function getDefaultMsg(number, type) {
 	var mathMsgs = _.map([
 		'an uninteresting number',
@@ -202,10 +238,12 @@ exports.getFact = function(number, type, options) {
 	// number or NaN
 
 	var ret = data[type][number];
+
   if (ret instanceof Array) {
     ret = randomChoice(ret);
     if (ret !== undefined && 'text' in ret) {
       return apiExtend(ret, {
+        text: getSentence(options.fragment, number, ret, type),
 				number: number,
 				found: true,
 				type: type,
@@ -225,7 +263,9 @@ exports.getFact = function(number, type, options) {
 		var index = _.sortedIndex(dataKeys[type], number);
 		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
 		var adjustedNum = dataPairs[type][index].string;
-		return apiExtend(randomChoice(data[type][adjustedNum]), {
+    ret = randomChoice(data[type][adjustedNum]);
+		return apiExtend(ret, {
+      text: getSentence(options.fragment, adjustedNum, ret, type),
 			number: adjustedNum,
 			found: false,
 			type: type,
