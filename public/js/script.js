@@ -79,9 +79,7 @@ function getParameterByName(query, name) {
 		return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-function processWidgetText(dataJson) {
-	var text = dataJson['text'];
-
+function processWidgetText(text) {
 	var htmlEscaped = '<span class="">' + escapeForHtml(text) + '</span>';
 
   htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
@@ -91,30 +89,24 @@ function processWidgetText(dataJson) {
 }
 
 function update_result(url, $result) {
-	// TODO: Do this properly by parsing keys of query string
-	//var queryRegex = /\?(.+)/.exec(url);
-	//var wantJson = (queryRegex && getParameterByName(queryRegex[1], 'json'));
-
-	var wantJson = (url.indexOf('json') !== -1);
-
 	$.ajax({
 		url: url,
-		dataType: 'json',
-		headers: { 'Content-Type': 'application/json' },
+		dataType: 'text',
 		success: function(data, httpStatus, xhr) {
 			var contentType = xhr.getResponseHeader('Content-Type');
 			if (contentType.indexOf('text/html') !== -1) {
 				return;
 			}
 
-			var type = data['type'];
-			var factText = wantJson ? JSON.stringify(data, null, ' ') : processWidgetText(data);
+			if (contentType.indexOf('text/plain') !== -1) {
+				data = processWidgetText(data);
+			}
 
 			var $text = $('#result-temporary-text');
 			$text
 				.css('opacity', 0)
-				.html(factText)
-				.toggleClass('script', wantJson)
+				.html(data)
+				.toggleClass('script', contentType.indexOf('text/plain') === -1)
 				.css('marginTop', $text.height() / -2)  // vertically centered (top 50% + abs position)
 				.animate({ opacity: 1.0 }, 300);
 
