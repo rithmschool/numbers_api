@@ -71,9 +71,10 @@ var MONTH_NAMES = 'January February March April May June July August September O
 function dateToString(date) {
 	return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
 }
-function getSentence(fragment, number, data, type) {
+
+function getSentence(wantFragment, number, data, type) {
   var text = data.text;
-  if (fragment !== undefined) {
+  if (wantFragment !== undefined) {  // Because wantFragment could be a query field value
     return text;
   }
 
@@ -100,27 +101,31 @@ function getSentence(fragment, number, data, type) {
   }
 }
 
-function getDefaultMsg(number, type) {
-	var mathMsgs = _.map([
+function getDefaultMsg(number, type, options) {
+	var mathMsgs = [
 		'an uninteresting number',
 		'a plain old number',
 		'a boring number',
 		'a most unremarkable number',
-	], function(val) { return val; });
+	];
 
 	var defaultMsgs = {
 		'math': mathMsgs,
 		'trivia': mathMsgs,  // TODO Actually come up with trivia defaults
-		'date': ['ERROR: Need to finish mining. Should be no default dates.'],
+		'date': ['no newsworthy events happened'],
 		'year': [
-			'nothing remarkable happened.',
-			'the Earth probably made about one revolution around the Sun.',
-			'nothing interesting came to pass.',
-			'we do not know what happened.',
+			'nothing remarkable happened',
+			'the Earth probably went around the Sun',
+			'nothing interesting came to pass',
+			'we do not know what happened',
 		],
 	}[type];
 
-	return randomChoice(defaultMsgs);
+	var data = {
+		text: randomChoice(defaultMsgs),
+	};
+
+	return getSentence(options.fragment, number, data, type);
 }
 
 // Mapping of meaning to query param value name
@@ -251,7 +256,7 @@ exports.getFact = function(number, type, options) {
 	// Handle the case of number not found
 	if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
 		return {
-			text: options[QUERY_DEFAULT] || getDefaultMsg(number, type),
+			text: options[QUERY_DEFAULT] || getDefaultMsg(number, type, options),
 			number: number,
 			found: false,
 			type: type,
