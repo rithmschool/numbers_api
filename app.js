@@ -1,3 +1,9 @@
+var fs = require('fs');
+
+// make a directory for log files if it does not exist
+if (!fs.existsSync('logs')) {
+  fs.mkdirSync('logs', 0777);
+}
 
 // Module dependencies.
 
@@ -6,7 +12,6 @@ var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
 var mustache = require('mustache');
 var markdown = require('discount');
-var fs = require('fs');
 
 // fake number of viistors
 var BASE_VISITOR_TIME = new Date(1330560000000);
