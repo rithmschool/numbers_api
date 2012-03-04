@@ -218,8 +218,9 @@ $(function() {
 	//});
 
 	// Listen for hash changes to keep UI in sync and on page load as well
+	// TODO: The leading dot check is a hack to prevent addThis hash tags
 	$(window).on('hashchange', updateAllFromHash);
-	if (!window.location.hash) {
+	if (!window.location.hash || window.location.hash[1] === '.') {
 		update_history('42');
 	}
 	setTimeout(updateAllFromHash, 0);
