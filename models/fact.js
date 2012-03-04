@@ -85,7 +85,11 @@ function getSentence(wantFragment, number, data, type) {
   } else if (type === 'date') {
     var date = new Date(2004, 0, number);
     if (data.year) {
-      text = dateToString(date) + ' is the day in ' + data.year + ' that ' + text;
+      if (data.year < 0) {
+        text = dateToString(date) + ' is the day in ' + -data.year + ' BC that ' + text;
+      } else {
+        text = dateToString(date) + ' is the day in ' + data.year + ' that ' + text;
+      }
     } else {
       text = dateToString(date) + ' is the day that ' + text;
     }
