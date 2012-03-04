@@ -1,0 +1,95 @@
+{
+   "0": [
+      {
+				"manual": true,
+				"self": false,
+				"text": "the atomic number of the theoretical element tetraneutron"
+      },
+			{
+				"manual": true,
+				"self": false,
+				"text": "the coldest possible temperature old the Kelvin scale"
+			}
+   ],
+
+	 "62": [
+			{
+				"manual": true,
+				"self": false,
+				"text": "the number which Sigmund Freud has an irrational fear of"
+			},
+			{
+				"manual": true,
+				"self": false,
+				"text": "the atomic number of samarium"
+			}
+	 ],
+
+	 "130": [
+			{
+				"": "http://www.omg-facts.com/view/Facts/26380",
+				"manual": true,
+				"self": false,
+				"text": "the approximate maximum height in meters of trees"
+			}
+	 ],
+
+	 "146": [
+			{
+				 "": "http://www.worldharmonyrun.org/un_initiatives/mother_language_day/record_146_languages",
+				 "manual": true,
+				 "self": false,
+				 "text": "the Guinness World Record for the most languages a poem was recited in"
+			}
+	 ],
+
+	 "147": [
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the highest possible break in snooker, in the absense of fouls and refereeing errors"
+			},
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the final score of the losing team in the NBA game in which Wilt Chamberlain scored 100 points"
+			}
+	 ],
+
+	 "205": [
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the world speed record (mph) of a car on ice"
+			}
+	 ],
+
+	 "209": [
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the basketball record for most three pointers in a row"
+			}
+	 ],
+
+	 "210": [
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the world speed record (km/h) for a mountain bike on a ski slope"
+			}
+	 ],
+
+	 "211": [
+			{
+					"manual": true,
+					"self": false,
+					"text": "a nickname for Steel Reserve, a malt liquor alcholic beverage"
+			},
+			{
+				 "manual": true,
+				 "self": false,
+				 "text": "the SMTP status code system status"
+			}
+	 ]
+}

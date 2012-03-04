@@ -55,8 +55,10 @@ function reader(out, path, callback) {
         if (!element) {
           return;
         }
-        if (element.text.length < 20 || element.text.length > 100) {
-          return;
+        if (!element.manual) {
+          if (element.text.length < 20 || element.text.length > 150) {
+            return;
+          }
         }
         o[o.length] = element;
       });

@@ -1,0 +1,38 @@
+{
+   "149": [
+      {
+				"manual": true,
+				"self": false,
+				"text": "a solar eclipse occurs while Alyattes is battling Cyaxares in the Battle of the Eclipse, leading to a truce",
+				"year": -585
+      },
+			{
+				"manual": true,
+				"self": false,
+				"text": "the Russian town of Neftegorsk is hit by a 7.6 magnitude earthquake that kills at least 2,000 people, half of the total population",
+				"year": 1995
+
+			}
+   ],
+
+	 "312": [
+			{
+				"manual": true,
+				"self": false,
+				"text": "the Ensisheim meteorite, the oldest meteorite with a known date of impact, strikes the Earth",
+				"year": 1492
+			},
+			{
+				"manual": true,
+				"self": false,
+				"text": "the London Gazette, the oldest surviving journal, is first published",
+				"year": 1665
+			},
+			{
+				"manual": true,
+				"self": false,
+				"text": "the Jokela school shooting in Tuusula, Finland happened, resulting in the death of nine people",
+				"year": 2007
+			}
+	 ]
+}
