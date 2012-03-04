@@ -104,19 +104,28 @@ function update_result(url, $result) {
 
 			var $text = $('#result-temporary-text');
 			$text
-				.css('opacity', 0)
+				.css({
+					opacity: 0,
+					top: '50%',
+					marginTop: 0
+				})
 				.html(data)
 				.toggleClass('script', contentType.indexOf('text/plain') === -1)
 
-      if ($text.height() < $('#search-result').height()) {
-        $text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
-      } else { // handle text overflow
-        // TODO: fix right padding before scrollbar
-        $text
-          .css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
-      }
+			$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
+
+      // TODO: buggy lionbars or something
+      //if ($text.height() < $('#search-result').height()) {
+        //$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
+      //} else { // handle text overflow
+        //// TODO: fix right padding before scrollbar
+        //$text
+          //.css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
+      //}
+
       $text.animate({ opacity: 1.0 }, 300);
-      $('#search-result.scroll').lionbars();
+      // TODO: this crap is buggy
+      //$('#search-result.scroll').lionbars();
 
 			var number = xhr.getResponseHeader('X-Numbers-API-Number');
 			$('#counter').counter('set', number, /* dontTriggerEvent */ true);

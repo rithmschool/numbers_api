@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-        <
-        /
   <head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Numbers API</title>
@@ -42,7 +40,7 @@
 
 		<div id="body-inner">
 
-        <div class="container">
+        <div class="body-container">
 
             <div id="addthis">
                 <div class="addthis_toolbox addthis_default_style">
@@ -116,7 +114,7 @@
 							<span><input id="search-text" type="text" /></span>
 						</div>
 						<!-- TODO: fix scroll for sandbox. shouldn't be too much of an issue yet, since facts generally should not be long enough to overflow the container -->
-						<div id="search-result" class="api-result scroll">
+						<div id="search-result" class="api-result">
 							<div id="counter"></div>
 							<span id="result-temporary-text"></span>
 						</div>
@@ -136,8 +134,9 @@
 
             <section id="visitors">
                 <div class="gradient-fill"></div>
-                <div class="visit-text" title="http://numbersapi.com/{{{ visitorFact.number }}}?notfound=floor&fragment">
-                    <a href="#{{{ visitorFact.number }}}?notfound=floor&fragment">This page has more visits than {{ visitorFact.text }}</a>.
+                <div class="flare-background"></div>
+                <div class="visit-text" title="Generated using http://numbersapi.com/{{{ visitorFact.number }}}?notfound=floor&fragment">
+                    <a href="#{{{ visitorFact.number }}}?notfound=floor&fragment">This page has more visits than {{ visitorFact.text }}.</a>
                 </div>
                 <div class="gradient-fill"></div>
             </section>
@@ -159,7 +158,6 @@
             <p><a href="mailto:info@numbersapi.com">numbersapi@gmail.com</a></p>
         </div>
     </footer>
-
 
 
     <!-- Le javascript
