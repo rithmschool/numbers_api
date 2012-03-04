@@ -9,7 +9,8 @@ var _ = require('underscore');
 function factResponse(fact, req, res, num) {
 	var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
 	var factStr = '' + factObj.text;
-	var useJson = (req.param('json') !== undefined || req.header('Content-Type') === 'application/json');
+	var useJson = (req.param('json') !== undefined ||
+			(req.header('Content-Type') || '').indexOf('application/json') !== -1);
 	function factObjStr() {
 		return JSON.stringify(factObj, null, ' ');
 	}
