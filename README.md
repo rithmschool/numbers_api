@@ -30,7 +30,7 @@ HTML:
 
 JavaScript:
 
-    $.get('http://numbersapi.com/1337/trivia?notfound=floor', function(data) {
+    $.get('http://numbersapi.com/1337/trivia?notfound=floor&fragment', function(data) {
         $('#number').text(data);
     });
 
@@ -40,24 +40,30 @@ Direct cross-origin requests like this are possible on browsers that support [CO
 <h3 id="jsonp">JSONP</h3>
 ...is supported with the query field [`callback`](#callback):
 
-    It turns out that 42 is also <span id="number"></span>
+    <span id="number-fact"></span>
 
     <script>
         function showNumber(str) {
-            document.getElementById('number').innerText = str;
+            document.getElementById('number-fact').innerText = str;
         }
+
+        (function() {
+            var scriptTag = document.createElement('script');
+            scriptTag.async = true;
+            scriptTag.src = "http://numbersapi.com/42/math?callback=showNumber";
+            document.body.appendChild(scriptTag);
+        })();
     </script>
-    <script src="http://numbersapi.com/42/math?callback=showNumber"></script>
 
 Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
 
-<h3 id="single-script-tag">Single Script Tag</h3>
+<h3 id="single-script-tag">HTML Embed</h3>
 Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
-    <script src="http://numbersapi.com/2012/year?write"></script>.
+    Did you know 2012 is the year that <script src="http://numbersapi.com/2012/year?write&fragment"></script>?
 
-Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>.  Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
+Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>. Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 
 ## Query Parameter Options
@@ -118,11 +124,11 @@ http://numbersapi.com/42/math?write
 &rArr; document.write("42 is the 5th Catalan number.");
 </pre>
 
-See the [single script tag usage example](#single-script-tag).
+See the [HTML embed tag usage example](#single-script-tag).
 
 
 ### Min and Max
-Restrict the range of values returned to the inclusive range \[**`min`**, **`max`**\].
+Restrict the range of values returned to the inclusive range \[**`min`**, **`max`**\] when `random` is given as the number.
 
 <pre>
 http://numbersapi.com/random?min=10&max=20
