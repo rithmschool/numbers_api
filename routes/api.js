@@ -26,7 +26,7 @@ function factResponse(fact, req, res, num) {
 		if (useJson) {
 			res.send(factObjStr(), { 'Content-Type': 'application/json' }, 200);
 		} else {
-			res.send(factStr, { 'Content-Type': 'text/plain' }, 200);
+			res.send(factStr, { 'Content-Type': 'text/plain; charset="UTF-8"' }, 200);
 		}
 	}
 }

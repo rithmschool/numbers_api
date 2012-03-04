@@ -66,6 +66,15 @@ def flatten(path, ignore_topics):
 
 	return all_flattened_facts
 
+def valid_wikipedia_file(filename):
+	if not filename:
+		return False
+	if not filename.startswith('wikipedia_'):
+		return False
+	if filename.find('manual') !== 0:
+		return False
+	return True
+
 def normalize_pre(all_facts):
 	all_normalized_facts = {}
 	for number, facts in all_facts.items():
@@ -101,7 +110,7 @@ def normalize_wikipedia_date():
 	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
-		if not filename.startswith('wikipedia_'):
+		if not valid_wikipedia_file(filename):
 			continue
 
 		path = os.path.join(category_raw_path, filename)
@@ -164,7 +173,7 @@ def normalize_wikipedia_year():
 	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
-		if not filename.startswith('wikipedia_'):
+		if not valid_wikipedia_file(filename):
 			continue
 
 		path = os.path.join(category_raw_path, filename)
@@ -225,9 +234,7 @@ def normalize_wikipedia_trivia():
 	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
-		#if not filename.startswith('wikipedia_'):
-		#	continue
-		if filename.find('manual') < 0:
+		if not valid_wikipedia_file(filename):
 			continue
 
 		path = os.path.join(category_raw_path, filename)
@@ -303,7 +310,7 @@ def normalize_wikipedia_math():
 	category_raw_path = os.path.join(sys.path[0], category, 'raw')
 	for filename in os.listdir(category_raw_path):
 
-		if not filename.startswith('wikipedia_'):
+		if not valid_wikipedia_file(filename):
 			continue
 
 		path = os.path.join(category_raw_path, filename)

@@ -11,7 +11,7 @@ function reader(out, path, callback) {
     // TODO: add encoding argument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(path + file);
+      var data = fs.readFileSync(path + file, 'utf8');
     } catch (e) {
       console.error('Exception while reading file ', path + file, ': ', e.message);
       return;

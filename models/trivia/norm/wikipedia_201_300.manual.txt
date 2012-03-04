@@ -251,7 +251,7 @@
     ],
     "251": [
         {
-            "text": "The number of PokÃ©mon available in PokÃ©mon Gold and Silver is 251.",
+            "text": "The number of Pokémon available in Pokémon Gold and Silver is 251.",
             "self": false, "manual": true
         },
         {

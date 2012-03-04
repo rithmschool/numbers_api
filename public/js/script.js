@@ -95,10 +95,10 @@ function update_result(url, $result) {
 		success: function(data, httpStatus, xhr) {
 			var contentType = xhr.getResponseHeader('Content-Type');
 			if (contentType.indexOf('text/html') !== -1) {
-				return;
+        return;
 			}
 
-			if (contentType.indexOf('text/plain') !== -1) {
+      if (contentType.indexOf('text/plain') !== -1) {
 				data = processWidgetText(data);
 			}
 
