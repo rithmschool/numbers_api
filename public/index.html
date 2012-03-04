@@ -66,7 +66,7 @@
 							<div class="example-box">
 								<a href="#5/math">numbersapi.com/5/math</a>
                                 <div class="api-result">
-                                    The number of platonic solids.
+                                    5 is the number of platonic solids.
                                 </div>
 							</div>
 						</div>
@@ -75,7 +75,7 @@
 							<div class="example-box">
 								<a href="#42">numbersapi.com/42</a>
                                 <div class="api-result">
-                                    The number of little squares forming
+                                    42 is the number of little squares forming
                                        the left side trail of Microsoft's
                                        Windows 98 logo.
                                    </div>
@@ -84,10 +84,9 @@
 						<div class="example">
 							<h2>Date</h2>
 							<div class="example-box">
-								<!-- TODO: remove hard code of today's date -->
-								<a href="#2/24/date">numbersapi.com/3/2/date</a>
+								<a href="#{{{ dateFact.month }}}/{{{ dateFact.day }}}/date">numbersapi.com/{{{ dateFact.month }}}/{{{ dateFact.day }}}/date</a>
                                 <div class="api-result">
-                                    Is the day that Wilt Chamberlain sets the single-game scoring record in the NBA by scoring 100 points.
+																	{{{ dateFact.data.text }}}
                                 </div>
 						</div>
 					</div>

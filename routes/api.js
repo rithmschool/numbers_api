@@ -34,7 +34,7 @@ function factResponse(fact, req, res, num) {
 
 // TODO: there's also a copy in public/js/script.js. create a single shared copy
 var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-function dateToDayOfYear(date) {
+exports.dateToDayOfYear = function(date) {
   var day = 0;
   for (var i = 0; i < date.getMonth(); ++i) {
     day += MONTH_DAYS[i];
@@ -46,14 +46,14 @@ exports.route = function(app, fact) {
 	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
 		var number = parseInt(req.param('num'), 10);
 		if (req.param('type') === 'date') {
-			number = dateToDayOfYear(new Date(2004, 0, number));
+			number = exports.dateToDayOfYear(new Date(2004, 0, number));
 		}
 		factResponse(fact, req, res, number);
 	});
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
 		var date = new Date(2004, req.param('month') - 1, req.param('day'));
-    var dayOfYear = dateToDayOfYear(date);
+    var dayOfYear = exports.dateToDayOfYear(date);
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
 	});

@@ -84,10 +84,16 @@ app.get('/', function(req, res) {
     lastVisitorTime = currTime;
   }
 	fs.readFile('README.md', 'utf-8', function(err, data) {
+    var currDate = new Date();
 		res.render('index.html', {
 			locals: {
         docs: markdown.parse(data),
         visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'ceil', fragment: true }),
+        dateFact: {
+          day: currDate.getDate(),
+          month: currDate.getMonth() + 1,
+          data: fact.getFact(router.dateToDayOfYear(currDate), 'date', {}),
+        },
       },
 			partials: {}
 		});
