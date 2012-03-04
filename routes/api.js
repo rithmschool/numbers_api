@@ -2,40 +2,45 @@ var _ = require('underscore');
 var fs = require('fs');
 
 var logBuffer = [];
-var logFrequency = 2;
+var logInterval = 1000*60;
 var millisecondsPerDay = 1000*60*60*24;
 
 function appendToFile(filePath, dataStr) {
   fs.open(filePath, 'a', 0666, function(e, id) {
     fs.writeSync(id, dataStr, 0, 'utf8');
-    console.log('Logging to file: ' + filePath);
   });
 }
 
 /**
- * Log a request. Start by logging to memory, and periodically empty to file
+ * logRequest a request. Start by logging to memory, and periodically empty to file
  */
-function log(req) {
+function logRequest(req) {
   var query = {};
   _.extend(query, req.query);
   _.extend(query, req.params);
-  var data = {
+  logBuffer.push({
     headers: req.headers,
     query: query,
     time: (new Date()).getTime(),
-  }
-  logBuffer.push(data);
-  if (logBuffer.length === logFrequency) {
+  });
+}
+
+// logRequest to file asynchronously at set interval
+setInterval(function() {
+  try {
     var day = Math.floor((new Date()).getTime() / millisecondsPerDay);
     var filePath = 'logs/' + day + '.json';
     var dataStr = '';
     _.each(logBuffer, function(element) {
-      dataStr += JSON.stringify(data) + '\n';
+      dataStr += JSON.stringify(element) + '\n';
     });
     logBuffer = [];
+    console.log('Logging to file: ' + filePath);
     appendToFile(filePath, dataStr);
+  } catch (e) {
+    console.log('Caught exception logging to file: ' + filePath, e);
   }
-}
+}, logInterval);
 
 /*
  * This is basically our "controllers" that's just an adapter between the URL
@@ -81,7 +86,7 @@ exports.dateToDayOfYear = function(date) {
 
 exports.route = function(app, fact) {
 	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
-    log(req);
+    logRequest(req);
 		var number = parseInt(req.param('num'), 10);
 		if (req.param('type') === 'date') {
 			number = exports.dateToDayOfYear(new Date(2004, 0, number));
@@ -90,7 +95,7 @@ exports.route = function(app, fact) {
 	});
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
-    log(req);
+    logRequest(req);
 		var date = new Date(2004, req.param('month') - 1, req.param('day'));
     var dayOfYear = exports.dateToDayOfYear(date);
 		req.params.type = 'date';
@@ -98,8 +103,7 @@ exports.route = function(app, fact) {
 	});
 
 	app.get('/random/:type?', function(req, res) {
-    log(req);
+    logRequest(req);
 		factResponse(fact, req, res, 'random');
 	});
-
 };
