@@ -67,9 +67,21 @@ function getRandomApiNum(type, options) {
   }
 }
 
+function getOrdinal(num) {
+  if (num % 10 === 1) {
+    return '' + num + 'st';
+  } else if (num % 10 === 2) {
+    return '' + num + 'nd';
+  } else if (num % 10 === 3) {
+    return '' + num + 'rd';
+  } else {
+    return '' + num + 'th';
+  }
+}
+
 var MONTH_NAMES = 'January February March April May June July August September October November December'.split(' ');
 function dateToString(date) {
-	return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
+	return MONTH_NAMES[date.getMonth()] + ' ' + getOrdinal(date.getDate());
 }
 
 function getSentence(wantFragment, number, data, type) {
@@ -102,8 +114,11 @@ function getSentence(wantFragment, number, data, type) {
       text = '' + number + ' is the year that ' + text;
     }
     if (data.date) {
-
-      text += ' on ' + data.date;
+      // format is 'December 25'
+      // TODO: should not just be storing string in data.date
+      var month = data.date.replace(/(\w+) \d+/, '$1');
+      var day = parseInt(data.date.replace(/\w+ (\d+)/, '$1'), 10);
+      text += ' on ' + month + ' ' + getOrdinal(day);
     }
     return text + '.';
   }
