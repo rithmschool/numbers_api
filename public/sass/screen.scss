@@ -16,6 +16,7 @@ $section-margin: 20px;
 $section-border-radius: 8px;
 $element-border-radius: 5px;
 $example-height: 5em;
+$page-top-padding: 20px;
 $url-height: 1.5em;
 
 // Colors -----------------------------------------
@@ -134,6 +135,7 @@ body {
       width: $body-width;
 			margin-left: auto;
 			margin-right: auto;
+			position: relative;
 		}
 	}
 }
@@ -166,7 +168,7 @@ a {
 }
 
 #logo-outer {
-  padding-top: 20px;
+  padding-top: $page-top-padding;
 }
 
 .logo {
@@ -188,6 +190,35 @@ a {
 		font-size: inherit;
     //border-top: 1px solid $color-one;
 	}
+}
+
+#addthis {
+  position: absolute;
+  right: 0;
+  width: 120px;
+  opacity: 0.7;
+  $addthis-padding: 5px;
+  padding: $addthis-padding;
+  margin-top: $page-top-padding + 20px;
+  background-color: rgba($color-five, $section-opacity);
+  @include border-radius($element-border-radius);
+  &:hover {
+    opacity: 1.0;
+    @include transition(all ease-out 0.3s);
+  }
+}
+
+.at_item, #at_hover, #at15s, #addthis, #at16p {
+  p, a, span, label, input {
+    text-shadow: none;
+    color: $color-five;
+    font-size: 12px;
+    @include transition(none);
+  }
+  #at15ptc {
+    font-size: 14px;
+  }
+  @include transition(none);
 }
 
 #tagline {
