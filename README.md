@@ -5,9 +5,9 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
 
 - **`type`** is one of `trivia`, `math`, `date`, or `year`. Defaults to `trivia` if omitted.
 - **`number`** is
-    - an integer (eg. `0`, `42`, `1337`), or
+    - an integer, or
     - the keyword `random`, for which we will try to return a random available fact, or
-    - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/01`, `04/1`), if **`type`** is `date`
+    - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/09`, `04/1`), if **`type`** is `date`
 
 <pre>
 http://numbersapi.com/42

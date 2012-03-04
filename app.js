@@ -88,7 +88,8 @@ app.get('/', function(req, res) {
 		res.render('index.html', {
 			locals: {
         docs: markdown.parse(data),
-        visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'ceil', fragment: true }),
+        visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
+				numVisitors: numVisitors,
         dateFact: {
           day: currDate.getDate(),
           month: currDate.getMonth() + 1,

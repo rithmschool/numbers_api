@@ -1228,7 +1228,7 @@
 
          "self": false,
 
-         "text": "the number of letters in the English and Interlingua alphabets, if capital letters are not distinguished from lowercase letters"
+         "text": "the number of letters in the English and Interlingua alphabets"
 
       },
 

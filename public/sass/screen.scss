@@ -571,6 +571,12 @@ $sandbox-result-height: 102px;
     z-index: 10;
     text-align: center;
     margin: 15px 0;
+    a {
+     color: $color-one;
+     &:hover {
+      color: $color-two;
+     }
+    }
   }
 
   .gradient-fill {
