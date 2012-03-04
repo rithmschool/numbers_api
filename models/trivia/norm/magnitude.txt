@@ -15,6 +15,92 @@
 	"128": [{"text": "The number of characters in the ASCII character set.", "manual": true}],
 	"150": [{"text": "The number of estimated distinct phonemes in the Taa language.", "manual": true}],
 	"193": [{"text": "The number of member states of the United Nations as of 2011.", "manual": true}],
+  "300": [{"text": "the approximate number of Spartans who fought to death at the Battle of Thermopylae", "manual": true}],
+  "304": [{"text": "the record number of wickets taken in English cricket season by Tich Freeman in 1928", "manual": true}],
+  "313": [{"text": "the number of Muslims who fought in the Battle of Badr against Muhammad's, and by extension, Islam's, foes", "manual": true}],
+  "334": [{"text": "the long-time highest score in Test cricket (held by Sir Donald Bradman and Mark Taylor)", "manual": true}],
+  "336": [{"text": "the number of dimples on an American golf ball", "manual": true}],
+  "343": [
+    {"text": "the number of New York City Firefighters who died on September 11, 2001", "manual": true},
+    {"text": "the number of frames in which U.S. President John F. Kennedy's presidential limousine can be seen in the Zapruder film", "manual": true},
+    {"text": "the speed of sound in dry air at 20 °C (68 °F) in m/s", "manual": true}
+  ],
+  "350": [{"text": "the number of cubic inches displaced in the most common form of the Small Block Chevrolet V8", "manual": true}],
+  "352": [{"text": "The number of international appearances by Kristine Lilly for the USA women's national soccer team, an all-time record", "manual": true}],
+  "360": [{"text": "the number of degrees in a circle for the purpose of angular measurement", "manual": true}],
+  "361": [{"text": "the number of positions on a standard 19 x 19 Go board", "manual": true}],
+  "364": [{"text": "The total number of gifts received in the song \"The Twelve Days of Christmas\"", "manual": true}],
+  "365": [{"text": "the number of solar days in the mean tropical year", "manual": true}],
+  "366": [{"text": "the number of days in a leap year", "manual": true}],
+  "383": [{"text": "the cubic displacement in inches of a 350cid Small Block Chevrolet with a 400cid SBC crankshaft", "manual": true}],
+  "384": [
+    {"text": "the apogee (farthest distance from Earth) of the expeditions to the International Space Station in km", "manual": true},
+    {"text": "the digest length of the secure hash function SHA-384 (384 is a low power of 2)", "manual": true}
+  ],
+  "386": [{"text": "the number of Pokémon in the 3rd Generation National Pokédex", "manual": true}],
+  "396": [{"text": "the displacement in cubic inches of early Chevrolet Big-Block engines", "manual": true}],
+  "400": [{"text": "the number of years in a period of the Gregorian calendar, of which 97 are leap years and 303 are common", "manual": true}],
+  "404": [{"text": "the HTTP status code for \"Not found\", perhaps the most famous HTTP status code", "manual": true}],
+  "418": [{"text": "the error code for \"I'm a teapot\" in the Hyper Text Coffee Pot Control Protocol", "manual": true}],
+  "432": [{"text": "three-dozen sets of a dozen, making it three gross", "manual": true}],
+  "433": [{"text": "The perfect score in the game show Fifteen To One, only ever achieved once in over 2000 shows", "manual": true}],
+  "440": [{"text": "the standard frequency in hertz to which most orchestras tune the pitch A above middle C", "manual": true}],
+  "441": [{"text": "the number of squares on a Super Scrabble board", "manual": true}],
+  "450": [{"text": "a perfect score in Canadian five-pin bowling", "manual": true}],
+  "451": [{"text": "the temperature at which the paper in books ignites, giving the name to Ray Bradbury's novel Fahrenheit 451", "manual": true}],
+  "463": [{"text": "the number of days in the synodic period of Ceres", "manual": true}],
+  "464": [{"text": "the number of legal positions of the kings in chess, not counting mirrored positions", "manual": true}],
+  "470": [{"text": "the minimum length in yards from the tee to the hole on a Par 5", "manual": true}],
+  "490": [
+    {"text": "the number of times Jesus told Peter to forgive his brother in the Gospel of Matthew", "manual": true},
+    {"text": "the number of Pokémon available as of the release of Pokémon Diamond and Pearl (excluding event Pokémon)", "manual": true}
+  ],
+  "493": [
+    {"text": "the number of Pokémon species, from the first set through the fourth generation as of August 2009", "manual": true},
+    {"text": "The number of bronze knuts equivalent to one gold galleon, in the monetary system of the world of Harry Potter", "manual": true}
+  ],
+  "496": [{"text": "what the dimension of the gauge group must be for a superstring theory to make sense", "manual": true}],
+  "500": [
+    {"text": "the longest advertised distance of the IndyCar Series and its premier race, the Indianapolis 500", "manual": true},
+    {"text": "the winning permillage (tenth of a percent) of a sports team with equal numbers of wins and losses", "manual": true}
+  ],
+  "511": [{"text": "the number of collaborators mathematician Paul Erdős had", "manual": true}],
+  "525": [{"text": "the number of scan lines in the NTSC television standard", "manual": true}],
+  "536": [{"text": "the number of ways to arrange the pieces of the stomachion puzzle into a square, not counting rotation or reflection", "manual": true}],
+  "538": [{"text": "the total number of votes in the Electoral College of the United States", "manual": true}],
+  "555": [
+    {"text": "The number of keyboard sonatas written by Domenico Scarlatti, according to the catalog by Ralph Kirkpatrick", "manual": true},
+    {"text": "The number of seats of the airliner A380-800", "manual": true}
+  ],
+  "562": [{"text": "the number of Native American (including Alaskan) Nations, or \"Tribes,\" recognized by the USA government", "manual": true}],
+  "587": [{"text": "the outgoing port for email message submission", "manual": true}],
+  "600": [
+    {"text": "the advertised number of miles that NASCAR runs in the Coca-Cola 600, the longest race on any of the NASCAR circuits", "manual": true},
+    {"text": "the maximum credit score considered poor, thus limiting available credit in the USA", "manual": true}
+  ],
+  "613": [
+    {"text": "a significant number in Judaism, as its metaphysics, the Kabbalah, views every full entity as divisible into 613 parts", "manual": true},
+    {"text": "the number hung from the rafters at Madison Square Garden in honor of New York Knicks coach Red Holzman's 613 victories", "manual": true}
+  ],
+  "614": [{"text": "the number of Commandments, according to Rabbi Fackenheimin, that should be in Judaism, vs. the traditional 613", "manual": true}],
+  "626": [{"text": "the number of compositions of Wolfgang Amadeus Mozart, according to the Köchel Catalogue", "manual": true}],
+  "649": [{"text": "the number of Pokémon as of Pokémon Black and White versions", "manual": true}],
+  "693": [{"text": "the number of sections in Ludwig Wittgenstein's Philosophical Investigations", "manual": true}],
+  "695": [{"text": "the number of people dead in the single deadliest tornado in United States history (the F5 Tri-State Tornado in 1925)", "manual": true}],
+  "712": [{"text": "the largest known number such that it and its 8th power have no common digits", "manual": true}],
+  "714": [{"text": "the number of home runs Babe Ruth scored in his career", "manual": true}],
+  "720": [
+    {"text": "the number of degrees in two circles (= 2 × 360)", "manual": true},
+    {"text": "five gross (= 500 duodecimal, 5 × 144)", "manual": true}
+  ],
+  "729": [{"text": "the number of times a philosopher's pleasure is greater than a tyrant's pleasure according to Plato in the Republic", "manual": true}],
+  "755": [{"text": "the number of home runs Hank Aaron ended his career with in 1976, a Major League record at the time", "manual": true}],
+  "850": [{"text": "the maximum possible Fair Isaac credit score", "manual": true}],
+  "911": [{"text": "the number of days after September 11th that the Madrid Attack took place", "manual": true}],
+  "1000": [
+    {"text": "the number of words a picture is worth", "manual": true},
+    {"text": "the number of origami cranes to fold to be granted a wish by a crane, according to an ancient Japanese legend", "manual": true}
+  ],
 	"2500": [{"text": "The number of letters on a typical typed page of text.", "manual": true}],
 	"4200": [{"text": "The number of standard size of a legion in the Roman Republic.", "manual": true}],
 	"5000": [{"text": "The number of base pairs in the DNA of the simplest viruses.", "manual": true}],
