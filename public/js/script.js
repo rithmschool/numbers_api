@@ -107,8 +107,16 @@ function update_result(url, $result) {
 				.css('opacity', 0)
 				.html(data)
 				.toggleClass('script', contentType.indexOf('text/plain') === -1)
-				.css('marginTop', $text.height() / -2)  // vertically centered (top 50% + abs position)
-				.animate({ opacity: 1.0 }, 300);
+
+      if ($text.height() < $('#search-result').height()) {
+        $text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
+      } else { // handle text overflow
+        // TODO: fix right padding before scrollbar
+        $text
+          .css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
+      }
+      $text.animate({ opacity: 1.0 }, 300);
+      $('#search-result.scroll').lionbars();
 
 			var number = xhr.getResponseHeader('X-Numbers-API-Number');
 			$('#counter').counter('set', number, /* dontTriggerEvent */ true);
@@ -242,6 +250,9 @@ $(function() {
 	}).change(function(e) {
 		$('#search-link').prop('href', $(this).val());
 	});
+
+  // initialize custom scroll bars for facts that overflow container
+  $('.scroll').lionbars();
 });
 
 /*
