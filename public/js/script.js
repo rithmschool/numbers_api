@@ -150,7 +150,7 @@ function update_query(url) {
 }
 
 function update_history(hash) {
-	if (window.history) {
+	if (window.history && window.history.replaceState) {
 		window.history.replaceState({}, null, '#' + hash);
 	} else {
 		window.location.hash = hash;
