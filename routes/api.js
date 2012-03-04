@@ -58,6 +58,9 @@ function factResponse(fact, req, res, num) {
 	}
 
 	res.header('X-Numbers-API-Number', factObj.number);
+  res.header('Pragma', 'no-cache');
+  res.header('Cache-Control', 'no-cache');
+  res.header('Expires', 0);
 
 	if (req.param('callback')) {  // JSONP
 		res.json(useJson ? factObj : factStr);
