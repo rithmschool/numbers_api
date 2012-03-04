@@ -109,3 +109,20 @@ reader(exports.math, 'models/math/norm/', function(element) {
   return normalize_common(element);
 });
 
+// check for missing entries
+(function() {
+  var configs = [
+    { category: 'math', data: exports.math, min: 0, max: 251 },
+    { category: 'trivia', data: exports.trivia, min: 0, max: 251 },
+    { category: 'date', data: exports.date, min: 1, max: 367 },
+    { category: 'year', data: exports.year, min: -100, max: 2050 },
+  ];
+
+  _.each(configs, function(config) {
+    _.each(_.range(config.min, config.max), function(index) {
+      if (!config.data[index] || config.data[index].length === 0) {
+        console.log('Missing: ' + config.category + ': ' + index);
+      }
+    });
+  });
+})();
