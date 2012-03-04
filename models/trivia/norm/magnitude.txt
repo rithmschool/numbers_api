@@ -51,7 +51,7 @@
 	"3e9": [{"text": "The number of base pairs in the human genome.", "manual": true}],
 	"3.4e9": [{"text": "The number of total number of speakers of Indo-European languages.", "manual": true}],
 	"4294967296": [{"text": "The number of possible unique IP addresses.", "manual": true}],
-	"4294967296": [{"text": "The number of number of bytes in 4 gibibytes.", "manual": true}],
+	"4294967296": [{"text": "The number of bytes in 4 gibibytes.", "manual": true}],
 	"7000000000": [{"text": "The estimated population for the world on 31 October 2011, the Day of Seven Billion.", "manual": true}],
 	"1e10": [{"text": "The number of bacteria in the human oral cavity.", "manual": true}],
 	"4.5e10": [{"text": "The number of galaxies in the observable universe.", "manual": true}],
