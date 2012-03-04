@@ -1,7 +1,14 @@
 var fs = require('fs');
 
 // make a directory for log files if it does not exist
-if (!fs.existsSync('logs')) {
+var logDirExists = false;
+if (fs.existsSync) {
+  logDirExists = fs.existsSync('logs');
+} else {
+  var path = require('path');
+  logDirExists = path.existsSync('logs');
+}
+if (!logDirExists) {
   fs.mkdirSync('logs', 0777);
 }
 
