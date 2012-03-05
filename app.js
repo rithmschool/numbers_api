@@ -24,6 +24,7 @@ var _ = require('underscore');
 var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
 var secrets = require('./secrets.js');
+var highcharts = require('./logs_highcharts.js');
 
 
 // fake number of viistors
@@ -58,7 +59,6 @@ function updateNumShares() {
 
 				try {
 					// TODO: Get daily number of shares, hourly, etc. and display best value
-					console.log('Add This API response for shares:', msg);
 					var dataObj = JSON.parse(msg);
 					numShares = _.reduce(dataObj, function(accum, val) { return accum + val['shares']; }, 0);
 				} catch (e) {
@@ -165,6 +165,10 @@ app.get('/', function(req, res) {
 			partials: {}
 		});
 	});
+});
+
+app.get('/type-time-highcharts', function(req, res) {
+	res.json(highcharts.getTypeTimeHist());
 });
 
 // Main
