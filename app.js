@@ -60,7 +60,7 @@ function updateNumShares() {
 				try {
 					// TODO: Get daily number of shares, hourly, etc. and display best value
 					var dataObj = JSON.parse(msg);
-					numShares = _.reduce(dataObj, function(accum, val) { return accum + val['shares']; }, 0);
+					numShares = _.reduce(dataObj, function(accum, val) { return accum + val['shares']; }, 0) + 2;
 				} catch (e) {
 					console.log('Exception handling response from AddThis share:', e.message);
 				}
