@@ -64,7 +64,7 @@ exports.getTypeTimeHist = function() {
 	_.each(typeTimeHistogram, function(hist, type) {
 		ret[type] = [];
 		_.each(hist, function(value, key) {
-			ret[type].push([key, value]);
+			ret[type].push([+key, value]);
 		});
 	});
 	return ret;
