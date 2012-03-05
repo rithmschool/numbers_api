@@ -12,19 +12,69 @@ if (!logDirExists) {
   fs.mkdirSync('logs', 0777);
 }
 
+
 // Module dependencies.
 
 var express = require('express');
-var fact = require('./models/fact.js');
-var router = require('./routes/api.js');
+var https = require('https');
 var mustache = require('mustache');
 var markdown = require('discount');
+var _ = require('underscore');
+
+var fact = require('./models/fact.js');
+var router = require('./routes/api.js');
+var secrets = require('./secrets.js');
+
 
 // fake number of viistors
 var BASE_VISITOR_TIME = new Date(1330560000000);
 var VISITOR_RATE = 1000*60*60*3; // 3 hours/visitor
 var lastVisitorTime = BASE_VISITOR_TIME;
 var numVisitors = 0;
+
+// TODO: Get rid of all these try catches, should use forever or something
+// Periodically get # of shares from AddThis API (THANK YOU FOR SANE API, You
+// are so much better than Google Analytics!!!)
+var ADD_THIS_API_HOST = 'api.addthis.com';
+var ADD_THIS_API_SHARE_PATH = '/analytics/1.0/pub/shares.json?userid=' +
+	secrets.ADD_THIS_USERNAME + '&password=' + secrets.ADD_THIS_PASSWORD + '&pubid=' + secrets.ADD_THIS_PUBID;
+var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
+var numShares = 15;
+
+function updateNumShares() {
+	var msg = '';
+	try {
+
+		https.get({
+			host: ADD_THIS_API_HOST,
+			path: ADD_THIS_API_SHARE_PATH,
+			headers: {
+				'Cache-Control': 'no-cache',
+				'Pragma': 'no-cache',
+			},
+		}, function(res) {
+			res.on('data', function(data) {
+				msg += data.toString();
+
+				try {
+					// TODO: Get daily number of shares, hourly, etc. and display best value
+					console.log('Add This API response for shares:', msg);
+					var dataObj = JSON.parse(msg);
+					numShares = _.reduce(dataObj, function(accum, val) { return accum + val['shares']; }, 0);
+				} catch (e) {
+					console.log('Exception handling response from AddThis share:', e.message);
+				}
+			});
+		}).on('error', function(e) {
+			console.log("Got error: " + e.message);
+		});
+
+	} catch (e) {
+		console.log('Exception getting number of shares:', e.message);
+	}
+}
+setInterval(updateNumShares, GET_NUM_SHARES_INTERVAL_MS);
+
 
 // From http://bitdrift.com/post/2376383378/using-mustache-templates-in-express
 var mustacheTemplate = {
@@ -90,18 +140,22 @@ router.route(app, fact);
 app.get('/', function(req, res) {
 	// TODO: There's gotta be a way of using Express to get the template and not
 	// just reading a file... (what's the RIGHT way of doing this)
-  var currTime = (new Date()).getTime();
-  if ((currTime - lastVisitorTime) >= VISITOR_RATE) {
-    numVisitors += Math.round((currTime - lastVisitorTime) / VISITOR_RATE);
-    lastVisitorTime = currTime;
-  }
+
+  // TODO: we could put this back and alternate between # shares
+  //var currTime = (new Date()).getTime();
+  //if ((currTime - lastVisitorTime) >= VISITOR_RATE) {
+  //  numVisitors += Math.round((currTime - lastVisitorTime) / VISITOR_RATE);
+  //  lastVisitorTime = currTime;
+  //}
 	fs.readFile('README.md', 'utf-8', function(err, data) {
     var currDate = new Date();
 		res.render('index.html', {
 			locals: {
         docs: markdown.parse(data),
-        visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
-				numVisitors: numVisitors,
+        //visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
+				//numVisitors: numVisitors,
+				sharesFact: fact.getFact(numShares, 'trivia', { notfound: 'floor', fragment: true }),
+				numShares: numShares,
         dateFact: {
           day: currDate.getDate(),
           month: currDate.getMonth() + 1,

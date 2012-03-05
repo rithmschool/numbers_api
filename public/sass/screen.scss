@@ -16,7 +16,7 @@ $section-margin: 20px;
 $section-border-radius: 8px;
 $element-border-radius: 5px;
 $example-height: 5em;
-$page-top-padding: 20px;
+$page-top-padding: 0px;
 $url-height: 1.5em;
 
 // Colors -----------------------------------------
@@ -193,18 +193,30 @@ a {
 }
 
 #addthis {
-  position: absolute;
-  right: 0;
-  width: 120px;
-  opacity: 0.7;
-  $addthis-padding: 5px;
-  padding: $addthis-padding;
-  margin-top: $page-top-padding + 20px;
-  background-color: rgba($color-five, $section-opacity);
+  position: relative;
+  clear: both;
+  width: 274px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  z-index: 5;
+  opacity: 0.8;
+  margin-top: 20px;
+  //background-color: rgba($color-five, $section-opacity);
   @include border-radius($element-border-radius);
+
   &:hover {
     opacity: 1.0;
     @include transition(all ease-out 0.3s);
+  }
+
+  a {
+    float: left;
+    padding: 0 5px;
+  }
+
+  .addthis_counter a {
+    font-size: 16px;
   }
 }
 
@@ -271,6 +283,10 @@ section {
 		padding-bottom: 10px;
 		display: inline-block;
 
+		h2 {
+      margin-bottom: 10px;
+    }
+
 		.example-box {
 			width: 250px;
 			height: 125px;
@@ -282,7 +298,6 @@ section {
 				display: block;
 				margin-top: 0;
 				margin-bottom: 0;
-				display: block;
 				padding: ($url-height - 1) / 2;
 			}
 			.api-result {
@@ -319,7 +334,7 @@ $sandbox-result-height: 102px;
 		writing-mode: lr-tb;
 		font-size: 70px;
 		font-family: pastel_crayon;
-		font-weight: bold;
+		font-weight: normal;
 		top: -32px;
 		left: -215px;
 		position: absolute;
@@ -548,17 +563,19 @@ $sandbox-result-height: 102px;
 }
 
 #visitors {
+  $visitors-side-padding: 10px;
   background: none;
-  margin: 60px 0 20px 0;
-  padding: 0;
+  margin: 20px 0 20px 0;
+  padding: 0 $visitors-side-padding;
   overflow: visible;
   position: relative;
   z-index: 0;
-  width: $body-width;
+  width: $body-width - $visitors-side-padding * 2;
+  //background-color: rgba($color-five, $section-opacity);
 
   .flare-background {
     width: 100%;
-    top: -375px;
+    top: -350px;
     height: 800px;
     position: absolute;
     @include background(radial-gradient(center, closest-side circle, rgba($color-one, 0.30) 0%, rgba($color-one, 0.0) 100%));

@@ -7,6 +7,7 @@ var millisecondsPerDay = 1000*60*60*24;
 
 function appendToFile(filePath, dataStr) {
   fs.open(filePath, 'a', 0666, function(e, id) {
+		// TODO: Should use async
     fs.writeSync(id, dataStr, 0, 'utf8');
   });
 }

@@ -42,17 +42,6 @@
 
         <div class="body-container">
 
-            <div id="addthis">
-                <div class="addthis_toolbox addthis_default_style">
-                    <a class="addthis_button_preferred_1"></a>
-                    <a class="addthis_button_preferred_2"></a>
-                    <a class="addthis_button_preferred_3"></a>
-                    <!--<a class="addthis_button_preferred_4"></a>-->
-                    <a class="addthis_button_compact"></a>
-                    <a class="addthis_counter addthis_bubble_style"></a>
-                </div>
-            </div>
-
 		    <div id="logo-outer">
                 <h1 class="logo">Numbers<span id="second-word">API</span></h1>
             </div>
@@ -135,8 +124,21 @@
             <section id="visitors">
                 <div class="gradient-fill"></div>
                 <div class="flare-background"></div>
-                <div class="visit-text" title="Generated using http://numbersapi.com/{{{ visitorFact.number }}}?notfound=floor&fragment">
-                    <a href="#{{{ visitorFact.number }}}?notfound=floor&fragment">This page has more visits than {{ visitorFact.text }}.</a>
+
+                <div id="addthis">
+                    <div class="addthis_toolbox addthis_32x32_style">
+                        <a class="addthis_button_preferred_1"></a>
+                        <a class="addthis_button_preferred_2"></a>
+                        <a class="addthis_button_preferred_3"></a>
+                        <a class="addthis_button_preferred_4"></a>
+                        <a class="addthis_button_compact"></a>
+                        <a class="addthis_counter addthis_bubble_style"></a>
+                    </div>
+                </div>
+
+
+                <div class="visit-text" title="Generated using http://numbersapi.com/{{{ sharesFact.number }}}?notfound=floor&fragment">
+                    <a href="#{{{ sharesFact.number }}}?notfound=floor&fragment">This page has been shared more times than {{ sharesFact.text }}.</a>
                 </div>
                 <div class="gradient-fill"></div>
             </section>
@@ -183,6 +185,7 @@
             data_ga_tracker: 'UA-29155677-1',
             data_ga_property: 'UA-29155677-1',
             data_ga_social: true,
+            services_exclude: 'print',
             ui_cobrand: 'Numbers API',
             ui_header_color: '#02273f',
             ui_header_background: '#cce4f4'

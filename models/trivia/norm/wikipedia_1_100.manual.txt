@@ -586,7 +586,7 @@
 
          "self": false,
 
-         "text": "the number of letters in the words \"uncopyrightable\", \"dermatoglyphics\", \"misconjugatedly\", and \"hydropneumatics\", which are the longest words in the English language that do not repeat a letter"
+         "text": "the number of letters in the words \"uncopyrightable\", \"dermatoglyphics\", \"misconjugatedly\", and \"hydropneumatics\", the longest English words with no repeat letters"
 
       },
 
@@ -1781,7 +1781,7 @@
 
          "self": false,
 
-         "text": "the number of flavors of Baskin-Robbins ice cream and the shops are called 31 Ice Cream in Japan"
+         "text": "the number of flavors of Baskin-Robbins ice cream"
 
       }
 

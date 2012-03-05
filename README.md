@@ -93,7 +93,7 @@ The `notfound` field tells us what to do if the number is not found. You can giv
     <pre>http://numbersapi.com/-12344/year?notfound=ceil
 &rArr; 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.</pre>
 
-Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page visits](#visitors).
+Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page shares](#visitors).
 
 
 <h3 id="default">Default</h3>
