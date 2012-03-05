@@ -127,9 +127,9 @@ function getSentence(wantFragment, number, data, type) {
 function getDefaultMsg(number, type, options) {
 	var mathMsgs = [
 		'an uninteresting number',
-		'a plain old number',
 		'a boring number',
-		'a most unremarkable number',
+		'an unremarkable number',
+		'a number for which we\'re missing a fact (submit one to numbersapi at google mail!)',
 	];
 
 	var defaultMsgs = {

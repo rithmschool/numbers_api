@@ -13,5 +13,13 @@
 					"self": false,
 					"manual": true
 			}
-		]
+		],
+
+    "1729": [
+       {
+           "manual": true,
+           "self": false,
+           "text": "the smallest natural number representable in two different ways as a sum of two positive cubes, as Ramanujan stated on the spot"
+       }
+    ]
 }

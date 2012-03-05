@@ -182,6 +182,27 @@ function updateAllFromHash() {
 	}
 }
 
+function registerUpdateShareMessage() {
+	addthis.addEventListener('addthis.ready', function(event) {
+		setTimeout(function() {
+			console.log('addthis ready!');
+			var numShares = $('.addthis_button_expanded').text();
+			console.log('num shares = ', numShares);
+			if (numShares.length < 1) return;
+
+			var path = numShares + '?fragment&notfound=floor';
+			var url = 'http://numbersapi.com/' + path;
+			$.get(url, function(data) {
+				$('.visit-text')
+					.prop('title', 'Generated using ' + url)
+					.find('a')
+						.text('This page has been shared more times than ' + data + '.')
+						.prop('href', '#' + path);
+			});
+		}, 3000);
+	});
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Main execution: what gets executed on DOM ready
@@ -263,6 +284,8 @@ $(function() {
 
   // initialize custom scroll bars for facts that overflow container
   $('.scroll').lionbars();
+
+	registerUpdateShareMessage();
 });
 
 /*
