@@ -88,6 +88,12 @@ exports.dateToDayOfYear = function(date) {
   return day + date.getDate();
 }
 
+// TODO: THis should be put in a utils
+exports.monthDayToDayOfYear = function(month, day) {
+	var date = new Date(2004, month - 1, day);
+	return exports.dateToDayOfYear(date);
+};
+
 exports.route = function(app, fact) {
 	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
     logRequest(req);
@@ -100,8 +106,7 @@ exports.route = function(app, fact) {
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
     logRequest(req);
-		var date = new Date(2004, req.param('month') - 1, req.param('day'));
-    var dayOfYear = exports.dateToDayOfYear(date);
+		var dayOfYear = exports.monthDayToDayOfYear(req.param('month'), req.param('day'));
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
 	});

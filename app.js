@@ -171,6 +171,10 @@ app.get('/type-time-highcharts', function(req, res) {
 	res.json(highcharts.getTypeTimeHist());
 });
 
+app.get('/type-number-highcharts', function(req, res) {
+	res.json(highcharts.getTypeNumberHist());
+});
+
 // Main
 
 app.listen(8124);

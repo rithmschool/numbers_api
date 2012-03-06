@@ -107,6 +107,14 @@
          "self": false,
          "text": "the smallest number representable in two different ways as a sum of two positive cubes, as Ramanujan stated on the spot"
      }
+  ],
+
+  "2701": [
+     {
+         "manual": true,
+         "self": false,
+         "text": "a plot triviality in Neal Stephenson's \"Cryptonomicon\""
+     }
   ]
 
 }

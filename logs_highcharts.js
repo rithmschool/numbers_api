@@ -1,38 +1,41 @@
 var fs = require('fs');
 var _ = require('underscore');
+var api = require('./routes/api.js')
 
 var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 5;
 
-var typeTimeHistogram = {
-	'trivia': {},
-	'math': {},
-	'year': {},
-	'date': {},
-};
+// TODO: repetition of code here with the types
+var FACT_TYPES = ['trivia', 'math', 'year', 'date'];
+var typeTimeHistogram = {};
+var typeNumberHistogram = {};
 
 function updateStatsFromLogs() {
 	// Clear the histogram first
-	_.each(typeTimeHistogram, function(value, key) {
+	_.each(FACT_TYPES, function(key) {
 		typeTimeHistogram[key] = {};
+		typeNumberHistogram[key] = {};
 	});
 
 	fs.readdir('./logs', function(err, files) {
 		_.each(files, function(file) {
 			fs.readFile('./logs/' + file, 'utf-8', function(err, contents) {
-				try {
-					_.each(contents.split('\n'), function(logJson) {
-						var logObj = null;
+				_.each(contents.split('\n'), function(logJson) {
+					var logObj = null;
+
+					try {
+						logObj = JSON.parse(logJson);
+					} catch(e) {
+					}
+
+					if (logObj) {
 						try {
-							logObj = JSON.parse(logJson);
-						} catch(e) {
-						}
-						if (logObj) {
 							reduceStats(logObj);
+						} catch (e) {
+							console.log('Failed reducing log file', file);
+							console.log(e.message, e.stack);
 						}
-					});
-				} catch (e) {
-					console.log('Failed reducing log files:', e.message);
-				}
+					}
+				});
 			})
 		})
 	});
@@ -41,12 +44,19 @@ function updateStatsFromLogs() {
 function reduceStats(obj) {
 	var timestamp = obj.time;
 	var query = obj.query;
-	var number = query.number || 'random';
+	var number = query.num || 'random';
+	if (query.month && query.day) {
+		number = api.monthDayToDayOfYear(query.month, query.day);
+	}
 	var type = query.type || 'trivia';
 
+	// There may be invalid types due to invalid user input
+	if (!_.contains(FACT_TYPES, type)) return;
+
+	// by time
 	if (timestamp >= (new Date()).getTime() - 1000 * 60 * 60 * 24 * 7) {
 		var date = new Date(timestamp);
-		var flooredDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		var flooredDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
 		var flooredTime = flooredDate.getTime();
 		var hist = typeTimeHistogram[type];
 		if (!hist[flooredTime]) {
@@ -54,18 +64,28 @@ function reduceStats(obj) {
 		}
 		hist[flooredTime] += 1;
 	}
+
+	// By number
+	hist = typeNumberHistogram[type];
+	if (!hist[number]) {
+		hist[number] = 0;
+	}
+	hist[number] += 1;
 }
 
 setTimeout(updateStatsFromLogs, 0);
 setInterval(updateStatsFromLogs, UPDATE_FROM_LOGS_FREQUENCY);
 
-exports.getTypeTimeHist = function() {
+function toHighchartsData(histogram, intKey) {
 	var ret = {};
-	_.each(typeTimeHistogram, function(hist, type) {
-		ret[type] = [];
-		_.each(hist, function(value, key) {
-			ret[type].push([+key, value]);
+	_.each(histogram, function(hist, type) {
+		ret[type] = _.map(hist, function(value, key) {
+			if (intKey) key = +key;
+			return [key, value];
 		});
 	});
 	return ret;
-};
+}
+
+exports.getTypeTimeHist = _.bind(toHighchartsData, null, typeTimeHistogram, true);
+exports.getTypeNumberHist = _.bind(toHighchartsData, null, typeNumberHistogram);
