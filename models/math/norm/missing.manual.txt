@@ -29,5 +29,13 @@
            "self": false,
            "text": "the product of the two primes 37 and 73"
        }
+    ],
+
+    "19937": [
+       {
+           "manual": true,
+           "self": false,
+           "text": "the largest known Mersenne prime exponent whose digits are all odd (also a circular prime)"
+       }
     ]
 }

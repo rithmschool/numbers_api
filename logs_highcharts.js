@@ -2,7 +2,7 @@ var fs = require('fs');
 var _ = require('underscore');
 var api = require('./routes/api.js')
 
-var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 5;
+var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60;
 
 // TODO: repetition of code here with the types
 var FACT_TYPES = ['trivia', 'math', 'year', 'date'];
