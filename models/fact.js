@@ -68,7 +68,9 @@ function getRandomApiNum(type, options) {
 }
 
 function getOrdinal(num) {
-  if (num % 10 === 1) {
+  if (num === 11 || num == 12 || num == 13) {
+    return '' + num + 'th';
+  } else if (num % 10 === 1) {
     return '' + num + 'st';
   } else if (num % 10 === 2) {
     return '' + num + 'nd';
