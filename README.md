@@ -8,6 +8,7 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
     - an integer, or
     - the keyword `random`, for which we will try to return a random available fact, or
     - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/09`, `04/1`), if **`type`** is `date`
+    - <a href="#batching">ranges of numbers</a>
 
 <pre>
 http://numbersapi.com/42
@@ -153,6 +154,21 @@ http://numbersapi.com/random/year?json
     "number": 2012,
     "type": "year",
     "date": "June 6"
+}
+</pre>
+
+<h3 id="batching">Batching</h3>
+Earlier, it was mentioned that the general request url format is <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code>. In reality, `number` is more complicated than this, and can be specify multiple numbers ranges to allow making batch requests for multiple numbers. A number range is specified as `min..max`, where `min` and `max` are separated by `..` (two dots). Each number between `min` and `max` inclusive will be returned. A mixture of individual numbers and number ranges can be requested at once separating them with a `,` (a comma).
+
+When a batch request is made, the response format will always be a JSON object containing number to fact pairs.At most, 100 numbers will be returned. The returned The query parameter `json` may still be used to specify whether the individual facts will be returned as string literals or JSON objects.
+
+<pre>
+http://numbersapi.com/1:3,10
+&rArr; {
+    "1": "1 is the number of dimensions of a line.",
+    "2": "2 is the number of polynucleotide strands in a DNA double helix.",
+    "3": "3 is the number of sets needed to be won to win the whole match in volleyball.",
+    "10": "10 is the highest score possible in Olympics gymnastics competitions."
 }
 </pre>
 

@@ -1,9 +1,11 @@
 var _ = require('underscore');
 var fs = require('fs');
 
+var LOG_INTERVAL = 1000*60;
+var MILLISECONDS_PER_DAY = 1000*60*60*24;
+var BATCH_LIMIT = 100;
+
 var logBuffer = [];
-var logInterval = 1000*60;
-var millisecondsPerDay = 1000*60*60*24;
 
 function appendToFile(filePath, dataStr) {
   fs.open(filePath, 'a', 0666, function(e, id) {
@@ -29,7 +31,7 @@ function logRequest(req) {
 // logRequest to file asynchronously at set interval
 setInterval(function() {
   try {
-    var day = Math.floor((new Date()).getTime() / millisecondsPerDay);
+    var day = Math.floor((new Date()).getTime() / MILLISECONDS_PER_DAY);
     var filePath = 'logs/' + day + '.json';
     var dataStr = '';
     _.each(logBuffer, function(element) {
@@ -41,7 +43,13 @@ setInterval(function() {
   } catch (e) {
     console.log('Caught exception logging to file: ' + filePath, e);
   }
-}, logInterval);
+}, LOG_INTERVAL);
+
+function setExpireHeaders(res) {
+  res.header('Pragma', 'no-cache');
+  res.header('Cache-Control', 'no-cache');
+  res.header('Expires', 0);
+}
 
 /*
  * This is basically our "controllers" that's just an adapter between the URL
@@ -50,7 +58,7 @@ setInterval(function() {
  */
 
 function factResponse(fact, req, res, num) {
-	var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
+  var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
 	var factStr = '' + factObj.text;
 	var useJson = (req.param('json') !== undefined ||
 			(req.header('Content-Type') || '').indexOf('application/json') !== -1);
@@ -59,9 +67,7 @@ function factResponse(fact, req, res, num) {
 	}
 
 	res.header('X-Numbers-API-Number', factObj.number);
-  res.header('Pragma', 'no-cache');
-  res.header('Cache-Control', 'no-cache');
-  res.header('Expires', 0);
+  setExpireHeaders(res);
 
 	if (req.param('callback')) {  // JSONP
 		res.json(useJson ? factObj : factStr);
@@ -78,6 +84,39 @@ function factResponse(fact, req, res, num) {
 	}
 }
 
+/*
+ * Similar to factResponse(), but supports returning facts for multiple numbers in order
+ * support making batch requests
+ */
+function factsResponse(fact, req, res, nums) {
+  var useJson = (req.param('json') !== undefined ||
+      (req.header('Content-Type') || '').indexOf('application/json') !== -1);
+  var factsObj = {};
+  _.each(nums, function(num) {
+    var factObj = fact.getFact(num, req.param('type', 'trivia'), req.query);
+    if (useJson) {
+      factsObj[num] = factObj;
+    } else {
+      factsObj[num] = '' + factObj.text;
+    }
+  });
+
+  function factsObjStr() {
+    return JSON.stringify(factsObj, null, ' ');
+  }
+
+  setExpireHeaders(res);
+
+  if (req.param('callback')) {  // JSONP
+    res.json(factsObj);
+  } else if (req.param('write') !== undefined) {
+    var script = 'document.write(' + factsObjStr() + ');';
+    res.send(script, {'Content-Type': 'text/javascript'}, 200);
+  } else {
+    res.send(factsObjStr(), { 'Content-Type': 'application/json' }, 200);
+  }
+}
+
 // TODO: there's also a copy in public/js/script.js. create a single shared copy
 var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 exports.dateToDayOfYear = function(date) {
@@ -88,14 +127,47 @@ exports.dateToDayOfYear = function(date) {
   return day + date.getDate();
 }
 
-// TODO: THis should be put in a utils
+// TODO: This should be put in a utils
 exports.monthDayToDayOfYear = function(month, day) {
 	var date = new Date(2004, month - 1, day);
 	return exports.dateToDayOfYear(date);
 };
 
 exports.route = function(app, fact) {
-	app.get('/:num(-?[0-9]+)/:type(date|year|trivia|math)?', function(req, res) {
+
+  var allTypesRegex = '/:type(date|year|trivia|math)?';
+
+  // parse a batch request string of (e.g. "1..3,10") into individual numbers
+  function getBatchNums(rangesStr, parseValue) {
+    var nums = [];
+    var count = 0;
+    var ranges = rangesStr.split(',');
+    _.each(ranges, function(range) {
+      var bounds = range.split('..');
+      if (bounds.length == 1) {
+        if (count == BATCH_LIMIT) {
+          return;
+        }
+        nums.push(parseValue(bounds[0]));
+      } else if (bounds.length == 2) {
+        var minBound = parseValue(bounds[0]);
+        var maxBound = parseValue(bounds[1]);
+        for (var i = minBound; i <= maxBound; i++) {
+          if (count == BATCH_LIMIT) {
+            return;
+          }
+          nums.push(i);
+          count++;
+        }
+      } else {
+        console.log('Unexpected number of bounds in range: ' + bounds.length);
+      }
+    });
+    return nums;
+  }
+
+
+	app.get('/:num(-?[0-9]+)' + allTypesRegex, function(req, res) {
     logRequest(req);
 		var number = parseInt(req.param('num'), 10);
 		if (req.param('type') === 'date') {
@@ -104,6 +176,21 @@ exports.route = function(app, fact) {
 		factResponse(fact, req, res, number);
 	});
 
+  app.get('/:num([-0-9.,]+)' + allTypesRegex, function(req, res)  {
+    logRequest(req);
+
+    if (!req.param('num').match(/^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/)) {
+      // 404 if bad match
+      res.send('Invalid url', 404);
+      return;
+    }
+
+    var nums = getBatchNums(req.param('num'), function(numStr) {
+      return parseInt(numStr, 0);
+    });
+    factsResponse(fact, req, res, nums);
+  });
+
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
     logRequest(req);
 		var dayOfYear = exports.monthDayToDayOfYear(req.param('month'), req.param('day'));
@@ -111,8 +198,28 @@ exports.route = function(app, fact) {
 		factResponse(fact, req, res, dayOfYear);
 	});
 
+  // TODO: currently returned json uses dayOfYear as key rather than "month/day".
+  // consider returning "month/day"
+  app.get('/:date([-0-9/.,]+)/:type(date)?', function(req, res) {
+    logRequest(req);
+
+    if (!req.param('date').match(/^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/)) {
+      // 404 if bad match
+      res.send('Invalid url', 404);
+      return;
+    }
+
+    var nums = getBatchNums(req.param('date'), function(dateStr) {
+      var splits = dateStr.split('/');
+      return exports.monthDayToDayOfYear(splits[0], splits[1]);
+    });
+    req.params.type = 'date';
+    factsResponse(fact, req, res, nums);
+  });
+
 	app.get('/random/:type?', function(req, res) {
     logRequest(req);
 		factResponse(fact, req, res, 'random');
 	});
+
 };
