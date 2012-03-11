@@ -18,6 +18,8 @@ $element-border-radius: 5px;
 $example-height: 5em;
 $page-top-padding: 0px;
 $url-height: 1.5em;
+$body-font: Palatino, Georgia, serif;
+$heading-font: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica', sans-serif;
 
 // Colors -----------------------------------------
 
@@ -93,23 +95,6 @@ $main-margin: 20%;
 	src: url('/font/pastel_crayon.ttf');
 }
 
-//@font-face {
-//	font-family: pointy;
-//	src: url('/font/pointy.ttf');
-//}
-//
-//@font-face {
-//	font-family: museo_slab;
-//	src: url('/font/Museo_Slab_300.otf');
-//	font-weight: normal;
-//}
-//
-//@font-face {
-//	font-family: museo_slab;
-//	src: url('/font/Museo_Slab_700.otf');
-//	font-weight: bold;
-//}
-
 @font-face {
 	font-family: museo_sans;
 	src: url('/font/MuseoSansRounded-300.otf');
@@ -142,7 +127,7 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
 	@include text-shadow($color-five 2px 2px 3px);
-	font-family: museo_sans;
+	font-family: $heading-font;
 	font-weight: bold;
 	letter-spacing: 3px;
 	color: $color-one;
@@ -151,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p, a, div, span, label, input {
   @include text-shadow(#000000 0px 1px 0px);
-	font-family: Palatino, 'Lucida Grande', Georgia, Verdana, serif;
+	font-family: $body-font;
 	font-weight: normal;
 	font-size: 18px;
 	//letter-spacing: 1px;
@@ -177,7 +162,7 @@ a {
 	padding: 0;
 	color: $color-five;
 	text-transform: uppercase;
-  font-family: museo_sans;
+  font-family: $heading-font;
   font-weight: bold;
 	font-size: 5em;
   //border-top: 1px solid $color-five;
@@ -333,7 +318,7 @@ $sandbox-result-height: 102px;
 		@include transform(rotate(-9deg));
 		writing-mode: lr-tb;
 		font-size: 70px;
-		font-family: pastel_crayon;
+		font-family: pastel_crayon, $body-font;
 		font-weight: normal;
 		top: -32px;
 		left: -215px;
@@ -395,7 +380,7 @@ $sandbox-result-height: 102px;
     }
     .counter-digit {
       font-weight: bold;
-      font-family: museo_sans, "Lucida Grande", Helvetica, sans-serif;
+      font-family: $heading-font;
       color: $color-five;
       text-shadow: none;
       background-color: $color-one;
