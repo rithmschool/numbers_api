@@ -48,7 +48,6 @@ function reader(out, path, callback) {
 					console.log('Skipping empty file (element.text is falsey)', path + file);
 					return;
 				}
-        // check if fact contains the number itself and discard it
         if (callback) {
           element = callback(element);
         }
@@ -69,17 +68,29 @@ function reader(out, path, callback) {
   });
 }
 
+
+var countBad = 0;
 function normalize_common(element) {
   // do not return results that contain the number itself
   if (element.self) {
-    return null;
+    return undefined;
   }
-  var text = element.text;
+  var text = element.text.trim();
   if (element.pos !== 'NP') {
     text = text[0].toLowerCase() + text.substring(1);
   }
-  if (text.charAt(text.length-1) === '.') {
+  var lastChar = text.charAt(text.length-1);
+  var charCode = lastChar.charCodeAt(0);
+  if (lastChar === '.') {
     text = text.substring(0, text.length-1);
+  } else if (
+      (charCode < 'a'.charCodeAt(0) || charCode > 'z'.charCodeAt(0)) &&
+      (charCode < 'A'.charCodeAt(0) || charCode > 'Z'.charCodeAt(0)) &&
+      (charCode < '0'.charCodeAt(0) || charCode > '9'.charCodeAt(0)) &&
+      lastChar !== ')' && lastChar !== '"' && lastChar !== '\'') {
+    // filter out results that do not end in '.', ')', or alphanumeric character as this is most
+    // likely complex grammar that we do not support
+    return undefined;
   }
   element.text = text;
   return element;
