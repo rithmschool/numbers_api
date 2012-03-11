@@ -224,6 +224,7 @@ function showAddFactText(event) {
 	$('#add-fact-label').text('Submit fact!')
 	$('#add-fact-area')
 		.find('#add-fact-text')
+			.val('')
 			.focus();
 
 	update_add_fact(currentNumber, currentType, true);
