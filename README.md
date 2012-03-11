@@ -136,7 +136,7 @@ http://numbersapi.com/random?min=10&max=20
 13 is the number of provinces and territories in Canada.
 </pre>
 
-### Json
+<h3 id="json">Json</h3>
 Include the query parameter `json` or set the HTTP header `Content-Type` to `application/json` to return the fact and associated meta-data as a JSON object, with the properties:
 
 - `text`: A string of the fact text itself.
@@ -157,13 +157,16 @@ http://numbersapi.com/random/year?json
 }
 </pre>
 
-<h3 id="batching">Batching</h3>
-Earlier, it was mentioned that the general request url format is <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code>. In reality, `number` is more complicated than this, and can be specify multiple numbers ranges to allow making batch requests for multiple numbers. A number range is specified as `min..max`, where `min` and `max` are separated by `..` (two dots). Each number between `min` and `max` inclusive will be returned. A mixture of individual numbers and number ranges can be requested at once separating them with a `,` (a comma).
+<h2 id="batching">Batch Requests</h2>
 
-When a batch request is made, the response format will always be a JSON object containing number to fact pairs.At most, 100 numbers will be returned. The returned The query parameter `json` may still be used to specify whether the individual facts will be returned as string literals or JSON objects.
+To get facts about multiple numbers in one request, specify ranges for <code><strong>number</strong></code> in <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code>.
+
+A number range (inclusive) is specified as <code><strong>min</strong>..<strong>max</strong></code>. Separate multiple individual numbers and ranges with `,` (a comma).
+
+The response format will always be a JSON map from numbers to facts, of at most 100 numbers. The query parameter [`json`](/#json) may still be used to specify whether individual facts will be returned as string literals or JSON objects.
 
 <pre>
-http://numbersapi.com/1:3,10
+http://numbersapi.com/1..3,10
 &rArr; {
     "1": "1 is the number of dimensions of a line.",
     "2": "2 is the number of polynucleotide strands in a DNA double helix.",
@@ -172,5 +175,3 @@ http://numbersapi.com/1:3,10
 }
 </pre>
 
-
-<!--TODO: make sentence structure work out (data mining) -->

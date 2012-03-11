@@ -114,9 +114,8 @@ function update_result(url, $result) {
 			$result.removeClass('error');
 		},
 		error: function() {
-			$('#result-temporary-text')
-				.html('Uh oh, we don\'t understand that URL :( <br>' +
-							'Maybe read the <a href="#api">API docs</a> below?');
+			setSandboxResult('Uh oh, we don\'t understand that URL :( <br>' +
+				'Maybe read the <a href="#api">API docs</a> below?', false);
 			$result.addClass('error');
 		}
 	});
