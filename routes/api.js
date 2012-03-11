@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var fs = require('fs');
+var utils = require('../public/js/shared_utils.js');
 
 var LOG_INTERVAL = 1000*60;
 var MILLISECONDS_PER_DAY = 1000*60*60*24;
@@ -7,12 +8,13 @@ var BATCH_LIMIT = 100;
 
 var logBuffer = [];
 
-function appendToFile(filePath, dataStr) {
-  fs.open(filePath, 'a', 0666, function(e, id) {
-		// TODO: Should use async
-    fs.writeSync(id, dataStr, 0, 'utf8');
-  });
-}
+exports.appendToFile = function(filePath, dataStr) {
+	fs.createWriteStream(filePath, {
+			flags: 'a',
+			encoding: 'utf8',
+			mode: 0666
+	}).write(dataStr);
+};
 
 /**
  * logRequest a request. Start by logging to memory, and periodically empty to file
@@ -39,7 +41,7 @@ setInterval(function() {
     });
     logBuffer = [];
     console.log('Logging to file: ' + filePath);
-    appendToFile(filePath, dataStr);
+    exports.appendToFile(filePath, dataStr);
   } catch (e) {
     console.log('Caught exception logging to file: ' + filePath, e);
   }
@@ -67,6 +69,7 @@ function factResponse(fact, req, res, num) {
 	}
 
 	res.header('X-Numbers-API-Number', factObj.number);
+	res.header('X-Numbers-API-Type', factObj.type);
   setExpireHeaders(res);
 
 	if (req.param('callback')) {  // JSONP
@@ -84,6 +87,7 @@ function factResponse(fact, req, res, num) {
 	}
 }
 
+// TODO: Refactor to have less duplicated code
 /*
  * Similar to factResponse(), but supports returning facts for multiple numbers in order
  * support making batch requests
@@ -116,22 +120,6 @@ function factsResponse(fact, req, res, nums) {
     res.send(factsObjStr(), { 'Content-Type': 'application/json' }, 200);
   }
 }
-
-// TODO: there's also a copy in public/js/script.js. create a single shared copy
-var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-exports.dateToDayOfYear = function(date) {
-  var day = 0;
-  for (var i = 0; i < date.getMonth(); ++i) {
-    day += MONTH_DAYS[i];
-  }
-  return day + date.getDate();
-}
-
-// TODO: This should be put in a utils
-exports.monthDayToDayOfYear = function(month, day) {
-	var date = new Date(2004, month - 1, day);
-	return exports.dateToDayOfYear(date);
-};
 
 exports.route = function(app, fact) {
 
@@ -171,7 +159,7 @@ exports.route = function(app, fact) {
     logRequest(req);
 		var number = parseInt(req.param('num'), 10);
 		if (req.param('type') === 'date') {
-			number = exports.dateToDayOfYear(new Date(2004, 0, number));
+			number = utils.dateToDayOfYear(new Date(2004, 0, number));
 		}
 		factResponse(fact, req, res, number);
 	});
@@ -193,7 +181,7 @@ exports.route = function(app, fact) {
 
 	app.get('/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?', function(req, res) {
     logRequest(req);
-		var dayOfYear = exports.monthDayToDayOfYear(req.param('month'), req.param('day'));
+		var dayOfYear = utils.monthDayToDayOfYear(req.param('month'), req.param('day'));
 		req.params.type = 'date';
 		factResponse(fact, req, res, dayOfYear);
 	});

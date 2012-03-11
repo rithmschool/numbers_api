@@ -1,39 +1,14 @@
 (function() {
 
 
-// TODO: Share a file with the node.js server of common utilities and
-//     algorithms
-
-
 // TODO: mvc to keep url, selected example, search text, and result in sync
 //		 +1 (david)
 var currentUrl = null;
+var currentNumber = 42;
+var currentType = 'trivia';
 
-function randInt(min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
-}
-
-function clamp(min, max, num) {
-	return Math.max(min, Math.min(max, num));
-}
-
-function randomIndex(array) {
-	return randInt(0, array.length);
-}
-
-function randomChoice(array) {
-	return array[randInt(0, array.length)];
-}
-
-var MONTH_DAYS = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-function dateToDayOfYear(date) {
-	var day = 0;
-	for (var i = 0; i < date.getMonth(); ++i) {
-		day += MONTH_DAYS[i];
-	}
-	return day + date.getDate();
-}
-
+// TODO: This URL parsing stuff should be in shared_utils.js, and then we can
+//		 get rid of express routing
 var NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
 function getNumFromUrl(url) {
 	var matches = NUM_FROM_URL_REGEX.exec(url);
@@ -41,7 +16,7 @@ function getNumFromUrl(url) {
 
 	if (matches[2]) {
 		// The number is a date, convert to day of year
-		return dateToDayOfYear(new Date(2004, matches[1] - 1, matches[2]));
+		return utils.dateToDayOfYear(new Date(2004, matches[1] - 1, matches[2]));
 	} else {
 		return parseInt(matches[1], 10);
 	}
@@ -80,12 +55,39 @@ function getParameterByName(query, name) {
 }
 
 function processWidgetText(text) {
-	var htmlEscaped = '<span class="">' + escapeForHtml(text) + '</span>';
+	var htmlEscaped = escapeForHtml(text);
 
   htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, '<sup>$1</sup>');
   htmlEscaped = htmlEscaped.replace(/\_{(.*?)}/g, '<sub>$1</sub>');
 
   return htmlEscaped;
+}
+
+function setSandboxResult(html, scriptStyle) {
+	var $text = $('#result-temporary-text');
+	$text
+		.css({
+			opacity: 0,
+			top: '50%',
+			marginTop: 0
+		})
+		.html(html)
+		.toggleClass('script', scriptStyle);
+
+	$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
+
+	// TODO: buggy lionbars or something
+	//if ($text.height() < $('#search-result').height()) {
+		//$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
+	//} else { // handle text overflow
+		//// TODO: fix right padding before scrollbar
+		//$text
+			//.css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
+	//}
+
+	$text.animate({ opacity: 1.0 }, 300);
+	// TODO: this crap is buggy
+	//$('#search-result.scroll').lionbars();
 }
 
 function update_result(url, $result) {
@@ -102,33 +104,12 @@ function update_result(url, $result) {
 				data = processWidgetText(data);
 			}
 
-			var $text = $('#result-temporary-text');
-			$text
-				.css({
-					opacity: 0,
-					top: '50%',
-					marginTop: 0
-				})
-				.html(data)
-				.toggleClass('script', contentType.indexOf('text/plain') === -1)
+			setSandboxResult(data, contentType.indexOf('text/plain') === -1);
 
-			$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
-
-      // TODO: buggy lionbars or something
-      //if ($text.height() < $('#search-result').height()) {
-        //$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
-      //} else { // handle text overflow
-        //// TODO: fix right padding before scrollbar
-        //$text
-          //.css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
-      //}
-
-      $text.animate({ opacity: 1.0 }, 300);
-      // TODO: this crap is buggy
-      //$('#search-result.scroll').lionbars();
-
-			var number = xhr.getResponseHeader('X-Numbers-API-Number');
-			$('#counter').counter('set', number, /* dontTriggerEvent */ true);
+			currentNumber = xhr.getResponseHeader('X-Numbers-API-Number');
+			$('#counter').counter('set', currentNumber, /* dontTriggerEvent */ true);
+			currentType = xhr.getResponseHeader('X-Numbers-API-Type');
+			update_add_fact(currentNumber, currentType);
 
 			$result.removeClass('error');
 		},
@@ -171,7 +152,7 @@ function update_all(url, force) {
 function switchTagline() {
 	$('#tagline')
 		.css('opacity', 0)
-		.html(randomChoice($('#tagline-alternates li')).innerHTML)
+		.html(utils.randomChoice($('#tagline-alternates li')).innerHTML)
 		.animate({ opacity: 1.0 }, 1000);
 }
 
@@ -203,10 +184,24 @@ function registerUpdateShareMessage() {
 	});
 }
 
+function update_add_fact(number, type) {
+	$('#add-fact-prefix').text(utils.getStandalonePrefix(number, type) + '...');
+	var $label = $('#add-fact-label');
+	if ($label.text().indexOf('ubmit') === -1) {
+		$label.text('+ Add a ' + type + ' fact ' + ' for ' + number);
+	} else {
+		$label.text('Submit ' + type + ' fact ' + ' for ' + number + '!');
+	}
+}
+
 function registerAddFactUi() {
 	$('#add-fact-label')
 		.show()
-		.click(showAddFactText);
+		.click(function(event) {
+			$('#add-fact-label').text().indexOf('ubmit') === -1 ? showAddFactText(event) : submitFact(event);
+			event.preventDefault();
+		});
+
 	$('#add-fact-text')
 		.focus(function() {
 			$(this).parent().addClass('focused');
@@ -214,17 +209,46 @@ function registerAddFactUi() {
 		.blur(function() {
 			$(this).parent().removeClass('focused');
 		});
+
+	$('#add-fact-prefix').click(function() {
+		$('#add-fact-text').focus();
+	});
 }
+
+var ADD_FACT_FADE_TIME = 100;
+
 function showAddFactText(event) {
-	$('#result-temporary-text').hide();
+	$('#result-temporary-text').fadeOut(ADD_FACT_FADE_TIME);
 	$('#add-fact-label').text('Submit fact!')
 	$('#add-fact-area')
-		.show()
+		.fadeIn(ADD_FACT_FADE_TIME)
 		.find('#add-fact-text')
-			.focus()
-		;
-	event.preventDefault();
+			.focus();
+
+	update_add_fact(currentNumber, currentType);
 }
+
+function submitFact(event) {
+	$('#add-fact-label')
+		.text('Submitting...')
+		.prop('disabled', true);
+
+	$.post('/submit', {
+		text: $('#add-fact-text').val(),
+		number: currentNumber,
+		type: currentType
+	}, function() {
+		$('#add-fact-area').fadeOut(ADD_FACT_FADE_TIME);
+		$('#add-fact-label')
+			.text('+Add a fact')
+			.prop('disable', false);
+		$('#result-temporary-text').show();
+		setSandboxResult("Thank you for your contribution! We'll add your fact as soon as we review it.", false);
+		update_add_fact(currentNumber, currentType);
+	});
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -313,16 +337,5 @@ $(function() {
 	registerAddFactUi();
 });
 
-/*
-$(document).ready(function() {
-  $('#examples').carouFredSel({
-    scroll: {
-      items: 1,
-      duration: 1000,
-      pauseOnHover: true
-    }
-  });
-});
-*/
 
 })();

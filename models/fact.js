@@ -1,38 +1,7 @@
 var _ = require('underscore');
-var util = require('util');
 var data = require('./data.js');
+var utils = require('../public/js/shared_utils.js');
 
-// TODO: There are a bunch of utils functions here that could be offshored
-// to another file if they're ever needed elsewhere.
-
-/**
- * @return {number} in [min, max) (inclusive-exclusive).
- */
-function randInt(min, max) {
-	return Math.floor(Math.random() * (max - min) + min);
-}
-
-var randDayOfYear = (function() {
-	var monthDays = [ 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
-	return function() {
-		// TODO Make February 29 less likely
-		var month = randInt(0, 12);
-		var day = randInt(1, monthDays[month] + 1)
-		return new Date(0, month, day);
-	}
-})();
-
-function clamp(min, max, num) {
-	return Math.max(min, Math.min(max, num));
-}
-
-function randomIndex(array) {
-  return randInt(0, array.length);
-}
-
-function randomChoice(array) {
-	return array[randInt(0, array.length)];
-}
 
 // http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
 function randomProperty(obj, pre) {
@@ -52,7 +21,7 @@ function getRandomApiNum(type, options) {
   var min = parseInt(options.min, 10);
   var max = parseInt(options.max, 10);
   if (isNaN(min) && isNaN(max)) {
-    return randomChoice(dataKeys[type]);
+    return utils.randomChoice(dataKeys[type]);
   } else {
     if (isNaN(min)) {
       min = -Infinity;
@@ -63,67 +32,27 @@ function getRandomApiNum(type, options) {
     var valid_keys = _.filter(dataKeys[type], function(element) {
       return element >= min && element <= max;
     });
-    return randomChoice(valid_keys);
+    return utils.randomChoice(valid_keys);
   }
 }
 
-function getOrdinal(num) {
-  if (num === 11 || num == 12 || num == 13) {
-    return '' + num + 'th';
-  } else if (num % 10 === 1) {
-    return '' + num + 'st';
-  } else if (num % 10 === 2) {
-    return '' + num + 'nd';
-  } else if (num % 10 === 3) {
-    return '' + num + 'rd';
-  } else {
-    return '' + num + 'th';
-  }
-}
-
-var MONTH_NAMES = 'January February March April May June July August September October November December'.split(' ');
-function dateToString(date) {
-	return MONTH_NAMES[date.getMonth()] + ' ' + getOrdinal(date.getDate());
-}
-
-function getSentence(wantFragment, number, data, type) {
+function getSentence(wantFragment, number, type, data) {
   var text = data.text;
   if (wantFragment !== undefined) {  // Because wantFragment could be a query field value
     return text;
   }
 
-  if (type === 'math') {
-    return '' + number + ' is ' + text + '.';
-  } else if (type === 'trivia') {
-    return '' + number + ' is ' + text + '.';
-  } else if (type === 'date') {
-    var date = new Date(2004, 0, number);
-    if (data.year) {
-      if (data.year < 0) {
-        text = dateToString(date) + ' is the day in ' + -data.year + ' BC that ' + text;
-      } else {
-        text = dateToString(date) + ' is the day in ' + data.year + ' that ' + text;
-      }
-    } else {
-      text = dateToString(date) + ' is the day that ' + text;
-    }
-    return text + '.';
-  } else if (type === 'year') {
-    // TODO: consider different grammar for year in the past vs. year in the future
-    if (number < 0) {
-      text = '' + -number + ' BC is the year that ' + text;
-    } else {
-      text = '' + number + ' is the year that ' + text;
-    }
-    if (data.date) {
-      // format is 'December 25'
-      // TODO: should not just be storing string in data.date
-      var month = data.date.replace(/(\w+) \d+/, '$1');
-      var day = parseInt(data.date.replace(/\w+ (\d+)/, '$1'), 10);
-      text += ' on ' + month + ' ' + getOrdinal(day);
-    }
-    return text + '.';
-  }
+	var prefix = utils.getStandalonePrefix(number, type, data);
+
+	if (type === 'year' && data.date) {
+		// format is 'December 25th'
+		// TODO: should not just be storing string in data.date
+		var month = data.date.replace(/(\w+) \d+/, '$1');
+		var day = parseInt(data.date.replace(/\w+ (\d+)/, '$1'), 10);
+		text += ' on ' + month + ' ' + utils.getOrdinalSuffix(day);
+	}
+
+	return prefix + ' ' + text + '.';
 }
 
 function getDefaultMsg(number, type, options) {
@@ -147,10 +76,10 @@ function getDefaultMsg(number, type, options) {
 	}[type];
 
 	var data = {
-		text: randomChoice(defaultMsgs),
+		text: utils.randomChoice(defaultMsgs),
 	};
 
-	return getSentence(options.fragment, number, data, type);
+	return getSentence(options.fragment, number, type, data);
 }
 
 // Mapping of meaning to query param value name
@@ -267,10 +196,10 @@ exports.getFact = function(number, type, options) {
 	var ret = data[type][number];
 
   if (ret instanceof Array) {
-    ret = randomChoice(ret);
+    ret = utils.randomChoice(ret);
     if (ret !== undefined && 'text' in ret) {
       return apiExtend(ret, {
-        text: getSentence(options.fragment, number, ret, type),
+        text: getSentence(options.fragment, number, type, ret),
 				number: number,
 				found: true,
 				type: type,
@@ -290,9 +219,9 @@ exports.getFact = function(number, type, options) {
 		var index = _.sortedIndex(dataKeys[type], number);
 		if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
 		var adjustedNum = dataPairs[type][index].string;
-    ret = randomChoice(data[type][adjustedNum]);
+    ret = utils.randomChoice(data[type][adjustedNum]);
 		return apiExtend(ret, {
-      text: getSentence(options.fragment, adjustedNum, ret, type),
+      text: getSentence(options.fragment, adjustedNum, type, ret),
 			number: adjustedNum,
 			found: false,
 			type: type,

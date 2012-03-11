@@ -25,7 +25,7 @@ var fact = require('./models/fact.js');
 var router = require('./routes/api.js');
 var secrets = require('./secrets.js');
 var highcharts = require('./logs_highcharts.js');
-
+var utils = require('./public/js/shared_utils.js');
 
 // fake number of viistors
 var BASE_VISITOR_TIME = new Date(1330560000000);
@@ -136,7 +136,7 @@ app.configure('production', function(){
 
 router.route(app, fact);
 
-var apiMarkdown = fs.readFileSync('README.md', 'utf-8');
+var apiDoscHtml = markdown.parse(fs.readFileSync('README.md', 'utf8'));
 
 // TODO: Precompile this template. Should also probably use a .mustache filename
 // extension.
@@ -153,7 +153,7 @@ app.get('/', function(req, res) {
   var currDate = new Date();
   res.render('index.html', {
     locals: {
-      docs: markdown.parse(apiMarkdown),
+      docs: apiDocsHtml,
       //visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
       //numVisitors: numVisitors,
       sharesFact: fact.getFact(numShares, 'trivia', { notfound: 'floor', fragment: true }),
@@ -175,6 +175,12 @@ app.get('/type-time-highcharts', function(req, res) {
 app.get('/type-number-highcharts', function(req, res) {
 	res.json(highcharts.getTypeNumberHist());
 });
+
+app.post('/submit', function(req, res) {
+	router.appendToFile('./suggestions.json', JSON.stringify(req.body) + "\n");
+	res.send(req.body);
+});
+
 
 // Main
 

@@ -1,6 +1,6 @@
 var fs = require('fs');
 var _ = require('underscore');
-var api = require('./routes/api.js')
+var utils = require('./public/js/shared_utils.js');
 
 var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60;
 
@@ -46,7 +46,7 @@ function reduceStats(obj) {
 	var query = obj.query;
 	var number = query.num || 'random';
 	if (query.month && query.day) {
-		number = api.monthDayToDayOfYear(query.month, query.day);
+		number = utils.monthDayToDayOfYear(query.month, query.day);
 	}
 	var type = query.type || 'trivia';
 

@@ -24,7 +24,7 @@ start: stop
 
 # Transfer files to the server
 transfer: compass
-	rsync -avz --exclude .git --exclude logs/ --stats --progress . numbers@david-hu.com:~/www
+	rsync -avz --exclude .git --exclude logs/ --exclude suggestions.json --stats --progress . numbers@david-hu.com:~/www
 
 # Deploy to the server: transfer files and restart node production server
 # See: http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine

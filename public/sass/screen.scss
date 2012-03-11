@@ -494,6 +494,7 @@ $sandbox-result-height: 102px;
           position: absolute;
           top: 50%;
           padding-right: 5px;
+          left: 153px;
         }
 			}
 
@@ -518,6 +519,7 @@ $sandbox-result-height: 102px;
         #add-fact-prefix {
           padding-left: 4px;
           line-height: 21px;
+          cursor: text;
         }
 
         &.focused #add-fact-prefix {
