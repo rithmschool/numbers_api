@@ -203,6 +203,29 @@ function registerUpdateShareMessage() {
 	});
 }
 
+function registerAddFactUi() {
+	$('#add-fact-label')
+		.show()
+		.click(showAddFactText);
+	$('#add-fact-text')
+		.focus(function() {
+			$(this).parent().addClass('focused');
+		})
+		.blur(function() {
+			$(this).parent().removeClass('focused');
+		});
+}
+function showAddFactText(event) {
+	$('#result-temporary-text').hide();
+	$('#add-fact-label').text('Submit fact!')
+	$('#add-fact-area')
+		.show()
+		.find('#add-fact-text')
+			.focus()
+		;
+	event.preventDefault();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 
 // Main execution: what gets executed on DOM ready
@@ -286,6 +309,8 @@ $(function() {
   $('.scroll').lionbars();
 
 	registerUpdateShareMessage();
+
+	registerAddFactUi();
 });
 
 /*

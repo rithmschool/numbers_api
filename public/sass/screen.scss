@@ -400,7 +400,7 @@ $sandbox-result-height: 102px;
 			margin-left: 0px;
 			margin-right: 20px;
 			padding-left: 10px;
-			padding-right: 10px;
+      padding-right: 10px;
 
 			#search-box {
         $search-box-height: 30px;
@@ -477,7 +477,7 @@ $sandbox-result-height: 102px;
 				position: relative;
 				margin-top: 0px;
 				margin-bottom: 5px;
-				padding: 0 10px;
+				padding: 0 0 0 10px;
         height: $sandbox-result-height;
 
 				//&.error {
@@ -496,6 +496,57 @@ $sandbox-result-height: 102px;
           padding-right: 5px;
         }
 			}
+
+			#add-fact-area {
+        width: 385px;
+        margin: 6px 0;
+        float: left;
+        background-color: rgba($color-four, 0.5);
+        @include border-radius(0 0 $element-border-radius 0);
+        @include transition(all ease-out 0.3s);
+        border: 2px solid rgba($color-five, 0.0);
+
+        &.focused {
+          border: 2px solid rgba($color-five, 0.8);
+          background-color: rgba($color-four, 0.2);
+        }
+
+        &:hover {
+          background-color: rgba($color-four, 0.2);
+        }
+
+        #add-fact-prefix {
+          padding-left: 4px;
+          line-height: 21px;
+        }
+
+        &.focused #add-fact-prefix {
+          background: url(/img/grainy-opacity-80.png);
+        }
+
+      }
+
+      #add-fact-text {
+        width: 100%;
+        padding: 3px 5px;
+        border: none;
+        box-sizing: border-box;
+        resize: none;
+        font-family: $body-font;
+        color: $color-one;
+        outline: none;
+        @include transition(all ease-out 0.3s);
+        @include border-radius(0 0 $element-border-radius 0);
+        background-color: rgba($color-five, 0.0);
+      }
+
+			#add-fact-label {
+        text-align: right;
+        display: block;
+        font-family: $heading-font;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
 		}
 		#search-examples {
 			float: left;
