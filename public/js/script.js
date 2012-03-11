@@ -109,7 +109,7 @@ function update_result(url, $result) {
 			currentNumber = xhr.getResponseHeader('X-Numbers-API-Number');
 			$('#counter').counter('set', currentNumber, /* dontTriggerEvent */ true);
 			currentType = xhr.getResponseHeader('X-Numbers-API-Type');
-			update_add_fact(currentNumber, currentType);
+			update_add_fact(currentNumber, currentType, false);
 
 			$result.removeClass('error');
 		},
@@ -183,13 +183,19 @@ function registerUpdateShareMessage() {
 	});
 }
 
-function update_add_fact(number, type) {
+var ADD_FACT_FADE_TIME = 100;
+
+function update_add_fact(number, type, addMode) {
 	$('#add-fact-prefix').text(utils.getStandalonePrefix(number, type) + '...');
-	var $label = $('#add-fact-label');
-	if ($label.text().indexOf('ubmit') === -1) {
-		$label.text('+ Add a ' + type + ' fact ' + ' for ' + number);
-	} else {
+	$label = $('#add-fact-label');
+	if (addMode) {
 		$label.text('Submit ' + type + ' fact ' + ' for ' + number + '!');
+		$('#add-fact-area').fadeIn(ADD_FACT_FADE_TIME)
+		$('#result-temporary-text').fadeOut(ADD_FACT_FADE_TIME);
+	} else {
+		$label.text('+ Add a ' + type + ' fact ' + ' for ' + number);
+		$('#add-fact-area').fadeOut(ADD_FACT_FADE_TIME)
+		$('#result-temporary-text').fadeIn(ADD_FACT_FADE_TIME);
 	}
 }
 
@@ -214,17 +220,13 @@ function registerAddFactUi() {
 	});
 }
 
-var ADD_FACT_FADE_TIME = 100;
-
 function showAddFactText(event) {
-	$('#result-temporary-text').fadeOut(ADD_FACT_FADE_TIME);
 	$('#add-fact-label').text('Submit fact!')
 	$('#add-fact-area')
-		.fadeIn(ADD_FACT_FADE_TIME)
 		.find('#add-fact-text')
 			.focus();
 
-	update_add_fact(currentNumber, currentType);
+	update_add_fact(currentNumber, currentType, true);
 }
 
 function submitFact(event) {
@@ -243,7 +245,7 @@ function submitFact(event) {
 			.prop('disable', false);
 		$('#result-temporary-text').show();
 		setSandboxResult("Thank you for your contribution! We'll add your fact as soon as we review it.", false);
-		update_add_fact(currentNumber, currentType);
+		update_add_fact(currentNumber, currentType, false);
 	});
 }
 
