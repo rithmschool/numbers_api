@@ -119,6 +119,7 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(allowCrossDomain);
+  app.use(express.favicon(__dirname + '/public/img/favicon.png', { maxAge: 2592000000 }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
 });
