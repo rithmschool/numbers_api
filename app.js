@@ -136,6 +136,8 @@ app.configure('production', function(){
 
 router.route(app, fact);
 
+var apiMarkdown = fs.readFileSync('README.md', 'utf-8');
+
 // TODO: Precompile this template. Should also probably use a .mustache filename
 // extension.
 app.get('/', function(req, res) {
@@ -148,24 +150,22 @@ app.get('/', function(req, res) {
   //  numVisitors += Math.round((currTime - lastVisitorTime) / VISITOR_RATE);
   //  lastVisitorTime = currTime;
   //}
-	fs.readFile('README.md', 'utf-8', function(err, data) {
-    var currDate = new Date();
-		res.render('index.html', {
-			locals: {
-        docs: markdown.parse(data),
-        //visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
-				//numVisitors: numVisitors,
-				sharesFact: fact.getFact(numShares, 'trivia', { notfound: 'floor', fragment: true }),
-				numShares: numShares,
-        dateFact: {
-          day: currDate.getDate(),
-          month: currDate.getMonth() + 1,
-          data: fact.getFact(router.dateToDayOfYear(currDate), 'date', {}),
-        },
+  var currDate = new Date();
+  res.render('index.html', {
+    locals: {
+      docs: markdown.parse(apiMarkdown),
+      //visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
+      //numVisitors: numVisitors,
+      sharesFact: fact.getFact(numShares, 'trivia', { notfound: 'floor', fragment: true }),
+      numShares: numShares,
+      dateFact: {
+        day: currDate.getDate(),
+        month: currDate.getMonth() + 1,
+        data: fact.getFact(router.dateToDayOfYear(currDate), 'date', {}),
       },
-			partials: {}
-		});
-	});
+    },
+    partials: {}
+  });
 });
 
 app.get('/type-time-highcharts', function(req, res) {
