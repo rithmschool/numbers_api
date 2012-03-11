@@ -165,9 +165,7 @@ function updateAllFromHash() {
 function registerUpdateShareMessage() {
 	addthis.addEventListener('addthis.ready', function(event) {
 		setTimeout(function() {
-			console.log('addthis ready!');
 			var numShares = $('.addthis_button_expanded').text();
-			console.log('num shares = ', numShares);
 			if (numShares.length < 1) return;
 
 			var path = numShares + '?fragment&notfound=floor';
