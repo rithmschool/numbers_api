@@ -20,7 +20,7 @@ stop:
 # TODO: Should use a deamon that monitors this process and automatically starts
 # 		on crash/reboot.
 start: stop
-	NODE_PATH=/usr/local/lib/node_modules NODE_ENV=production nohup node app.js &
+	NODE_PATH=/usr/local/lib/node_modules NODE_ENV=production nohup supervisor app.js &
 
 # Transfer files to the server
 transfer: compass
@@ -29,5 +29,5 @@ transfer: compass
 # Deploy to the server: transfer files and restart node production server
 # See: http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine
 deploy: transfer
-	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &> deploy.log < /dev/null &'
+	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'
 	ssh numbers@david-hu.com 'cat /home/numbers/www/deploy.log'
