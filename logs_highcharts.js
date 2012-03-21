@@ -2,7 +2,8 @@ var fs = require('fs');
 var _ = require('underscore');
 var utils = require('./public/js/shared_utils.js');
 
-var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60;
+var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60 * 3;
+var USAGE_HISTOGRAM_DAYS = 12;
 
 // TODO: repetition of code here with the types
 var FACT_TYPES = ['trivia', 'math', 'year', 'date'];
@@ -54,7 +55,7 @@ function reduceStats(obj) {
 	if (!_.contains(FACT_TYPES, type)) return;
 
 	// by time
-	if (timestamp >= (new Date()).getTime() - 1000 * 60 * 60 * 24 * 7) {
+	if (timestamp >= (new Date()).getTime() - 1000 * 60 * 60 * 24 * USAGE_HISTOGRAM_DAYS) {
 		var date = new Date(timestamp);
 		var flooredDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
 		var flooredTime = flooredDate.getTime();

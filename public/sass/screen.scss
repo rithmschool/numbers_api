@@ -684,6 +684,10 @@ $sandbox-result-height: 102px;
   }
 }
 
+#changelog {
+  margin-top: 100px;
+}
+
 footer {
   margin-top: 60px;
 	@include background(linear-gradient(top, rgba($color-five, 0) 0%, rgba($color-five, 0.1) 20%, rgba($color-five, 0.8) 100%));

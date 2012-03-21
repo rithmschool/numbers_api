@@ -161,7 +161,7 @@ http://numbersapi.com/random/year?json
 
 To get facts about multiple numbers in one request, specify ranges for <code><strong>number</strong></code> in <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code>.
 
-A number range (inclusive) is specified as <code><strong>min</strong>..<strong>max</strong></code>. Separate multiple individual numbers and ranges with `,` (a comma).
+A number range (inclusive) is specified as <code><strong>min</strong>..<strong>max</strong></code>. Separate multiple ranges and individual numbers with `,` (a comma).
 
 The response format will always be a JSON map from numbers to facts, of at most 100 numbers. The query parameter [`json`](/#json) may still be used to specify whether individual facts will be returned as string literals or JSON objects.
 
@@ -174,4 +174,26 @@ http://numbersapi.com/1..3,10
     "10": "10 is the highest score possible in Olympics gymnastics competitions."
 }
 </pre>
+
+
+<h1 id="changelog">Changelog</h1>
+
+### Coming soon...
+
+- Thousands of new trivia and year facts
+- Integration with [Mashape](http://mashape.com/)
+
+### March 17, 2012
+
+- This changelog!
+- [Article on Programmable Web](http://blog.programmableweb.com/2012/03/16/know-all-about-numbers-with-the-numbers-api/)
+
+### March 10, 2012
+
+- [Batch calls](#batching) to get multiple facts in one request
+- A little UI to let visitors add facts (see it at the [top of this page](/#sandbox-outer)). We review and verify all user-submitted facts.
+
+### March 5, 2012
+
+- Initial launch on [Hacker News](http://news.ycombinator.com/item?id=3667469)
 

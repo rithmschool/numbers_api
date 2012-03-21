@@ -157,8 +157,11 @@ function switchTagline() {
 
 function updateAllFromHash() {
 	var hash = window.location.hash;
-	if (hash) {
-		update_all(hash.substr(1));
+	hash = hash && hash.substr(1);
+
+	// Only update from hash if the hash is not a page ID (an anchor)
+	if (hash && $('*[id]').filter(function() { return this.id === hash; }).length === 0) {
+		update_all(hash);
 	}
 }
 
@@ -219,9 +222,7 @@ function registerAddFactUi() {
 }
 
 function showAddFactText(event) {
-	$('#add-fact-label').text('Submit fact!')
 	update_add_fact(currentNumber, currentType, true);
-
 	$('#add-fact-area')
 		.find('#add-fact-text')
 			.val('')
@@ -231,7 +232,8 @@ function showAddFactText(event) {
 function submitFact(event) {
 	$('#add-fact-label')
 		.text('Submitting...')
-		.prop('disabled', true);
+		.prop('disabled', true)
+		.prop('href', null);
 
 	$.post('/submit', {
 		text: $('#add-fact-text').val(),
@@ -240,8 +242,8 @@ function submitFact(event) {
 	}, function() {
 		$('#add-fact-area').fadeOut(ADD_FACT_FADE_TIME);
 		$('#add-fact-label')
-			.text('+Add a fact')
-			.prop('disable', false);
+			.prop('disabled', false)
+			.prop('href', '#');
 		$('#result-temporary-text').show();
 		setSandboxResult("Thank you for your contribution! We'll add your fact as soon as we review it.", false);
 		update_add_fact(currentNumber, currentType, false);

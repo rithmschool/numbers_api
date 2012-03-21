@@ -30,4 +30,4 @@ transfer: compass
 # See: http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine
 deploy: transfer
 	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'
-	ssh numbers@david-hu.com 'cat /home/numbers/www/deploy.log'
+	ssh numbers@david-hu.com 'tail -n 200 /home/numbers/www/deploy.log'
