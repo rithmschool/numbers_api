@@ -1,0 +1,10 @@
+{
+   "1253": [
+      {
+        "manual": true,
+        "self": false,
+        "text": "King Henry III of England met with English nobles and church leaders to reaffirm the validity of the Magna Carta"
+      }
+   ]
+
+}
