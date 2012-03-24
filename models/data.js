@@ -117,6 +117,7 @@ function reader_manual(outs, path, callbacks) {
       var matches = regex.exec(line);
       if (!matches) {
         console.log('Skipping invaid line', line, 'in file', path + file);
+				continue;
       }
       var number = parseFloat(matches[1], 10);
       if (isNaN(number)) {
@@ -214,7 +215,7 @@ reader_norm(exports.math, 'models/math/norm/', function(element) {
 var outs = {
   'd': exports.date,
   'y': exports.year,
-  'm': exports.month,
+  'm': exports.math,
   't': exports.trivia,
 };
 var callbacks = {
