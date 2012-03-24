@@ -1,3 +1,5 @@
+console.log('\n\n\n=== ##### STARTING SERVER ##### ===\nat', new Date(), '\n');
+
 // Module dependencies.
 
 var fs = require('fs');
@@ -12,8 +14,6 @@ var router = require('./routes/api.js');
 var secrets = require('./secrets.js');
 var highcharts = require('./logs_highcharts.js');
 var utils = require('./public/js/shared_utils.js');
-
-console.log('Starting server at: ', new Date());
 
 // fake number of viistors
 var BASE_VISITOR_TIME = new Date(1330560000000);
