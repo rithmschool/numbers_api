@@ -1,3 +1,25 @@
+/**
+ * Format of data:
+ *
+ * {
+ *		date: {
+ *				'12': [{
+ *						'text': 'some string',
+ *						'self': true,
+ *						'manual': true,
+ *						'pos': 'N',
+ *						'year': 'optional year'
+ *				}, {}, {}, {}, {}]
+ *		},
+ *		year:
+ *		trivia:
+ *		math:
+ * }
+ *
+ */
+
+
+
 var _ = require('underscore');
 var fs = require('fs');
 

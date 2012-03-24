@@ -31,3 +31,11 @@ transfer: compass
 deploy: transfer
 	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'
 	ssh numbers@david-hu.com 'tail -n 200 /home/numbers/www/deploy.log'
+
+# Dump all facts data to files
+dump:
+	NODE_PATH=/usr/local/lib/node_modules node app.js --dump
+
+count:
+	@grep -c '[a-zA-Z]' facts-dump/*.txt
+	@grep '[a-zA-Z]' facts-dump/*.txt | wc -l

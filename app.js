@@ -29,6 +29,14 @@ var ADD_THIS_API_SHARE_PATH = '/analytics/1.0/pub/shares.json?userid=' +
 	secrets.ADD_THIS_USERNAME + '&password=' + secrets.ADD_THIS_PASSWORD + '&pubid=' + secrets.ADD_THIS_PUBID;
 var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
 var numShares = 15;
+var arguments = process.argv.splice(2);
+
+// Dump all facts data to a directory
+if (_.contains(arguments, '--dump')) {
+	fact.dumpData('facts-dump');
+	console.log('Dumped all fact data to directory facts-dump!');
+	process.exit(0);
+}
 
 function updateNumShares() {
 	var msg = '';

@@ -2,7 +2,6 @@ var _ = require('underscore');
 var data = require('./data.js');
 var utils = require('../public/js/shared_utils.js');
 
-
 // http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
 function randomProperty(obj, pre) {
   var result;
@@ -227,4 +226,15 @@ exports.getFact = function(number, type, options) {
 			type: type,
 		});
 	}
+};
+
+exports.dumpData = function(dirname) {
+	var fs = require('fs');
+
+	_.each(data, function(typeObj, type) {
+		var text = _.map(typeObj, function(factList, number) {
+			return '' + number + '\n' + _.pluck(factList, 'text').join('\n');
+		}).join('\n\n');
+		fs.writeFileSync(dirname + '/' + type + '.txt', text);
+	});
 };
