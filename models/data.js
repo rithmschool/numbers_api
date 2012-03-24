@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var fs = require('fs');
 
-function reader(out, path, callback) {
+function reader_norm(out, path, callback) {
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(path);
 
@@ -61,6 +61,7 @@ function reader(out, path, callback) {
         }
         o[o.length] = element;
       });
+      // TODO: should probably be performing this deletion also for early returns
       if (o.length === 0) {
         delete out[float_key];
       }
@@ -68,6 +69,72 @@ function reader(out, path, callback) {
   });
 }
 
+// Format is line separated facts of format <#> <t|m|d|y> <fact>
+function reader_manual(outs, path, callbacks) {
+  // TODO: more reliable checking if file is data file
+  var files = fs.readdirSync(path);
+
+  console.log('files: ', files);
+
+  _.each(files, function(file) {
+    // TODO: fix directory so it's relative to directory of this file
+    try {
+      var data = fs.readFileSync(path + file, 'utf8');
+    } catch (e) {
+      console.error('Exception while reading file ', path + file, ': ', e.message);
+      return;
+    }
+
+    var lines = data.split(/\n(?:\s*\n)*/);
+    var regex = /^([-]?\d+)\s+(\w+)\s+(.*)$/
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      if (line.toUpperCase().indexOf('SENTINEL') >= 0) {
+        break;
+      }
+      var matches = regex.exec(line);
+      if (!matches) {
+        console.log('Skipping invaid line', line, 'in file', path + file);
+      }
+      var number = parseFloat(matches[1], 10);
+      if (isNaN(number)) {
+        console.log('Skipping invaid number', number, 'in file', path + file, ' on line: ', line);
+        continue;
+      }
+      var type = matches[2];
+      if (type !== 'y' && type !== 'd' && type !== 'm' && type !== 't') {
+        console.error('Invalid fact type in file: ', path + file, ' on line: ', line);
+        continue;
+      }
+
+      var text = matches[3];
+      if (!text || text.length === 0) {
+        console.log('Skipping empty fact in file: ', path + file, ' on line: ', line);
+        continue;
+      }
+
+      var element = {
+        'text': text,
+        'self': false,
+        'manual': true,
+      };
+
+      if (type in callbacks) {
+        element = callbacks[type](element);
+      }
+      if (!element) {
+        continue;
+      }
+
+      var out = outs[type];
+      if (!(number in out)) {
+        out[number] = [];
+      }
+      var o = out[number];
+      o.push(element);
+    }
+  });
+}
 
 var countBad = 0;
 function normalize_common(element) {
@@ -97,18 +164,18 @@ function normalize_common(element) {
 }
 
 exports.date = {};
-reader(exports.date, 'models/date/norm/', function(element) {
+reader_norm(exports.date, 'models/date/norm/', function(element) {
   return normalize_common(element);
 });
 
 exports.year = {};
-reader(exports.year, 'models/year/norm/', function(element) {
+reader_norm(exports.year, 'models/year/norm/', function(element) {
   return normalize_common(element);
 });
 
 exports.trivia = {};
 var trivia_path = 'models/trivia/';
-reader(exports.trivia, 'models/trivia/norm/', function(element) {
+reader_norm(exports.trivia, 'models/trivia/norm/', function(element) {
   // TODO: include back non-manual results
   if (element.manual) {
     return normalize_common(element);
@@ -118,9 +185,23 @@ reader(exports.trivia, 'models/trivia/norm/', function(element) {
 });
 
 exports.math = {};
-reader(exports.math, 'models/math/norm/', function(element) {
+reader_norm(exports.math, 'models/math/norm/', function(element) {
   return normalize_common(element);
 });
+
+var outs = {
+  'd': exports.date,
+  'y': exports.year,
+  'm': exports.month,
+  't': exports.trivia,
+};
+var callbacks = {
+  'd': normalize_common,
+  'y': normalize_common,
+  'm': normalize_common,
+  't': normalize_common,
+}
+reader_manual(outs, 'models/manual/', callbacks);
 
 // check for missing entries
 (function() {
