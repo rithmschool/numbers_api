@@ -40,7 +40,6 @@ setInterval(function() {
       dataStr += JSON.stringify(element) + '\n';
     });
     logBuffer = [];
-    console.log('Logging to file: ' + filePath);
     exports.appendToFile(filePath, dataStr);
   } catch (e) {
     console.log('Caught exception logging to file: ' + filePath, e);

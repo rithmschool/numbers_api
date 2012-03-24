@@ -1,5 +1,7 @@
 var fs = require('fs');
 
+console.log('Starting server at: ', new Date());
+
 // make a directory for log files if it does not exist
 var logDirExists = false;
 if (fs.existsSync) {
