@@ -9,11 +9,13 @@ var BATCH_LIMIT = 100;
 var logBuffer = [];
 
 exports.appendToFile = function(filePath, dataStr) {
-	fs.createWriteStream(filePath, {
+	var stream = fs.createWriteStream(filePath, {
 			flags: 'a',
 			encoding: 'utf8',
 			mode: 0666
-	}).write(dataStr);
+	});
+  stream.write(dataStr);
+  stream.destroySoon();
 };
 
 /**
