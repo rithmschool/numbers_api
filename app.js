@@ -1,22 +1,6 @@
-var fs = require('fs');
-
-console.log('Starting server at: ', new Date());
-
-// make a directory for log files if it does not exist
-var logDirExists = false;
-if (fs.existsSync) {
-  logDirExists = fs.existsSync('logs');
-} else {
-  var path = require('path');
-  logDirExists = path.existsSync('logs');
-}
-if (!logDirExists) {
-  fs.mkdirSync('logs', 0777);
-}
-
-
 // Module dependencies.
 
+var fs = require('fs');
 var express = require('express');
 var https = require('https');
 var mustache = require('mustache');
@@ -28,6 +12,8 @@ var router = require('./routes/api.js');
 var secrets = require('./secrets.js');
 var highcharts = require('./logs_highcharts.js');
 var utils = require('./public/js/shared_utils.js');
+
+console.log('Starting server at: ', new Date());
 
 // fake number of viistors
 var BASE_VISITOR_TIME = new Date(1330560000000);

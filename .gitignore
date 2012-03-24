@@ -1,4 +1,3 @@
 *.pyc
-logs/
 secrets.js
 suggestions.json
