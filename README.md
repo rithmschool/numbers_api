@@ -12,7 +12,7 @@ Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</stron
 
 <pre>
 http://numbersapi.com/42
-&rArr; The result given by Google and Bing for the query "the answer to life the universe and everything".
+&rArr; 42 is the result given by Google and Bing for the query "the answer to life the universe and everything".
 
 http://numbersapi.com/2/29/date
 &rArr; February 29 is the day in 1504 that Christopher Columbus uses his knowledge of a lunar eclipse to convince Native Americans to provide him with supplies.
