@@ -2,7 +2,7 @@ var fs = require('fs');
 var _ = require('underscore');
 var utils = require('./public/js/shared_utils.js');
 
-var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60 * 3;
+var UPDATE_FROM_LOGS_FREQUENCY = 1000 * 60 * 60 * 24;
 var USAGE_HISTOGRAM_DAYS = 10;
 
 // TODO: repetition of code here with the types
