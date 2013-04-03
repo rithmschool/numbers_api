@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<api xmlns="http://mashape.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mashape.com http://www.mashape.com/schema/mashape-4.0.xsd">
+    <endpoint name="1 Get trivia fact" group="" http="GET">
+        <route>/{number}/trivia</route>
+        <description>Get a trivia fact about a number</description>
+        <parameters>
+            <parameter type="string" optional="false" name="number">
+                <description>The integer of interest</description>
+                <example>42</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fragment">
+                <description>Add &quot;?fragment=true&quot; to return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like “We now have more users than [fact as fragment]!”.</description>
+                <example>true</example>
+            </parameter>
+            <parameter type="string" optional="true" name="notfound">
+                <description>Specifies what to return if the number is not found. Value can be &quot;default&quot; (to return a canned message), &quot;floor&quot; (to round down to the largest number that does have an associated fact, and return that fact), or &quot;ceil&quot; (which is like floor but rounds up to the smallest number that has an associated fact).</description>
+                <example>floor</example>
+            </parameter>
+            <parameter type="string" optional="true" name="json">
+                <description>Specify &quot;true&quot; to return result as JSON instead of plaintext.</description>
+                <example>true</example>
+            </parameter>
+        </parameters>
+        <response type="string"/>
+    </endpoint>
+    <endpoint name="2 Get math fact" group="" http="GET">
+        <route>/{number}/math</route>
+        <description>Get a mathematical property about a number</description>
+        <parameters>
+            <parameter type="string" optional="false" name="number">
+                <description>The integer of interest</description>
+                <example>1729</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fragment">
+                <description>Add &quot;?fragment=true&quot; to return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like “We now have more users than [fact as fragment]!”.</description>
+                <example>true</example>
+            </parameter>
+            <parameter type="string" optional="true" name="json">
+                <description>Specify &quot;true&quot; to return result as JSON instead of plaintext.</description>
+                <example>true</example>
+            </parameter>
+        </parameters>
+        <response type="string"/>
+    </endpoint>
+    <endpoint name="3 Get year fact" group="" http="GET">
+        <route>/{year}/year</route>
+        <description>Get a fact about a year</description>
+        <parameters>
+            <parameter type="string" optional="false" name="year">
+                <description>The year of interest</description>
+                <example>1492</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fragment">
+                <description>Add &quot;?fragment=true&quot; to return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like “We now have more users than [fact as fragment]!”.</description>
+                <example>true</example>
+            </parameter>
+            <parameter type="string" optional="true" name="json">
+                <description>Specify &quot;true&quot; to return result as JSON instead of plaintext.</description>
+                <example>true</example>
+            </parameter>
+        </parameters>
+        <response type="string"/>
+    </endpoint>
+    <endpoint name="4 Get date fact" group="" http="GET">
+        <route>/{month}/{day}/date</route>
+        <description>Get a fact about a day of year</description>
+        <parameters>
+            <parameter type="string" optional="false" name="month">
+                <description>The 1-indexed month (eg. 6 for June)</description>
+                <example>6</example>
+            </parameter>
+            <parameter type="string" optional="false" name="day">
+                <description>The day of the month</description>
+                <example>21</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fragment">
+                <description>Add &quot;?fragment=true&quot; to return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like “We now have more users than [fact as fragment]!”.</description>
+                <example>true</example>
+            </parameter>
+            <parameter type="string" optional="true" name="json">
+                <description>Specify &quot;true&quot; to return result as JSON instead of plaintext.</description>
+                <example>true</example>
+            </parameter>
+        </parameters>
+        <response type="string"/>
+    </endpoint>
+    <endpoint name="5 Get random fact" group="" http="GET">
+        <route>/random/{type}</route>
+        <description>Get result by random number</description>
+        <parameters>
+            <parameter type="string" optional="false" name="type">
+                <description>One of &quot;trivia&quot;, &quot;math&quot;, &quot;date&quot;, or &quot;year&quot;</description>
+                <example>trivia</example>
+            </parameter>
+            <parameter type="string" optional="true" name="min">
+                <description>Minimum number, inclusive</description>
+                <example>10</example>
+            </parameter>
+            <parameter type="string" optional="true" name="max">
+                <description>Maximium number, inclusive</description>
+                <example>20</example>
+            </parameter>
+            <parameter type="string" optional="true" name="fragment">
+                <description>Add &quot;?fragment=true&quot; to return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like “We now have more users than [fact as fragment]!”.</description>
+                <example>true</example>
+            </parameter>
+            <parameter type="string" optional="true" name="json">
+                <description>Specify &quot;true&quot; to return result as JSON instead of plaintext.</description>
+                <example>true</example>
+            </parameter>
+        </parameters>
+        <response type="string"/>
+    </endpoint>
+</api>
