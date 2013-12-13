@@ -6,7 +6,7 @@ var fs = require('fs');
 var express = require('express');
 var https = require('https');
 var mustache = require('mustache');
-var markdown = require('discount');
+var marked = require('marked');
 var _ = require('underscore');
 
 var fact = require('./models/fact.js');
@@ -132,7 +132,7 @@ app.configure('production', function(){
 
 router.route(app, fact);
 
-var apiDocsHtml = markdown.parse(fs.readFileSync('README.md', 'utf8'));
+var apiDocsHtml = marked(fs.readFileSync('README.md', 'utf8'));
 
 // TODO: Precompile this template. Should also probably use a .mustache filename
 // extension.
@@ -157,8 +157,8 @@ app.get('/', function(req, res) {
       dateFact: {
         day: currDate.getDate(),
         month: currDate.getMonth() + 1,
-        data: fact.getFact(utils.dateToDayOfYear(currDate), 'date', {}),
-      },
+        data: fact.getFact(utils.dateToDayOfYear(currDate), 'date', {})
+      }
     },
     partials: {}
   });

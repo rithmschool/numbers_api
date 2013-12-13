@@ -2,3 +2,13 @@ test
 support
 benchmarks
 examples
+lib-cov
+coverage.html
+.gitmodules
+.travis.yml
+History.md
+Makefile
+test/
+support/
+benchmarks/
+examples/
