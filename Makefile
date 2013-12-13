@@ -24,13 +24,13 @@ start: stop
 
 # Transfer files to the server
 transfer: compass
-	rsync -avz --exclude .git --exclude logs/ --exclude suggestions.json --stats --progress . numbers@david-hu.com:~/www
+	rsync -avz --exclude .git --exclude logs/ --exclude suggestions.json --stats --progress . numbers:~/www
 
 # Deploy to the server: transfer files and restart node production server
 # See: http://stackoverflow.com/questions/29142/getting-ssh-to-execute-a-command-in-the-background-on-target-machine
 deploy: transfer
-	ssh numbers@david-hu.com 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'
-	ssh numbers@david-hu.com 'tail -n 200 /home/numbers/www/deploy.log'
+	ssh numbers 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'
+	ssh numbers 'tail -n 200 /home/numbers/www/deploy.log'
 
 # Dump all facts data to files
 dump:
