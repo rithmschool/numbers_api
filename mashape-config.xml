@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <api xmlns="http://mashape.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mashape.com http://www.mashape.com/schema/mashape-4.0.xsd">
-    <endpoint name="1 Get trivia fact" group="" http="GET">
+    <endpoint name="Get trivia fact" group="" http="GET">
         <route>/{number}/trivia</route>
         <description>Get a trivia fact about a number</description>
         <parameters>
@@ -23,7 +23,7 @@
         </parameters>
         <response type="string"/>
     </endpoint>
-    <endpoint name="2 Get math fact" group="" http="GET">
+    <endpoint name="Get math fact" group="" http="GET">
         <route>/{number}/math</route>
         <description>Get a mathematical property about a number</description>
         <parameters>
@@ -42,7 +42,7 @@
         </parameters>
         <response type="string"/>
     </endpoint>
-    <endpoint name="3 Get year fact" group="" http="GET">
+    <endpoint name="Get year fact" group="" http="GET">
         <route>/{year}/year</route>
         <description>Get a fact about a year</description>
         <parameters>
@@ -61,7 +61,7 @@
         </parameters>
         <response type="string"/>
     </endpoint>
-    <endpoint name="4 Get date fact" group="" http="GET">
+    <endpoint name="Get date fact" group="" http="GET">
         <route>/{month}/{day}/date</route>
         <description>Get a fact about a day of year</description>
         <parameters>
@@ -84,7 +84,7 @@
         </parameters>
         <response type="string"/>
     </endpoint>
-    <endpoint name="5 Get random fact" group="" http="GET">
+    <endpoint name="Get random fact" group="" http="GET">
         <route>/random/{type}</route>
         <description>Get result by random number</description>
         <parameters>
