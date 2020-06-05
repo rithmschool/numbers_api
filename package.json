@@ -2,7 +2,10 @@
   "name": "numbers_api",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "NODE_ENV=development forever -a start app.js",
+    "start-prod": "NODE_ENV=production forever -a start app.js",
+    "stop": "forever stopall"
   },
   "main": "app.js",
   "husky": {
@@ -15,12 +18,15 @@
     "*.{js,css,md}": "pretty-quick --staged"
   },
   "dependencies": {
-    "express": "2.5.8",
+    "cors": "^2.8.5",
+    "errorhandler": "^1.5.1",
+    "express": "^4.17.1",
+    "forever": "^3.0.0",
     "jade": ">= 0.0.1",
-    "underscore": ">= 1.3.1",
-    "mustache": "*",
-    "marked": "*",
-    "newrelic": "*"
+    "marked": "^1.1.0",
+    "mustache": "^4.0.1",
+    "serve-favicon": "^2.5.0",
+    "underscore": ">= 1.3.1"
   },
   "devDependencies": {
     "husky": "^4.2.5",
