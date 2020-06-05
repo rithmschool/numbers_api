@@ -9,7 +9,7 @@ const _ = require("underscore");
 const cors = require("cors");
 const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
-const mustacheExpress = require("mustache-express");
+const nunjucks = require("nunjucks");
 
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
@@ -95,14 +95,17 @@ const app = express();
 
 // Configuration and middleware
 
-app.use(cors({ allowedHeaders: "X-Requested-With" }));
-app.set("views", __dirname + "/views");
-app.enable("jsonp callback");
+nunjucks.configure("views/", {
+  autoescape: true,
+  express: app
+});
 
-app.engine("html", mustacheExpress());
+app.use(cors({ allowedHeaders: "X-Requested-With" }));
+// app.set("views", __dirname + "/views");
+app.enable("jsonp callback");
 app.use(express.static("public"));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(
   favicon(__dirname + "/public/img/favicon.png", {
     maxAge: 2592000000
@@ -119,8 +122,7 @@ router.route(app, fact);
 
 var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 
-// TODO: Precompile this template. Should also probably use a .mustache filename
-// extension.
+// TODO: Precompile this template.
 app.get("/", function (req, res) {
   var currDate = new Date();
   res.render("index.html", {
