@@ -13,14 +13,15 @@ compass:
 	compass compile public/
 
 # Stops any running node server
-stop:
+stop:	
 	sudo pkill node || true
+	npm run stop
 
 # Starts a production node server
 # TODO: Should use a deamon that monitors this process and automatically starts
 # 		on crash/reboot.
 start: stop
-	NODE_PATH=/usr/local/lib/node_modules NODE_ENV=production nohup supervisor app.js &
+	npm run start-prod &
 
 # Transfer files to the server
 transfer: compass
