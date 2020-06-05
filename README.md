@@ -1,14 +1,15 @@
 Bring meaning to your metrics and stories to your dates with our API of interesting number facts.
 
 ## URL Structure
+
 Just hit <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code> to get a plain text response, where
 
 - **`type`** is one of `trivia`, `math`, `date`, or `year`. Defaults to `trivia` if omitted.
 - **`number`** is
-    - an integer, or
-    - the keyword `random`, for which we will try to return a random available fact, or
-    - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/09`, `04/1`), if **`type`** is `date`
-    - <a href="#batching">ranges of numbers</a>
+  - an integer, or
+  - the keyword `random`, for which we will try to return a random available fact, or
+  - a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. `2/29`, `1/09`, `04/1`), if **`type`** is `date`
+  - <a href="#batching">ranges of numbers</a>
 
 <pre>
 http://numbersapi.com/42
@@ -21,10 +22,10 @@ http://numbersapi.com/random/year
 &rArr; 2013 is the year that China will attempt its first unmanned Moon landing.
 </pre>
 
-
 ## Usage Examples
 
 ### jQuery
+
 HTML:
 
     We now have more users than <span id="number"></span>!
@@ -37,8 +38,8 @@ JavaScript:
 
 Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). Live demo on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
-
 <h3 id="jsonp">JSONP</h3>
+
 ...is supported with the query field [`callback`](#callback):
 
     <span id="number-fact"></span>
@@ -58,14 +59,13 @@ Direct cross-origin requests like this are possible on browsers that support [CO
 
 Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
-
 <h3 id="single-script-tag">HTML Embed</h3>
+
 Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
     Did you know 2012 is the year that <script src="http://numbersapi.com/2012/year?write&fragment"></script>?
 
 Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>. Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
-
 
 ## Query Parameter Options
 
@@ -80,22 +80,21 @@ http://numbersapi.com/1969/year?fragment
 &rArr; an estimated 500 million people worldwide watch Neil Armstrong take his historic first steps on the Moon
 </pre>
 
-
 ### Notfound
+
 The `notfound` field tells us what to do if the number is not found. You can give us
 
 - `default` to return one of our pre-written missing messages, or a message you supply with the [`default`](#default) query field. This is the default behaviour.
-    <pre>http://numbersapi.com/314159265358979
-&rArr; 314159265358979 is a boring number.</pre>
+  <pre>http://numbersapi.com/314159265358979
+  &rArr; 314159265358979 is a boring number.</pre>
 - `floor` to round down to the largest number that does have an associated fact, and return that fact.
-    <pre>http://numbersapi.com/35353?notfound=floor
-&rArr; 35000 is the number of genes in a human being.</pre>
+  <pre>http://numbersapi.com/35353?notfound=floor
+  &rArr; 35000 is the number of genes in a human being.</pre>
 - `ceil`, which is like `floor` but rounds up to the smallest number that has an associated fact.
-    <pre>http://numbersapi.com/-12344/year?notfound=ceil
-&rArr; 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.</pre>
+  <pre>http://numbersapi.com/-12344/year?notfound=ceil
+  &rArr; 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.</pre>
 
 Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page shares](#visitors).
-
 
 <h3 id="default">Default</h3>
 The value of the `default` query field tells us what to return if we don't have a fact for the requested number.
@@ -104,7 +103,6 @@ The value of the `default` query field tells us what to return if we don't have 
 http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
 &rArr; Boring number is boring.
 </pre>
-
 
 <h3 id="callback">Callback</h3>
 To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
@@ -116,7 +114,6 @@ http://numbersapi.com/42/math?callback=showNumber
 
 See the [JSONP usage example](#jsonp).
 
-
 <h3 id="write">Write</h3>
 Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
 
@@ -127,8 +124,8 @@ http://numbersapi.com/42/math?write
 
 See the [HTML embed tag usage example](#single-script-tag).
 
-
 ### Min and Max
+
 Restrict the range of values returned to the inclusive range \[**`min`**, **`max`**\] when `random` is given as the number.
 
 <pre>
