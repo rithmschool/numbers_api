@@ -173,9 +173,9 @@ exports.route = function (app, fact) {
     logRequest(req);
 
     if (
-      !req
-        .param("num")
-        .match(/^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/)
+      !req.params.num.match(
+        /^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/
+      )
     ) {
       // 400: Bad request if bad match
       res.send("Invalid url", 400);
