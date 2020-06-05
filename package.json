@@ -1,7 +1,19 @@
 {
   "name": "numbers_api",
-  "version": "0.1.0",
-  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest"
+  },
+  "main": "app.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{js,css,md}": "pretty-quick --staged"
+  },
   "dependencies": {
     "express": "2.5.8",
     "jade": ">= 0.0.1",
@@ -9,5 +21,12 @@
     "mustache": "*",
     "marked": "*",
     "newrelic": "*"
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.9",
+    "prettier": "^2.0.5",
+    "prettier-quick": "0.0.5"
   }
 }
