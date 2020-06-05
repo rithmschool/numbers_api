@@ -4,12 +4,12 @@ console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
 const fs = require("fs");
 const express = require("express");
 const https = require("https");
-const mustache = require("mustache");
 const marked = require("marked");
 const _ = require("underscore");
 const cors = require("cors");
 const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
+const mustacheExpress = require("mustache-express");
 
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
@@ -90,48 +90,25 @@ function updateNumShares() {
 }
 setInterval(updateNumShares, GET_NUM_SHARES_INTERVAL_MS);
 
-// From http://bitdrift.com/post/2376383378/using-mustache-templates-in-express
-var mustacheTemplate = {
-  compile: function (source, options) {
-    if (typeof source == "string") {
-      return function (options) {
-        options.locals = options.locals || {};
-        options.partials = options.partials || {};
-        if (options.body)
-          // for express.js > v1.0
-          locals.body = options.body;
-        return mustache.to_html(source, options.locals, options.partials);
-      };
-    } else {
-      return source;
-    }
-  },
-  render: function (template, options) {
-    template = this.compile(template, options);
-    return template(options);
-  }
-};
-
 const nodeEnv = process.env.NODE_ENV || "development";
 const app = express();
 
 // Configuration and middleware
 
 app.use(cors({ allowedHeaders: "X-Requested-With" }));
-app.set("views", __dirname + "/public");
-app.set("view options", { layout: false });
+app.set("views", __dirname + "/views");
+app.set("view engine", "html");
 app.enable("jsonp callback");
 
-// app.engine("html", mustacheTemplate);
+app.engine("html", mustacheExpress());
+app.use(express.static("public"));
 
-// app.use(express.bodyParser());
-// app.use(express.methodOverride());
+app.use(express.urlencoded({ extended: true }));
 app.use(
   favicon(__dirname + "/public/img/favicon.png", {
     maxAge: 2592000000
   })
 );
-app.use(express.static(__dirname + "/public"));
 
 if (nodeEnv === "development") {
   app.use(errorhandler());
@@ -146,33 +123,19 @@ var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 // TODO: Precompile this template. Should also probably use a .mustache filename
 // extension.
 app.get("/", function (req, res) {
-  // TODO: There's gotta be a way of using Express to get the template and not
-  // just reading a file... (what's the RIGHT way of doing this)
-
-  // TODO: we could put this back and alternate between # shares
-  //var currTime = (new Date()).getTime();
-  //if ((currTime - lastVisitorTime) >= VISITOR_RATE) {
-  //  numVisitors += Math.round((currTime - lastVisitorTime) / VISITOR_RATE);
-  //  lastVisitorTime = currTime;
-  //}
   var currDate = new Date();
-  res.render("index.html", {
-    locals: {
-      docs: apiDocsHtml,
-      //visitorFact: fact.getFact(numVisitors, 'trivia', { notfound: 'floor', fragment: true }),
-      //numVisitors: numVisitors,
-      sharesFact: fact.getFact(numShares, "trivia", {
-        notfound: "floor",
-        fragment: true
-      }),
-      numShares: numShares,
-      dateFact: {
-        day: currDate.getDate(),
-        month: currDate.getMonth() + 1,
-        data: fact.getFact(utils.dateToDayOfYear(currDate), "date", {})
-      }
-    },
-    partials: {}
+  res.render("index", {
+    docs: apiDocsHtml,
+    sharesFact: fact.getFact(numShares, "trivia", {
+      notfound: "floor",
+      fragment: true
+    }),
+    numShares: numShares,
+    dateFact: {
+      day: currDate.getDate(),
+      month: currDate.getMonth() + 1,
+      data: fact.getFact(utils.dateToDayOfYear(currDate), "date", {})
+    }
   });
 });
 
@@ -192,7 +155,7 @@ app.post("/submit", function (req, res) {
 // Main
 
 const PORT = 8124;
-app.listen(8124);
+app.listen(PORT);
 console.log("Express server listening on port %d in %s mode", PORT, nodeEnv);
 
 module.exports = app;
