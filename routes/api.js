@@ -2,11 +2,7 @@ var _ = require("underscore");
 var fs = require("fs");
 var utils = require("../public/js/shared_utils.js");
 
-var LOG_INTERVAL = 1000 * 60;
-var MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 var BATCH_LIMIT = 100;
-
-var logBuffer = [];
 
 exports.appendToFile = function (filePath, dataStr) {
   var stream = fs.createWriteStream(filePath, {
@@ -17,36 +13,6 @@ exports.appendToFile = function (filePath, dataStr) {
   stream.write(dataStr);
   stream.destroySoon();
 };
-
-/**
- * logRequest a request. Start by logging to memory, and periodically empty to file
- */
-function logRequest(req) {
-  var query = {};
-  _.extend(query, req.query);
-  _.extend(query, req.params);
-  logBuffer.push({
-    headers: req.headers,
-    query: query,
-    time: new Date().getTime()
-  });
-}
-
-// logRequest to file asynchronously at set interval
-setInterval(function () {
-  try {
-    var day = Math.floor(new Date().getTime() / MILLISECONDS_PER_DAY);
-    var filePath = "logs/" + day + ".json";
-    var dataStr = "";
-    _.each(logBuffer, function (element) {
-      dataStr += JSON.stringify(element) + "\n";
-    });
-    logBuffer = [];
-    exports.appendToFile(filePath, dataStr);
-  } catch (e) {
-    console.log("Caught exception logging to file: " + filePath, e);
-  }
-}, LOG_INTERVAL);
 
 function setExpireHeaders(res) {
   res.set("Pragma", "no-cache");
@@ -161,7 +127,6 @@ exports.route = function (app, fact) {
   }
 
   app.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
-    logRequest(req);
     var number = parseInt(req.params.num, 10);
     if (req.params.type === "date") {
       number = utils.dateToDayOfYear(new Date(2004, 0, number));
@@ -170,8 +135,6 @@ exports.route = function (app, fact) {
   });
 
   app.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
-    logRequest(req);
-
     if (
       !req.params.num.match(
         /^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/
@@ -189,7 +152,6 @@ exports.route = function (app, fact) {
   });
 
   app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
-    logRequest(req);
     var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
     req.params.type = "date";
     factResponse(fact, req, res, dayOfYear);
@@ -198,8 +160,6 @@ exports.route = function (app, fact) {
   // TODO: currently returned json uses dayOfYear as key rather than "month/day".
   // consider returning "month/day"
   app.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
-    logRequest(req);
-
     if (
       !req.params.date.match(
         /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
@@ -219,7 +179,6 @@ exports.route = function (app, fact) {
   });
 
   app.get("/random/:type?", function (req, res) {
-    logRequest(req);
     factResponse(fact, req, res, "random");
   });
 };

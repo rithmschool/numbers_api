@@ -14,7 +14,7 @@ const mustacheExpress = require("mustache-express");
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
 const secrets = require("./secrets.js");
-const highcharts = require("./logs_highcharts.js");
+// const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
 
 // fake number of viistors
@@ -97,7 +97,6 @@ const app = express();
 
 app.use(cors({ allowedHeaders: "X-Requested-With" }));
 app.set("views", __dirname + "/views");
-app.set("view engine", "html");
 app.enable("jsonp callback");
 
 app.engine("html", mustacheExpress());
@@ -124,7 +123,7 @@ var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 // extension.
 app.get("/", function (req, res) {
   var currDate = new Date();
-  res.render("index", {
+  res.render("index.html", {
     docs: apiDocsHtml,
     sharesFact: fact.getFact(numShares, "trivia", {
       notfound: "floor",
@@ -139,13 +138,13 @@ app.get("/", function (req, res) {
   });
 });
 
-app.get("/type-time-highcharts", function (req, res) {
-  res.json(highcharts.getTypeTimeHist());
-});
+// app.get("/type-time-highcharts", function (req, res) {
+//   res.json(highcharts.getTypeTimeHist());
+// });
 
-app.get("/type-number-highcharts", function (req, res) {
-  res.json(highcharts.getTypeNumberHist());
-});
+// app.get("/type-number-highcharts", function (req, res) {
+//   res.json(highcharts.getTypeNumberHist());
+// });
 
 app.post("/submit", function (req, res) {
   router.appendToFile("./suggestions.json", JSON.stringify(req.body) + "\n");
