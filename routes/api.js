@@ -49,9 +49,9 @@ setInterval(function () {
 }, LOG_INTERVAL);
 
 function setExpireHeaders(res) {
-  res.header("Pragma", "no-cache");
-  res.header("Cache-Control", "no-cache");
-  res.header("Expires", 0);
+  res.set("Pragma", "no-cache");
+  res.set("Cache-Control", "no-cache");
+  res.set("Expires", 0);
 }
 
 /*
@@ -71,8 +71,8 @@ function factResponse(fact, req, res, num) {
     return JSON.stringify(factObj, null, " ");
   }
 
-  res.header("X-Numbers-API-Number", factObj.number);
-  res.header("X-Numbers-API-Type", factObj.type);
+  res.set("X-Numbers-API-Number", factObj.number);
+  res.set("X-Numbers-API-Type", factObj.type);
   setExpireHeaders(res);
 
   if (req.params.callback) {
@@ -81,12 +81,12 @@ function factResponse(fact, req, res, num) {
   } else if (req.params.write !== undefined) {
     var arg = useJson ? factObjStr() : '"' + _.escape(factStr) + '"';
     var script = "document.write(" + arg + ");";
-    res.send(script, { "Content-Type": "text/javascript" }, 200);
+    res.set("Content-Type", "text/javascript").send(script);
   } else {
     if (useJson) {
-      res.send(factObjStr(), { "Content-Type": "application/json" }, 200);
+      res.set("Content-Type", "application/json").send(factObjStr());
     } else {
-      res.send(factStr, { "Content-Type": 'text/plain; charset="UTF-8"' }, 200);
+      res.set("Content-Type", 'text/plain; charset="UTF-8"').send(factStr);
     }
   }
 }
