@@ -97,6 +97,7 @@ The `notfound` field tells us what to do if the number is not found. You can giv
 Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page shares](#visitors).
 
 <h3 id="default">Default</h3>
+
 The value of the `default` query field tells us what to return if we don't have a fact for the requested number.
 
 <pre>
@@ -105,6 +106,7 @@ http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
 </pre>
 
 <h3 id="callback">Callback</h3>
+
 To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
 
 <pre>
@@ -115,6 +117,7 @@ http://numbersapi.com/42/math?callback=showNumber
 See the [JSONP usage example](#jsonp).
 
 <h3 id="write">Write</h3>
+
 Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
 
 <pre>
