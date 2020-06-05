@@ -61,10 +61,11 @@ function setExpireHeaders(res) {
  */
 
 function factResponse(fact, req, res, num) {
-  var factObj = fact.getFact(num, req.param("type", "trivia"), req.query);
+  const type = req.params.type || "trivia";
+  var factObj = fact.getFact(num, type, req.query);
   var factStr = "" + factObj.text;
   var useJson =
-    req.param("json") !== undefined ||
+    req.params.json !== undefined ||
     (req.header("Content-Type") || "").indexOf("application/json") !== -1;
   function factObjStr() {
     return JSON.stringify(factObj, null, " ");
@@ -74,10 +75,10 @@ function factResponse(fact, req, res, num) {
   res.header("X-Numbers-API-Type", factObj.type);
   setExpireHeaders(res);
 
-  if (req.param("callback")) {
+  if (req.params.callback) {
     // JSONP
     res.json(useJson ? factObj : factStr);
-  } else if (req.param("write") !== undefined) {
+  } else if (req.params.write !== undefined) {
     var arg = useJson ? factObjStr() : '"' + _.escape(factStr) + '"';
     var script = "document.write(" + arg + ");";
     res.send(script, { "Content-Type": "text/javascript" }, 200);
@@ -97,11 +98,12 @@ function factResponse(fact, req, res, num) {
  */
 function factsResponse(fact, req, res, nums) {
   var useJson =
-    req.param("json") !== undefined ||
+    req.params.json !== undefined ||
     (req.header("Content-Type") || "").indexOf("application/json") !== -1;
   var factsObj = {};
   _.each(nums, function (num) {
-    var factObj = fact.getFact(num, req.param("type", "trivia"), req.query);
+    const type = req.params.type || "trivia";
+    var factObj = fact.getFact(num, type, req.query);
     if (useJson) {
       factsObj[num] = factObj;
     } else {
@@ -115,10 +117,10 @@ function factsResponse(fact, req, res, nums) {
 
   setExpireHeaders(res);
 
-  if (req.param("callback")) {
+  if (req.params.callback) {
     // JSONP
     res.json(factsObj);
-  } else if (req.param("write") !== undefined) {
+  } else if (req.params.write !== undefined) {
     var script = "document.write(" + factsObjStr() + ");";
     res.send(script, { "Content-Type": "text/javascript" }, 200);
   } else {
@@ -160,8 +162,8 @@ exports.route = function (app, fact) {
 
   app.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
     logRequest(req);
-    var number = parseInt(req.param("num"), 10);
-    if (req.param("type") === "date") {
+    var number = parseInt(req.params.num, 10);
+    if (req.params.type === "date") {
       number = utils.dateToDayOfYear(new Date(2004, 0, number));
     }
     factResponse(fact, req, res, number);
@@ -180,7 +182,7 @@ exports.route = function (app, fact) {
       return;
     }
 
-    var nums = getBatchNums(req.param("num"), function (numStr) {
+    var nums = getBatchNums(req.params.num, function (numStr) {
       return parseInt(numStr, 0);
     });
     factsResponse(fact, req, res, nums);
@@ -188,10 +190,7 @@ exports.route = function (app, fact) {
 
   app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
     logRequest(req);
-    var dayOfYear = utils.monthDayToDayOfYear(
-      req.param("month"),
-      req.param("day")
-    );
+    var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
     req.params.type = "date";
     factResponse(fact, req, res, dayOfYear);
   });
@@ -202,18 +201,16 @@ exports.route = function (app, fact) {
     logRequest(req);
 
     if (
-      !req
-        .param("date")
-        .match(
-          /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
-        )
+      !req.params.date.match(
+        /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
+      )
     ) {
       // 404 if bad match
       res.send("Invalid url", 404);
       return;
     }
 
-    var nums = getBatchNums(req.param("date"), function (dateStr) {
+    var nums = getBatchNums(req.params.date, function (dateStr) {
       var splits = dateStr.split("/");
       return exports.monthDayToDayOfYear(splits[0], splits[1]);
     });

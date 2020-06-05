@@ -1,25 +1,27 @@
 console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
-
 // Module dependencies.
 
-var fs = require("fs");
-var express = require("express");
-var https = require("https");
-var mustache = require("mustache");
-var marked = require("marked");
-var _ = require("underscore");
+const fs = require("fs");
+const express = require("express");
+const https = require("https");
+const mustache = require("mustache");
+const marked = require("marked");
+const _ = require("underscore");
+const cors = require("cors");
+const favicon = require("serve-favicon");
+const errorhandler = require("errorhandler");
 
-var fact = require("./models/fact.js");
-var router = require("./routes/api.js");
-var secrets = require("./secrets.js");
-var highcharts = require("./logs_highcharts.js");
-var utils = require("./public/js/shared_utils.js");
+const fact = require("./models/fact.js");
+const router = require("./routes/api.js");
+const secrets = require("./secrets.js");
+const highcharts = require("./logs_highcharts.js");
+const utils = require("./public/js/shared_utils.js");
 
 // fake number of viistors
-var BASE_VISITOR_TIME = new Date(1330560000000);
-var VISITOR_RATE = 1000 * 60 * 60 * 3; // 3 hours/visitor
-var lastVisitorTime = BASE_VISITOR_TIME;
-var numVisitors = 0;
+// var BASE_VISITOR_TIME = new Date(1330560000000);
+// var VISITOR_RATE = 1000 * 60 * 60 * 3; // 3 hours/visitor
+// var lastVisitorTime = BASE_VISITOR_TIME;
+// var numVisitors = 0;
 
 // TODO: Get rid of all these try catches, should use forever or something
 // Periodically get # of shares from AddThis API (THANK YOU FOR SANE API, You
@@ -59,7 +61,6 @@ function updateNumShares() {
         function (res) {
           res.on("data", function (data) {
             msg += data.toString();
-
             try {
               // TODO: Get daily number of shares, hourly, etc. and display best value
               var dataObj = JSON.parse(msg);
@@ -111,43 +112,30 @@ var mustacheTemplate = {
   }
 };
 
-var app = (module.exports = express.createServer());
+const nodeEnv = process.env.NODE_ENV || "development";
+const app = express();
 
 // Configuration and middleware
 
-// CORS middleware -- http://stackoverflow.com/questions/7067966/how-to-allow-cors-in-express-nodejs
-var allowCrossDomain = function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  next();
-};
+app.use(cors({ allowedHeaders: "X-Requested-With" }));
+app.set("views", __dirname + "/public");
+app.set("view options", { layout: false });
+app.enable("jsonp callback");
 
-app.configure(function () {
-  app.set("views", __dirname + "/public");
-  app.set("view options", { layout: false });
-  app.enable("jsonp callback");
+// app.engine("html", mustacheTemplate);
 
-  app.register(".html", mustacheTemplate);
+// app.use(express.bodyParser());
+// app.use(express.methodOverride());
+app.use(
+  favicon(__dirname + "/public/img/favicon.png", {
+    maxAge: 2592000000
+  })
+);
+app.use(express.static(__dirname + "/public"));
 
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(allowCrossDomain);
-  app.use(
-    express.favicon(__dirname + "/public/img/favicon.png", {
-      maxAge: 2592000000
-    })
-  );
-  app.use(app.router);
-  app.use(express.static(__dirname + "/public"));
-});
-
-app.configure("development", function () {
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-});
-
-app.configure("production", function () {
-  app.use(express.errorHandler());
-});
+if (nodeEnv === "development") {
+  app.use(errorhandler());
+}
 
 // Routes
 
@@ -203,9 +191,8 @@ app.post("/submit", function (req, res) {
 
 // Main
 
+const PORT = 8124;
 app.listen(8124);
-console.log(
-  "Express server listening on port %d in %s mode",
-  app.address().port,
-  app.settings.env
-);
+console.log("Express server listening on port %d in %s mode", PORT, nodeEnv);
+
+module.exports = app;
