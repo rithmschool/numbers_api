@@ -31,7 +31,7 @@ function factResponse(fact, req, res, num) {
   var factObj = fact.getFact(num, type, req.query);
   var factStr = "" + factObj.text;
   var useJson =
-    req.params.json !== undefined ||
+    req.query.json !== undefined ||
     (req.header("Content-Type") || "").indexOf("application/json") !== -1;
   function factObjStr() {
     return JSON.stringify(factObj, null, " ");
