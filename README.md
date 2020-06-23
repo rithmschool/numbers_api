@@ -137,7 +137,7 @@ http://numbersapi.com/random?min=10&max=20
 </pre>
 
 <h3 id="json">Json</h3>
-Include the query parameter `json` or set the HTTP header `Content-Type` to `application/json` to return the fact and associated meta-data as a JSON object, with the properties:
+Include the query parameter `json`, or set the HTTP header `Content-Type` to `application/json`, or set the HTTP header `Accept` to `application/json` to return the fact and associated meta-data as a JSON object, with the properties:
 
 - `text`: A string of the fact text itself.
 - `found`: Boolean of whether there was a fact for the requested number.
