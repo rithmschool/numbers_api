@@ -8,7 +8,7 @@ exports.appendToFile = function (filePath, dataStr) {
   var stream = fs.createWriteStream(filePath, {
     flags: "a",
     encoding: "utf8",
-    mode: 0666
+    mode: 0666,
   });
   stream.write(dataStr);
   stream.destroySoon();
@@ -32,7 +32,9 @@ function factResponse(fact, req, res, num) {
   var factStr = "" + factObj.text;
   var useJson =
     req.query.json !== undefined ||
-    (req.header("Content-Type") || "").indexOf("application/json") !== -1;
+    (req.header("Content-Type") || req.header("Accept") || "").includes(
+      "application/json"
+    ) === true;
   function factObjStr() {
     return JSON.stringify(factObj, null, " ");
   }
