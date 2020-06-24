@@ -97,10 +97,12 @@ const app = express();
 
 nunjucks.configure("views/", {
   autoescape: true,
-  express: app
+  express: app,
 });
 
-app.use(cors({ allowedHeaders: "X-Requested-With" }));
+app.use(
+  cors({ allowedHeaders: ["X-Requested-With", "Accept", "Content-Type"] })
+);
 // app.set("views", __dirname + "/views");
 app.enable("jsonp callback");
 app.use(express.static("public"));
@@ -108,7 +110,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   favicon(__dirname + "/public/img/favicon.png", {
-    maxAge: 2592000000
+    maxAge: 2592000000,
   })
 );
 
@@ -129,14 +131,14 @@ app.get("/", function (req, res) {
     docs: apiDocsHtml,
     sharesFact: fact.getFact(numShares, "trivia", {
       notfound: "floor",
-      fragment: true
+      fragment: true,
     }),
     numShares: numShares,
     dateFact: {
       day: currDate.getDate(),
       month: currDate.getMonth() + 1,
-      data: fact.getFact(utils.dateToDayOfYear(currDate), "date", {})
-    }
+      data: fact.getFact(utils.dateToDayOfYear(currDate), "date", {}),
+    },
   });
 });
 
