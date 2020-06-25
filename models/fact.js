@@ -1,12 +1,12 @@
-var _ = require("underscore");
-var data = require("./data.js");
-var utils = require("../public/js/shared_utils.js");
+let _ = require("underscore");
+let data = require("./data.js");
+let utils = require("../public/js/shared_utils.js");
 
 // http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
 function randomProperty(obj, pre) {
-  var result;
-  var count = 0;
-  for (var prop in obj) {
+  let result;
+  let count = 0;
+  for (let prop in obj) {
     if (obj.hasOwnProperty(prop)) {
       if (Math.random() < 1 / ++count) {
         result = prop;
@@ -17,8 +17,8 @@ function randomProperty(obj, pre) {
 }
 
 function getRandomApiNum(type, options) {
-  var min = parseInt(options.min, 10);
-  var max = parseInt(options.max, 10);
+  let min = parseInt(options.min, 10);
+  let max = parseInt(options.max, 10);
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[type]);
   } else {
@@ -28,7 +28,7 @@ function getRandomApiNum(type, options) {
       max = Infinity;
     }
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[type], function (element) {
+    let valid_keys = _.filter(dataKeys[type], function (element) {
       return element >= min && element <= max;
     });
     return utils.randomChoice(valid_keys);
@@ -60,7 +60,7 @@ function getDefaultMsg(number, type, options) {
     "an uninteresting number",
     "a boring number",
     "an unremarkable number",
-    "a number for which we're missing a fact (submit one to numbersapi at google mail!)"
+    "a number for which we're missing a fact (submit one to numbersapi at google mail!)",
   ];
 
   var defaultMsgs = {
@@ -71,12 +71,12 @@ function getDefaultMsg(number, type, options) {
       "nothing remarkable happened",
       "the Earth probably went around the Sun",
       "nothing interesting came to pass",
-      "we do not know what happened"
-    ]
+      "we do not know what happened",
+    ],
   }[type];
 
   var data = {
-    text: utils.randomChoice(defaultMsgs)
+    text: utils.randomChoice(defaultMsgs),
   };
 
   return getSentence(options.fragment, number, type, data);
@@ -87,7 +87,7 @@ var NOT_FOUND = {
   DEFAULT: "default",
   CEIL: "ceil",
   FLOOR: "floor",
-  MISSING: "404" // TODO
+  MISSING: "404", // TODO
 };
 
 // Query parameter keys
@@ -109,17 +109,17 @@ var dataPairs = (function () {
         _.map(_.keys(numbers), function (number) {
           return {
             number: parseFloat(number, 10),
-            string: number
+            string: number,
           };
         }),
-        { number: Infinity, string: "Infinity" }
+        { number: Infinity, string: "Infinity" },
       ]),
       function (pair) {
         return pair.number;
       }
     );
     numbers["-Infinity"] = numbers["-Infinity"] || [
-      { text: "negative infinity" }
+      { text: "negative infinity" },
     ];
     numbers["Infinity"] = numbers["Infinity"] || [{ text: "infinity" }];
   });
@@ -185,7 +185,7 @@ exports.getFact = function (number, type, options) {
     return {
       text: "ERROR: Invalid type.",
       number: number,
-      type: type
+      type: type,
     };
   }
 
@@ -205,7 +205,7 @@ exports.getFact = function (number, type, options) {
         text: getSentence(options.fragment, number, type, ret),
         number: number,
         found: true,
-        type: type
+        type: type,
       });
     }
   }
@@ -216,7 +216,7 @@ exports.getFact = function (number, type, options) {
       text: options[QUERY_DEFAULT] || getDefaultMsg(number, type, options),
       number: number,
       found: false,
-      type: type
+      type: type,
     };
   } else {
     var index = _.sortedIndex(dataKeys[type], number);
@@ -227,7 +227,7 @@ exports.getFact = function (number, type, options) {
       text: getSentence(options.fragment, adjustedNum, type, ret),
       number: adjustedNum,
       found: false,
-      type: type
+      type: type,
     });
   }
 };
@@ -242,3 +242,5 @@ exports.dumpData = function (dirname) {
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
 };
+
+module.exports = getRandomApiNum;
