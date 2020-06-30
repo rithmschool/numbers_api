@@ -90,9 +90,9 @@ function factsResponse(fact, req, res, nums) {
     res.json(factsObj);
   } else if (req.query.write !== undefined) {
     var script = "document.write(" + factsObjStr() + ");";
-    res.send(script, { "Content-Type": "text/javascript" }, 200);
+    res.status(200).set("Content-Type", "text/javascript").send(script);
   } else {
-    res.send(factsObjStr(), { "Content-Type": "application/json" }, 200);
+    res.status(200).set("Content-Type", "application/json").send(factsObjStr());
   }
 }
 
