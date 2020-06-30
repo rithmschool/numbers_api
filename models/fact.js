@@ -2,21 +2,7 @@ let _ = require("underscore");
 let data = require("./data.js");
 let utils = require("../public/js/shared_utils.js");
 
-// http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
-function randomProperty(obj, pre) {
-  let result;
-  let count = 0;
-  for (let prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      if (Math.random() < 1 / ++count) {
-        result = prop;
-      }
-    }
-  }
-  return result;
-}
-
-function getRandomApiNum(type, options) {
+exports.getRandomApiNum = function (type, options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
   if (isNaN(min) && isNaN(max)) {
@@ -33,7 +19,7 @@ function getRandomApiNum(type, options) {
     });
     return utils.randomChoice(valid_keys);
   }
-}
+};
 
 function getSentence(wantFragment, number, type, data) {
   var text = data.text;
@@ -242,5 +228,3 @@ exports.dumpData = function (dirname) {
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
 };
-
-module.exports = getRandomApiNum;
