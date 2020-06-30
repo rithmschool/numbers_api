@@ -130,16 +130,6 @@ function filterObj(obj, whitelist) {
   return result;
 }
 
-// Not needed
-function extendWithWhitelist(obj, newObj, whitelist) {
-  _.each(newObj, function (value, key, list) {
-    if (key in whitelist) {
-      obj[key] = value;
-    }
-  });
-  return obj;
-}
-
 // This is a list of keys on the lowest-level fact objects that we will return
 // with the API
 var API_WHITELIST = ["text", "year", "date"];
