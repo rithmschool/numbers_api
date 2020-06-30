@@ -1,4 +1,4 @@
-const getRandomApiNum = require("../../models/fact");
+const { getRandomApiNum } = require("../../models/fact");
 
 describe("getRandomApiNum()", () => {
   test("return same year", function () {
