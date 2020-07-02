@@ -1,6 +1,6 @@
-let _ = require("underscore");
-let data = require("./data.js");
-let utils = require("../public/js/shared_utils.js");
+const _ = require("underscore");
+const data = require("./data.js");
+const utils = require("../public/js/shared_utils.js");
 
 exports.getRandomApiNum = function (type, options) {
   let min = parseInt(options.min, 10);
