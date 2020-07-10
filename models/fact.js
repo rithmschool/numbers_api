@@ -5,6 +5,7 @@ const utils = require("../public/js/shared_utils.js");
 exports.getRandomApiNum = function (type, options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
+
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[type]);
   } else {
@@ -13,10 +14,17 @@ exports.getRandomApiNum = function (type, options) {
     } else if (isNaN(max)) {
       max = Infinity;
     }
+
     // TODO: Use binary search here instead of O(n) linear search
     let valid_keys = _.filter(dataKeys[type], function (element) {
       return element >= min && element <= max;
     });
+
+    // TODO: error handling for when number is not in range
+    //      of min and max. For example, {min: 2010, max: 2011}
+    //      returns undefined rather than the number itself
+    //      "undefined is an unremarkable number."
+
     return utils.randomChoice(valid_keys);
   }
 };
