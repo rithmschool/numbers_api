@@ -25,6 +25,9 @@ exports.getRandomApiNum = function (type, options) {
     //      returns undefined rather than the number itself
     //      "undefined is an unremarkable number."
 
+    // TODO: error handling for when min and max are invalid values
+    //       such as min = 10 and max = -20. Currently returns undefined
+
     return utils.randomChoice(valid_keys);
   }
 };
