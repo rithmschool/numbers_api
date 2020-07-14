@@ -32,7 +32,7 @@ exports.getRandomApiNum = function (type, options) {
   }
 };
 
-function getSentence(wantFragment, number, type, data) {
+exports.getSentence = function (wantFragment, number, type, data) {
   var text = data.text;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -50,7 +50,7 @@ function getSentence(wantFragment, number, type, data) {
   }
 
   return prefix + " " + text + ".";
-}
+};
 
 function getDefaultMsg(number, type, options) {
   var mathMsgs = [
