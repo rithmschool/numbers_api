@@ -1,4 +1,4 @@
-const { getRandomApiNum } = require("../../models/fact");
+const { getRandomApiNum, getSentence } = require("../../models/fact");
 
 describe("getRandomApiNum() with type 'date'", () => {
   // This test returns undefined instead of the expected value of 2010
@@ -137,5 +137,14 @@ describe("getRandomApiNum() with type 'year'", () => {
   test("return random number when min and max are undefined", function () {
     let noMinMaxRes = getRandomApiNum("year", {});
     expect(typeof noMinMaxRes).toBe("number");
+  });
+});
+
+describe("getSentence() returns sentence with type 'year'", () => {
+  test("returns text when wantFragment is defined", function () {
+    let sentence = getSentence("some random stuff", 1969, "year", {
+      text: "nothing remarkable happened",
+    });
+    expect(sentence).toBe("nothing remarkable happened");
   });
 });
