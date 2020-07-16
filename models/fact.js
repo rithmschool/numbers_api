@@ -2,7 +2,7 @@ const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
 
-exports.getRandomApiNum = function (type, options) {
+function getRandomApiNum(type, options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
 
@@ -30,9 +30,9 @@ exports.getRandomApiNum = function (type, options) {
 
     return utils.randomChoice(valid_keys);
   }
-};
+}
 
-exports.getSentence = function (wantFragment, number, type, data) {
+function getSentence(wantFragment, number, type, data) {
   var text = data.text;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -50,7 +50,7 @@ exports.getSentence = function (wantFragment, number, type, data) {
   }
 
   return prefix + " " + text + ".";
-};
+}
 
 function getDefaultMsg(number, type, options) {
   var mathMsgs = [
@@ -229,3 +229,6 @@ exports.dumpData = function (dirname) {
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
 };
+
+exports.getRandomApiNum = getRandomApiNum;
+exports.getSentence = getSentence;
