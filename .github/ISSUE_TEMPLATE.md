@@ -5,6 +5,12 @@ Fill out this template with information that is relevant to the issue and if nec
 -->
 **Problem description**:
 
+**Steps to Reproduce**:
+
+**The current behavior**:
+
+**The expectec behavior**:
+
 **Suggested solution**:
 
 **Relevant code snippet**:
