@@ -144,10 +144,13 @@ describe("getSentence() returns sentence with type 'year'", () => {
   test("returns text when wantFragment is defined", function () {
     let sentence = getSentence(true, 1000, "year", {
       text:
-        "1000 is the year that the Hutu arrive in present-day Rwanda and Burundi.",
+        "1 is the year that Confucius is given his first royal title (posthumous name) of Lord Baochengxun Ni.",
+      number: 1,
+      found: true,
+      type: "year",
     });
     expect(sentence).toBe(
-      "1000 is the year that the Hutu arrive in present-day Rwanda and Burundi."
+      "1 is the year that Confucius is given his first royal title (posthumous name) of Lord Baochengxun Ni."
     );
   });
 
@@ -160,7 +163,17 @@ describe("getSentence() returns sentence with type 'year'", () => {
     );
   });
 
-  // test("returns sentence when number is undefined", function () => {
-  //   let sentence = getSentence
-  // })
+  test("returns sentence when data contains date", function () {
+    let sentence = getSentence(undefined, 1000, "year", {
+      date: "December 25",
+      text:
+        "Stephen I becomes King of Hungary, which is established as a Christian kingdom on",
+      number: 1000,
+      found: true,
+      type: "year",
+    });
+    expect(sentence).toBe(
+      "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on on December 25th."
+    );
+  });
 });
