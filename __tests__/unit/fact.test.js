@@ -142,9 +142,25 @@ describe("getRandomApiNum() with type 'year'", () => {
 
 describe("getSentence() returns sentence with type 'year'", () => {
   test("returns text when wantFragment is defined", function () {
-    let sentence = getSentence("some random stuff", 1969, "year", {
-      text: "nothing remarkable happened",
+    let sentence = getSentence(true, 1000, "year", {
+      text:
+        "1000 is the year that the Hutu arrive in present-day Rwanda and Burundi.",
     });
-    expect(sentence).toBe("nothing remarkable happened");
+    expect(sentence).toBe(
+      "1000 is the year that the Hutu arrive in present-day Rwanda and Burundi."
+    );
   });
+
+  test("returns sentence when wantFragment is undefined", function () {
+    let sentence = getSentence(undefined, 1000, "year", {
+      text: "Bell foundry is founded in Italy by Pontificia Fonderia Marinelli",
+    });
+    expect(sentence).toBe(
+      "1000 is the year that Bell foundry is founded in Italy by Pontificia Fonderia Marinelli."
+    );
+  });
+
+  // test("returns sentence when number is undefined", function () => {
+  //   let sentence = getSentence
+  // })
 });
