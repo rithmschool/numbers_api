@@ -3,6 +3,7 @@ const {
   getSentence,
   dataPairs,
   filterObj,
+  getFact,
 } = require("../../models/fact");
 
 describe("getRandomApiNum() with type 'date'", () => {
@@ -183,9 +184,10 @@ describe("getSentence() returns sentence with type 'year'", () => {
   });
 });
 
-describe("dataPairs()", () => {
+describe("dataPairs", () => {
   // dataPairs returns
   // {"date": [Array], "math": [Array], "trivia": [Array], "year": [Array]}
+  // {'number': 1, string: '1'}
 
   test("return object with keys 'date', 'math', 'trivia', 'year'", function () {
     expect(Object.keys(dataPairs)).toEqual(["date", "year", "trivia", "math"]);
@@ -260,5 +262,40 @@ describe("filterObj()", () => {
       ["whiskey"]
     );
     expect(notPresent).toEqual({});
+  });
+});
+
+describe("getFact()", () => {
+  test("return error object with invalid type", function () {
+    let filtered = getFact(1000, "sdasd", {});
+    expect(filtered).toEqual({
+      text: "ERROR: Invalid type.",
+      number: 1000,
+      type: "sdasd",
+    });
+  });
+
+  test("return data on random number", function () {
+    let random = getFact("random", "math", {});
+    expect(random).toEqual(
+      expect.objectContaining({
+        text: expect.any(String),
+        number: expect.any(Number),
+        found: true,
+        type: "math",
+      })
+    );
+  });
+
+  test("return error handling for number not found", function () {
+    let notFound = getFact(1000, "math", {});
+    expect(notFound).toEqual(
+      expect.objectContaining({
+        text: expect.any(String),
+        number: 1000,
+        found: false,
+        type: "math",
+      })
+    );
   });
 });
