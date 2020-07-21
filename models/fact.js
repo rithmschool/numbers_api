@@ -132,13 +132,7 @@ _.each(dataPairs, function (pairs, category) {
 });
 
 function filterObj(obj, whitelist) {
-  var result = {};
-  _.each(obj, function (value, key, list) {
-    if (_.contains(whitelist, key)) {
-      result[key] = value;
-    }
-  });
-  return result;
+  return _.pick(obj, whitelist);
 }
 
 // This is a list of keys on the lowest-level fact objects that we will return
