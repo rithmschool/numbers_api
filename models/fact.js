@@ -233,3 +233,4 @@ exports.dumpData = function (dirname) {
 exports.getRandomApiNum = getRandomApiNum;
 exports.getSentence = getSentence;
 exports.dataPairs = dataPairs;
+exports.filterObj = filterObj;
