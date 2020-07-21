@@ -2,6 +2,7 @@ const {
   getRandomApiNum,
   getSentence,
   dataPairs,
+  filterObj,
 } = require("../../models/fact");
 
 describe("getRandomApiNum() with type 'date'", () => {
@@ -224,5 +225,40 @@ describe("dataPairs()", () => {
         expect.objectContaining({ number: 1, string: "1" }),
       ])
     );
+  });
+});
+
+describe("filterObj()", () => {
+  test("return filtered object that has values for whitelisted keys", function () {
+    let filtered = filterObj(
+      {
+        hello: "world",
+        not: "this",
+      },
+      ["hello"]
+    );
+    expect(filtered).toEqual({ hello: "world" });
+  });
+
+  test("return empty object when whitelist is empty", function () {
+    let emptyWhitelist = filterObj(
+      {
+        hello: "world",
+        not: "this",
+      },
+      []
+    );
+    expect(emptyWhitelist).toEqual({});
+  });
+
+  test("return empty object when whitelist key is not in object", function () {
+    let notPresent = filterObj(
+      {
+        hello: "world",
+        not: "this",
+      },
+      ["whiskey"]
+    );
+    expect(notPresent).toEqual({});
   });
 });
