@@ -145,44 +145,44 @@ describe("getRandomApiNum() with type 'year'", () => {
   });
 });
 
-describe("getSentence() returns sentence with type 'year'", () => {
-  test("type: year, when wantFragment is defined", function () {
-    let sentence = getSentence(true, 1000, "year", {
-      text:
-        "1 is the year that Confucius is given his first royal title (posthumous name) of Lord Baochengxun Ni.",
-      number: 1,
-      found: true,
-      type: "year",
-    });
+describe("getSentence() with type 'year'", () => {
+  const data = {
+    text: "Sweyn I establishes Danish control over part of Norway",
+  };
+
+  test("When wantFragment is true, returns partial text only", function () {
+    let sentence = getSentence({ fragment: true }, 1000, "year", data);
     expect(sentence).toBe(
-      "1 is the year that Confucius is given his first royal title (posthumous name) of Lord Baochengxun Ni."
+      "Sweyn I establishes Danish control over part of Norway"
     );
   });
 
-  test("type: year, when wantFragment is undefined", function () {
-    let sentence = getSentence(undefined, 1000, "year", {
-      text: "Bell foundry is founded in Italy by Pontificia Fonderia Marinelli",
-    });
+  test("When wantFragment is undefined, returns full sentence", function () {
+    let sentence = getSentence(undefined, 1000, "year", data);
     expect(sentence).toBe(
-      "1000 is the year that Bell foundry is founded in Italy by Pontificia Fonderia Marinelli."
+      "1000 is the year that Sweyn I establishes Danish control over part of Norway."
     );
   });
 
-  test("type: year, when data contains date", function () {
+  test("When data has key of date, returns full sentence with date in the end", function () {
     let sentence = getSentence(undefined, 1000, "year", {
       date: "December 25",
       text:
         "Stephen I becomes King of Hungary, which is established as a Christian kingdom on",
-      number: 1000,
-      found: true,
-      type: "year",
     });
     expect(sentence).toBe(
       "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on on December 25th."
     );
   });
 
-  test("");
+  test("Return sentence when year is invalid", function () {
+    let sentence = getSentence(undefined, 10000000000, "year", {
+      text: "nothing remarkable happened",
+    });
+    expect(sentence).toBe(
+      "10000000000 is the year that nothing remarkable happened."
+    );
+  });
 });
 
 describe("dataPairs()", () => {
