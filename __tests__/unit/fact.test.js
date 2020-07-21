@@ -1,4 +1,8 @@
-const { getRandomApiNum, getSentence } = require("../../models/fact");
+const {
+  getRandomApiNum,
+  getSentence,
+  dataPairs,
+} = require("../../models/fact");
 
 describe("getRandomApiNum() with type 'date'", () => {
   // This test returns undefined instead of the expected value of 2010
@@ -15,7 +19,7 @@ describe("getRandomApiNum() with type 'date'", () => {
   //   let invalidRange = getRandomApiNum("date", { min: 10, max: -20 });
   // });
 
-  test("return random number greater than 2010", function () {
+  test("return random number greater than or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum("date", { min: 2010 });
     expect(greaterThanMin).toBeGreaterThan(2010);
   });
@@ -174,6 +178,51 @@ describe("getSentence() returns sentence with type 'year'", () => {
     });
     expect(sentence).toBe(
       "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on on December 25th."
+    );
+  });
+});
+
+describe("dataPairs()", () => {
+  // dataPairs returns
+  // {"date": [Array], "math": [Array], "trivia": [Array], "year": [Array]}
+
+  test("return object with keys 'date', 'math', 'trivia', 'year'", function () {
+    expect(Object.keys(dataPairs)).toEqual(["date", "year", "trivia", "math"]);
+  });
+
+  test("date contains data in correct format", function () {
+    let date = dataPairs["date"];
+    expect(date).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ number: 1, string: "1" }),
+      ])
+    );
+  });
+
+  test("math contains data in correct format", function () {
+    let math = dataPairs["math"];
+    expect(math).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ number: 1, string: "1" }),
+      ])
+    );
+  });
+
+  test("trivia contains data in correct format", function () {
+    let trivia = dataPairs["trivia"];
+    expect(trivia).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ number: 1, string: "1" }),
+      ])
+    );
+  });
+
+  test("year contains data in correct format", function () {
+    let year = dataPairs["year"];
+    expect(year).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ number: 1, string: "1" }),
+      ])
     );
   });
 });
