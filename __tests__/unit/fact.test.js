@@ -146,7 +146,7 @@ describe("getRandomApiNum() with type 'year'", () => {
 });
 
 describe("getSentence() returns sentence with type 'year'", () => {
-  test("returns text when wantFragment is defined", function () {
+  test("type: year, when wantFragment is defined", function () {
     let sentence = getSentence(true, 1000, "year", {
       text:
         "1 is the year that Confucius is given his first royal title (posthumous name) of Lord Baochengxun Ni.",
@@ -159,7 +159,7 @@ describe("getSentence() returns sentence with type 'year'", () => {
     );
   });
 
-  test("returns sentence when wantFragment is undefined", function () {
+  test("type: year, when wantFragment is undefined", function () {
     let sentence = getSentence(undefined, 1000, "year", {
       text: "Bell foundry is founded in Italy by Pontificia Fonderia Marinelli",
     });
@@ -168,7 +168,7 @@ describe("getSentence() returns sentence with type 'year'", () => {
     );
   });
 
-  test("returns sentence when data contains date", function () {
+  test("type: year, when data contains date", function () {
     let sentence = getSentence(undefined, 1000, "year", {
       date: "December 25",
       text:
@@ -181,6 +181,8 @@ describe("getSentence() returns sentence with type 'year'", () => {
       "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on on December 25th."
     );
   });
+
+  test("");
 });
 
 describe("dataPairs()", () => {
