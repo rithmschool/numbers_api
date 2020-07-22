@@ -214,6 +214,20 @@ describe("getSentence() for types: trivia and math", () => {
   });
 });
 
+describe("getSentence() for type 'date' ", () => {
+  const data = {
+    text: "that Victoria is crowned princess of Sweden",
+    year: 1980,
+  };
+
+  test("When wantFragment is undefined, returns full sentence", function () {
+    let sentence = getSentence(undefined, 1 / 1, "date", data);
+    expect(sentence).toBe(
+      "January 1st is the day in 1980 that that Victoria is crowned princess of Sweden."
+    );
+  });
+});
+
 describe("dataPairs", () => {
   // dataPairs returns
   // {"date": [Array], "math": [Array], "trivia": [Array], "year": [Array]}
