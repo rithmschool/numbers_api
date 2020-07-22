@@ -1,15 +1,15 @@
 (function () {
   // TODO: mvc to keep url, selected example, search text, and result in sync
   //		 +1 (david)
-  var currentUrl = null;
-  var currentNumber = 42;
-  var currentType = "trivia";
+  let currentUrl = null;
+  let currentNumber = 42;
+  let currentType = "trivia";
 
   // TODO: This URL parsing stuff should be in shared_utils.js, and then we can
   //		 get rid of express routing
-  var NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
+  const NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
   function getNumFromUrl(url) {
-    var matches = NUM_FROM_URL_REGEX.exec(url);
+    const matches = NUM_FROM_URL_REGEX.exec(url);
     if (!matches) return null;
 
     if (matches[2]) {
@@ -21,17 +21,17 @@
   }
 
   function changeUrlToNum(url, num) {
-    var matches = NUM_FROM_URL_REGEX.exec(url);
-    var needle = NUM_FROM_URL_REGEX;
+    const matches = NUM_FROM_URL_REGEX.exec(url);
+    let needle = NUM_FROM_URL_REGEX;
     if (!matches) {
       needle = "random";
     }
 
     if (url.match(/\/date/) || (matches && matches[2])) {
       // number is a day of year, so convert to date and into m/d notation
-      var date = new Date(2004, 0);
+      let date = new Date(2004, 0);
       date.setDate(num);
-      num = "" + (date.getMonth() + 1) + "/" + date.getDate();
+      num = `${date.getMonth() + 1}/${date.getDate()}`;
     }
     return url.replace(needle, num);
   }
@@ -43,15 +43,15 @@
   // From http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript
   function getParameterByName(query, name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regexS = "[\\?&]" + name + "=([^&#]*)";
-    var regex = new RegExp(regexS);
-    var results = regex.exec(query);
+    const regexS = `[\\?&]${name}=([^&#]*)`;
+    const regex = new RegExp(regexS);
+    const results = regex.exec(query);
     if (results == null) return "";
     else return decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
   function processWidgetText(text) {
-    var htmlEscaped = escapeForHtml(text);
+    let htmlEscaped = escapeForHtml(text);
 
     htmlEscaped = htmlEscaped.replace(/\^{(.*?)}/g, "<sup>$1</sup>");
     htmlEscaped = htmlEscaped.replace(/\_{(.*?)}/g, "<sub>$1</sub>");
@@ -60,7 +60,7 @@
   }
 
   function setSandboxResult(html, scriptStyle) {
-    var $text = $("#result-temporary-text");
+    let $text = $("#result-temporary-text");
     $text
       .css({
         opacity: 0,
@@ -91,7 +91,7 @@
       url: url,
       dataType: "text",
       success: function (data, httpStatus, xhr) {
-        var contentType = xhr.getResponseHeader("Content-Type");
+        const contentType = xhr.getResponseHeader("Content-Type");
         if (contentType.indexOf("text/html") !== -1) {
           return;
         }
@@ -159,7 +159,7 @@
   }
 
   function updateAllFromHash() {
-    var hash = window.location.hash;
+    let hash = window.location.hash;
     hash = hash && hash.substr(1);
 
     // Only update from hash if the hash is not a page ID (an anchor)
@@ -176,33 +176,33 @@
   function registerUpdateShareMessage() {
     addthis.addEventListener("addthis.ready", function (event) {
       setTimeout(function () {
-        var numShares = $(".addthis_button_expanded").text();
+        const numShares = $(".addthis_button_expanded").text();
         if (numShares.length < 1) return;
 
-        var path = numShares + "?fragment&notfound=floor";
-        var url = "http://numbersapi.com/" + path;
+        const path = `${numShares}?fragment&notfound=floor`;
+        const url = `http://numbersapi.com/${path}`;
         $.get(url, function (data) {
           $(".visit-text")
-            .prop("title", "Generated using " + url)
+            .prop("title", `Generated using ${url}`)
             .find("a")
-            .text("This page has been shared more times than " + data + ".")
-            .prop("href", "#" + path);
+            .text(`This page has been shared more times than ${data}.`)
+            .prop("href", `#${path}`);
         });
       }, 3000);
     });
   }
 
-  var ADD_FACT_FADE_TIME = 100;
+  const ADD_FACT_FADE_TIME = 100;
 
   function update_add_fact(number, type, addMode) {
     $("#add-fact-prefix").text(utils.getStandalonePrefix(number, type) + "...");
-    $label = $("#add-fact-label");
+    let $label = $("#add-fact-label");
     if (addMode) {
-      $label.text("Submit " + type + " fact " + " for " + number + "!");
+      $label.text(`Submit ${type} fact for ${number}!`);
       $("#add-fact-area").fadeIn(ADD_FACT_FADE_TIME);
       $("#result-temporary-text").fadeOut(ADD_FACT_FADE_TIME);
     } else {
-      $label.text("+ Add a " + type + " fact " + " for " + number);
+      $label.text(`+ Add a ${type} fact for ${number}`);
       $("#add-fact-area").fadeOut(ADD_FACT_FADE_TIME);
       $("#result-temporary-text").fadeIn(ADD_FACT_FADE_TIME);
     }
@@ -304,17 +304,17 @@
     }
     setTimeout(updateAllFromHash, 0);
 
-    var $prev_selected = undefined;
+    let $prev_selected = undefined;
     $("#search-examples a").click(function (e) {
       e.stopPropagation();
 
-      var $this = $(this);
-      var hash = $this.attr("href");
+      const $this = $(this);
+      let hash = $this.attr("href");
       hash = hash.substring(1, hash.length);
       if ($prev_selected) {
         $prev_selected.removeClass("selected");
       }
-      var $parent = $this.parent();
+      let $parent = $this.parent();
       $parent.addClass("selected");
       $("#search-text").val(hash);
 
@@ -323,11 +323,11 @@
       $prev_selected = $parent;
     });
 
-    var $prev_selected = undefined;
+    $prev_selected = undefined;
     // Note: Using keydown instead of keypress to catch arrow key events
     $("#search-text")
       .keydown(function (e) {
-        var code = e.keyCode || e.which;
+        const code = e.keyCode || e.which;
         if (code == 13) {
           // enter
           update_all($(this).val(), /* force */ true);
