@@ -4,7 +4,9 @@ const {
   dataPairs,
   filterObj,
   getFact,
+  dumpData,
 } = require("../../models/fact");
+const fs = require("fs");
 
 describe("getRandomApiNum() with type 'date'", () => {
   // This test returns undefined instead of the expected value of 2010
@@ -341,5 +343,22 @@ describe("getFact()", () => {
         type: "math",
       })
     );
+  });
+});
+
+describe("dumpData()", () => {
+  beforeEach(() => {
+    require("fs");
+  });
+
+  test("facts-dump contains correct files", function () {
+    let factsDump = fs.readdirSync("./facts-dump");
+    expect(factsDump).toEqual([
+      ".gitignore",
+      "date.txt",
+      "math.txt",
+      "trivia.txt",
+      "year.txt",
+    ]);
   });
 });
