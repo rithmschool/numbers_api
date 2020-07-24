@@ -23,11 +23,8 @@ var fs = require("fs");
 
 function reader_norm(out, path, callback) {
   // TODO: more reliable checking if file is data file
-  try {
-    var files = fs.readdirSync(path);
-  } catch (e) {
-    console.error(`Error reading directory ${path}: `, e.message);
-  }
+
+  var files = fs.readdirSync(path);
   _.each(files, function (file) {
     // TODO: add encoding arg ument
     // TODO: fix directory so it's relative to directory of this file
@@ -107,7 +104,7 @@ function reader_norm(out, path, callback) {
         }
       });
     } catch (e) {
-      console.error();
+      console.error(`Exception while iterating through data: `, e.message);
     }
   });
 }
@@ -233,30 +230,30 @@ function normalize_common(element) {
 }
 
 exports.date = {};
-reader_norm(exports.date, "models/date/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.date, "models/date/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 exports.year = {};
-reader_norm(exports.year, "models/year/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.year, "models/year/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 exports.trivia = {};
-var trivia_path = "models/trivia/";
-reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
-  // TODO: include back non-manual results
-  if (element.manual) {
-    return normalize_common(element);
-  } else {
-    return undefined;
-  }
-});
+// var trivia_path = "models/trivia/";
+// reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
+//   // TODO: include back non-manual results
+//   if (element.manual) {
+//     return normalize_common(element);
+//   } else {
+//     return undefined;
+//   }
+// });
 
 exports.math = {};
-reader_norm(exports.math, "models/math/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.math, "models/math/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 var outs = {
   d: exports.date,
@@ -270,7 +267,7 @@ var callbacks = {
   m: normalize_common,
   t: normalize_common,
 };
-reader_manual(outs, "models/manual/", callbacks);
+// reader_manual(outs, "models/manual/", callbacks);
 
 // check for missing entries
 (function () {

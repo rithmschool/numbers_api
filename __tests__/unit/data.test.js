@@ -4,26 +4,39 @@ const {
   normalizeCommon,
 } = require("../../models/data");
 
+const { summarizeFiles, readFiles } = require("./summarizeFiles");
+jest.mock("fs");
+
 describe("data.js functions", function () {
   let errorSpy;
-  let consoleSpy;
 
-  beforeEach(function () {
-    errorSpy = jest.spyOn(console, "error");
-    errorSpy.mockImplementation((err) => err.message || err);
-    consoleSpy = jest.spyOn(console, "log");
-    consoleSpy.mockImplementation((err) => err.message || err);
+  const MOCK_INFO = {
+    "/path/to/norm/file1.txt": {
+      "213": [
+        {
+          text:
+            "Marcus Aurelius Antoninus Augustus (Caracalla) and Decimus Caelius Calvinus Balbinus become Roman Consuls.",
+          self: false,
+          pos: "NP",
+        },
+        {
+          text:
+            "Emperor Caracalla leaves Rome and expels some German marauders from Gaul.",
+          self: false,
+          pos: "NP",
+        },
+      ],
+    },
+    "/path/to/norm/file2.txt": { "": [] },
+    "/path/to/manual/file2.txt": "stuffff",
+  };
+
+  beforeEach(async function () {
+    errorSpy = await jest.spyOn(console, "error");
+    await errorSpy.mockImplementation((err) => err.message || err);
+    require("fs").__setMockFiles(MOCK_INFO);
+    require("fs").__setMockFileContent(MOCK_INFO);
   });
 
-  describe("reader_norm function", function () {
-    test("it should log bad path error message", function () {
-      let out = {};
-      let pathname = "does/not/exist/";
-      let callback = jest.fn((el) => el);
-      readerNorm(out, pathname, callback);
-      expect(errorSpy).toHaveReturnedWith(
-        `Error reading directory ${pathname}: `
-      );
-    });
-  });
+  describe("reader_norm function", function () {});
 });
