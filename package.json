@@ -5,7 +5,8 @@
     "test": "jest",
     "start": "NODE_ENV=development forever -a start app.js",
     "start-prod": "NODE_ENV=production forever -a start app.js",
-    "stop": "forever stopall"
+    "stop": "forever stopall",
+    "dev": "node app.js"
   },
   "main": "app.js",
   "husky": {

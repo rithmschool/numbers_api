@@ -23,15 +23,16 @@ var fs = require("fs");
 
 function reader_norm(out, path, callback) {
   // TODO: more reliable checking if file is data file
-  var files = fs.readdirSync(path);
-
-  console.log("files: ", files);
-
+  try {
+    var files = fs.readdirSync(path);
+  } catch (e) {
+    console.error(`Error reading directory ${path}: `, e.message);
+  }
   _.each(files, function (file) {
-    // TODO: add encoding argument
+    // TODO: add encoding arg ument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(path + file, "utf8");
+      var data = fs.readFileSync(path + file, { encoding: "utf8" });
     } catch (e) {
       console.error(
         "Exception while reading file ",
@@ -55,55 +56,59 @@ function reader_norm(out, path, callback) {
     }
 
     // TODO: There should be a try/catch around this
-    _.each(numbers, function (number_data, number_key) {
-      float_key = parseFloat(number_key, 10);
-      if (isNaN(float_key)) {
-        console.log(
-          "Skipping invaid number_key",
-          number_key,
-          "in file",
-          path + file
-        );
-        return;
-      }
-
-      // TODO: handle this during normalization
-      if (!number_data || number_data.length === 0) {
-        // console.log('Skipping empty number_data for float_key', float_key, 'in file', path + file);
-        return;
-      }
-
-      if (!(float_key in out)) {
-        out[float_key] = [];
-      }
-      var o = out[float_key];
-
-      _.each(number_data, function (element) {
-        if (!element.text || !element.text.length) {
+    try {
+      _.each(numbers, function (number_data, number_key) {
+        float_key = parseFloat(number_key, 10);
+        if (isNaN(float_key)) {
           console.log(
-            "Skipping empty file (element.text is falsey)",
+            "Skipping invaid number_key",
+            number_key,
+            "in file",
             path + file
           );
           return;
         }
-        if (callback) {
-          element = callback(element);
-        }
-        if (!element) {
+
+        // TODO: handle this during normalization
+        if (!number_data || number_data.length === 0) {
+          // console.log('Skipping empty number_data for float_key', float_key, 'in file', path + file);
           return;
         }
-        if (!element.manual) {
-          if (element.text.length < 20 || element.text.length > 150) {
+
+        if (!(float_key in out)) {
+          out[float_key] = [];
+        }
+        var o = out[float_key];
+
+        _.each(number_data, function (element) {
+          if (!element.text || !element.text.length) {
+            console.log(
+              "Skipping empty file (element.text is falsey)",
+              path + file
+            );
             return;
           }
+          if (callback) {
+            element = callback(element);
+          }
+          if (!element) {
+            return;
+          }
+          if (!element.manual) {
+            if (element.text.length < 20 || element.text.length > 150) {
+              return;
+            }
+          }
+          o[o.length] = element;
+        });
+        // TODO: should probably be performing this deletion also for early returns
+        if (o.length === 0) {
+          delete out[float_key];
         }
-        o[o.length] = element;
       });
-      // TODO: should probably be performing this deletion also for early returns
-      if (o.length === 0) {
-        delete out[float_key];
-      }
-    });
+    } catch (e) {
+      console.error();
+    }
   });
 }
 
@@ -177,7 +182,7 @@ function reader_manual(outs, path, callbacks) {
       var element = {
         text: text,
         self: false,
-        manual: true
+        manual: true,
       };
 
       if (type in callbacks) {
@@ -257,13 +262,13 @@ var outs = {
   d: exports.date,
   y: exports.year,
   m: exports.math,
-  t: exports.trivia
+  t: exports.trivia,
 };
 var callbacks = {
   d: normalize_common,
   y: normalize_common,
   m: normalize_common,
-  t: normalize_common
+  t: normalize_common,
 };
 reader_manual(outs, "models/manual/", callbacks);
 
@@ -273,14 +278,20 @@ reader_manual(outs, "models/manual/", callbacks);
     { category: "math", data: exports.math, min: 0, max: 251 },
     { category: "trivia", data: exports.trivia, min: 0, max: 251 },
     { category: "date", data: exports.date, min: 1, max: 367 },
-    { category: "year", data: exports.year, min: -100, max: 2050 }
+    { category: "year", data: exports.year, min: -100, max: 2050 },
   ];
 
   _.each(configs, function (config) {
     _.each(_.range(config.min, config.max), function (index) {
       if (!config.data[index] || config.data[index].length === 0) {
-        console.log("Missing: " + config.category + ": " + index);
+        // console.log("Missing: " + config.category + ": " + index);
       }
     });
   });
 })();
+
+module.exports = {
+  readerNorm: reader_norm,
+  readerManual: reader_manual,
+  normalizeCommon: normalize_common,
+};
