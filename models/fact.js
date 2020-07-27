@@ -3,8 +3,8 @@ const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
 
 function getRandomApiNum(type, options) {
-  let min = parseInt(options.min, 10);
-  let max = parseInt(options.max, 10);
+  var min = parseInt(options.min, 10);
+  var max = parseInt(options.max, 10);
 
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[type]);
@@ -16,7 +16,7 @@ function getRandomApiNum(type, options) {
     }
 
     // TODO: Use binary search here instead of O(n) linear search
-    let valid_keys = _.filter(dataKeys[type], function (element) {
+    var valid_keys = _.filter(dataKeys[type], function (element) {
       return element >= min && element <= max;
     });
 
@@ -228,3 +228,4 @@ exports.getRandomApiNum = getRandomApiNum;
 exports.getSentence = getSentence;
 exports.dataPairs = dataPairs;
 exports.filterObj = filterObj;
+exports.apiExtend = apiExtend;
