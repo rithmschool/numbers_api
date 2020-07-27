@@ -3,6 +3,7 @@ const {
   getSentence,
   dataPairs,
   filterObj,
+  apiExtend,
   getFact,
   dumpData,
 } = require("../../models/fact");
@@ -311,6 +312,13 @@ describe("filterObj()", () => {
   });
 });
 
+describe("apiExtend()", () => {
+  test("extends filtered object with new object data", function () {
+    let extend = apiExtend({ year: 2020, random: "lol" }, { newData: "wow" });
+    expect(extend).toEqual({ year: 2020, newData: "wow" });
+  });
+});
+
 describe("getFact()", () => {
   test("return error object with invalid type", function () {
     let filtered = getFact(1000, "sdasd", {});
@@ -352,6 +360,7 @@ describe("dumpData()", () => {
   });
 
   test("facts-dump contains correct files", function () {
+    dumpData("./facts-dump");
     let factsDump = fs.readdirSync("./facts-dump");
     expect(factsDump).toEqual([
       ".gitignore",
