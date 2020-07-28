@@ -10,20 +10,6 @@ const {
 const fs = require("fs");
 
 describe("getRandomApiNum() with type 'date'", () => {
-  // This test returns undefined instead of the expected value of 2010
-
-  // test("return same number as min and max", function () {
-  //   let sameAsMinMax = getRandomApiNum("date", { min: 2010, max: 2010 });
-  //   expect(sameAsMinMax).toEqual(2010);
-  // });
-
-  // This test returns undefined instead of error handling
-  // Error handling currently isn't supported
-
-  // test("return error message when min and max has an invalid range", function () {
-  //   let invalidRange = getRandomApiNum("date", { min: 10, max: -20 });
-  // });
-
   test("return random number greater than or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum("date", { min: 2010 });
     expect(greaterThanMin).toBeGreaterThan(2010);
@@ -35,31 +21,17 @@ describe("getRandomApiNum() with type 'date'", () => {
   });
 
   test("return random number when min and max are NaN", function () {
-    let notNumMinMaxRes = getRandomApiNum("date", { min: "a", max: "b" });
-    expect(typeof notNumMinMaxRes).toBe("number");
+    let invalidInputNum = getRandomApiNum("date", { min: "a", max: "b" });
+    expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMaxRes = getRandomApiNum("date", {});
-    expect(typeof noMinMaxRes).toBe("number");
+    let noMinMax = getRandomApiNum("date", {});
+    expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'trivia'", () => {
-  // This test returns undefined instead of the expected value of 2010
-
-  // test("return same number as min and max", function () {
-  //   let sameAsMinMax = getRandomApiNum("trivia", { min: 2010, max: 2010 });
-  //   expect(sameAsMinMax).toEqual(2010);
-  // });
-
-  // This test returns undefined instead of error handling
-  // Error handling currently isn't supported
-
-  // test("return error message when min and max has an invalid range", function () {
-  //   let invalidRange = getRandomApiNum("trivia", { min: 10, max: -20 });
-  // });
-
   test("return random number greater than 2010", function () {
     let greaterThanMin = getRandomApiNum("trivia", { min: 2010 });
     expect(greaterThanMin).toBeGreaterThan(2010);
@@ -71,24 +43,17 @@ describe("getRandomApiNum() with type 'trivia'", () => {
   });
 
   test("return random number when min and max are NaN", function () {
-    let notNumMinMaxRes = getRandomApiNum("year", { min: "a", max: "b" });
-    expect(typeof notNumMinMaxRes).toBe("number");
+    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMaxRes = getRandomApiNum("year", {});
-    expect(typeof noMinMaxRes).toBe("number");
+    let noMinMax = getRandomApiNum("year", {});
+    expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'math'", () => {
-  // This test returns undefined instead of error handling
-  // Error handling currently isn't supported
-
-  // test("return error message when min and max has an invalid range", function () {
-  //   let invalidRange = getRandomApiNum("math", { min: 10, max: -20 });
-  // });
-
   test("return same number as min and max", function () {
     let sameAsMinMax = getRandomApiNum("math", { min: 2010, max: 2010 });
     expect(sameAsMinMax).toEqual(2010);
@@ -105,24 +70,17 @@ describe("getRandomApiNum() with type 'math'", () => {
   });
 
   test("return random number when min and max are NaN", function () {
-    let notNumMinMaxRes = getRandomApiNum("year", { min: "a", max: "b" });
-    expect(typeof notNumMinMaxRes).toBe("number");
+    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMaxRes = getRandomApiNum("year", {});
-    expect(typeof noMinMaxRes).toBe("number");
+    let noMinMax = getRandomApiNum("year", {});
+    expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'year'", () => {
-  // This test returns undefined instead of error handling
-  // Error handling currently isn't supported
-
-  // test("return error message when min and max has an invalid range", function () {
-  //   let invalidRange = getRandomApiNum("year", { min: 10, max: -20 });
-  // });
-
   test("return same number as min and max", function () {
     let sameAsMinMax = getRandomApiNum("year", { min: 2010, max: 2010 });
     expect(sameAsMinMax).toEqual(2010);
@@ -139,13 +97,13 @@ describe("getRandomApiNum() with type 'year'", () => {
   });
 
   test("return random number when min and max are NaN", function () {
-    let notNumMinMaxRes = getRandomApiNum("year", { min: "a", max: "b" });
-    expect(typeof notNumMinMaxRes).toBe("number");
+    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMaxRes = getRandomApiNum("year", {});
-    expect(typeof noMinMaxRes).toBe("number");
+    let noMinMax = getRandomApiNum("year", {});
+    expect(typeof noMinMax).toBe("number");
   });
 });
 
@@ -301,28 +259,28 @@ describe("filterObj()", () => {
   });
 
   test("return empty object when whitelist key is not in object", function () {
-    let notPresent = filterObj(
+    let notPresentKey = filterObj(
       {
         hello: "world",
         not: "this",
       },
       ["whiskey"]
     );
-    expect(notPresent).toEqual({});
+    expect(notPresentKey).toEqual({});
   });
 });
 
 describe("apiExtend()", () => {
-  test("extends filtered object with new object data", function () {
+  test("filters object and extends with new data", function () {
     let extend = apiExtend({ year: 2020, random: "lol" }, { newData: "wow" });
     expect(extend).toEqual({ year: 2020, newData: "wow" });
   });
 });
 
 describe("getFact()", () => {
-  test("return error object with invalid type", function () {
-    let filtered = getFact(1000, "sdasd", {});
-    expect(filtered).toEqual({
+  test("return error object for invalid input type", function () {
+    let invalidType = getFact(1000, "sdasd", {});
+    expect(invalidType).toEqual({
       text: "ERROR: Invalid type.",
       number: 1000,
       type: "sdasd",
@@ -330,27 +288,23 @@ describe("getFact()", () => {
   });
 
   test("return data on random number", function () {
-    let random = getFact("random", "math", {});
-    expect(random).toEqual(
-      expect.objectContaining({
-        text: expect.any(String),
-        number: expect.any(Number),
-        found: true,
-        type: "math",
-      })
-    );
+    let randomNumData = getFact("random", "math", {});
+    expect(randomNumData).toEqual({
+      text: expect.any(String),
+      number: expect.any(Number),
+      found: true,
+      type: "math",
+    });
   });
 
-  test("return error handling for number not found", function () {
+  test("return error handling when number not found", function () {
     let notFound = getFact(1000, "math", {});
-    expect(notFound).toEqual(
-      expect.objectContaining({
-        text: expect.any(String),
-        number: 1000,
-        found: false,
-        type: "math",
-      })
-    );
+    expect(notFound).toEqual({
+      text: expect.any(String),
+      number: 1000,
+      found: false,
+      type: "math",
+    });
   });
 });
 
