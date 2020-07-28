@@ -21,7 +21,6 @@ function __setMockFiles(newMockFiles) {
     }
     mockFiles[dir].push(path.basename(file));
   }
-  console.log("mockfiles: ", mockFiles);
 }
 
 /**
@@ -31,9 +30,7 @@ function __setMockFiles(newMockFiles) {
 function readdirSync(directoryPath) {
   try {
     return mockFiles[directoryPath] || [];
-  } catch (e) {
-    console.error(`Error reading directory ${directoryPath}: `, e.message);
-  }
+  } catch (e) {}
 }
 
 /**
@@ -60,8 +57,12 @@ function __setMockFileContent(newMockFiles) {
  * @param {String} directoryPath
  * @param {string} file
  */
-function readFileSync(directoryPath, file) {
-  return mockFiles[directoryPath + file] || {};
+function readFileSync(pathname, encoding) {
+  try {
+    return mockFileContent[pathname] || {};
+  } catch (e) {
+    console.error(`Error reading file ${directoryPath + file}: `, e.message);
+  }
 }
 
 fs.__setMockFiles = __setMockFiles;

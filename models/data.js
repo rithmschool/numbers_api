@@ -20,20 +20,22 @@
 
 var _ = require("underscore");
 var fs = require("fs");
+const path = require("path");
 
-function reader_norm(out, path, callback) {
+function reader_norm(out, pathname, callback) {
   // TODO: more reliable checking if file is data file
 
-  var files = fs.readdirSync(path);
+  var files = fs.readdirSync(path.resolve(__dirname, pathname));
   _.each(files, function (file) {
     // TODO: add encoding arg ument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(path + file, { encoding: "utf8" });
+      var data = fs.readFileSync(pathname + file, { encoding: "utf8" });
+      console.log("DATA: ", data);
     } catch (e) {
       console.error(
         "Exception while reading file ",
-        path + file,
+        pathname + file,
         ": ",
         e.message
       );
@@ -41,11 +43,13 @@ function reader_norm(out, path, callback) {
     }
 
     try {
+      console.log("hihihi", JSON.parse(data));
       var numbers = JSON.parse(data);
+      console.log("numbers: ", numbers);
     } catch (e) {
       console.error(
         "Exception while parsing file",
-        path + file,
+        pathname + file,
         ": ",
         e.message
       );
@@ -61,14 +65,14 @@ function reader_norm(out, path, callback) {
             "Skipping invaid number_key",
             number_key,
             "in file",
-            path + file
+            pathname + file
           );
           return;
         }
 
         // TODO: handle this during normalization
         if (!number_data || number_data.length === 0) {
-          // console.log('Skipping empty number_data for float_key', float_key, 'in file', path + file);
+          // console.log('Skipping empty number_data for float_key', float_key, 'in file', pathname + file);
           return;
         }
 
@@ -81,7 +85,7 @@ function reader_norm(out, path, callback) {
           if (!element.text || !element.text.length) {
             console.log(
               "Skipping empty file (element.text is falsey)",
-              path + file
+              pathname + file
             );
             return;
           }
@@ -110,20 +114,20 @@ function reader_norm(out, path, callback) {
 }
 
 // Format is line separated facts of format <#> <t|m|d|y> <fact>
-function reader_manual(outs, path, callbacks) {
+function reader_manual(outs, pathname, callbacks) {
   // TODO: more reliable checking if file is data file
-  var files = fs.readdirSync(path);
+  var files = fs.readdirSync(pathname);
 
   console.log("files: ", files);
 
   _.each(files, function (file) {
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(path + file, "utf8");
+      var data = fs.readFileSync(pathname + file, "utf8");
     } catch (e) {
       console.error(
         "Exception while reading file ",
-        path + file,
+        pathname + file,
         ": ",
         e.message
       );
@@ -139,7 +143,7 @@ function reader_manual(outs, path, callbacks) {
       }
       var matches = regex.exec(line);
       if (!matches) {
-        console.log("Skipping invaid line", line, "in file", path + file);
+        console.log("Skipping invaid line", line, "in file", pathname + file);
         continue;
       }
       var number = parseFloat(matches[1], 10);
@@ -148,7 +152,7 @@ function reader_manual(outs, path, callbacks) {
           "Skipping invaid number",
           number,
           "in file",
-          path + file,
+          pathname + file,
           " on line: ",
           line
         );
@@ -158,7 +162,7 @@ function reader_manual(outs, path, callbacks) {
       if (type !== "y" && type !== "d" && type !== "m" && type !== "t") {
         console.error(
           "Invalid fact type in file: ",
-          path + file,
+          pathname + file,
           " on line: ",
           line
         );
@@ -169,7 +173,7 @@ function reader_manual(outs, path, callbacks) {
       if (!text || text.length === 0) {
         console.log(
           "Skipping empty fact in file: ",
-          path + file,
+          pathname + file,
           " on line: ",
           line
         );

@@ -38,5 +38,15 @@ describe("data.js functions", function () {
     require("fs").__setMockFileContent(MOCK_INFO);
   });
 
-  describe("reader_norm function", function () {});
+  describe("reader_norm function", function () {
+    test("it reads an existing text file correctly", async function () {
+      let data = {};
+      let pathname = "/path/to/norm/";
+      let callback = jest.fn((el) => el);
+      readerNorm(data, pathname, callback);
+      // console.log(mockFileContent);
+      // summarizeFiles(pathname);
+      // readFiles(pathname, "file1.txt");
+    });
+  });
 });
