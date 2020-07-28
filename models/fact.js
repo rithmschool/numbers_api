@@ -1,6 +1,6 @@
-const _ = require("underscore");
-const data = require("./data.js");
-const utils = require("../public/js/shared_utils.js");
+var _ = require("underscore");
+var data = require("./data.js");
+var utils = require("../public/js/shared_utils.js");
 
 function getRandomApiNum(type, options) {
   var min = parseInt(options.min, 10);
@@ -19,14 +19,6 @@ function getRandomApiNum(type, options) {
     var valid_keys = _.filter(dataKeys[type], function (element) {
       return element >= min && element <= max;
     });
-
-    // TODO: error handling for when number is not in range
-    //      of min and max. For example, {min: 2010, max: 2011}
-    //      returns undefined rather than the number itself
-    //      "undefined is an unremarkable number."
-
-    // TODO: error handling for when min and max are invalid values
-    //       such as min = 10 and max = -20. Currently returns undefined
 
     return utils.randomChoice(valid_keys);
   }
