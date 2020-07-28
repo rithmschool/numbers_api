@@ -20,14 +20,6 @@ function getRandomApiNum(type, options) {
       return element >= min && element <= max;
     });
 
-    // TODO: error handling for when number is not in range
-    //      of min and max. For example, {min: 2010, max: 2011}
-    //      returns undefined rather than the number itself
-    //      "undefined is an unremarkable number."
-
-    // TODO: error handling for when min and max are invalid values
-    //       such as min = 10 and max = -20. Currently returns undefined
-
     return utils.randomChoice(valid_keys);
   }
 }
