@@ -28,7 +28,8 @@ describe("data.js functions", function () {
       ],
     },
     "/path/to/norm/bad/file2.txt": { "": [] },
-    "/path/to/manual/file2.txt": "stuffff",
+    "/path/to/manual/file2.txt":
+      "300 t the number of bones humans are born with in their body",
   };
 
   beforeEach(function () {
@@ -52,11 +53,15 @@ describe("data.js functions", function () {
     });
   });
 
-  test("input object is not the same after calling readerNorm", async function () {
+  test("input object is not the same after calling readerNorm", function () {
     let data = {};
     let pathname = "/path/to/norm/good/";
     let cb = jest.fn((el) => el);
     readerNorm(data, pathname, cb);
     expect(Object.keys(data).length).toBeGreaterThan(0);
+  });
+
+  describe("reader_manual function", function () {
+    test("testing reader_manual function", function () {});
   });
 });
