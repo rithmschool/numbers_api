@@ -59,7 +59,7 @@ function __setMockFileContent(newMockFiles) {
  */
 function readFileSync(pathname, encoding) {
   try {
-    return mockFileContent[pathname] || {};
+    return mockFileContent[pathname][0] || {};
   } catch (e) {
     console.error(`Error reading file ${directoryPath + file}: `, e.message);
   }

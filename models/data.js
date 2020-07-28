@@ -31,7 +31,6 @@ function reader_norm(out, pathname, callback) {
     // TODO: fix directory so it's relative to directory of this file
     try {
       var data = fs.readFileSync(pathname + file, { encoding: "utf8" });
-      console.log("DATA: ", data);
     } catch (e) {
       console.error(
         "Exception while reading file ",
@@ -43,9 +42,11 @@ function reader_norm(out, pathname, callback) {
     }
 
     try {
-      console.log("hihihi", JSON.parse(data));
-      var numbers = JSON.parse(data);
-      console.log("numbers: ", numbers);
+      if (typeof data === "object") {
+        var numbers = data;
+      } else {
+        var numbers = JSON.parse(data);
+      }
     } catch (e) {
       console.error(
         "Exception while parsing file",
@@ -80,7 +81,6 @@ function reader_norm(out, pathname, callback) {
           out[float_key] = [];
         }
         var o = out[float_key];
-
         _.each(number_data, function (element) {
           if (!element.text || !element.text.length) {
             console.log(

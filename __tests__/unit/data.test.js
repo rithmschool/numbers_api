@@ -4,14 +4,14 @@ const {
   normalizeCommon,
 } = require("../../models/data");
 
-const { summarizeFiles, readFiles } = require("./summarizeFiles");
 jest.mock("fs");
 
 describe("data.js functions", function () {
   let errorSpy;
+  let consoleSpy;
 
   const MOCK_INFO = {
-    "/path/to/norm/file1.txt": {
+    "/path/to/norm/good/file1.txt": {
       "213": [
         {
           text:
@@ -27,26 +27,36 @@ describe("data.js functions", function () {
         },
       ],
     },
-    "/path/to/norm/file2.txt": { "": [] },
+    "/path/to/norm/bad/file2.txt": { "": [] },
     "/path/to/manual/file2.txt": "stuffff",
   };
 
-  beforeEach(async function () {
-    errorSpy = await jest.spyOn(console, "error");
-    await errorSpy.mockImplementation((err) => err.message || err);
+  beforeEach(function () {
+    errorSpy = jest.spyOn(console, "error");
+    errorSpy.mockImplementation((err) => err.message || err);
+
+    consoleSpy = jest.spyOn(console, "log");
+    consoleSpy.mockImplementation((err) => err.message || err);
+
     require("fs").__setMockFiles(MOCK_INFO);
     require("fs").__setMockFileContent(MOCK_INFO);
   });
 
   describe("reader_norm function", function () {
-    test("it reads an existing text file correctly", async function () {
+    test("logs invalid key to the console", function () {
       let data = {};
-      let pathname = "/path/to/norm/";
+      let pathname = "/path/to/norm/bad/";
       let callback = jest.fn((el) => el);
       readerNorm(data, pathname, callback);
-      // console.log(mockFileContent);
-      // summarizeFiles(pathname);
-      // readFiles(pathname, "file1.txt");
+      expect(consoleSpy).toHaveLastReturnedWith("Skipping invaid number_key");
     });
+  });
+
+  test("input object is not the same after calling readerNorm", async function () {
+    let data = {};
+    let pathname = "/path/to/norm/good/";
+    let cb = jest.fn((el) => el);
+    readerNorm(data, pathname, cb);
+    expect(Object.keys(data).length).toBeGreaterThan(0);
   });
 });
