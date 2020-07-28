@@ -5,37 +5,6 @@
   let currentNumber = 42;
   let currentType = "trivia";
 
-  // TODO: This URL parsing stuff should be in shared_utils.js, and then we can
-  //		 get rid of express routing
-  const NUM_FROM_URL_REGEX = /(-?[0-9]+)(?:\/(-?[0-9]+))?/;
-  function getNumFromUrl(url) {
-    const matches = NUM_FROM_URL_REGEX.exec(url);
-    if (!matches) return null;
-
-    if (matches[2]) {
-      // The number is a date, convert to day of year
-      return utils.dateToDayOfYear(new Date(2004, matches[1] - 1, matches[2]));
-    } else {
-      return parseInt(matches[1], 10);
-    }
-  }
-
-  function changeUrlToNum(url, num) {
-    const matches = NUM_FROM_URL_REGEX.exec(url);
-    let needle = NUM_FROM_URL_REGEX;
-    if (!matches) {
-      needle = "random";
-    }
-
-    if (url.match(/\/date/) || (matches && matches[2])) {
-      // number is a day of year, so convert to date and into m/d notation
-      let date = new Date(2004, 0);
-      date.setDate(num);
-      num = `${date.getMonth() + 1}/${date.getDate()}`;
-    }
-    return url.replace(needle, num);
-  }
-
   function escapeForHtml(text) {
     return $("<div>").text(text).html();
   }
@@ -141,7 +110,7 @@
   }
 
   function update_counter(url) {
-    $("#counter").counter("set", getNumFromUrl(url), false);
+    $("#counter").counter("set", utils.getNumFromUrl(url), false);
   }
 
   function update_all(url, force) {
@@ -278,7 +247,9 @@
         showSides: false,
       })
       .bind("counterChanged", function (event, newVal) {
-        update_all(changeUrlToNum(window.location.hash.substr(1), newVal));
+        update_all(
+          utils.changeUrlToNum(window.location.hash.substr(1), newVal)
+        );
       })
       .find(".counter-container-inner")
       .click(function (event) {
