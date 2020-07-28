@@ -130,10 +130,10 @@ describe("getSentence() with type 'year'", () => {
     let sentence = getSentence(undefined, 1000, "year", {
       date: "December 25",
       text:
-        "Stephen I becomes King of Hungary, which is established as a Christian kingdom on",
+        "Stephen I becomes King of Hungary, which is established as a Christian kingdom",
     });
     expect(sentence).toBe(
-      "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on on December 25th."
+      "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on December 25th."
     );
   });
 

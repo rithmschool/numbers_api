@@ -25,7 +25,7 @@ function reader_norm(out, path, callback) {
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(path);
 
-  console.log("files: ", files);
+  // console.log("files: ", files);
 
   _.each(files, function (file) {
     // TODO: add encoding argument
@@ -58,12 +58,12 @@ function reader_norm(out, path, callback) {
     _.each(numbers, function (number_data, number_key) {
       float_key = parseFloat(number_key, 10);
       if (isNaN(float_key)) {
-        console.log(
-          "Skipping invaid number_key",
-          number_key,
-          "in file",
-          path + file
-        );
+        // console.log(
+        //   "Skipping invaid number_key",
+        //   number_key,
+        //   "in file",
+        //   path + file
+        // );
         return;
       }
 
@@ -80,10 +80,10 @@ function reader_norm(out, path, callback) {
 
       _.each(number_data, function (element) {
         if (!element.text || !element.text.length) {
-          console.log(
-            "Skipping empty file (element.text is falsey)",
-            path + file
-          );
+          // console.log(
+          //   "Skipping empty file (element.text is falsey)",
+          //   path + file
+          // );
           return;
         }
         if (callback) {
@@ -112,7 +112,7 @@ function reader_manual(outs, path, callbacks) {
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(path);
 
-  console.log("files: ", files);
+  // console.log("files: ", files);
 
   _.each(files, function (file) {
     // TODO: fix directory so it's relative to directory of this file
@@ -137,19 +137,19 @@ function reader_manual(outs, path, callbacks) {
       }
       var matches = regex.exec(line);
       if (!matches) {
-        console.log("Skipping invaid line", line, "in file", path + file);
+        // console.log("Skipping invaid line", line, "in file", path + file);
         continue;
       }
       var number = parseFloat(matches[1], 10);
       if (isNaN(number)) {
-        console.log(
-          "Skipping invaid number",
-          number,
-          "in file",
-          path + file,
-          " on line: ",
-          line
-        );
+        // console.log(
+        //   "Skipping invaid number",
+        //   number,
+        //   "in file",
+        //   path + file,
+        //   " on line: ",
+        //   line
+        // );
         continue;
       }
       var type = matches[2];
@@ -165,19 +165,19 @@ function reader_manual(outs, path, callbacks) {
 
       var text = matches[3];
       if (!text || text.length === 0) {
-        console.log(
-          "Skipping empty fact in file: ",
-          path + file,
-          " on line: ",
-          line
-        );
+        // console.log(
+        //   "Skipping empty fact in file: ",
+        //   path + file,
+        //   " on line: ",
+        //   line
+        // );
         continue;
       }
 
       var element = {
         text: text,
         self: false,
-        manual: true
+        manual: true,
       };
 
       if (type in callbacks) {
@@ -257,13 +257,13 @@ var outs = {
   d: exports.date,
   y: exports.year,
   m: exports.math,
-  t: exports.trivia
+  t: exports.trivia,
 };
 var callbacks = {
   d: normalize_common,
   y: normalize_common,
   m: normalize_common,
-  t: normalize_common
+  t: normalize_common,
 };
 reader_manual(outs, "models/manual/", callbacks);
 
@@ -273,13 +273,13 @@ reader_manual(outs, "models/manual/", callbacks);
     { category: "math", data: exports.math, min: 0, max: 251 },
     { category: "trivia", data: exports.trivia, min: 0, max: 251 },
     { category: "date", data: exports.date, min: 1, max: 367 },
-    { category: "year", data: exports.year, min: -100, max: 2050 }
+    { category: "year", data: exports.year, min: -100, max: 2050 },
   ];
 
   _.each(configs, function (config) {
     _.each(_.range(config.min, config.max), function (index) {
       if (!config.data[index] || config.data[index].length === 0) {
-        console.log("Missing: " + config.category + ": " + index);
+        // console.log("Missing: " + config.category + ": " + index);
       }
     });
   });
