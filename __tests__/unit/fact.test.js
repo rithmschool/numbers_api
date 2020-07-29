@@ -192,30 +192,34 @@ describe("getSentence() for type 'date' ", function () {
 
 describe("getDefault() for all 4 types", function () {
   test("random default msg for type:'year'", function () {
-    const defaultMsgs = [
+    const yearMsgs = [
       "9999999999 is the year that nothing remarkable happened.",
       "9999999999 is the year that the Earth probably went around the Sun.",
       "9999999999 is the year that nothing interesting came to pass.",
       "9999999999 is the year that we do not know what happened.",
     ];
     const sentence = getDefaultMsg(9999999999, "year", {});
-    expect(defaultMsgs.includes(sentence)).toEqual(true);
+    expect(yearMsgs.includes(sentence)).toEqual(true);
   });
 
-  // test("prefix for type:'math' with no fact", function () {
-  //   let sentence = getDefaultMsg(10000000000, "math", {});
-  //   expect(sentence).toContain("0000000000 is")
-  // })
+  test("random default msg for type:'math' & type:'trivia'", function () {
+    const mathMsgs = [
+      "9999999999 is an uninteresting number.",
+      "9999999999 is a boring number.",
+      "9999999999 is an unremarkable number.",
+      "9999999999 is a number for which we're missing a fact (submit one to numbersapi at google mail!).",
+    ];
+    const sentence = getDefaultMsg(9999999999, "math", {});
+    console.log(sentence);
+    expect(mathMsgs.includes(sentence)).toEqual(true);
+  });
 
-  // test("prefix for type:'math' with no fact", function () {
-  //   let sentence = getDefaultMsg(10000000000, "math", {});
-  //   expect(sentence).toContain("0000000000 is")
-  // })
-
-  // test("Return random default message for type:'math' with no fact", function () {
-  //   let sentence = getDefaultMsg(10000000000, "math", {});
-  //   expect(sentence).toContain("0000000000 is")
-  // })
+  test("default msg for type:'date' with no fact", function () {
+    const sentence = getDefaultMsg(1 / 1, "date", {});
+    expect(sentence).toBe(
+      "January 1st is the day that no newsworthy events happened."
+    );
+  });
 });
 
 describe("dataPairs", () => {
