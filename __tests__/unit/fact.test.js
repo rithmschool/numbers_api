@@ -210,7 +210,6 @@ describe("getDefault() for all 4 types", function () {
       "9999999999 is a number for which we're missing a fact (submit one to numbersapi at google mail!).",
     ];
     const sentence = getDefaultMsg(9999999999, "math", {});
-    console.log(sentence);
     expect(mathMsgs.includes(sentence)).toEqual(true);
   });
 
