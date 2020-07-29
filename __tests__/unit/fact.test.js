@@ -114,21 +114,21 @@ describe("getSentence() for type 'year'", () => {
   };
 
   test("When wantFragment is true, returns partial text only", function () {
-    let sentence = getSentence({ fragment: true }, 1000, "year", data);
+    const sentence = getSentence({ fragment: true }, 1000, "year", data);
     expect(sentence).toBe(
       "Sweyn I establishes Danish control over part of Norway"
     );
   });
 
   test("When wantFragment is undefined, returns full sentence", function () {
-    let sentence = getSentence(undefined, 1000, "year", data);
+    const sentence = getSentence(undefined, 1000, "year", data);
     expect(sentence).toBe(
       "1000 is the year that Sweyn I establishes Danish control over part of Norway."
     );
   });
 
   test("When data has key of date, returns full sentence with date in the end", function () {
-    let sentence = getSentence(undefined, 1000, "year", {
+    const sentence = getSentence(undefined, 1000, "year", {
       date: "December 25",
       text:
         "Stephen I becomes King of Hungary, which is established as a Christian kingdom",
@@ -139,7 +139,7 @@ describe("getSentence() for type 'year'", () => {
   });
 
   test("Return sentence when year is invalid", function () {
-    let sentence = getSentence(undefined, 10000000000, "year", {
+    const sentence = getSentence(undefined, 10000000000, "year", {
       text: "nothing remarkable happened",
     });
     expect(sentence).toBe(
@@ -155,21 +155,21 @@ describe("getSentence() for types: trivia and math", () => {
   };
 
   test("When wantFragment is true, returns partial text only", function () {
-    let sentence = getSentence({ fragment: true }, 88, "trivia", data);
+    const sentence = getSentence({ fragment: true }, 88, "trivia", data);
     expect(sentence).toBe(
       "the number of keys on a piano (36 black and 52 white)"
     );
   });
 
   test("When wantFragment is undefined, returns full sentence", function () {
-    let sentence = getSentence(undefined, 88, "trivia", data);
+    const sentence = getSentence(undefined, 88, "trivia", data);
     expect(sentence).toBe(
       "88 is the number of keys on a piano (36 black and 52 white)."
     );
   });
 
   test("When trivia number is invalid, returns sentence", function () {
-    let sentence = getSentence(undefined, 88888, "trivia", {
+    const sentence = getSentence(undefined, 88888, "trivia", {
       text: "an unremarkable number",
     });
     expect(sentence).toBe("88888 is an unremarkable number.");
@@ -183,7 +183,7 @@ describe("getSentence() for type 'date' ", function () {
   };
 
   test("When wantFragment is undefined, returns full sentence", function () {
-    let sentence = getSentence(undefined, 1 / 1, "date", data);
+    const sentence = getSentence(undefined, 1 / 1, "date", data);
     expect(sentence).toBe(
       "January 1st is the day in 1980 that that Victoria is crowned princess of Sweden."
     );
