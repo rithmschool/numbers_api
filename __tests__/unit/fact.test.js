@@ -190,7 +190,7 @@ describe("getSentence() for type 'date' ", function () {
   });
 });
 
-describe("getDefault() for all 4 types", function () {
+describe("getDefaultMsg() for all 4 types", function () {
   test("random default msg for type:'year'", function () {
     const yearMsgs = [
       "9999999999 is the year that nothing remarkable happened.",
