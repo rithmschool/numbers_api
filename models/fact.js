@@ -221,3 +221,4 @@ exports.getSentence = getSentence;
 exports.dataPairs = dataPairs;
 exports.filterObj = filterObj;
 exports.apiExtend = apiExtend;
+exports.getDefaultMsg = getDefaultMsg;
