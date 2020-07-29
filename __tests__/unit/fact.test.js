@@ -6,6 +6,7 @@ const {
   apiExtend,
   getFact,
   dumpData,
+  getDefaultMsg,
 } = require("../../models/fact");
 const fs = require("fs");
 
@@ -107,7 +108,7 @@ describe("getRandomApiNum() with type 'year'", () => {
   });
 });
 
-describe("getSentence() with type 'year'", () => {
+describe("getSentence() for type 'year'", () => {
   const data = {
     text: "Sweyn I establishes Danish control over part of Norway",
   };
@@ -175,7 +176,7 @@ describe("getSentence() for types: trivia and math", () => {
   });
 });
 
-describe("getSentence() for type 'date' ", () => {
+describe("getSentence() for type 'date' ", function () {
   const data = {
     text: "that Victoria is crowned princess of Sweden",
     year: 1980,
@@ -187,6 +188,34 @@ describe("getSentence() for type 'date' ", () => {
       "January 1st is the day in 1980 that that Victoria is crowned princess of Sweden."
     );
   });
+});
+
+describe("getDefault() for all 4 types", function () {
+  test("random default msg for type:'year'", function () {
+    const defaultMsgs = [
+      "9999999999 is the year that nothing remarkable happened.",
+      "9999999999 is the year that the Earth probably went around the Sun.",
+      "9999999999 is the year that nothing interesting came to pass.",
+      "9999999999 is the year that we do not know what happened.",
+    ];
+    const sentence = getDefaultMsg(9999999999, "year", {});
+    expect(defaultMsgs.includes(sentence)).toEqual(true);
+  });
+
+  // test("prefix for type:'math' with no fact", function () {
+  //   let sentence = getDefaultMsg(10000000000, "math", {});
+  //   expect(sentence).toContain("0000000000 is")
+  // })
+
+  // test("prefix for type:'math' with no fact", function () {
+  //   let sentence = getDefaultMsg(10000000000, "math", {});
+  //   expect(sentence).toContain("0000000000 is")
+  // })
+
+  // test("Return random default message for type:'math' with no fact", function () {
+  //   let sentence = getDefaultMsg(10000000000, "math", {});
+  //   expect(sentence).toContain("0000000000 is")
+  // })
 });
 
 describe("dataPairs", () => {
