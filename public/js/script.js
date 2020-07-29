@@ -39,20 +39,17 @@
       .html(html)
       .toggleClass("script", scriptStyle);
 
-    $text.css("marginTop", $text.height() / -2); // vertically centered (top 50% + abs position)
-
-    // TODO: buggy lionbars or something
-    //if ($text.height() < $('#search-result').height()) {
-    //$text.css('marginTop', $text.height() / -2);  // vertically centered (top 50% + abs position)
-    //} else { // handle text overflow
-    //// TODO: fix right padding before scrollbar
-    //$text
-    //.css({'padding-top': 10, 'padding-bottom': 10, 'top': 0});
-    //}
+    if ($text.height() < $("#search-result").height()) {
+      // vertically centered (top 50% + abs position)
+      $text.css("marginTop", $text.height() / -2);
+    } else {
+      // handle text overflow
+      $text.css({ "padding-top": 10, "padding-bottom": 10, top: 0 });
+    }
 
     $text.animate({ opacity: 1.0 }, 300);
-    // TODO: this crap is buggy
-    //$('#search-result.scroll').lionbars();
+    // add scrollbars if the search result text overflows
+    $("#search-result").css("overflow", "auto");
   }
 
   function update_result(url, $result) {
@@ -316,8 +313,8 @@
         $("#search-link").prop("href", $(this).val());
       });
 
-    // initialize custom scroll bars for facts that overflow container
-    $(".scroll").lionbars();
+    // initialize scroll bars for facts that overflow container
+    $(".scroll").css("overflow", "auto");
 
     registerUpdateShareMessage();
 
