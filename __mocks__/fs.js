@@ -53,8 +53,8 @@ function __setMockFileContent(MOCK_INFO) {
     }
     if (Array.isArray(content[file])) {
       let currFile = content[file];
-      for (let file of currFile) {
-        mockFileContent[file].push(file);
+      for (let line of currFile) {
+        mockFileContent[file].push(line);
       }
     } else {
       mockFileContent[file].push(content[file]);
