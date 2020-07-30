@@ -51,10 +51,8 @@ function __setMockFileContent(MOCK_INFO) {
     if (!mockFileContent[file]) {
       mockFileContent[file] = [];
     }
-    console.log("content: ", content[file]);
     if (Array.isArray(content[file])) {
       let currFile = content[file];
-      console.log("cur: ", currFile);
       for (let file of currFile) {
         mockFileContent[file].push(file);
       }
