@@ -30,7 +30,9 @@ function __setMockFiles(newMockFiles) {
 function readdirSync(directoryPath) {
   try {
     return mockFiles[directoryPath] || [];
-  } catch (e) {}
+  } catch (e) {
+    console.error(`Error reading directory ${directoryPath}`, e.message);
+  }
 }
 
 /**
@@ -40,15 +42,25 @@ let mockFileContent = Object.create(null);
 
 /**
  * adding a method onto our fs.module
- * @param {Object} newMockFiles
+ * @param {Object} MOCK_INFO
  */
-function __setMockFileContent(newMockFiles) {
+function __setMockFileContent(MOCK_INFO) {
   mockFileContent = Object.create(null);
-  for (let file in newMockFiles) {
+  let content = JSON.parse(MOCK_INFO);
+  for (let file in content) {
     if (!mockFileContent[file]) {
       mockFileContent[file] = [];
     }
-    mockFileContent[file].push(newMockFiles[file]);
+    console.log("content: ", content[file]);
+    if (Array.isArray(content[file])) {
+      let currFile = content[file];
+      console.log("cur: ", currFile);
+      for (let file of currFile) {
+        mockFileContent[file].push(file);
+      }
+    } else {
+      mockFileContent[file].push(content[file]);
+    }
   }
 }
 
