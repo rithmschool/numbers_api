@@ -20,12 +20,10 @@
 
 var _ = require("underscore");
 var fs = require("fs");
-const path = require("path");
 
 function reader_norm(out, pathname, callback) {
   // TODO: more reliable checking if file is data file
-
-  var files = fs.readdirSync(path.resolve(__dirname, pathname));
+  var files = fs.readdirSync(pathname);
   _.each(files, function (file) {
     // TODO: add encoding arg ument
     // TODO: fix directory so it's relative to directory of this file
@@ -42,11 +40,7 @@ function reader_norm(out, pathname, callback) {
     }
 
     try {
-      if (typeof data === "object") {
-        var numbers = data;
-      } else {
-        var numbers = JSON.parse(data);
-      }
+      var numbers = JSON.parse(data);
     } catch (e) {
       console.error(
         "Exception while parsing file",
@@ -56,7 +50,6 @@ function reader_norm(out, pathname, callback) {
       );
       return;
     }
-
     // TODO: There should be a try/catch around this
     try {
       _.each(numbers, function (number_data, number_key) {
@@ -117,9 +110,6 @@ function reader_norm(out, pathname, callback) {
 function reader_manual(outs, pathname, callbacks) {
   // TODO: more reliable checking if file is data file
   var files = fs.readdirSync(pathname);
-
-  console.log("files: ", files);
-
   _.each(files, function (file) {
     // TODO: fix directory so it's relative to directory of this file
     try {
@@ -192,7 +182,6 @@ function reader_manual(outs, pathname, callbacks) {
       if (!element) {
         continue;
       }
-
       var out = outs[type];
       if (!(number in out)) {
         out[number] = [];
@@ -234,30 +223,30 @@ function normalize_common(element) {
 }
 
 exports.date = {};
-// reader_norm(exports.date, "models/date/norm/", function (element) {
-//   return normalize_common(element);
-// });
+reader_norm(exports.date, "models/date/norm/", function (element) {
+  return normalize_common(element);
+});
 
 exports.year = {};
-// reader_norm(exports.year, "models/year/norm/", function (element) {
-//   return normalize_common(element);
-// });
+reader_norm(exports.year, "models/year/norm/", function (element) {
+  return normalize_common(element);
+});
 
 exports.trivia = {};
-// var trivia_path = "models/trivia/";
-// reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
-//   // TODO: include back non-manual results
-//   if (element.manual) {
-//     return normalize_common(element);
-//   } else {
-//     return undefined;
-//   }
-// });
+var trivia_pathname = "models/trivia/";
+reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
+  // TODO: include back non-manual results
+  if (element.manual) {
+    return normalize_common(element);
+  } else {
+    return undefined;
+  }
+});
 
 exports.math = {};
-// reader_norm(exports.math, "models/math/norm/", function (element) {
-//   return normalize_common(element);
-// });
+reader_norm(exports.math, "models/math/norm/", function (element) {
+  return normalize_common(element);
+});
 
 var outs = {
   d: exports.date,
@@ -271,7 +260,7 @@ var callbacks = {
   m: normalize_common,
   t: normalize_common,
 };
-// reader_manual(outs, "models/manual/", callbacks);
+reader_manual(outs, "models/manual/", callbacks);
 
 // check for missing entries
 (function () {
@@ -285,14 +274,12 @@ var callbacks = {
   _.each(configs, function (config) {
     _.each(_.range(config.min, config.max), function (index) {
       if (!config.data[index] || config.data[index].length === 0) {
-        // console.log("Missing: " + config.category + ": " + index);
+        console.log("Missing: " + config.category + ": " + index);
       }
     });
   });
 })();
 
-module.exports = {
-  readerNorm: reader_norm,
-  readerManual: reader_manual,
-  normalizeCommon: normalize_common,
-};
+exports.reader_norm = reader_norm;
+exports.reader_manual = reader_manual;
+exports.normalize_common = normalize_common;
