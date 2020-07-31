@@ -15,7 +15,7 @@ let mockFiles = Object.create(null);
 function __setMockFiles(newMockFiles) {
   mockFiles = Object.create(null); // set to null
   for (let file in newMockFiles) {
-    const dir = path.dirname(file);
+    const dir = path.dirname(file) + "/";
     if (!mockFiles[dir]) {
       mockFiles[dir] = [];
     }
@@ -31,7 +31,7 @@ function readdirSync(directoryPath) {
   try {
     return mockFiles[directoryPath] || [];
   } catch (e) {
-    console.error(`Error reading directory ${directoryPath}`, e.message);
+    console.error(`Issue reading from directory ${directoryPath}: `, e.message);
   }
 }
 
@@ -42,23 +42,16 @@ let mockFileContent = Object.create(null);
 
 /**
  * adding a method onto our fs.module
- * @param {Object} MOCK_INFO
+ * @param {Object} newMockFiles
  */
-function __setMockFileContent(MOCK_INFO) {
+function __setMockFileContent(newMockFiles) {
   mockFileContent = Object.create(null);
-  let content = JSON.parse(MOCK_INFO);
+  let content = JSON.parse(newMockFiles);
   for (let file in content) {
     if (!mockFileContent[file]) {
       mockFileContent[file] = [];
     }
-    if (Array.isArray(content[file])) {
-      let currFile = content[file];
-      for (let line of currFile) {
-        mockFileContent[file].push(line);
-      }
-    } else {
-      mockFileContent[file].push(content[file]);
-    }
+    mockFileContent[file].push(content[file]);
   }
 }
 
@@ -69,9 +62,13 @@ function __setMockFileContent(MOCK_INFO) {
  */
 function readFileSync(pathname, encoding) {
   try {
-    return mockFileContent[pathname][0] || {};
+    // Checking if it's a "manual" file or a "norm" file.
+    if (Array.isArray(mockFileContent[pathname][0])) {
+      return mockFileContent[pathname][0][0];
+    }
+    return JSON.stringify(mockFileContent[pathname][0]) || {};
   } catch (e) {
-    console.error(`Error reading file ${directoryPath + file}: `, e.message);
+    console.error(`Error reading file ${pathname}: `, e.message);
   }
 }
 
