@@ -46,13 +46,21 @@ describe("data.js functions", function () {
 
     test("handles invalid key in the console", function () {
       let data = {};
-      let pathname = "/path/to/norm/bad/";
+      let badPath = "/path/to/norm/bad/";
       let callback = jest.fn((el) => el);
-      reader_norm(data, pathname, callback);
+      reader_norm(data, badPath, callback);
       expect(consoleSpy).toHaveLastReturnedWith("Skipping invaid number_key");
     });
 
-    test("adds data to our empty object after passing into reader_norm", function () {
+    test("doesnt add data to our input object if given bad path", function () {
+      let data = {};
+      let badPath = "/path/to/norm/bad/";
+      let callback = jest.fn((el) => el);
+      reader_norm(data, badPath, callback);
+      expect(Object.keys(data).length).toEqual(0);
+    });
+
+    test("adds data to our empty object after passing into reader_norm if given good path", function () {
       let data = {};
       let pathname = "/path/to/norm/good/";
       let cb = jest.fn((el) => el);
@@ -68,9 +76,6 @@ describe("data.js functions", function () {
       let cb = jest.fn((el) => el);
       reader_manual(data, path, cb);
       expect(Object.keys(data["t"]).length).toBeGreaterThan(0);
-      expect(Object.keys(data["y"]).length).toEqual(0);
-      expect(Object.keys(data["m"]).length).toEqual(0);
-      expect(Object.keys(data["d"]).length).toEqual(0);
     });
 
     test("console.logs a message if a bad path is passed in", function () {
@@ -79,6 +84,16 @@ describe("data.js functions", function () {
       let cb = jest.fn((el) => el);
       reader_manual(data, path, cb);
       expect(consoleSpy).toHaveBeenCalled();
+    });
+
+    test("no data is added if a bad path is passed", function () {
+      let data = { t: {}, y: {}, m: {}, d: {} };
+      let path = "/path/to/norm/bad/";
+      let cb = jest.fn((el) => el);
+      reader_manual(data, path, cb);
+      for (let key in data) {
+        expect(Object.keys(data[key]).length).toEqual(0);
+      }
     });
   });
 
@@ -91,9 +106,42 @@ describe("data.js functions", function () {
         self: false,
         pos: "DET",
       };
-      let elementCopy = { ...element };
       element = normalize_common(element);
-      expect(elementCopy.text).not.toEqual(element.text);
+      expect(element.text[0]).not.toEqual(element.text[0].toUpperCase());
+    });
+
+    test("returns undefined if self tag is set to true", function () {
+      let element = {
+        date: "August 4",
+        text: "This is some text",
+        self: true,
+        pos: "DET",
+      };
+      expect(normalize_common(element)).toBeUndefined();
+    });
+
+    test("returns undefined if invalid character is passed in", function () {
+      let element = {
+        date: "Augst 4",
+        text: "invalid!!!@#)((*!@)$",
+        self: false,
+        pos: "NP",
+      };
+
+      expect(normalize_common(element)).toBeUndefined();
+    });
+
+    test("text remains the same if NP tag is passed in", function () {
+      let element = {
+        date: "Augst 4",
+        text: "Gurl same....",
+        self: false,
+        pos: "NP",
+      };
+      let newElement = normalize_common(element);
+      for (let key in newElement) {
+        expect(newElement[key]).toEqual(element[key]);
+      }
     });
   });
 });
