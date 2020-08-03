@@ -144,4 +144,8 @@ describe("data.js functions", function () {
       }
     });
   });
+
+  afterAll(function () {
+    jest.clearAllMocks();
+  });
 });
