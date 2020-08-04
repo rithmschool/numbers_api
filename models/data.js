@@ -28,7 +28,9 @@ function reader_norm(out, pathname, callback) {
     // TODO: add encoding arg ument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(pathname + file, { encoding: "utf8" });
+      var data = fs.readFileSync(path.resolve(__dirname, pathname + file), {
+        encoding: "utf8",
+      });
     } catch (e) {
       console.error(
         "Exception while reading file ",
@@ -113,7 +115,9 @@ function reader_manual(outs, pathname, callbacks) {
   _.each(files, function (file) {
     // TODO: fix directory so it's relative to directory of this file
     try {
-      var data = fs.readFileSync(pathname + file, "utf8");
+      var data = fs.readFileSync(path.resolve(__dirname, pathname + file), {
+        encoding: "utf8",
+      });
     } catch (e) {
       console.error(
         "Exception while reading file ",
