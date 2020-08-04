@@ -9,7 +9,7 @@ Fill out this template with information that is relevant to the issue and if nec
 
 **The current behavior**:
 
-**The expectec behavior**:
+**The expected behavior**:
 
 **Suggested solution**:
 
