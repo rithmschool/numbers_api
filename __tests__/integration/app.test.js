@@ -12,6 +12,12 @@ describe("app.js", function () {
       expect(response.statusCode).toBe(200);
       done();
     });
+
+    test("response should return html", async function (done) {
+      const response = await request(app).get("/");
+      expect(response.text).toContain("<!DOCTYPE html>");
+      done();
+    });
   });
 
   afterAll((done) => {
