@@ -23,7 +23,7 @@ describe("app.js", function () {
     test("it should call fact.getFact()", async function (done) {
       let getFact = jest.spyOn(fact, "getFact");
       const response = await request(app).get("/");
-      expect(getFact).toHaveBeenCalledWith();
+      expect(getFact).toHaveBeenCalled();
       done();
     });
   });
