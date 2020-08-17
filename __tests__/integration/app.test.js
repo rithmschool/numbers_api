@@ -1,5 +1,6 @@
 const app = require("../../app");
 const request = require("supertest");
+const fact = require("../../models/fact");
 
 describe("app.js", function () {
   beforeAll((done) => {
@@ -16,6 +17,13 @@ describe("app.js", function () {
     test("response should return html", async function (done) {
       const response = await request(app).get("/");
       expect(response.text).toContain("<!DOCTYPE html>");
+      done();
+    });
+
+    test("it should call fact.getFact()", async function (done) {
+      let getFact = jest.spyOn(fact, "getFact");
+      const response = await request(app).get("/");
+      expect(getFact).toHaveBeenCalledWith();
       done();
     });
   });
