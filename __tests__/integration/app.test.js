@@ -3,7 +3,7 @@ const request = require("supertest");
 const fact = require("../../models/fact");
 
 describe("app.js", function () {
-  beforeAll((done) => {
+  beforeEach((done) => {
     done();
   });
 
@@ -28,8 +28,7 @@ describe("app.js", function () {
     });
   });
 
-  afterAll((done) => {
-    app.close();
+  afterEach((done) => {
     done();
   });
 });
