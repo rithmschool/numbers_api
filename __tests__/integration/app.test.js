@@ -28,6 +28,14 @@ describe("app.js", function () {
     });
   });
 
+  describe("POST /submit", function () {
+    test("it should respond with a 200 status code", async function (done) {
+      const response = await request(app).post("/submit");
+      expect(response.statusCode).toBe(200);
+      done();
+    });
+  });
+
   afterEach((done) => {
     done();
   });
