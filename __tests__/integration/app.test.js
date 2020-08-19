@@ -50,6 +50,17 @@ describe("app.js", function () {
       expect(response.body).toEqual(data);
       done();
     });
+
+    test("it should not process data if no headers are set", async function (done) {
+      let data = {
+        trivia: true,
+        number: 5,
+        fact: "5 is an odd number",
+      };
+      const response = await request(app).post("/submit");
+      expect(Object.keys(response.body).length).toEqual(0);
+      done();
+    });
   });
 
   afterEach((done) => {
