@@ -34,6 +34,22 @@ describe("app.js", function () {
       expect(response.statusCode).toBe(200);
       done();
     });
+
+    test("it should return request body to user", async function (done) {
+      let data = {
+        trivia: true,
+        number: 5,
+        fact: "5 is an odd number",
+      };
+
+      const response = await request(app)
+        .post("/submit")
+        .send(data)
+        .set("Content-Type", "application/json");
+
+      expect(response.body).toEqual(data);
+      done();
+    });
   });
 
   afterEach((done) => {
