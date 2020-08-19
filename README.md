@@ -38,7 +38,7 @@ JavaScript:
 
 Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). Live demo on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
-<h3 id="jsonp">JSONP</h3>
+### JSONP
 
 ...is supported with the query field [`callback`](#callback):
 
@@ -69,7 +69,8 @@ Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js
 
 ## Query Parameter Options
 
-<h3 id="fragment">Fragment</h3>
+### Fragment
+
 Return the fact as a sentence fragment that can be easily included as part of a larger sentence. This means that the first word is lowercase and ending punctuation is omitted. For trivia and math, a noun phrase is returned that can be used in a sentence like "We now have more users than [fact as fragment]!".
 
 <pre>
@@ -82,7 +83,7 @@ http://numbersapi.com/1969/year?fragment
 
 ### Notfound
 
-The `notfound` field tells us what to do if the number is not found. You can give us
+The `notfound` field tells us what to do if the number is not found. You can give us:
 
 - `default` to return one of our pre-written missing messages, or a message you supply with the [`default`](#default) query field. This is the default behaviour.
   <pre>http://numbersapi.com/314159265358979
@@ -96,7 +97,7 @@ The `notfound` field tells us what to do if the number is not found. You can giv
 
 Combine with the [fragment](#fragment) option to produce interesting facts about, for example, [the number of page shares](#visitors).
 
-<h3 id="default">Default</h3>
+### Default
 
 The value of the `default` query field tells us what to return if we don't have a fact for the requested number.
 
@@ -105,7 +106,7 @@ http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
 &rArr; Boring number is boring.
 </pre>
 
-<h3 id="callback">Callback</h3>
+### Callback
 
 To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
 
@@ -116,7 +117,7 @@ http://numbersapi.com/42/math?callback=showNumber
 
 See the [JSONP usage example](#jsonp).
 
-<h3 id="write">Write</h3>
+### Write
 
 Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
 
@@ -136,7 +137,8 @@ http://numbersapi.com/random?min=10&max=20
 13 is the number of provinces and territories in Canada.
 </pre>
 
-<h3 id="json">Json</h3>
+### JSON
+
 Include the query parameter `json`, or set the HTTP header `Content-Type` to `application/json`, or set the HTTP header `Accept` to `application/json` to return the fact and associated meta-data as a JSON object, with the properties:
 
 - `text`: A string of the fact text itself.
