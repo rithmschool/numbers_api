@@ -51,7 +51,7 @@ describe("app.js", function () {
       done();
     });
 
-    test("it should not process data if no headers are set", async function (done) {
+    test("it should not return data to user if no headers are set", async function (done) {
       let data = {
         trivia: true,
         number: 5,
