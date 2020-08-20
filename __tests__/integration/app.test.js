@@ -3,10 +3,6 @@ const request = require("supertest");
 const fact = require("../../models/fact");
 
 describe("app.js", function () {
-  beforeEach((done) => {
-    done();
-  });
-
   describe("GET /", function () {
     test("it should respond with a 200 status code", async function (done) {
       const response = await request(app).get("/");
@@ -41,7 +37,6 @@ describe("app.js", function () {
         number: 5,
         fact: "5 is an odd number",
       };
-
       const response = await request(app)
         .post("/submit")
         .send(data)
@@ -61,9 +56,5 @@ describe("app.js", function () {
       expect(Object.keys(response.body).length).toEqual(0);
       done();
     });
-  });
-
-  afterEach((done) => {
-    done();
   });
 });
