@@ -109,7 +109,7 @@ function reader_norm(out, pathname, callback) {
 function reader_manual(outs, pathname, callbacks) {
   // TODO: more reliable checking if file is data file
   let files = fs.readdirSync(pathname);
-  for (let file of files) {
+  files.forEach((file) => {
     let data;
     try {
       data = fs.readFileSync(path.join(__dirname, pathname, file), {
@@ -178,7 +178,7 @@ function reader_manual(outs, pathname, callbacks) {
       let o = out[number];
       o.push(element);
     }
-  }
+  });
 }
 
 let countBad = 0;
@@ -212,30 +212,30 @@ function normalize_common(element) {
 }
 
 exports.date = {};
-reader_norm(exports.date, "models/date/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.date, "models/date/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 exports.year = {};
-reader_norm(exports.year, "models/year/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.year, "models/year/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 exports.trivia = {};
-let trivia_pathname = "models/trivia/";
-reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
-  // TODO: include back non-manual results
-  if (element.manual) {
-    return normalize_common(element);
-  } else {
-    return undefined;
-  }
-});
+// let trivia_pathname = "models/trivia/";
+// reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
+//   // TODO: include back non-manual results
+//   if (element.manual) {
+//     return normalize_common(element);
+//   } else {
+//     return undefined;
+//   }
+// });
 
 exports.math = {};
-reader_norm(exports.math, "models/math/norm/", function (element) {
-  return normalize_common(element);
-});
+// reader_norm(exports.math, "models/math/norm/", function (element) {
+//   return normalize_common(element);
+// });
 
 let outs = {
   d: exports.date,
@@ -263,7 +263,7 @@ reader_manual(outs, "models/manual/", callbacks);
   _.each(configs, function (config) {
     _.each(_.range(config.min, config.max), function (index) {
       if (!config.data[index] || config.data[index].length === 0) {
-        console.log(`Missing: ${config.category} : ${index}`);
+        // console.log(`Missing: ${config.category} : ${index}`);
       }
     });
   });
