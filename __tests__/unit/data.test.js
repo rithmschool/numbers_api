@@ -27,29 +27,29 @@ describe("data.js functions", function () {
       ],
     },
     "/path/to/norm/bad/file2.txt": { invalid: [] },
-    "/path/to/manual/file2.txt": [
-      "100 t the approximate number of eyes a scallop has around the edge of its shell",
-    ],
+    "/path/to/manual/file2.txt":
+      "500 t the number of detectable earthquakes in the world each year",
   };
 
   beforeEach(function () {
     let stringify = JSON.stringify(MOCK_INFO);
     require("fs").__setMockFiles(MOCK_INFO);
     require("fs").__setMockFileContent(stringify);
+    consoleSpy = jest.spyOn(console, "warn");
+    consoleSpy.mockImplementationOnce((err) => err.message || err);
+  });
+
+  afterEach(function () {
+    jest.clearAllMocks();
   });
 
   describe("reader_norm function", function () {
-    beforeEach(function () {
-      consoleSpy = jest.spyOn(console, "log");
-      consoleSpy.mockImplementationOnce((err) => err.message || err);
-    });
-
-    test("handles invalid key in the console", function () {
+    test("Logs error message to the console", function () {
       let data = {};
       let badPath = "/path/to/norm/bad/";
       let callback = jest.fn((el) => el);
       reader_norm(data, badPath, callback);
-      expect(consoleSpy).toHaveLastReturnedWith("Skipping invaid number_key");
+      expect(consoleSpy).toHaveBeenCalled();
     });
 
     test("doesnt add data to our input object if given bad path", function () {
@@ -57,7 +57,8 @@ describe("data.js functions", function () {
       let badPath = "/path/to/norm/bad/";
       let callback = jest.fn((el) => el);
       reader_norm(data, badPath, callback);
-      expect(Object.keys(data).length).toEqual(0);
+      let keys = Object.keys(data);
+      expect(keys.length).toEqual(0);
     });
 
     test("adds data to our empty object after passing into reader_norm if given good path", function () {
@@ -65,7 +66,8 @@ describe("data.js functions", function () {
       let pathname = "/path/to/norm/good/";
       let cb = jest.fn((el) => el);
       reader_norm(data, pathname, cb);
-      expect(Object.keys(data).length).toBeGreaterThan(0);
+      let keys = Object.keys(data);
+      expect(keys.length).toBeGreaterThan(0);
     });
   });
 
@@ -75,10 +77,11 @@ describe("data.js functions", function () {
       let path = "/path/to/manual/";
       let cb = jest.fn((el) => el);
       reader_manual(data, path, cb);
-      expect(Object.keys(data["t"]).length).toBeGreaterThan(0);
+      let triviaKeys = Object.keys(data["t"]);
+      expect(triviaKeys.length).toBeGreaterThan(0);
     });
 
-    test("console.logs a message if a bad path is passed in", function () {
+    test("Logs error message to the console", function () {
       let data = { t: {}, y: {}, m: {}, d: {} };
       let path = "/path/to/norm/bad/";
       let cb = jest.fn((el) => el);
@@ -92,7 +95,8 @@ describe("data.js functions", function () {
       let cb = jest.fn((el) => el);
       reader_manual(data, path, cb);
       for (let key in data) {
-        expect(Object.keys(data[key]).length).toEqual(0);
+        const key = Object.keys(data[key]);
+        expect(key.length).toEqual(0);
       }
     });
   });
@@ -134,18 +138,16 @@ describe("data.js functions", function () {
     test("text remains the same if NP tag is passed in", function () {
       let element = {
         date: "Augst 4",
-        text: "Gurl same....",
+        text:
+          "118 t the number of decibels of the loudest burp, held by record-holder Paul Hunn, which is as loud as a chainsaw",
         self: false,
         pos: "NP",
       };
       let newElement = normalize_common(element);
       for (let key in newElement) {
-        expect(newElement[key]).toEqual(element[key]);
+        const currElement = newElement[key];
+        expect(currElement).toEqual(element[key]);
       }
     });
-  });
-
-  afterAll(function () {
-    jest.clearAllMocks();
   });
 });
