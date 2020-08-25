@@ -95,8 +95,8 @@ describe("data.js functions", function () {
       let cb = jest.fn((el) => el);
       reader_manual(data, path, cb);
       for (let key in data) {
-        const key = Object.keys(data[key]);
-        expect(key.length).toEqual(0);
+        const keys = Object.keys(data[key]);
+        expect(keys.length).toEqual(0);
       }
     });
   });
