@@ -28,7 +28,6 @@ function __setMockFiles(newMockFiles) {
  * @param {String} directoryPath
  */
 function readdirSync(directoryPath) {
-  console.log("DIRECTROY: ", directoryPath);
   try {
     return mockFiles[directoryPath] || [];
   } catch (e) {
@@ -71,7 +70,7 @@ function readFileSync(pathname, encoding) {
     if (pathname.includes("norm/bad"))
       return JSON.stringify(mockFileContent["/path/to/norm/bad/file2.txt"][0]);
     if (pathname.includes("/path/to/manual/"))
-      return JSON.stringify(mockFileContent["/path/to/manual/file2.txt"][0]);
+      return mockFileContent["/path/to/manual/file2.txt"][0];
   } catch (e) {
     console.error(`Error reading file ${pathname}: `, e.message);
   }
