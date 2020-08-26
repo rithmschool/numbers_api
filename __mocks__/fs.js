@@ -6,14 +6,14 @@ const fs = jest.genMockFromModule("fs");
 /**
  * In-memory store for our mock directories and their files
  */
-let mockFiles = Object.create(null);
+let mockFiles = {};
 
 /**
  * Creates our in-memory object with the directories and associated files
  * @param {Object} newMockFiles
  */
 function __setMockFiles(newMockFiles) {
-  mockFiles = Object.create(null); // set to null
+  mockFiles = {};
   for (let file in newMockFiles) {
     const dir = path.dirname(file) + "/";
     if (!mockFiles[dir]) {
@@ -36,37 +36,41 @@ function readdirSync(directoryPath) {
 }
 
 /**
- * In-memory object of directors and the content associated with each file
+ * In-memory object of directories and the content associated with each file
  */
-let mockFileContent = Object.create(null);
+let mockFileContent = {};
 
 /**
  * adding a method onto our fs.module
  * @param {Object} newMockFiles
  */
 function __setMockFileContent(newMockFiles) {
-  mockFileContent = Object.create(null);
+  mockFileContent = {};
   let content = JSON.parse(newMockFiles);
   for (let file in content) {
+    let fileContent = content[file];
     if (!mockFileContent[file]) {
       mockFileContent[file] = [];
     }
-    mockFileContent[file].push(content[file]);
+    mockFileContent[file].push(fileContent);
   }
 }
 
 /**
- * monkey-patching fs readFileSync method
+ * Monkey-patching fs readFileSync method.
+ * This method is used for testing purposes to return specific data in place of text files for 'models/data.js'
  * @param {String} directoryPath
  * @param {string} file
  */
 function readFileSync(pathname, encoding) {
   try {
     // Checking if it's a "manual" file or a "norm" file.
-    if (Array.isArray(mockFileContent[pathname][0])) {
-      return mockFileContent[pathname][0][0];
-    }
-    return JSON.stringify(mockFileContent[pathname][0]) || {};
+    if (pathname.includes("norm/good"))
+      return JSON.stringify(mockFileContent["/path/to/norm/good/file1.txt"][0]);
+    if (pathname.includes("norm/bad"))
+      return JSON.stringify(mockFileContent["/path/to/norm/bad/file2.txt"][0]);
+    if (pathname.includes("/path/to/manual/"))
+      return mockFileContent["/path/to/manual/file2.txt"][0];
   } catch (e) {
     console.error(`Error reading file ${pathname}: `, e.message);
   }
