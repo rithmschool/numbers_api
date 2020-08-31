@@ -4,19 +4,19 @@ const fact = require("../../models/fact");
 
 describe("app.js", function () {
   describe("GET /", function () {
-    test("it should respond with a 200 status code", async function (done) {
+    test("GET request responds with a 200 status code", async function (done) {
       const response = await request(app).get("/");
       expect(response.statusCode).toBe(200);
       done();
     });
 
-    test("response should return html", async function (done) {
+    test("GET request responds with html", async function (done) {
       const response = await request(app).get("/");
       expect(response.text).toContain("<!DOCTYPE html>");
       done();
     });
 
-    test("it should call fact.getFact()", async function (done) {
+    test("GET request should call fact.getFact()", async function (done) {
       let getFact = jest.spyOn(fact, "getFact");
       const response = await request(app).get("/");
       expect(getFact).toHaveBeenCalled();
