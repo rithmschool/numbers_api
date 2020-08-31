@@ -1,24 +1,8 @@
 const app = require("../../app");
 const request = require("supertest");
 const fact = require("../../models/fact");
-const { createWriteStream } = require("../../__mocks__/fs");
 
 describe("app.js", function () {
-  beforeEach(() => {
-    jest.mock("fs", () => {
-      createWriteStream: (filepath, ...args) => {
-        return {
-          write: (dataStream) => console.log("Writing..."),
-          destroySoon: () => console.log("Destroying stream..."),
-        };
-      };
-    });
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
   describe("GET /", function () {
     test("GET request responds with a 200 status code", async function (done) {
       const response = await request(app).get("/");
