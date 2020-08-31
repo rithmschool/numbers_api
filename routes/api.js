@@ -8,7 +8,7 @@ exports.appendToFile = function (filePath, dataStr) {
   var stream = fs.createWriteStream(filePath, {
     flags: "a",
     encoding: "utf8",
-    mode: 0666,
+    mode: "0666",
   });
   stream.write(dataStr);
   stream.destroySoon();
