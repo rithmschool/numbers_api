@@ -51,25 +51,28 @@ function __setMockFileContent(newMockFiles) {
   mockFileContent = {};
   let content = JSON.parse(newMockFiles);
   for (let file in content) {
+    let fileContent = content[file];
     if (!mockFileContent[file]) {
       mockFileContent[file] = [];
     }
-    mockFileContent[file].push(content[file]);
+    mockFileContent[file].push(fileContent);
   }
 }
 
 /**
- *
+ * This method modifies fs' readFileSync and returns custom data
  * @param {String} directoryPath
  * @param {String} file
  */
 function readFileSync(pathname, encoding) {
   try {
     // Checking if it's a "manual" file or a "norm" file.
-    if (Array.isArray(mockFileContent[pathname][0])) {
-      return mockFileContent[pathname][0][0];
-    }
-    return JSON.stringify(mockFileContent[pathname][0]) || {};
+    if (pathname.includes("norm/good"))
+      return JSON.stringify(mockFileContent["/path/to/norm/good/file1.txt"][0]);
+    if (pathname.includes("norm/bad"))
+      return JSON.stringify(mockFileContent["/path/to/norm/bad/file2.txt"][0]);
+    if (pathname.includes("/path/to/manual/"))
+      return mockFileContent["/path/to/manual/file2.txt"][0];
   } catch (e) {
     console.error(`Error reading file ${pathname}: `, e.message);
   }
