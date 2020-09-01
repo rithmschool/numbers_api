@@ -5,15 +5,17 @@ const fs = jest.genMockFromModule("fs");
 
 /**
  * In-memory store for our mock directories and their files
+ * This holds a fake 'directory' and the 'files' listed in each directory.
+ * Example taken from here: https://jestjs.io/docs/en/manual-mocks
  */
-let mockFiles = Object.create(null);
+let mockFiles = {};
 
 /**
- * Creates our in-memory object with the directories and associated files
+ * Creates our in-memory object with the directories and their associated files
  * @param {Object} newMockFiles
  */
 function __setMockFiles(newMockFiles) {
-  mockFiles = Object.create(null); // set to null
+  mockFiles = {};
   for (let file in newMockFiles) {
     const dir = path.dirname(file) + "/";
     if (!mockFiles[dir]) {
@@ -24,7 +26,8 @@ function __setMockFiles(newMockFiles) {
 }
 
 /**
- * Monkey-patching the built-in fs.readdirSync method
+ * This funciton modifies the behaviour of the fs readdirSync method.
+ * It returns an array of files associated with a given pathname.
  * @param {String} directoryPath
  */
 function readdirSync(directoryPath) {
@@ -36,16 +39,16 @@ function readdirSync(directoryPath) {
 }
 
 /**
- * In-memory object of directors and the content associated with each file
+ * In-memory object of directories and the content associated with each file
  */
-let mockFileContent = Object.create(null);
+let mockFileContent = {};
 
 /**
- * adding a method onto our fs.module
+ * This method creates an in-memory store of the data associated with each file in a directory.
  * @param {Object} newMockFiles
  */
 function __setMockFileContent(newMockFiles) {
-  mockFileContent = Object.create(null);
+  mockFileContent = {};
   let content = JSON.parse(newMockFiles);
   for (let file in content) {
     if (!mockFileContent[file]) {
@@ -56,9 +59,9 @@ function __setMockFileContent(newMockFiles) {
 }
 
 /**
- * monkey-patching fs readFileSync method
+ *
  * @param {String} directoryPath
- * @param {string} file
+ * @param {String} file
  */
 function readFileSync(pathname, encoding) {
   try {
