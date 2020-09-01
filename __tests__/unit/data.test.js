@@ -31,6 +31,9 @@ describe("data.js functions", function () {
       "500 t the number of detectable earthquakes in the world each year",
   };
 
+  /**
+   * Setting in-memory data for dummy data to test the methods in our functions
+   */
   beforeEach(function () {
     let stringify = JSON.stringify(MOCK_INFO);
     require("fs").__setMockFiles(MOCK_INFO);
