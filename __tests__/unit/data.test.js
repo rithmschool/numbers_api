@@ -32,16 +32,16 @@ describe("data.js functions", function () {
   };
 
   /**
-   * Setting in-memory data for dummy data to test the methods in our functions
+   * Setting in-memory data for dummy data in our mocks directory
    */
   beforeEach(function () {
     let stringify = JSON.stringify(MOCK_INFO);
     require("fs").__setMockFiles(MOCK_INFO);
     require("fs").__setMockFileContent(stringify);
     consoleSpy = jest.spyOn(console, "warn");
-    consoleSpy.mockImplementationOnce((err) => err.message || err);
   });
 
+  // Clearing our mocks
   afterEach(function () {
     jest.clearAllMocks();
   });
@@ -55,7 +55,7 @@ describe("data.js functions", function () {
       expect(consoleSpy).toHaveBeenCalled();
     });
 
-    test("doesnt add data to our input object if given bad path", function () {
+    test("Given a bad pathname, no data is added to our input object", function () {
       let data = {};
       let badPath = "/path/to/norm/bad/";
       let callback = jest.fn((el) => el);
@@ -64,7 +64,7 @@ describe("data.js functions", function () {
       expect(keys.length).toEqual(0);
     });
 
-    test("adds data to our empty object after passing into reader_norm if given good path", function () {
+    test("Correctly adds data to our input object given a correct pathname", function () {
       let data = {};
       let pathname = "/path/to/norm/good/";
       let cb = jest.fn((el) => el);
@@ -75,7 +75,7 @@ describe("data.js functions", function () {
   });
 
   describe("reader_manual function", function () {
-    test("adds data to the correct category in our input object", function () {
+    test("Adds data to the correct category in our input object", function () {
       let data = { t: {}, y: {}, m: {}, d: {} };
       let path = "/path/to/manual/";
       let cb = jest.fn((el) => el);
@@ -92,7 +92,7 @@ describe("data.js functions", function () {
       expect(consoleSpy).toHaveBeenCalled();
     });
 
-    test("no data is added if a bad path is passed", function () {
+    test("no data is added if given a bad pathname", function () {
       let data = { t: {}, y: {}, m: {}, d: {} };
       let path = "/path/to/norm/bad/";
       let cb = jest.fn((el) => el);
@@ -117,7 +117,7 @@ describe("data.js functions", function () {
       expect(element.text[0]).not.toEqual(element.text[0].toUpperCase());
     });
 
-    test("returns undefined if self tag is set to true", function () {
+    test("returns undefined if self key is set to true", function () {
       let element = {
         date: "August 4",
         text: "This is some text",
@@ -138,7 +138,7 @@ describe("data.js functions", function () {
       expect(normalize_common(element)).toBeUndefined();
     });
 
-    test("text remains the same if NP tag is passed in", function () {
+    test("Doesn't modify input text value if NP tag is passed in", function () {
       let element = {
         date: "Augst 4",
         text:
