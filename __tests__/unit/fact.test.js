@@ -348,12 +348,14 @@ describe("dumpData()", () => {
   test("facts-dump contains correct files", function () {
     dumpData("./facts-dump");
     let factsDump = fs.readdirSync("./facts-dump");
-    expect(factsDump).toEqual([
-      ".gitignore",
-      "date.txt",
-      "math.txt",
-      "trivia.txt",
-      "year.txt",
-    ]);
+    expect(factsDump).toEqual(
+      expect.arrayContaining([
+        ".gitignore",
+        "date.txt",
+        "math.txt",
+        "trivia.txt",
+        "year.txt",
+      ])
+    );
   });
 });
