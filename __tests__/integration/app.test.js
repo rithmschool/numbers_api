@@ -5,15 +5,11 @@ const api = require("../../routes/api");
 
 describe("app.js", function () {
   describe("GET /", function () {
-    test("GET request responds with a 200 status code", async function (done) {
+    test("GET request responds with a 200 status code and returns HTML", async function (done) {
       const response = await request(app).get("/");
-      expect(response.statusCode).toBe(200);
-      done();
-    });
-
-    test("GET request responds with html", async function (done) {
-      const response = await request(app).get("/");
-      expect(response.text).toContain("<!DOCTYPE html>");
+      const { statusCode, text } = response;
+      expect(statusCode).toBe(200);
+      expect(text).toContain("<!DOCTYPE html>");
       done();
     });
 
