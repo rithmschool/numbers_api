@@ -3,7 +3,7 @@ const request = require("supertest");
 const fact = require("../../models/fact");
 const api = require("../../routes/api");
 
-describe("app.js", function () {
+describe("Integration/unit testing app.js", function () {
   describe("GET /", function () {
     test("GET request responds with a 200 status code and returns HTML", async function (done) {
       const response = await request(app).get("/");
