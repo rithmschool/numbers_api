@@ -49,7 +49,7 @@ describe("Unit testing functions in `models/data.js`", function () {
     jest.clearAllMocks();
   });
 
-  describe("reader_norm function", function () {
+  describe("Testing reader_norm function", function () {
     beforeEach(function () {
       data = {};
       callback = jest.fn((el) => el);
@@ -61,7 +61,7 @@ describe("Unit testing functions in `models/data.js`", function () {
       expect(consoleSpy).toHaveBeenCalled();
     });
 
-    test("Given a bad pathname, no data is added to our input object", function () {
+    test("No data is added to our input object when given a bad pathname", function () {
       let badPath = "/path/to/norm/bad/";
       reader_norm(data, badPath, callback);
       let keys = Object.keys(data);
@@ -76,7 +76,7 @@ describe("Unit testing functions in `models/data.js`", function () {
     });
   });
 
-  describe("reader_manual function", function () {
+  describe("Testing reader_manual function", function () {
     beforeEach(function () {
       data = { t: {}, y: {}, m: {}, d: {} };
       callback = jest.fn((el) => el);
@@ -106,7 +106,7 @@ describe("Unit testing functions in `models/data.js`", function () {
     });
   });
 
-  describe("normalize_common function", function () {
+  describe("Testing normalize_common function", function () {
     test("function sets first letter in text to lowercase character when 'DET' tag is passed in", function () {
       let element = {
         date: "August 4",
