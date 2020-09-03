@@ -10,6 +10,8 @@ describe("Unit testing functions in `models/data.js`", function () {
   let consoleSpy;
   let data;
   let callback;
+
+  // Mock data to replace having to read from the disc
   const MOCKINFO = {
     "/path/to/norm/good/file1.txt": {
       "213": [
@@ -36,9 +38,9 @@ describe("Unit testing functions in `models/data.js`", function () {
    * Setting in-memory data for dummy data in our mocks directory
    */
   beforeEach(function () {
-    let stringify = JSON.stringify(MOCKINFO);
+    let mockInfoStringify = JSON.stringify(MOCKINFO);
     require("fs").__setMockFiles(MOCKINFO);
-    require("fs").__setMockFileContent(stringify);
+    require("fs").__setMockFileContent(mockInfoStringify);
     consoleSpy = jest.spyOn(console, "warn");
   });
 
@@ -105,7 +107,7 @@ describe("Unit testing functions in `models/data.js`", function () {
   });
 
   describe("normalize_common function", function () {
-    test("Sets first letter to lowercase character when 'NP' tag is not passed in", function () {
+    test("function sets first letter in text to lowercase character when 'DET' tag is passed in", function () {
       let element = {
         date: "August 4",
         text:
@@ -114,7 +116,7 @@ describe("Unit testing functions in `models/data.js`", function () {
         pos: "DET",
       };
       element = normalize_common(element);
-      expect(element.text[0]).not.toEqual(element.text[0].toUpperCase());
+      expect(element.text[0]).toEqual(element.text[0].toLowerCase());
     });
 
     test("function returns undefined if `self` key is set to true", function () {
@@ -127,7 +129,7 @@ describe("Unit testing functions in `models/data.js`", function () {
       expect(normalize_common(element)).toBeUndefined();
     });
 
-    test("returns undefined if invalid character is passed in", function () {
+    test("function returns undefined if invalid character is passed in", function () {
       let element = {
         date: "August 4",
         text: "invalid!!!@#)((*!@)$",
