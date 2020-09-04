@@ -1,5 +1,7 @@
-const { appendToFile, route } = require("../../routes/api");
+const { appendToFile } = require("../../routes/api");
 const fs = require("fs");
+const app = require("../../app");
+const request = require("supertest");
 
 describe("appendToFile()", () => {
   test("adds to a file", function () {
@@ -16,5 +18,12 @@ describe("appendToFile()", () => {
 });
 
 describe("routes", () => {
-  test("", function () {});
+  test("implicitly testing getBatchNums() and 2nd route", async function () {
+    // idk what to call 2nd route
+    // this test isnt completed,
+    // jest doesnt exit after this test runs
+    // investigate further, probably has to do with the async code
+    const res = await request(app).get("/1..3");
+    expect(res.body).toHaveProperty("1", "2", "3");
+  });
 });
