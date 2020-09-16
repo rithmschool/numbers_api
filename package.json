@@ -5,8 +5,7 @@
     "test": "jest",
     "start": "NODE_ENV=development forever -a start app.js",
     "start-prod": "NODE_ENV=production forever -a start app.js",
-    "stop": "forever stopall",
-    "dev": "node app.js"
+    "stop": "forever stopall"
   },
   "main": "app.js",
   "husky": {
@@ -26,7 +25,6 @@
     "marked": "^1.1.0",
     "nunjucks": "^3.2.1",
     "serve-favicon": "^2.5.0",
-    "supertest": "^4.0.2",
     "underscore": ">= 1.3.1"
   },
   "devDependencies": {
