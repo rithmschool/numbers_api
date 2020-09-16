@@ -6,10 +6,13 @@ const {
 
 jest.mock("fs");
 
-describe("data.js functions", function () {
+describe("Unit testing functions in `models/data.js`", function () {
   let consoleSpy;
+  let data;
+  let callback;
 
-  const MOCK_INFO = {
+  // Mock data to replace having to read from the disc
+  const MOCKINFO = {
     "/path/to/norm/good/file1.txt": {
       "213": [
         {
@@ -31,69 +34,71 @@ describe("data.js functions", function () {
       "500 t the number of detectable earthquakes in the world each year",
   };
 
+  /**
+   * Setting in-memory data for dummy data in our mocks directory
+   */
   beforeEach(function () {
-    let stringify = JSON.stringify(MOCK_INFO);
-    require("fs").__setMockFiles(MOCK_INFO);
-    require("fs").__setMockFileContent(stringify);
+    let mockInfoStringify = JSON.stringify(MOCKINFO);
+    require("fs").__setMockFiles(MOCKINFO);
+    require("fs").__setMockFileContent(mockInfoStringify);
     consoleSpy = jest.spyOn(console, "warn");
-    consoleSpy.mockImplementationOnce((err) => err.message || err);
   });
 
+  // Clearing our mocks
   afterEach(function () {
     jest.clearAllMocks();
   });
 
-  describe("reader_norm function", function () {
+  describe("Testing reader_norm function", function () {
+    beforeEach(function () {
+      data = {};
+      callback = jest.fn((el) => el);
+    });
+
     test("Logs error message to the console", function () {
-      let data = {};
       let badPath = "/path/to/norm/bad/";
-      let callback = jest.fn((el) => el);
       reader_norm(data, badPath, callback);
       expect(consoleSpy).toHaveBeenCalled();
     });
 
-    test("doesnt add data to our input object if given bad path", function () {
-      let data = {};
+    test("No data is added to our input object when given a bad pathname", function () {
       let badPath = "/path/to/norm/bad/";
-      let callback = jest.fn((el) => el);
       reader_norm(data, badPath, callback);
       let keys = Object.keys(data);
       expect(keys.length).toEqual(0);
     });
 
-    test("adds data to our empty object after passing into reader_norm if given good path", function () {
-      let data = {};
+    test("Correctly adds data to our input object given a correct pathname", function () {
       let pathname = "/path/to/norm/good/";
-      let cb = jest.fn((el) => el);
-      reader_norm(data, pathname, cb);
+      reader_norm(data, pathname, callback);
       let keys = Object.keys(data);
       expect(keys.length).toBeGreaterThan(0);
     });
   });
 
-  describe("reader_manual function", function () {
-    test("adds data to the correct category in our input object", function () {
-      let data = { t: {}, y: {}, m: {}, d: {} };
+  describe("Testing reader_manual function", function () {
+    beforeEach(function () {
+      data = { t: {}, y: {}, m: {}, d: {} };
+      callback = jest.fn((el) => el);
+    });
+
+    // This test checks that we've added data to the appropriate key value input
+    test("checks that we've added data to the appropriate key value store in our input object", function () {
       let path = "/path/to/manual/";
-      let cb = jest.fn((el) => el);
-      reader_manual(data, path, cb);
+      reader_manual(data, path, callback);
       let triviaKeys = Object.keys(data["t"]);
       expect(triviaKeys.length).toBeGreaterThan(0);
     });
 
-    test("Logs error message to the console", function () {
-      let data = { t: {}, y: {}, m: {}, d: {} };
+    test("Logs error message to the console when given a bad pathname", function () {
       let path = "/path/to/norm/bad/";
-      let cb = jest.fn((el) => el);
-      reader_manual(data, path, cb);
+      reader_manual(data, path, callback);
       expect(consoleSpy).toHaveBeenCalled();
     });
 
-    test("no data is added if a bad path is passed", function () {
-      let data = { t: {}, y: {}, m: {}, d: {} };
+    test("No data is added to our input object when given a bad pathname", function () {
       let path = "/path/to/norm/bad/";
-      let cb = jest.fn((el) => el);
-      reader_manual(data, path, cb);
+      reader_manual(data, path, callback);
       for (let key in data) {
         const keys = Object.keys(data[key]);
         expect(keys.length).toEqual(0);
@@ -101,8 +106,8 @@ describe("data.js functions", function () {
     });
   });
 
-  describe("normalize_common function", function () {
-    test("removes capitalization when 'NP' tag is not passed in", function () {
+  describe("Testing normalize_common function", function () {
+    test("function sets first letter in text to lowercase character when 'DET' tag is passed in", function () {
       let element = {
         date: "August 4",
         text:
@@ -111,10 +116,10 @@ describe("data.js functions", function () {
         pos: "DET",
       };
       element = normalize_common(element);
-      expect(element.text[0]).not.toEqual(element.text[0].toUpperCase());
+      expect(element.text[0]).toEqual(element.text[0].toLowerCase());
     });
 
-    test("returns undefined if self tag is set to true", function () {
+    test("function returns undefined if `self` key is set to true", function () {
       let element = {
         date: "August 4",
         text: "This is some text",
@@ -124,30 +129,15 @@ describe("data.js functions", function () {
       expect(normalize_common(element)).toBeUndefined();
     });
 
-    test("returns undefined if invalid character is passed in", function () {
+    test("function returns undefined if invalid character is passed in", function () {
       let element = {
-        date: "Augst 4",
+        date: "August 4",
         text: "invalid!!!@#)((*!@)$",
         self: false,
         pos: "NP",
       };
 
       expect(normalize_common(element)).toBeUndefined();
-    });
-
-    test("text remains the same if NP tag is passed in", function () {
-      let element = {
-        date: "Augst 4",
-        text:
-          "118 t the number of decibels of the loudest burp, held by record-holder Paul Hunn, which is as loud as a chainsaw",
-        self: false,
-        pos: "NP",
-      };
-      let newElement = normalize_common(element);
-      for (let key in newElement) {
-        const currElement = newElement[key];
-        expect(currElement).toEqual(element[key]);
-      }
     });
   });
 });
