@@ -155,10 +155,4 @@ app.post("/submit", function (req, res) {
   res.send(req.body);
 });
 
-// Main
-
-const PORT = 8124;
-app.listen(PORT);
-console.log("Express server listening on port %d in %s mode", PORT, nodeEnv);
-
 module.exports = app;
