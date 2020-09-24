@@ -212,19 +212,19 @@ function normalize_common(element) {
   return element;
 }
 
-exports.date = {};
-reader_norm(exports.date, "models/date/norm/", function (element) {
+let date = {};
+reader_norm(date, "models/date/norm/", function (element) {
   return normalize_common(element);
 });
 
-exports.year = {};
-reader_norm(exports.year, "models/year/norm/", function (element) {
+let year = {};
+reader_norm(year, "models/year/norm/", function (element) {
   return normalize_common(element);
 });
 
-exports.trivia = {};
+let trivia = {};
 let trivia_pathname = "models/trivia/";
-reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
+reader_norm(trivia, "models/trivia/norm/", function (element) {
   // TODO: include back non-manual results
   if (element.manual) {
     return normalize_common(element);
@@ -233,16 +233,16 @@ reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
   }
 });
 
-exports.math = {};
-reader_norm(exports.math, "models/math/norm/", function (element) {
+let math = {};
+reader_norm(math, "models/math/norm/", function (element) {
   return normalize_common(element);
 });
 
 let outs = {
-  d: exports.date,
-  y: exports.year,
-  m: exports.math,
-  t: exports.trivia,
+  d: date,
+  y: year,
+  m: math,
+  t: trivia,
 };
 let callbacks = {
   d: normalize_common,
@@ -255,10 +255,10 @@ reader_manual(outs, "models/manual/", callbacks);
 // check for missing entries
 (function () {
   let configs = [
-    { category: "math", data: exports.math, min: 0, max: 251 },
-    { category: "trivia", data: exports.trivia, min: 0, max: 251 },
-    { category: "date", data: exports.date, min: 1, max: 367 },
-    { category: "year", data: exports.year, min: -100, max: 2050 },
+    { category: "math", data: math, min: 0, max: 251 },
+    { category: "trivia", data: trivia, min: 0, max: 251 },
+    { category: "date", data: date, min: 1, max: 367 },
+    { category: "year", data: year, min: -100, max: 2050 },
   ];
 
   _.each(configs, function (config) {
@@ -270,6 +270,12 @@ reader_manual(outs, "models/manual/", callbacks);
   });
 })();
 
-exports.reader_norm = reader_norm;
-exports.reader_manual = reader_manual;
-exports.normalize_common = normalize_common;
+module.exports = {
+  reader_norm,
+  reader_manual,
+  normalize_common,
+  math,
+  trivia,
+  date,
+  year,
+};
