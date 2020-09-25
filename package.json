@@ -32,6 +32,7 @@
     "jest": "^26.0.1",
     "lint-staged": "^10.2.9",
     "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "supertest": "^4.0.2"
   }
 }
