@@ -147,11 +147,15 @@ function apiExtend(obj, newObj) {
  *			or the given default message if one is provided.
  * @return {Object} A map with fields 'number' and 'text'
  */
-function getFact(number, type, options) {
+function getFact(options) {
+  // number, type
   // Default query param options
   var defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
+
+  let number = options.number;
+  let type = options.type;
 
   if (!dataKeys[type]) {
     // TODO: Set HTTP status code as well
