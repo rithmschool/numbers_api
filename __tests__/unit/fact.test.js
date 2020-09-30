@@ -224,14 +224,20 @@ describe("getDefaultMsg() for all 4 types", function () {
 describe("dataPairs", () => {
   // dataPairs returns
   // {"date": [Array], "math": [Array], "trivia": [Array], "year": [Array]}
-  // {'number': 1, string: '1'}
+  // each array contains objects that have this format {'number': 1, string: '1'}
 
   test("return object with keys 'date', 'math', 'trivia', 'year'", function () {
     expect(Object.keys(dataPairs)).toEqual(["date", "year", "trivia", "math"]);
   });
 
+  // each data type contains objects that contains the string and integer version of numbers
+  // for example, type "date" contains -infinity, 1 through 366 inclusive, and infinity
+  // each data type has a different amount of numbers
+  // {'number': 1, string: '1'} is present in every data type
+
   test("date contains data in correct format", function () {
     let date = dataPairs["date"];
+    console.log("DATE", date[date.length - 2]);
     expect(date).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ number: 1, string: "1" }),
@@ -250,6 +256,7 @@ describe("dataPairs", () => {
 
   test("trivia contains data in correct format", function () {
     let trivia = dataPairs["trivia"];
+    console.log("TRIVIA", trivia[trivia.length - 3]);
     expect(trivia).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ number: 1, string: "1" }),
