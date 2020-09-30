@@ -2,12 +2,12 @@ var _ = require("underscore");
 var data = require("./data.js");
 var utils = require("../public/js/shared_utils.js");
 
-function getRandomApiNum(type, options) {
+function getRandomApiNum(options) {
   var min = parseInt(options.min, 10);
   var max = parseInt(options.max, 10);
 
   if (isNaN(min) && isNaN(max)) {
-    return utils.randomChoice(dataKeys[type]);
+    return utils.randomChoice(dataKeys[options.type]);
   } else {
     if (isNaN(min)) {
       min = -Infinity;
@@ -16,7 +16,7 @@ function getRandomApiNum(type, options) {
     }
 
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[type], function (element) {
+    var valid_keys = _.filter(dataKeys[options.type], function (element) {
       return element >= min && element <= max;
     });
 
@@ -163,7 +163,8 @@ function getFact(number, type, options) {
   }
 
   if (number === "random") {
-    number = getRandomApiNum(type, options);
+    options["type"] = type;
+    number = getRandomApiNum(options);
   }
 
   // TODO Better error handling (for out of dates), and for number is an invalid
