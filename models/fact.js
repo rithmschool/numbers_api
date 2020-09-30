@@ -147,7 +147,7 @@ function apiExtend(obj, newObj) {
  *			or the given default message if one is provided.
  * @return {Object} A map with fields 'number' and 'text'
  */
-exports.getFact = function (number, type, options) {
+function getFact(number, type, options) {
   // Default query param options
   var defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
@@ -203,9 +203,9 @@ exports.getFact = function (number, type, options) {
       type: type,
     });
   }
-};
+}
 
-exports.dumpData = function (dirname) {
+function dumpData(dirname) {
   var fs = require("fs");
 
   _.each(data, function (typeObj, type) {
@@ -214,11 +214,15 @@ exports.dumpData = function (dirname) {
     }).join("\n\n");
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
-};
+}
 
-exports.getRandomApiNum = getRandomApiNum;
-exports.getSentence = getSentence;
-exports.dataPairs = dataPairs;
-exports.filterObj = filterObj;
-exports.apiExtend = apiExtend;
-exports.getDefaultMsg = getDefaultMsg;
+module.exports = {
+  apiExtend,
+  dataPairs,
+  dumpData,
+  filterObj,
+  getDefaultMsg,
+  getFact,
+  getRandomApiNum,
+  getSentence,
+};
