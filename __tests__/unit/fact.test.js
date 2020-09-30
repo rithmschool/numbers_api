@@ -237,7 +237,6 @@ describe("dataPairs", () => {
 
   test("date contains data in correct format", function () {
     let date = dataPairs["date"];
-    console.log("DATE", date[date.length - 2]);
     expect(date).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ number: 1, string: "1" }),
@@ -256,7 +255,6 @@ describe("dataPairs", () => {
 
   test("trivia contains data in correct format", function () {
     let trivia = dataPairs["trivia"];
-    console.log("TRIVIA", trivia[trivia.length - 3]);
     expect(trivia).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ number: 1, string: "1" }),
@@ -318,7 +316,7 @@ describe("apiExtend()", () => {
 
 describe("getFact()", () => {
   test("return error object for invalid input type", function () {
-    let invalidType = getFact(1000, "sdasd", {});
+    let invalidType = getFact({ number: 1000, type: "sdasd" });
     expect(invalidType).toEqual({
       text: "ERROR: Invalid type.",
       number: 1000,
@@ -327,7 +325,7 @@ describe("getFact()", () => {
   });
 
   test("return data on random number", function () {
-    let randomNumData = getFact("random", "math", {});
+    let randomNumData = getFact({ number: "random", type: "math" });
     expect(randomNumData).toEqual({
       text: expect.any(String),
       number: expect.any(Number),
@@ -337,7 +335,7 @@ describe("getFact()", () => {
   });
 
   test("return error handling when number not found", function () {
-    let notFound = getFact(1000, "math", {});
+    let notFound = getFact({ number: 1000, type: "math" });
     expect(notFound).toEqual({
       text: expect.any(String),
       number: 1000,
