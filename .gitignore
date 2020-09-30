@@ -2,3 +2,4 @@
 secrets.js
 suggestions.json
 node_modules
+.DS_Store
