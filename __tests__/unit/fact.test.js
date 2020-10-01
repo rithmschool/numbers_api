@@ -12,98 +12,98 @@ const fs = require("fs");
 
 describe("getRandomApiNum() with type 'date'", () => {
   test("return random number greater than or equal to 2010", function () {
-    let greaterThanMin = getRandomApiNum("date", { min: 2010 });
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "date" });
     expect(greaterThanMin).toBeGreaterThan(2010);
   });
 
   test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum("date", { max: 2010 });
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "date" });
     expect(lessThanMax).toBeLessThan(2010);
   });
 
   test("return random number when min and max are NaN", function () {
-    let invalidInputNum = getRandomApiNum("date", { min: "a", max: "b" });
+    let invalidInputNum = getRandomApiNum({ min: "a", max: "b", type: "date" });
     expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMax = getRandomApiNum("date", {});
+    let noMinMax = getRandomApiNum({ type: "date" });
     expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'trivia'", () => {
   test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum("trivia", { min: 2010 });
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "trivia" });
     expect(greaterThanMin).toBeGreaterThan(2010);
   });
 
   test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum("trivia", { max: 2010 });
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "trivia" });
     expect(lessThanMax).toBeLessThan(2010);
   });
 
   test("return random number when min and max are NaN", function () {
-    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    let invalidInputNum = getRandomApiNum({ min: "a", max: "b", type: "year" });
     expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMax = getRandomApiNum("year", {});
+    let noMinMax = getRandomApiNum({ type: "year" });
     expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'math'", () => {
   test("return same number as min and max", function () {
-    let sameAsMinMax = getRandomApiNum("math", { min: 2010, max: 2010 });
+    let sameAsMinMax = getRandomApiNum({ min: 2010, max: 2010, type: "math" });
     expect(sameAsMinMax).toEqual(2010);
   });
 
   test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum("math", { min: 2010 });
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "math" });
     expect(greaterThanMin).toBeGreaterThan(2010);
   });
 
   test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum("math", { max: 2010 });
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "math" });
     expect(lessThanMax).toBeLessThan(2010);
   });
 
   test("return random number when min and max are NaN", function () {
-    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    let invalidInputNum = getRandomApiNum({ min: "a", max: "b", type: "year" });
     expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMax = getRandomApiNum("year", {});
+    let noMinMax = getRandomApiNum({ type: "year" });
     expect(typeof noMinMax).toBe("number");
   });
 });
 
 describe("getRandomApiNum() with type 'year'", () => {
   test("return same number as min and max", function () {
-    let sameAsMinMax = getRandomApiNum("year", { min: 2010, max: 2010 });
+    let sameAsMinMax = getRandomApiNum({ min: 2010, max: 2010, type: "year" });
     expect(sameAsMinMax).toEqual(2010);
   });
 
   test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum("year", { min: 2010 });
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "year" });
     expect(greaterThanMin).toBeGreaterThan(2010);
   });
 
   test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum("year", { max: 2010 });
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "year" });
     expect(lessThanMax).toBeLessThan(2010);
   });
 
   test("return random number when min and max are NaN", function () {
-    let invalidInputNum = getRandomApiNum("year", { min: "a", max: "b" });
+    let invalidInputNum = getRandomApiNum({ min: "a", max: "b", type: "year" });
     expect(typeof invalidInputNum).toBe("number");
   });
 
   test("return random number when min and max are undefined", function () {
-    let noMinMax = getRandomApiNum("year", {});
+    let noMinMax = getRandomApiNum({ type: "year" });
     expect(typeof noMinMax).toBe("number");
   });
 });
@@ -244,11 +244,16 @@ describe("getDefaultMsg() for all 4 types", function () {
 describe("dataPairs", () => {
   // dataPairs returns
   // {"date": [Array], "math": [Array], "trivia": [Array], "year": [Array]}
-  // {'number': 1, string: '1'}
+  // each array contains objects that have this format {'number': 1, string: '1'}
 
   test("return object with keys 'date', 'math', 'trivia', 'year'", function () {
     expect(Object.keys(dataPairs)).toEqual(["date", "year", "trivia", "math"]);
   });
+
+  // each data type contains objects that contains the string and integer version of numbers
+  // for example, type "date" contains -infinity, 1 through 366 inclusive, and infinity
+  // each data type has a different amount of numbers
+  // {'number': 1, string: '1'} is present in every data type
 
   test("date contains data in correct format", function () {
     let date = dataPairs["date"];
@@ -331,7 +336,7 @@ describe("apiExtend()", () => {
 
 describe("getFact()", () => {
   test("return error object for invalid input type", function () {
-    let invalidType = getFact(1000, "sdasd", {});
+    let invalidType = getFact({ number: 1000, type: "sdasd" });
     expect(invalidType).toEqual({
       text: "ERROR: Invalid type.",
       number: 1000,
@@ -340,7 +345,7 @@ describe("getFact()", () => {
   });
 
   test("return data on random number", function () {
-    let randomNumData = getFact("random", "math", {});
+    let randomNumData = getFact({ number: "random", type: "math" });
     expect(randomNumData).toEqual({
       text: expect.any(String),
       number: expect.any(Number),
@@ -350,7 +355,7 @@ describe("getFact()", () => {
   });
 
   test("return error handling when number not found", function () {
-    let notFound = getFact(1000, "math", {});
+    let notFound = getFact({ number: 1000, type: "math" });
     expect(notFound).toEqual({
       text: expect.any(String),
       number: 1000,
@@ -372,6 +377,7 @@ describe("dumpData()", () => {
       ".gitignore",
       "date.txt",
       "math.txt",
+      "test.txt",
       "trivia.txt",
       "year.txt",
     ]);

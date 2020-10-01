@@ -2,12 +2,12 @@ var _ = require("underscore");
 var data = require("./data.js");
 var utils = require("../public/js/shared_utils.js");
 
-function getRandomApiNum(type, options) {
+function getRandomApiNum(options) {
   var min = parseInt(options.min, 10);
   var max = parseInt(options.max, 10);
 
   if (isNaN(min) && isNaN(max)) {
-    return utils.randomChoice(dataKeys[type]);
+    return utils.randomChoice(dataKeys[options.type]);
   } else {
     if (isNaN(min)) {
       min = -Infinity;
@@ -16,7 +16,7 @@ function getRandomApiNum(type, options) {
     }
 
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[type], function (element) {
+    var valid_keys = _.filter(dataKeys[options.type], function (element) {
       return element >= min && element <= max;
     });
 
@@ -152,11 +152,15 @@ function apiExtend(obj, newObj) {
  *			or the given default message if one is provided.
  * @return {Object} A map with fields 'number' and 'text'
  */
-exports.getFact = function (number, type, options) {
+function getFact(options) {
+  // number, type
   // Default query param options
   var defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
+
+  let number = options.number;
+  let type = options.type;
 
   if (!dataKeys[type]) {
     // TODO: Set HTTP status code as well
@@ -168,7 +172,8 @@ exports.getFact = function (number, type, options) {
   }
 
   if (number === "random") {
-    number = getRandomApiNum(type, options);
+    options["type"] = type;
+    number = getRandomApiNum(options);
   }
 
   // TODO Better error handling (for out of dates), and for number is an invalid
@@ -220,9 +225,9 @@ exports.getFact = function (number, type, options) {
       type: type,
     });
   }
-};
+}
 
-exports.dumpData = function (dirname) {
+function dumpData(dirname) {
   var fs = require("fs");
 
   _.each(data, function (typeObj, type) {
@@ -231,11 +236,15 @@ exports.dumpData = function (dirname) {
     }).join("\n\n");
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
-};
+}
 
-exports.getRandomApiNum = getRandomApiNum;
-exports.getSentence = getSentence;
-exports.dataPairs = dataPairs;
-exports.filterObj = filterObj;
-exports.apiExtend = apiExtend;
-exports.getDefaultMsg = getDefaultMsg;
+module.exports = {
+  apiExtend,
+  dataPairs,
+  dumpData,
+  filterObj,
+  getDefaultMsg,
+  getFact,
+  getRandomApiNum,
+  getSentence,
+};
