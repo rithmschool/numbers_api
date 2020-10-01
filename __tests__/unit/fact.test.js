@@ -170,40 +170,58 @@ describe("getSentence() for type 'year'", () => {
 
 describe("getSentence() for types: trivia and math", () => {
   // trivia and math share the same prefix
-  const data = {
-    text: "the number of keys on a piano (36 black and 52 white)",
-  };
-
   test("When wantFragment is true, returns partial text only", function () {
-    const sentence = getSentence({ fragment: true }, 88, "trivia", data);
+    const sentence = getSentence({
+      wantFragment: { fragment: true },
+      number: 88,
+      type: "trivia",
+      data: {
+        text: "the number of keys on a piano (36 black and 52 white)",
+      },
+    });
     expect(sentence).toBe(
       "the number of keys on a piano (36 black and 52 white)"
     );
   });
 
   test("When wantFragment is undefined, returns full sentence", function () {
-    const sentence = getSentence(undefined, 88, "trivia", data);
+    const sentence = getSentence({
+      wantFragment: undefined,
+      number: 88,
+      type: "trivia",
+      data: {
+        text: "the number of keys on a piano (36 black and 52 white)",
+      },
+    });
     expect(sentence).toBe(
       "88 is the number of keys on a piano (36 black and 52 white)."
     );
   });
 
   test("When trivia number is invalid, returns sentence", function () {
-    const sentence = getSentence(undefined, 88888, "trivia", {
-      text: "an unremarkable number",
+    const sentence = getSentence({
+      wantFragment: undefined,
+      number: 88888,
+      type: "trivia",
+      data: {
+        text: "an unremarkable number",
+      },
     });
     expect(sentence).toBe("88888 is an unremarkable number.");
   });
 });
 
 describe("getSentence() for type 'date' ", function () {
-  const data = {
-    text: "that Victoria is crowned princess of Sweden",
-    year: 1980,
-  };
-
   test("When wantFragment is undefined, returns full sentence", function () {
-    const sentence = getSentence(undefined, 1 / 1, "date", data);
+    const sentence = getSentence({
+      wantFragment: undefined,
+      number: 1 / 1,
+      type: "date",
+      data: {
+        text: "that Victoria is crowned princess of Sweden",
+        year: 1980,
+      },
+    });
     expect(sentence).toBe(
       "January 1st is the day in 1980 that that Victoria is crowned princess of Sweden."
     );
@@ -218,7 +236,11 @@ describe("getDefaultMsg() for all 4 types", function () {
       "9999999999 is the year that nothing interesting came to pass.",
       "9999999999 is the year that we do not know what happened.",
     ];
-    const sentence = getDefaultMsg(9999999999, "year", {});
+    const sentence = getDefaultMsg({
+      number: 9999999999,
+      type: "year",
+      options: {},
+    });
     expect(yearMsgs.includes(sentence)).toEqual(true);
   });
 
@@ -229,12 +251,20 @@ describe("getDefaultMsg() for all 4 types", function () {
       "9999999999 is an unremarkable number.",
       "9999999999 is a number for which we're missing a fact (submit one to numbersapi at google mail!).",
     ];
-    const sentence = getDefaultMsg(9999999999, "math", {});
+    const sentence = getDefaultMsg({
+      number: 9999999999,
+      type: "math",
+      options: {},
+    });
     expect(mathMsgs.includes(sentence)).toEqual(true);
   });
 
   test("default msg for type:'date' with no fact", function () {
-    const sentence = getDefaultMsg(1 / 1, "date", {});
+    const sentence = getDefaultMsg({
+      number: 1 / 1,
+      type: "date",
+      options: {},
+    });
     expect(sentence).toBe(
       "January 1st is the day that no newsworthy events happened."
     );
