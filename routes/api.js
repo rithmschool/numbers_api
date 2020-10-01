@@ -43,10 +43,10 @@ function factResponse(fact, req, res, num) {
   res.set("X-Numbers-API-Type", factObj.type);
   setExpireHeaders(res);
 
-  if (req.params.callback) {
+  if (req.query.callback) {
     // JSONP
     res.json(useJson ? factObj : factStr);
-  } else if (req.params.write !== undefined) {
+  } else if (req.query.write !== undefined) {
     var arg = useJson ? factObjStr() : '"' + _.escape(factStr) + '"';
     var script = "document.write(" + arg + ");";
     res.set("Content-Type", "text/javascript").send(script);
@@ -85,14 +85,14 @@ function factsResponse(fact, req, res, nums) {
 
   setExpireHeaders(res);
 
-  if (req.params.callback) {
+  if (req.query.callback) {
     // JSONP
     res.json(factsObj);
-  } else if (req.params.write !== undefined) {
+  } else if (req.query.write !== undefined) {
     var script = "document.write(" + factsObjStr() + ");";
-    res.send(script, { "Content-Type": "text/javascript" }, 200);
+    res.status(200).set("Content-Type", "text/javascript").send(script);
   } else {
-    res.send(factsObjStr(), { "Content-Type": "application/json" }, 200);
+    res.status(200).set("Content-Type", "application/json").send(factsObjStr());
   }
 }
 
