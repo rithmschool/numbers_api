@@ -9,7 +9,8 @@ describe("Integration/unit testing app.js", function () {
       const response = await request(app).get("/");
       const { statusCode, text } = response;
       expect(statusCode).toBe(200);
-      expect(text).toContain("<!DOCTYPE html>");
+      const titleDescription = `An API for interesting facts about numbers`;
+      expect(text).toContain(titleDescription);
       done();
     });
 
