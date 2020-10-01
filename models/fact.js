@@ -24,7 +24,7 @@ function getRandomApiNum(type, options) {
   }
 }
 
-function getSentence(wantFragment, number, type, data) {
+function getSentence({ wantFragment, number, type, data }) {
   var text = data.text;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -68,7 +68,12 @@ function getDefaultMsg(number, type, options) {
     text: utils.randomChoice(defaultMsgs),
   };
 
-  return getSentence(options.fragment, number, type, data);
+  return getSentence({
+    wantFragment: options.fragment,
+    number: number,
+    type: type,
+    data: data,
+  });
 }
 
 // Mapping of meaning to query param value name
@@ -175,7 +180,12 @@ exports.getFact = function (number, type, options) {
     ret = utils.randomChoice(ret);
     if (ret !== undefined && "text" in ret) {
       return apiExtend(ret, {
-        text: getSentence(options.fragment, number, type, ret),
+        text: getSentence({
+          wantFragment: options.fragment,
+          number: number,
+          type: type,
+          data: ret,
+        }),
         number: number,
         found: true,
         type: type,
@@ -197,7 +207,12 @@ exports.getFact = function (number, type, options) {
     var adjustedNum = dataPairs[type][index].string;
     ret = utils.randomChoice(data[type][adjustedNum]);
     return apiExtend(ret, {
-      text: getSentence(options.fragment, adjustedNum, type, ret),
+      text: getSentence({
+        wantFragment: options.fragment,
+        number: number,
+        type: type,
+        data: ret,
+      }),
       number: adjustedNum,
       found: false,
       type: type,
