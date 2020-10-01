@@ -37,7 +37,8 @@ describe("Integration/unit testing app.js", function () {
         fact: "5 is an odd number",
       };
       const response = await request(app).post("/submit").send(data);
-      expect(Object.keys(response.body).length).toEqual(0);
+      const { body } = response;
+      expect(body).toEqual(data);
       done();
     });
 
