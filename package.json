@@ -2,7 +2,7 @@
   "name": "numbers_api",
   "version": "1.0.0",
   "scripts": {
-    "test": "jest --forceExit",
+    "test": "jest",
     "start": "NODE_ENV=development node app.js",
     "start-prod": "NODE_ENV=production forever -a start app.js",
     "stop": "forever stopall"
