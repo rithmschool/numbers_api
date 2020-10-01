@@ -109,29 +109,44 @@ describe("getRandomApiNum() with type 'year'", () => {
 });
 
 describe("getSentence() for type 'year'", () => {
-  const data = {
-    text: "Sweyn I establishes Danish control over part of Norway",
-  };
-
   test("When wantFragment is true, returns partial text only", function () {
-    const sentence = getSentence({ fragment: true }, 1000, "year", data);
+    const sentence = getSentence({
+      wantFragment: { fragment: true },
+      number: 1000,
+      type: "year",
+      data: {
+        text: "Sweyn I establishes Danish control over part of Norway",
+      },
+    });
     expect(sentence).toBe(
       "Sweyn I establishes Danish control over part of Norway"
     );
   });
 
   test("When wantFragment is undefined, returns full sentence", function () {
-    const sentence = getSentence(undefined, 1000, "year", data);
+    const sentence = getSentence({
+      wantFragment: undefined,
+      number: 1000,
+      type: "year",
+      data: {
+        text: "Sweyn I establishes Danish control over part of Norway",
+      },
+    });
     expect(sentence).toBe(
       "1000 is the year that Sweyn I establishes Danish control over part of Norway."
     );
   });
 
   test("When data has key of date, returns full sentence with date in the end", function () {
-    const sentence = getSentence(undefined, 1000, "year", {
-      date: "December 25",
-      text:
-        "Stephen I becomes King of Hungary, which is established as a Christian kingdom",
+    const sentence = getSentence({
+      wantFragment: undefined,
+      number: 1000,
+      type: "year",
+      data: {
+        date: "December 25",
+        text:
+          "Stephen I becomes King of Hungary, which is established as a Christian kingdom",
+      },
     });
     expect(sentence).toBe(
       "1000 is the year that Stephen I becomes King of Hungary, which is established as a Christian kingdom on December 25th."
@@ -139,8 +154,13 @@ describe("getSentence() for type 'year'", () => {
   });
 
   test("Return sentence when year is invalid", function () {
-    const sentence = getSentence(undefined, 10000000000, "year", {
-      text: "nothing remarkable happened",
+    const sentence = getSentence({
+      wantFragment: undefined,
+      type: "year",
+      number: 10000000000,
+      data: {
+        text: "nothing remarkable happened",
+      },
     });
     expect(sentence).toBe(
       "10000000000 is the year that nothing remarkable happened."
