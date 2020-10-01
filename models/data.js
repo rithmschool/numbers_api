@@ -18,12 +18,12 @@
  *
  */
 
-let _ = require("underscore");
-let fs = require("fs");
+var _ = require("underscore");
+var fs = require("fs");
 
 function reader_norm(out, path, callback) {
   // TODO: more reliable checking if file is data file
-  let files = fs.readdirSync(path);
+  var files = fs.readdirSync(path);
 
   console.log("files: ", files);
 
@@ -31,7 +31,7 @@ function reader_norm(out, path, callback) {
     // TODO: add encoding argument
     // TODO: fix directory so it's relative to directory of this file
     try {
-      let data = fs.readFileSync(path + file, "utf8");
+      var data = fs.readFileSync(path + file, "utf8");
     } catch (e) {
       console.error(
         "Exception while reading file ",
@@ -43,7 +43,7 @@ function reader_norm(out, path, callback) {
     }
 
     try {
-      let numbers = JSON.parse(data);
+      var numbers = JSON.parse(data);
     } catch (e) {
       console.error(
         "Exception while parsing file",
@@ -81,7 +81,7 @@ function reader_norm(out, path, callback) {
       if (!(float_key in out)) {
         out[float_key] = [];
       }
-      let o = out[float_key];
+      var o = out[float_key];
 
       _.each(number_data, function (element) {
         if (!element.text || !element.text.length) {
@@ -115,14 +115,14 @@ function reader_norm(out, path, callback) {
 // Format is line separated facts of format <#> <t|m|d|y> <fact>
 function reader_manual(outs, path, callbacks) {
   // TODO: more reliable checking if file is data file
-  let files = fs.readdirSync(path);
+  var files = fs.readdirSync(path);
 
   console.log("files: ", files);
 
   _.each(files, function (file) {
     // TODO: fix directory so it's relative to directory of this file
     try {
-      let data = fs.readFileSync(path + file, "utf8");
+      var data = fs.readFileSync(path + file, "utf8");
     } catch (e) {
       console.error(
         "Exception while reading file ",
@@ -133,19 +133,19 @@ function reader_manual(outs, path, callbacks) {
       return;
     }
 
-    let lines = data.split(/\n(?:\s*\n)*/);
-    let regex = /^([-]?\d+)\s+(\w+)\s+(.*)$/;
-    for (let i = 0; i < lines.length; i++) {
-      let line = lines[i];
+    var lines = data.split(/\n(?:\s*\n)*/);
+    var regex = /^([-]?\d+)\s+(\w+)\s+(.*)$/;
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
       if (line.toUpperCase().indexOf("SENTINEL") >= 0) {
         break;
       }
-      let matches = regex.exec(line);
+      var matches = regex.exec(line);
       if (!matches) {
         console.log("Skipping invaid line", line, "in file", path + file);
         continue;
       }
-      let number = parseFloat(matches[1], 10);
+      var number = parseFloat(matches[1], 10);
       if (isNaN(number)) {
         console.log(
           "Skipping invaid number",
@@ -157,7 +157,7 @@ function reader_manual(outs, path, callbacks) {
         );
         continue;
       }
-      let type = matches[2];
+      var type = matches[2];
       if (type !== "y" && type !== "d" && type !== "m" && type !== "t") {
         console.error(
           "Invalid fact type in file: ",
@@ -168,7 +168,7 @@ function reader_manual(outs, path, callbacks) {
         continue;
       }
 
-      let text = matches[3];
+      var text = matches[3];
       if (!text || text.length === 0) {
         console.log(
           "Skipping empty fact in file: ",
@@ -179,7 +179,7 @@ function reader_manual(outs, path, callbacks) {
         continue;
       }
 
-      let element = {
+      var element = {
         text: text,
         self: false,
         manual: true,
@@ -192,28 +192,28 @@ function reader_manual(outs, path, callbacks) {
         continue;
       }
 
-      let out = outs[type];
+      var out = outs[type];
       if (!(number in out)) {
         out[number] = [];
       }
-      let o = out[number];
+      var o = out[number];
       o.push(element);
     }
   });
 }
 
-let countBad = 0;
+var countBad = 0;
 function normalize_common(element) {
   // do not return results that contain the number itself
   if (element.self) {
     return undefined;
   }
-  let text = element.text.trim();
+  var text = element.text.trim();
   if (element.pos !== "NP") {
     text = text[0].toLowerCase() + text.substring(1);
   }
-  let lastChar = text.charAt(text.length - 1);
-  let charCode = lastChar.charCodeAt(0);
+  var lastChar = text.charAt(text.length - 1);
+  var charCode = lastChar.charCodeAt(0);
   if (lastChar === ".") {
     text = text.substring(0, text.length - 1);
   } else if (
@@ -243,7 +243,7 @@ reader_norm(exports.year, "models/year/norm/", function (element) {
 });
 
 exports.trivia = {};
-let trivia_path = "models/trivia/";
+var trivia_path = "models/trivia/";
 reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
   // TODO: include back non-manual results
   if (element.manual) {
@@ -258,13 +258,13 @@ reader_norm(exports.math, "models/math/norm/", function (element) {
   return normalize_common(element);
 });
 
-let outs = {
+var outs = {
   d: exports.date,
   y: exports.year,
   m: exports.math,
   t: exports.trivia,
 };
-let callbacks = {
+var callbacks = {
   d: normalize_common,
   y: normalize_common,
   m: normalize_common,
@@ -274,7 +274,7 @@ reader_manual(outs, "models/manual/", callbacks);
 
 // check for missing entries
 (function () {
-  let configs = [
+  var configs = [
     { category: "math", data: exports.math, min: 0, max: 251 },
     { category: "trivia", data: exports.trivia, min: 0, max: 251 },
     { category: "date", data: exports.date, min: 1, max: 367 },
