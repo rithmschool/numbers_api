@@ -44,7 +44,7 @@ function getSentence({ wantFragment, number, type, data }) {
   return prefix + " " + text + ".";
 }
 
-function getDefaultMsg(number, type, options) {
+function getDefaultMsg({ number, type, options }) {
   var mathMsgs = [
     "an uninteresting number",
     "a boring number",
@@ -196,7 +196,9 @@ exports.getFact = function (number, type, options) {
   // Handle the case of number not found
   if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
     return {
-      text: options[QUERY_DEFAULT] || getDefaultMsg(number, type, options),
+      text:
+        options[QUERY_DEFAULT] ||
+        getDefaultMsg({ number: number, type: type, options: options }),
       number: number,
       found: false,
       type: type,
