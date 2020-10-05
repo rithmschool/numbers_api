@@ -1,6 +1,7 @@
 var _ = require("underscore");
 var fs = require("fs");
 var utils = require("../public/js/shared_utils.js");
+const { Console } = require("console");
 
 var BATCH_LIMIT = 100;
 
@@ -134,6 +135,7 @@ exports.route = function (app, fact) {
       number = utils.dateToDayOfYear(new Date(2004, 0, number));
     }
     factResponse(fact, req, res, number);
+    console.log("IN FIRST ROUTE");
   });
 
   app.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
@@ -151,12 +153,14 @@ exports.route = function (app, fact) {
       return parseInt(numStr, 0);
     });
     factsResponse(fact, req, res, nums);
+    console.log("IN SECOND ROUTE");
   });
 
   app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
     var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
     req.params.type = "date";
     factResponse(fact, req, res, dayOfYear);
+    console.log("IN THIRD ROUTE");
   });
 
   // TODO: currently returned json uses dayOfYear as key rather than "month/day".
@@ -178,9 +182,11 @@ exports.route = function (app, fact) {
     });
     req.params.type = "date";
     factsResponse(fact, req, res, nums);
+    console.log("IN FOURTH ROUTE");
   });
 
   app.get("/random/:type?", function (req, res) {
     factResponse(fact, req, res, "random");
+    console.log("IN FIFTH ROUTE");
   });
 };
