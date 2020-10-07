@@ -19,8 +19,6 @@
     "*.{js,css,md}": "pretty-quick --staged"
   },
   "dependencies": {
-    "compass-mixins": "^0.12.10",
-    "compass-sass-mixins": "^0.12.7",
     "cors": "^2.8.5",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
