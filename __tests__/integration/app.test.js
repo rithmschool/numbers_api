@@ -21,12 +21,6 @@ describe("Integration/unit testing app.js", function () {
   });
 
   describe("POST => /submit", function () {
-    test("POST request should respond with a 200 status code", async () => {
-      const response = await request(app).post("/submit");
-      const { statusCode } = response;
-      expect(statusCode).toBe(200);
-    });
-
     test("POST /submit request should not return data to user if no headers are set", async () => {
       let data = {
         trivia: true,
