@@ -21,7 +21,7 @@ describe("Integration/unit testing app.js", function () {
   });
 
   describe("POST => /submit", function () {
-    test("POST /submit request should not return data to user if no headers are set", async () => {
+    test("POST /submit request should return data to user", async () => {
       let data = {
         trivia: true,
         number: 5,
