@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
-    "start": "NODE_ENV=development node app.js",
+    "start": "NODE_ENV=development nodemon server.js",
     "start-prod": "NODE_ENV=production forever -a start app.js",
     "stop": "forever stopall"
   },
