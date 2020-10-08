@@ -1,13 +1,9 @@
-/* Welcome to Compass.
- * In this file you should write your main styles. (or centralize your imports)
+/* In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "partials/normalize";
-@import "compass/css3";
-@import "compass/utilities/general/clearfix";
-//@import "compass/reset";
-//@import "compass_twitter_bootstrap";
+
 
 // Layout ------------------------------------
 $body-width: 960px;
@@ -51,18 +47,18 @@ $main-margin: 20%;
 }
 
 @mixin element-box {
-	@include border-radius($element-border-radius);
+	border-radius: $element-border-radius;
 	//@include box-shadow(2px 2px 10px 2px $color-five);
-  @include box-shadow(0 0 9px rgba(red, 1.0));
+  box-shadow: 0 0 9px rgba(red, 1.0);
 }
 
 @mixin section-box {
-	@include border-radius($section-border-radius);
+	border-radius: $section-border-radius;
   //@include box-shadow(0px 0px 5px $color-five);
 }
 
 @mixin box-top {
-	@include border-radius($element-border-radius $element-border-radius 0 0);
+	border-radius: $element-border-radius $element-border-radius 0 0;
 	//@include box-shadow(2px 2px 10px 2px $color-five);
   background-color: $color-five;
   //background: url(/img/grainy-color-five.png);
@@ -71,11 +67,11 @@ $main-margin: 20%;
 }
 
 @mixin box-bottom {
-	@include border-radius(0 0 $element-border-radius $element-border-radius);
+	border-radius: 0 0 $element-border-radius $element-border-radius;
 	//@include box-shadow(2px 2px 10px 2px $color-five);
 	background-color: rgba($color-three, 0.5);
-  @include background(radial-gradient(50px 20px, ellipse farthest-side, rgba(lighten($color-three, 25%), 0.5) 0%, rgba(lighten($color-three, 10%), 0.5) 100%));
-  @include box-shadow(inset 0 0 3px rgba($color-five, 0.3));
+  background: radial-gradient(ellipse farthest-side, rgba(lighten($color-three, 25%), 0.5) 0%, rgba(lighten($color-three, 10%), 0.5) 100%);
+  box-shadow: inset 0 0 3px rgba($color-five, 0.3);
   border: 2px solid rgba($color-five, 0.9);
   border-top: 0px solid white;
 }
@@ -109,11 +105,11 @@ $main-margin: 20%;
 // CSS ----------------------------------------
 
 body {
-  @include background($color-three);  // Fallback
-  @include background(linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), image-url("/img/background.jpg"));
+  background: $color-three;  // Fallback
+  background: linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), url("/img/background.jpg");
   overflow-x: hidden;  // Won't work on IE6/7: http://stackoverflow.com/questions/2284562/absolutely-positioned-div-on-right-causing-scrollbar-when-the-left-doesnt
 	#body-inner {
-    @include background(url(/img/graph-paper-5.png));
+    background: url(/img/graph-paper-5.png);
 		.body-container {
 			// TODO: consider double layer of opacity for foreground/background effect
       width: $body-width;
@@ -125,7 +121,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	@include text-shadow($color-five 2px 2px 3px);
+	text-shadow: $color-five 2px 2px 3px;
 	font-family: $heading-font;
 	font-weight: bold;
 	letter-spacing: 3px;
@@ -134,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, a, div, span, label, input {
-  @include text-shadow(#000000 0px 1px 0px);
+  text-shadow: #000000 0px 1px 0px;
 	font-family: $body-font;
 	font-weight: normal;
 	font-size: 18px;
@@ -145,7 +141,7 @@ p, a, div, span, label, input {
 a {
   color: $color-two;
   text-decoration: none;
-  @include transition(all 0.3s ease-out);
+  transition: all 0.3s ease-out;
   &:hover {
     color: $color-one;
   }
@@ -156,7 +152,7 @@ a {
 }
 
 .logo {
-	@include text-shadow($color-one 0px 0px 10px, $color-one 0 0 60px);
+	text-shadow: $color-one 0px 0px 10px, $color-one 0 0 60px;
 	margin: 0px;
 	padding: 0;
 	color: $color-five;
@@ -167,7 +163,7 @@ a {
   //border-top: 1px solid $color-five;
 	#second-word {
     //@include text-shadow($color-five 0px 0px 10px, $color-five 0px 0px 50px);
-    @include text-shadow($color-five 0px 0px 10px);
+    text-shadow: $color-five 0px 0px 10px;
 		color: $color-one;
 		font-family: inherit;
     font-weight: normal;
@@ -186,12 +182,12 @@ a {
   z-index: 5;
   opacity: 0.8;
   margin-top: 20px;
-  //background-color: rgba($color-five, $section-opacity);
-  @include border-radius($element-border-radius);
+  // background-color: rgba($color-five, $section-opacity);
+  border-radius: $element-border-radius;
 
   &:hover {
     opacity: 1.0;
-    @include transition(all ease-out 0.3s);
+    transition: all ease-out 0.3s;
   }
 
   a {
@@ -209,16 +205,16 @@ a {
     text-shadow: none;
     color: $color-five;
     font-size: 12px;
-    @include transition(none);
+    transition: none;
   }
   #at15ptc {
     font-size: 14px;
   }
-  @include transition(none);
+  transition: none;
 }
 
 #tagline {
-  @include text-shadow($color-five 0px 0px 5px);
+  text-shadow: $color-five 0px 0px 5px;
 	margin: 0px;
 	font-size: 1.6em;
   font-style: italic;
@@ -246,8 +242,8 @@ section {
     width: 100%;
     height: 100%;
     z-index: 10;
-    @include border-radius($element-border-radius);
-    @include background(linear-gradient(top, rgba($color-three, 0) 0%, rgba($color-three, 0.5) 80%, rgba($color-three, 1) 100%));
+    border-radius: $element-border-radius;
+    background: linear-gradient(to top, rgba($color-three, 0) 0%, rgba($color-three, 0.5) 80%, rgba($color-three, 1) 100%);
   }
 }
 
@@ -304,8 +300,8 @@ $sandbox-result-height: 102px;
 }
 #sandbox {
 	.arrow {
-		@include background(image-url("/img/arrow-short.png") no-repeat);
-		@include transform(rotate(50deg) scale(0.5, 0.4));
+		background: url("/img/arrow-short.png") no-repeat;
+		transform: rotate(50deg) scale(0.5, 0.4);
 		width: 301px;
 		height: 266px;
 		position: absolute;
@@ -314,7 +310,7 @@ $sandbox-result-height: 102px;
     //display: none;
 	}
 	#sandbox-text {
-		@include transform(rotate(-9deg));
+		transform: rotate(-9deg);
 		writing-mode: lr-tb;
 		font-size: 70px;
 		font-family: pastel_crayon, $body-font;
@@ -331,7 +327,7 @@ $sandbox-result-height: 102px;
 		margin-right: 12px;
 		padding: 3px 0px;
 		float: left;
-    @include border-radius($element-border-radius $element-border-radius);
+    border-radius: $element-border-radius $element-border-radius;
     $gradient-color: $color-three;
 
     .counter-container-outer {
@@ -342,15 +338,15 @@ $sandbox-result-height: 102px;
         background: $color-five;
         color: $color-two;
         text-shadow: none;
-        @include user-select(none);
-        @include transition(all 0.3s ease-out, text-shadow 0.3s ease-out);
+        user-select: none;
+        transition: all 0.3s ease-out, text-shadow 0.3s ease-out;
         &.counter-button-up {
-          @include background(linear-gradient(top, rgba($color-five, 0.5), $color-five));
-          @include border-radius($element-border-radius $element-border-radius 0 0);
+          background: linear-gradient(to top, rgba($color-five, 0.5), $color-five);
+          border-radius: $element-border-radius $element-border-radius 0 0;
         }
         &.counter-button-down {
-          @include background(linear-gradient(top, $color-five, rgba($color-five, 0.5)));
-          @include border-radius(0 0 $element-border-radius $element-border-radius);
+          background: linear-gradient(to top, $color-five, rgba($color-five, 0.5));
+          border-radius: 0 0 $element-border-radius $element-border-radius;
         }
       }
       &:hover .counter-button {
@@ -358,7 +354,7 @@ $sandbox-result-height: 102px;
       }
       .counter-button:hover {
         opacity: 1.0;
-        @include box-shadow(0 0 5px $color-one);
+        box-shadow: 0 0 5px $color-one;
         cursor: pointer;
       }
       .counter-button:active {
@@ -366,14 +362,14 @@ $sandbox-result-height: 102px;
         cursor: pointer;
       }
       .counter-container-inner {
-        @include box-shadow(0 0 10px rgba($gradient-color, 0.7));
-        @include transition(all ease-out 0.3s);
+        box-shadow: 0 0 10px rgba($gradient-color, 0.7);
+        transition: all ease-out 0.3s;
         &:hover {
           cursor: pointer;
-          @include box-shadow(0 0 15px $color-one);
+          box-shadow: 0 0 15px $color-one;
         }
         &:active {
-          @include box-shadow(0 0 30px $color-one);
+          box-shadow: 0 0 30px $color-one;
         }
       }
     }
@@ -385,7 +381,7 @@ $sandbox-result-height: 102px;
       background-color: $color-one;
     }
     .counter-mask {
-      @include background(linear-gradient(top, $gradient-color 0%, rgba($color-one,0) 50%, $gradient-color 100%));
+      background: linear-gradient(to top, $gradient-color 0%, rgba($color-one,0) 50%, $gradient-color 100%);
     }
   }
 	#outer-search {
@@ -412,7 +408,7 @@ $sandbox-result-height: 102px;
         font-size: 18px;
 
 				label {
-					@include clearfix;
+					overflow: auto;
 					display: table-cell;
 					width: 1px;
 					height: inherit;
@@ -435,7 +431,7 @@ $sandbox-result-height: 102px;
 				label:hover + span > input {
           text-decoration: underline;
           color: $color-one;
-          @include transition(all ease-out 0.3s);
+          transition: all ease-out 0.3s;
         }
 
 				span {
@@ -446,7 +442,7 @@ $sandbox-result-height: 102px;
 					padding-left: 0px;
 					border: 0px;
 					input {
-						@include border-radius(0 $element-border-radius 0 0);
+						border-radius: 0 $element-border-radius 0 0;
 						width: 100%;
 						margin: 0px;
 						border: 0px;
@@ -455,7 +451,7 @@ $sandbox-result-height: 102px;
 						text-shadow: none;
             background-color: rgba($color-four, 0.5);
             color: $color-two;
-            @include transition(all ease-out 0.3s);
+            transition: all ease-out 0.3s;
             &:hover {
               background-color: rgba($color-four, 0.2);
               color: $color-one;
@@ -502,8 +498,8 @@ $sandbox-result-height: 102px;
         margin: 6px 0;
         float: left;
         background-color: rgba($color-four, 0.5);
-        @include border-radius(0 0 $element-border-radius 0);
-        @include transition(all ease-out 0.3s);
+        border-radius: 0 0 $element-border-radius 0;
+        transition: all ease-out 0.3s;
         border: 2px solid rgba($color-five, 0.0);
 
         &.focused {
@@ -536,8 +532,8 @@ $sandbox-result-height: 102px;
         font-family: $body-font;
         color: $color-one;
         outline: none;
-        @include transition(all ease-out 0.3s);
-        @include border-radius(0 0 $element-border-radius 0);
+        transition: all ease-out 0.3s;
+        border-radius: 0 0 $element-border-radius 0;
         background-color: rgba($color-five, 0.0);
       }
 
@@ -567,16 +563,16 @@ $sandbox-result-height: 102px;
 				padding-left: 0;
         text-align: center;
 				li {
-          @include transition(all ease-out 0.3s);
+          transition: all ease-out 0.3s;
 
           &:last-child {
-            @include border-radius(0 0 $element-border-radius $element-border-radius);
+            border-radius: 0 0 $element-border-radius $element-border-radius;
           }
 
 					a {
 						display: block;
             padding: 5px;
-            @include text-shadow(none);
+            text-shadow: none;
 					}
 
 					&:hover {
@@ -615,8 +611,8 @@ $sandbox-result-height: 102px;
     top: -350px;
     height: 800px;
     position: absolute;
-    @include background(radial-gradient(center, closest-side circle, rgba($color-one, 0.30) 0%, rgba($color-one, 0.0) 100%));
-    @include transform(scale(1.5, 1.0));
+    background: radial-gradient(closest-side, rgba($color-one, 0.30) 0%, rgba($color-one, 0.0) 100%);
+    transform: scale(1.5, 1.0);
     z-index: 0;
   }
 
@@ -638,10 +634,10 @@ $sandbox-result-height: 102px;
     width: 100%;
     height: 1px;
     z-index: 10;
-    @include background(linear-gradient(left,
+    background: linear-gradient(to left,
       rgba($color-three, 0) 0%,
       rgba($color-one, 0.7) 50%,
-      rgba($color-three, 0) 100%));
+      rgba($color-three, 0) 100%);
   }
 }
 
@@ -659,19 +655,19 @@ $sandbox-result-height: 102px;
   code {
     line-height: 1.5em;
     padding: 0 0.3em;
-    @include border-radius(0.2em);
+    border-radius: 0.2em;
   }
   pre code {
     background-color: transparent;
     border: none;
     line-height: 1em;
     padding: 0;
-    @include border-radius(0);
+    border-radius: 0;
   }
   pre {
     padding: 10px 10px 10px 20px;
     border-left: 8px solid rgba($color-five, 0.5);
-    @include border-radius(0 $element-border-radius $element-border-radius 0);
+    border-radius: 0 $element-border-radius $element-border-radius 0;
   }
   h2 {
     border-top: 2px solid rgba($color-one, 0.8);
@@ -689,7 +685,7 @@ $sandbox-result-height: 102px;
 
 footer {
   margin-top: 60px;
-	@include background(linear-gradient(top, rgba($color-five, 0) 0%, rgba($color-five, 0.1) 20%, rgba($color-five, 0.8) 100%));
+	background: linear-gradient(to bottom, rgba($color-five, 0) 0%, rgba($color-five, 0.1) 20%, rgba($color-five, 0.8) 100%);
 	height: 150px;
 	width: 100%;
 	padding-top: 20px;
