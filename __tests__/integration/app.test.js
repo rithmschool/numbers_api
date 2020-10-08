@@ -5,32 +5,29 @@ const api = require("../../routes/api");
 
 describe("Integration/unit testing app.js", function () {
   describe("GET /", function () {
-    test("GET request responds with a 200 status code and returns HTML", async function (done) {
+    test("GET request responds with a 200 status code and returns HTML", async () => {
       const response = await request(app).get("/");
       const { statusCode, text } = response;
       expect(statusCode).toBe(200);
       const titleDescription = `An API for interesting facts about numbers`;
       expect(text).toContain(titleDescription);
-      done();
     });
 
-    test("GET request should call fact.getFact()", async function (done) {
+    test("GET request should call fact.getFact()", async () => {
       const getFact = jest.spyOn(fact, "getFact");
       const response = await request(app).get("/");
       expect(getFact).toHaveBeenCalled();
-      done();
     });
   });
 
   describe("POST => /submit", function () {
-    test("POST request should respond with a 200 status code", async function (done) {
+    test("POST request should respond with a 200 status code", async () => {
       const response = await request(app).post("/submit");
       const { statusCode } = response;
       expect(statusCode).toBe(200);
-      done();
     });
 
-    test("POST /submit request should not return data to user if no headers are set", async function (done) {
+    test("POST /submit request should not return data to user if no headers are set", async () => {
       let data = {
         trivia: true,
         number: 5,
@@ -39,10 +36,9 @@ describe("Integration/unit testing app.js", function () {
       const response = await request(app).post("/submit").send(data);
       const { body } = response;
       expect(body).toEqual(data);
-      done();
     });
 
-    test("POST /submit request should call appendToFile method in our router", async function (done) {
+    test("POST /submit request should call appendToFile method in our router", async () => {
       const appendToFile = jest.spyOn(api, "appendToFile");
       let data = {
         trivia: true,
@@ -52,7 +48,6 @@ describe("Integration/unit testing app.js", function () {
 
       const response = await request(app).post("/submit").send(data);
       expect(appendToFile).toHaveBeenCalled();
-      done();
     });
   });
 });
