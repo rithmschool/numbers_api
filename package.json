@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
-    "start": "NODE_ENV=development nodemon app.js",
+    "start": "NODE_ENV=development nodemon server.js",
     "start-prod": "NODE_ENV=production forever -a start app.js",
     "stop": "forever stopall",
     "scss": "node-sass public/sass -o public/css"
@@ -34,6 +34,7 @@
     "jest": "^26.0.1",
     "lint-staged": "^10.2.9",
     "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1"
+    "pretty-quick": "^2.0.1",
+    "supertest": "^4.0.2"
   }
 }
