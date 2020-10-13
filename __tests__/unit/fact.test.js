@@ -111,7 +111,7 @@ describe("getRandomApiNum() with type 'year'", () => {
 describe("getSentence() for type 'year'", () => {
   test("When wantFragment is true, returns partial text only", function () {
     const sentence = getSentence({
-      wantFragment: { fragment: true },
+      wantFragment: true,
       number: 1000,
       type: "year",
       data: {
@@ -125,7 +125,6 @@ describe("getSentence() for type 'year'", () => {
 
   test("When wantFragment is undefined, returns full sentence", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
       number: 1000,
       type: "year",
       data: {
@@ -139,7 +138,6 @@ describe("getSentence() for type 'year'", () => {
 
   test("When data has key of date, returns full sentence with date in the end", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
       number: 1000,
       type: "year",
       data: {
@@ -155,7 +153,6 @@ describe("getSentence() for type 'year'", () => {
 
   test("Return sentence when year is invalid", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
       type: "year",
       number: 10000000000,
       data: {
@@ -172,7 +169,7 @@ describe("getSentence() for types: trivia and math", () => {
   // trivia and math share the same prefix
   test("When wantFragment is true, returns partial text only", function () {
     const sentence = getSentence({
-      wantFragment: { fragment: true },
+      wantFragment: true,
       number: 88,
       type: "trivia",
       data: {
@@ -186,7 +183,6 @@ describe("getSentence() for types: trivia and math", () => {
 
   test("When wantFragment is undefined, returns full sentence", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
       number: 88,
       type: "trivia",
       data: {
@@ -200,7 +196,6 @@ describe("getSentence() for types: trivia and math", () => {
 
   test("When trivia number is invalid, returns sentence", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
       number: 88888,
       type: "trivia",
       data: {
@@ -214,8 +209,7 @@ describe("getSentence() for types: trivia and math", () => {
 describe("getSentence() for type 'date' ", function () {
   test("When wantFragment is undefined, returns full sentence", function () {
     const sentence = getSentence({
-      wantFragment: undefined,
-      number: 1 / 1,
+      number: 1,
       type: "date",
       data: {
         text: "that Victoria is crowned princess of Sweden",
