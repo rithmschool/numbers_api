@@ -30,7 +30,7 @@ function reader_norm(out, pathname, callback) {
     let data;
     let numbers;
     try {
-      data = fs.readFileSync(path.join(__dirname, pathname, file), {
+      data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
       });
     } catch (e) {
@@ -47,7 +47,6 @@ function reader_norm(out, pathname, callback) {
       );
       return;
     }
-
     try {
       _.each(numbers, function (number_data, number_key) {
         let float_key = parseFloat(number_key, 10);
@@ -111,7 +110,7 @@ function reader_manual(outs, pathname, callbacks) {
   files.forEach((file) => {
     let data;
     try {
-      data = fs.readFileSync(path.join(__dirname, pathname, file), {
+      data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
       });
     } catch (e) {
@@ -239,13 +238,11 @@ reader_norm(math, "models/math/norm/", function (element) {
   return normalize_common(element);
 });
 
-
 let outs = {
   d: date,
   y: year,
   m: math,
   t: trivia,
-
 };
 let callbacks = {
   d: normalize_common,
@@ -257,13 +254,11 @@ reader_manual(outs, "models/manual/", callbacks);
 
 // check for missing entries
 (function () {
-
   let configs = [
     { category: "math", data: math, min: 0, max: 251 },
     { category: "trivia", data: trivia, min: 0, max: 251 },
     { category: "date", data: date, min: 1, max: 367 },
     { category: "year", data: year, min: -100, max: 2050 },
-
   ];
 
   _.each(configs, function (config) {

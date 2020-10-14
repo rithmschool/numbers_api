@@ -271,7 +271,7 @@ describe("dataPairs", () => {
   // each array contains objects that have this format {'number': 1, string: '1'}
 
   test("return object with keys 'date', 'math', 'trivia', 'year'", function () {
-    expect(Object.keys(dataPairs)).toEqual(["date", "year", "trivia", "math"]);
+    expect(Object.keys(dataPairs)).toContain("date", "year", "trivia", "math");
   });
 
   // each data type contains objects that contains the string and integer version of numbers
@@ -400,7 +400,12 @@ describe("dumpData()", () => {
     expect(factsDump).toEqual([
       ".gitignore",
       "date.txt",
+      "dumpData.txt",
+      "getFact.txt",
       "math.txt",
+      "normalize_common.txt",
+      "reader_manual.txt",
+      "reader_norm.txt",
       "test.txt",
       "trivia.txt",
       "year.txt",
