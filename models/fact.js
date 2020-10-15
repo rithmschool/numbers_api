@@ -45,7 +45,7 @@ function getSentence({ wantFragment, number, type, data }) {
   return prefix + " " + text + ".";
 }
 
-function getDefaultMsg({ number, type, options }) {
+function getDefaultMsg({ number, type, options = {} }) {
   var mathMsgs = [
     "an uninteresting number",
     "a boring number",
