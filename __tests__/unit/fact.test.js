@@ -233,7 +233,6 @@ describe("getDefaultMsg() for all 4 types", function () {
     const sentence = getDefaultMsg({
       number: 9999999999,
       type: "year",
-      options: {},
     });
     expect(yearMsgs.includes(sentence)).toEqual(true);
   });
@@ -248,16 +247,14 @@ describe("getDefaultMsg() for all 4 types", function () {
     const sentence = getDefaultMsg({
       number: 9999999999,
       type: "math",
-      options: {},
     });
     expect(mathMsgs.includes(sentence)).toEqual(true);
   });
 
   test("default msg for type:'date' with no fact", function () {
     const sentence = getDefaultMsg({
-      number: 1 / 1,
+      number: 1,
       type: "date",
-      options: {},
     });
     expect(sentence).toBe(
       "January 1st is the day that no newsworthy events happened."
