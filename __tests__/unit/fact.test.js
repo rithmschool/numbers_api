@@ -400,8 +400,6 @@ describe("dumpData()", () => {
     expect(factsDump).toEqual([
       ".gitignore",
       "date.txt",
-      "dumpData.txt",
-      "getFact.txt",
       "math.txt",
       "normalize_common.txt",
       "reader_manual.txt",
