@@ -11,6 +11,8 @@ const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
 const nunjucks = require("nunjucks");
 
+const mousewheel = require("jquery-mousewheel");
+
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
 const secrets = require("./secrets.js");
@@ -123,6 +125,8 @@ if (nodeEnv === "development") {
 router.route(app, fact);
 
 var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
+
+app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
 
 // TODO: Precompile this template.
 app.get("/", function (req, res) {
