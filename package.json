@@ -4,11 +4,16 @@
   "scripts": {
     "test": "jest",
     "start": "NODE_ENV=development nodemon server.js",
-    "start-prod": "NODE_ENV=production forever -a start app.js",
+    "start-prod": "NODE_ENV=production forever -a start server.js",
     "stop": "forever stopall",
-    "scss": "node-sass public/sass -o public/css"
+    "scss": "node-sass public/sass -o public/css",
+    "dangerously-stop-running-node-servers": "sudo pkill node || true; npm run stop",
+    "transfer": "npm run scss; rsync -avz --exclude .git --exclude logs/ --exclude suggestions.json --stats --progress . numbers:~/www",
+    "deploy": "npm run transfer; ssh numbers 'cd /home/numbers/www && nohup make start &>> deploy.log < /dev/null &'; ssh numbers 'tail -n 200 /home/numbers/www/deploy.log'",
+    "dump-facts": "NODE_PATH=/usr/local/lib/node_modules node server.js --dump",
+    "count-facts": "grep -c '[a-zA-Z]' facts-dump/*.txt && grep '[a-zA-Z]' facts-dump/*.txt | wc -l"
   },
-  "main": "app.js",
+  "main": "server.js",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
