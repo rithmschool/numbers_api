@@ -28,7 +28,7 @@ function setExpireHeaders(res) {
 
 function factResponse(fact, req, res, num) {
   const type = req.params.type || "trivia";
-  var factObj = fact.getFact(num, type, req.query);
+  var factObj = fact.getFact({ number: num, type: type, options: req.query });
   var factStr = "" + factObj.text;
   var useJson =
     req.query.json !== undefined ||
@@ -71,7 +71,7 @@ function factsResponse(fact, req, res, nums) {
   var factsObj = {};
   _.each(nums, function (num) {
     const type = req.params.type || "trivia";
-    var factObj = fact.getFact(num, type, req.query);
+    var factObj = fact.getFact({ number: num, type: type, options: req.query });
     if (useJson) {
       factsObj[num] = factObj;
     } else {

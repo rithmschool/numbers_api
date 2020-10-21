@@ -2,40 +2,29 @@ var _ = require("underscore");
 var data = require("./data.js");
 var utils = require("../public/js/shared_utils.js");
 
-// http://stackoverflow.com/questions/2532218/pick-random-property-from-a-javascript-object
-function randomProperty(obj, pre) {
-  var result;
-  var count = 0;
-  for (var prop in obj) {
-    if (obj.hasOwnProperty(prop)) {
-      if (Math.random() < 1 / ++count) {
-        result = prop;
-      }
-    }
-  }
-  return result;
-}
-
-function getRandomApiNum(type, options) {
+function getRandomApiNum(options) {
   var min = parseInt(options.min, 10);
   var max = parseInt(options.max, 10);
+
   if (isNaN(min) && isNaN(max)) {
-    return utils.randomChoice(dataKeys[type]);
+    return utils.randomChoice(dataKeys[options.type]);
   } else {
     if (isNaN(min)) {
       min = -Infinity;
     } else if (isNaN(max)) {
       max = Infinity;
     }
+
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[type], function (element) {
+    var valid_keys = _.filter(dataKeys[options.type], function (element) {
       return element >= min && element <= max;
     });
+
     return utils.randomChoice(valid_keys);
   }
 }
 
-function getSentence(wantFragment, number, type, data) {
+function getSentence({ wantFragment, number, type, data }) {
   var text = data.text;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -55,12 +44,12 @@ function getSentence(wantFragment, number, type, data) {
   return prefix + " " + text + ".";
 }
 
-function getDefaultMsg(number, type, options) {
+function getDefaultMsg({ number, type, options = {} }) {
   var mathMsgs = [
     "an uninteresting number",
     "a boring number",
     "an unremarkable number",
-    "a number for which we're missing a fact (submit one to numbersapi at google mail!)"
+    "a number for which we're missing a fact (submit one to numbersapi at google mail!)",
   ];
 
   var defaultMsgs = {
@@ -71,15 +60,20 @@ function getDefaultMsg(number, type, options) {
       "nothing remarkable happened",
       "the Earth probably went around the Sun",
       "nothing interesting came to pass",
-      "we do not know what happened"
-    ]
+      "we do not know what happened",
+    ],
   }[type];
 
   var data = {
-    text: utils.randomChoice(defaultMsgs)
+    text: utils.randomChoice(defaultMsgs),
   };
 
-  return getSentence(options.fragment, number, type, data);
+  return getSentence({
+    wantFragment: options.fragment,
+    number: number,
+    type: type,
+    data: data,
+  });
 }
 
 // Mapping of meaning to query param value name
@@ -87,7 +81,7 @@ var NOT_FOUND = {
   DEFAULT: "default",
   CEIL: "ceil",
   FLOOR: "floor",
-  MISSING: "404" // TODO
+  MISSING: "404", // TODO
 };
 
 // Query parameter keys
@@ -109,17 +103,17 @@ var dataPairs = (function () {
         _.map(_.keys(numbers), function (number) {
           return {
             number: parseFloat(number, 10),
-            string: number
+            string: number,
           };
         }),
-        { number: Infinity, string: "Infinity" }
+        { number: Infinity, string: "Infinity" },
       ]),
       function (pair) {
         return pair.number;
       }
     );
     numbers["-Infinity"] = numbers["-Infinity"] || [
-      { text: "negative infinity" }
+      { text: "negative infinity" },
     ];
     numbers["Infinity"] = numbers["Infinity"] || [{ text: "infinity" }];
   });
@@ -135,23 +129,7 @@ _.each(dataPairs, function (pairs, category) {
 });
 
 function filterObj(obj, whitelist) {
-  var result = {};
-  _.each(obj, function (value, key, list) {
-    if (_.contains(whitelist, key)) {
-      result[key] = value;
-    }
-  });
-  return result;
-}
-
-// Not needed
-function extendWithWhitelist(obj, newObj, whitelist) {
-  _.each(newObj, function (value, key, list) {
-    if (key in whitelist) {
-      obj[key] = value;
-    }
-  });
-  return obj;
+  return _.pick(obj, whitelist);
 }
 
 // This is a list of keys on the lowest-level fact objects that we will return
@@ -174,7 +152,8 @@ function apiExtend(obj, newObj) {
  *			or the given default message if one is provided.
  * @return {Object} A map with fields 'number' and 'text'
  */
-exports.getFact = function (number, type, options) {
+function getFact({ number, type, options = {} }) {
+  // number, type
   // Default query param options
   var defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
@@ -185,12 +164,13 @@ exports.getFact = function (number, type, options) {
     return {
       text: "ERROR: Invalid type.",
       number: number,
-      type: type
+      type: type,
     };
   }
 
   if (number === "random") {
-    number = getRandomApiNum(type, options);
+    options["type"] = type;
+    number = getRandomApiNum(options);
   }
 
   // TODO Better error handling (for out of dates), and for number is an invalid
@@ -202,10 +182,15 @@ exports.getFact = function (number, type, options) {
     ret = utils.randomChoice(ret);
     if (ret !== undefined && "text" in ret) {
       return apiExtend(ret, {
-        text: getSentence(options.fragment, number, type, ret),
+        text: getSentence({
+          wantFragment: options.fragment,
+          number: number,
+          type: type,
+          data: ret,
+        }),
         number: number,
         found: true,
-        type: type
+        type: type,
       });
     }
   }
@@ -213,10 +198,12 @@ exports.getFact = function (number, type, options) {
   // Handle the case of number not found
   if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
     return {
-      text: options[QUERY_DEFAULT] || getDefaultMsg(number, type, options),
+      text:
+        options[QUERY_DEFAULT] ||
+        getDefaultMsg({ number: number, type: type, options: options }),
       number: number,
       found: false,
-      type: type
+      type: type,
     };
   } else {
     var index = _.sortedIndex(dataKeys[type], number);
@@ -224,15 +211,20 @@ exports.getFact = function (number, type, options) {
     var adjustedNum = dataPairs[type][index].string;
     ret = utils.randomChoice(data[type][adjustedNum]);
     return apiExtend(ret, {
-      text: getSentence(options.fragment, adjustedNum, type, ret),
+      text: getSentence({
+        wantFragment: options.fragment,
+        number: number,
+        type: type,
+        data: ret,
+      }),
       number: adjustedNum,
       found: false,
-      type: type
+      type: type,
     });
   }
-};
+}
 
-exports.dumpData = function (dirname) {
+function dumpData(dirname) {
   var fs = require("fs");
 
   _.each(data, function (typeObj, type) {
@@ -241,4 +233,15 @@ exports.dumpData = function (dirname) {
     }).join("\n\n");
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
   });
+}
+
+module.exports = {
+  apiExtend,
+  dataPairs,
+  dumpData,
+  filterObj,
+  getDefaultMsg,
+  getFact,
+  getRandomApiNum,
+  getSentence,
 };
