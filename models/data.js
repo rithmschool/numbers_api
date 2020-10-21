@@ -30,7 +30,7 @@ function reader_norm(out, pathname, callback) {
     let data;
     let numbers;
     try {
-      data = fs.readFileSync(path.join(__dirname, pathname, file), {
+      data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
       });
     } catch (e) {
@@ -110,7 +110,7 @@ function reader_manual(outs, pathname, callbacks) {
   files.forEach((file) => {
     let data;
     try {
-      data = fs.readFileSync(path.join(__dirname, pathname, file), {
+      data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
       });
     } catch (e) {
