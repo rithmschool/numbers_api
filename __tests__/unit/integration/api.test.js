@@ -39,7 +39,6 @@ describe("routes", () => {
 
   test("batch request with range and specific number", async function (done) {
     const res = await request(app).get("/1..3,10");
-    console.log("wtf", res.body);
     expect(res.body).toHaveProperty("1", "2", "3", "10");
     done();
   });
@@ -156,6 +155,12 @@ describe("routes", () => {
     // the public domain, assuming that copyright is not extended again.
     const res = await request(app).get("/random/year");
     expect(res.text).toContain("is the year");
+    done();
+  });
+
+  test("returns multiple facts for a range of dates", async function (done) {
+    const res = await request(app).get("/10/15..10/31,12/31/date");
+    expect(res.text).toContain("289");
     done();
   });
 });
