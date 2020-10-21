@@ -13,7 +13,7 @@ const nunjucks = require("nunjucks");
 
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
-// const secrets = require("./secrets.js");
+const secrets = require("./secrets.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
 
@@ -103,10 +103,10 @@ nunjucks.configure("views/", {
 app.use(
   cors({ allowedHeaders: ["X-Requested-With", "Accept", "Content-Type"] })
 );
+app.use(express.json());
 // app.set("views", __dirname + "/views");
 app.enable("jsonp callback");
 app.use(express.static("public"));
-
 app.use(express.urlencoded({ extended: false }));
 app.use(
   favicon(__dirname + "/public/img/favicon.png", {
@@ -129,15 +129,20 @@ app.get("/", function (req, res) {
   var currDate = new Date();
   res.render("index.html", {
     docs: apiDocsHtml,
-    sharesFact: fact.getFact(numShares, "trivia", {
+    sharesFact: fact.getFact({
       notfound: "floor",
       fragment: true,
+      type: "trivia",
+      number: numShares,
     }),
     numShares: numShares,
     dateFact: {
       day: currDate.getDate(),
       month: currDate.getMonth() + 1,
-      data: fact.getFact(utils.dateToDayOfYear(currDate), "date", {}),
+      data: fact.getFact({
+        type: "date",
+        number: utils.dateToDayOfYear(currDate),
+      }),
     },
   });
 });

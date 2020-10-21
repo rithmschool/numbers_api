@@ -18,204 +18,184 @@
  *
  */
 
-var _ = require("underscore");
-var fs = require("fs");
+const _ = require("underscore");
+const fs = require("fs");
+const path = require("path");
 
-function reader_norm(out, path, callback) {
+function reader_norm(out, pathname, callback) {
   // TODO: more reliable checking if file is data file
-  var files = fs.readdirSync(path);
+  let files = fs.readdirSync(pathname);
 
-  console.log("files: ", files);
-
-  _.each(files, function (file) {
-    // TODO: add encoding argument
-    // TODO: fix directory so it's relative to directory of this file
+  files.forEach((file) => {
+    let data;
+    let numbers;
     try {
-      var data = fs.readFileSync(path + file, "utf8");
+      data = fs.readFileSync(pathname + file, {
+        encoding: "utf8",
+      });
     } catch (e) {
       console.error(
-        "Exception while reading file ",
-        path + file,
-        ": ",
-        e.message
+        `Exception while reading file ${pathname + file}: ${e.message}`
       );
       return;
     }
-
     try {
-      var numbers = JSON.parse(data);
+      numbers = JSON.parse(data);
     } catch (e) {
       console.error(
-        "Exception while parsing file",
-        path + file,
-        ": ",
-        e.message
+        `Exception while parsing file, ${pathname + file}: ${e.message}`
       );
       return;
     }
-
-    // TODO: There should be a try/catch around this
-    _.each(numbers, function (number_data, number_key) {
-      float_key = parseFloat(number_key, 10);
-      if (isNaN(float_key)) {
-        console.log(
-          "Skipping invaid number_key",
-          number_key,
-          "in file",
-          path + file
-        );
-        return;
-      }
-
-      // TODO: handle this during normalization
-      if (!number_data || number_data.length === 0) {
-        console.log(
-          "Skipping empty number_data for float_key",
-          float_key,
-          "in file",
-          path + file
-        );
-        return;
-      }
-
-      if (!(float_key in out)) {
-        out[float_key] = [];
-      }
-      var o = out[float_key];
-
-      _.each(number_data, function (element) {
-        if (!element.text || !element.text.length) {
-          console.log(
-            "Skipping empty file (element.text is falsey)",
-            path + file
+    try {
+      _.each(numbers, function (number_data, number_key) {
+        let float_key = parseFloat(number_key, 10);
+        if (isNaN(float_key)) {
+          console.warn(
+            `Skipping invalid number_key, ${number_key} in file ${
+              pathname + file
+            }`
           );
           return;
         }
-        if (callback) {
-          element = callback(element);
-        }
-        if (!element) {
+
+        // TODO: handle this during normalization
+        if (!number_data || number_data.length === 0) {
+          // console.warn('Skipping empty number_data for float_key', float_key, 'in file', pathname + file);
           return;
         }
-        if (!element.manual) {
-          if (element.text.length < 20 || element.text.length > 150) {
+        if (!(float_key in out)) {
+          out[float_key] = [];
+        }
+        let o = out[float_key];
+        number_data.forEach((element) => {
+          if (!element.text || !element.text.length) {
+            console.warn(
+              `Skipping empty file (element.text is falsey) ${pathname + file}`
+            );
             return;
           }
+          if (callback) {
+            element = callback(element);
+          }
+          if (!element) {
+            return;
+          }
+          const [MIN_LENGTH, MAX_LENGTH] = [20, 150];
+          if (!element.manual) {
+            if (
+              element.text.length < MIN_LENGTH ||
+              element.text.length > MAX_LENGTH
+            ) {
+              return;
+            }
+          }
+          o.push(element);
+        });
+        // TODO: should probably be performing this deletion also for early returns
+        if (o.length === 0) {
+          delete out[float_key];
         }
-        o[o.length] = element;
       });
-      // TODO: should probably be performing this deletion also for early returns
-      if (o.length === 0) {
-        delete out[float_key];
-      }
-    });
+    } catch (e) {
+      console.error(`Exception while iterating through data: ${e.message}`);
+    }
   });
 }
 
 // Format is line separated facts of format <#> <t|m|d|y> <fact>
-function reader_manual(outs, path, callbacks) {
+function reader_manual(outs, pathname, callbacks) {
   // TODO: more reliable checking if file is data file
-  var files = fs.readdirSync(path);
-
-  console.log("files: ", files);
-
-  _.each(files, function (file) {
-    // TODO: fix directory so it's relative to directory of this file
+  let files = fs.readdirSync(pathname);
+  files.forEach((file) => {
+    let data;
     try {
-      var data = fs.readFileSync(path + file, "utf8");
+      data = fs.readFileSync(pathname + file, {
+        encoding: "utf8",
+      });
     } catch (e) {
       console.error(
-        "Exception while reading file ",
-        path + file,
-        ": ",
-        e.message
+        `Exception while reading file, ${pathname + file}: ${e.message}`
       );
       return;
     }
-
-    var lines = data.split(/\n(?:\s*\n)*/);
-    var regex = /^([-]?\d+)\s+(\w+)\s+(.*)$/;
-    for (var i = 0; i < lines.length; i++) {
-      var line = lines[i];
+    const lines = data.split(/\n(?:\s*\n)*/);
+    const regex = /^([-]?\d+)\s+(\w+)\s+(.*)$/; // matches leading dashes followed by digits followed by whitespace followed by characters
+    for (let line of lines) {
       if (line.toUpperCase().indexOf("SENTINEL") >= 0) {
         break;
       }
-      var matches = regex.exec(line);
+      let matches = regex.exec(line);
       if (!matches) {
-        console.log("Skipping invaid line", line, "in file", path + file);
-        continue;
-      }
-      var number = parseFloat(matches[1], 10);
-      if (isNaN(number)) {
-        console.log(
-          "Skipping invaid number",
-          number,
-          "in file",
-          path + file,
-          " on line: ",
-          line
+        console.warn(
+          `Skipping invalid line ${line} in file ${pathname + file}`
         );
         continue;
       }
-      var type = matches[2];
+      let number = parseFloat(matches[1], 10);
+      if (isNaN(number)) {
+        console.warn(
+          `Skipping invaid number ${number} in file ${
+            pathname + file
+          } on line: ${line}`
+        );
+        continue;
+      }
+      let type = matches[2];
       if (type !== "y" && type !== "d" && type !== "m" && type !== "t") {
         console.error(
-          "Invalid fact type in file: ",
-          path + file,
-          " on line: ",
-          line
+          `Invalid fact type in file: ${pathname + file} on line: ${line}`
         );
         continue;
       }
 
-      var text = matches[3];
+      let text = matches[3];
       if (!text || text.length === 0) {
-        console.log(
-          "Skipping empty fact in file: ",
-          path + file,
-          " on line: ",
-          line
+        console.warn(
+          `Skipping empty fact in file: ${pathname + file} on line: ${line}`
         );
         continue;
       }
 
-      var element = {
+      let element = {
         text: text,
         self: false,
         manual: true,
       };
 
       if (type in callbacks) {
-        element = callbacks[type](element);
+        let callback = callbacks[type];
+        element = callback(element);
       }
       if (!element) {
         continue;
       }
-
-      var out = outs[type];
+      let out = outs[type];
       if (!(number in out)) {
         out[number] = [];
       }
-      var o = out[number];
+      let o = out[number];
       o.push(element);
     }
   });
 }
 
-var countBad = 0;
+let countBad = 0;
 function normalize_common(element) {
   // do not return results that contain the number itself
   if (element.self) {
     return undefined;
   }
-  var text = element.text.trim();
+  let text = element.text.trim();
+  // Converts first letter in text to lower-case if element.pos is NOT "NP"
   if (element.pos !== "NP") {
-    text = text[0].toLowerCase() + text.substring(1);
+    let firstChar = text[0].toLowerCase();
+    text = firstChar + text.slice(1);
   }
-  var lastChar = text.charAt(text.length - 1);
-  var charCode = lastChar.charCodeAt(0);
+  let lastChar = text.charAt(text.length - 1);
+  let charCode = lastChar.charCodeAt(0);
   if (lastChar === ".") {
-    text = text.substring(0, text.length - 1);
+    text = text.slice(0, text.length - 1);
   } else if (
     (charCode < "a".charCodeAt(0) || charCode > "z".charCodeAt(0)) &&
     (charCode < "A".charCodeAt(0) || charCode > "Z".charCodeAt(0)) &&
@@ -232,19 +212,19 @@ function normalize_common(element) {
   return element;
 }
 
-exports.date = {};
-reader_norm(exports.date, "models/date/norm/", function (element) {
+let date = {};
+reader_norm(date, "models/date/norm/", function (element) {
   return normalize_common(element);
 });
 
-exports.year = {};
-reader_norm(exports.year, "models/year/norm/", function (element) {
+let year = {};
+reader_norm(year, "models/year/norm/", function (element) {
   return normalize_common(element);
 });
 
-exports.trivia = {};
-var trivia_path = "models/trivia/";
-reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
+let trivia = {};
+let trivia_pathname = "models/trivia/";
+reader_norm(trivia, "models/trivia/norm/", function (element) {
   // TODO: include back non-manual results
   if (element.manual) {
     return normalize_common(element);
@@ -253,18 +233,18 @@ reader_norm(exports.trivia, "models/trivia/norm/", function (element) {
   }
 });
 
-exports.math = {};
-reader_norm(exports.math, "models/math/norm/", function (element) {
+let math = {};
+reader_norm(math, "models/math/norm/", function (element) {
   return normalize_common(element);
 });
 
-var outs = {
-  d: exports.date,
-  y: exports.year,
-  m: exports.math,
-  t: exports.trivia,
+let outs = {
+  d: date,
+  y: year,
+  m: math,
+  t: trivia,
 };
-var callbacks = {
+let callbacks = {
   d: normalize_common,
   y: normalize_common,
   m: normalize_common,
@@ -274,18 +254,28 @@ reader_manual(outs, "models/manual/", callbacks);
 
 // check for missing entries
 (function () {
-  var configs = [
-    { category: "math", data: exports.math, min: 0, max: 251 },
-    { category: "trivia", data: exports.trivia, min: 0, max: 251 },
-    { category: "date", data: exports.date, min: 1, max: 367 },
-    { category: "year", data: exports.year, min: -100, max: 2050 },
+  let configs = [
+    { category: "math", data: math, min: 0, max: 251 },
+    { category: "trivia", data: trivia, min: 0, max: 251 },
+    { category: "date", data: date, min: 1, max: 367 },
+    { category: "year", data: year, min: -100, max: 2050 },
   ];
 
   _.each(configs, function (config) {
     _.each(_.range(config.min, config.max), function (index) {
       if (!config.data[index] || config.data[index].length === 0) {
-        console.log("Missing: " + config.category + ": " + index);
+        console.warn(`Missing: ${config.category} : ${index}`);
       }
     });
   });
 })();
+
+module.exports = {
+  reader_norm,
+  reader_manual,
+  normalize_common,
+  math,
+  trivia,
+  date,
+  year,
+};
