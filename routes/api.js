@@ -1,7 +1,6 @@
 var _ = require("underscore");
 var fs = require("fs");
 var utils = require("../public/js/shared_utils.js");
-const { Console } = require("console");
 
 var BATCH_LIMIT = 100;
 
