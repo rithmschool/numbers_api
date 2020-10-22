@@ -1,8 +1,14 @@
-/* In this file you should write your main styles. (or centralize your imports)
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "partials/normalize";
+@import "partials/lionbars";
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+//@import "compass/reset";
+//@import "compass_twitter_bootstrap";
 
 // Layout ------------------------------------
 $body-width: 960px;
@@ -13,8 +19,7 @@ $example-height: 5em;
 $page-top-padding: 0px;
 $url-height: 1.5em;
 $body-font: Palatino, Georgia, serif;
-$heading-font: museo_sans, "Lucida Grande", "Lucida Sans", "Helvetica",
-  sans-serif;
+$heading-font: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica', sans-serif;
 
 // Colors -----------------------------------------
 
@@ -47,35 +52,31 @@ $main-margin: 20%;
 }
 
 @mixin element-box {
-  border-radius: $element-border-radius;
-  //@include box-shadow(2px 2px 10px 2px $color-five);
-  box-shadow: 0 0 9px rgba(red, 1);
+	@include border-radius($element-border-radius);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
+  @include box-shadow(0 0 9px rgba(red, 1.0));
 }
 
 @mixin section-box {
-  border-radius: $section-border-radius;
+	@include border-radius($section-border-radius);
   //@include box-shadow(0px 0px 5px $color-five);
 }
 
 @mixin box-top {
-  border-radius: $element-border-radius $element-border-radius 0 0;
-  //@include box-shadow(2px 2px 10px 2px $color-five);
+	@include border-radius($element-border-radius $element-border-radius 0 0);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
   background-color: $color-five;
   //background: url(/img/grainy-color-five.png);
   background: url(/img/grainy-opacity-80.png);
-  //border-bottom: rgba($color-one, 0.5) 1px solid;
+	//border-bottom: rgba($color-one, 0.5) 1px solid;
 }
 
 @mixin box-bottom {
-  border-radius: 0 0 $element-border-radius $element-border-radius;
-  //@include box-shadow(2px 2px 10px 2px $color-five);
-  background-color: rgba($color-three, 0.5);
-  background: radial-gradient(
-    ellipse farthest-side,
-    rgba(lighten($color-three, 25%), 0.5) 0%,
-    rgba(lighten($color-three, 10%), 0.5) 100%
-  );
-  box-shadow: inset 0 0 3px rgba($color-five, 0.3);
+	@include border-radius(0 0 $element-border-radius $element-border-radius);
+	//@include box-shadow(2px 2px 10px 2px $color-five);
+	background-color: rgba($color-three, 0.5);
+  @include background(radial-gradient(50px 20px, ellipse farthest-side, rgba(lighten($color-three, 25%), 0.5) 0%, rgba(lighten($color-three, 10%), 0.5) 100%));
+  @include box-shadow(inset 0 0 3px rgba($color-five, 0.3));
   border: 2px solid rgba($color-five, 0.9);
   border-top: 0px solid white;
 }
@@ -90,76 +91,62 @@ $main-margin: 20%;
 // TODO: Get rid of unneeded fonts
 
 @font-face {
-  font-family: pastel_crayon;
-  src: url("/font/pastel_crayon.ttf");
+	font-family: pastel_crayon;
+	src: url('/font/pastel_crayon.ttf');
 }
 
 @font-face {
-  font-family: museo_sans;
-  src: url("/font/MuseoSansRounded-300.otf");
-  font-weight: normal;
+	font-family: museo_sans;
+	src: url('/font/MuseoSansRounded-300.otf');
+	font-weight: normal;
 }
 
 @font-face {
-  font-family: museo_sans;
-  src: url("/font/MuseoSansRounded-700.otf");
-  font-weight: bold;
+	font-family: museo_sans;
+	src: url('/font/MuseoSansRounded-700.otf');
+	font-weight: bold;
 }
 
 // CSS ----------------------------------------
 
 body {
-  background: $color-three; // Fallback
-  background: linear-gradient(
-      rgba($color-three, $background-opacity - 0.1) 0%,
-      rgba($color-three, 1) 20%
-    ),
-    url("/img/background.jpg");
-  overflow-x: hidden; // Won't work on IE6/7: http://stackoverflow.com/questions/2284562/absolutely-positioned-div-on-right-causing-scrollbar-when-the-left-doesnt
-  #body-inner {
-    background: url(/img/graph-paper-5.png);
-    .body-container {
-      // TODO: consider double layer of opacity for foreground/background effect
+  @include background($color-three);  // Fallback
+  @include background(linear-gradient(rgba($color-three, $background-opacity - 0.1) 0%, rgba($color-three, 1.0) 20%), image-url("/img/background.jpg"));
+  overflow-x: hidden;  // Won't work on IE6/7: http://stackoverflow.com/questions/2284562/absolutely-positioned-div-on-right-causing-scrollbar-when-the-left-doesnt
+	#body-inner {
+    @include background(url(/img/graph-paper-5.png));
+		.body-container {
+			// TODO: consider double layer of opacity for foreground/background effect
       width: $body-width;
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-    }
-  }
+			margin-left: auto;
+			margin-right: auto;
+			position: relative;
+		}
+	}
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  text-shadow: $color-five 2px 2px 3px;
-  font-family: $heading-font;
-  font-weight: bold;
-  letter-spacing: 3px;
-  color: $color-one;
-  text-transform: uppercase;
+h1, h2, h3, h4, h5, h6 {
+	@include text-shadow($color-five 2px 2px 3px);
+	font-family: $heading-font;
+	font-weight: bold;
+	letter-spacing: 3px;
+	color: $color-one;
+	text-transform: uppercase;
 }
 
-p,
-a,
-div,
-span,
-label,
-input {
-  text-shadow: #000000 0px 1px 0px;
-  font-family: $body-font;
-  font-weight: normal;
-  font-size: 18px;
-  //letter-spacing: 1px;
-  color: $color-one;
+p, a, div, span, label, input {
+  @include text-shadow(#000000 0px 1px 0px);
+	font-family: $body-font;
+	font-weight: normal;
+	font-size: 18px;
+	//letter-spacing: 1px;
+	color: $color-one;
 }
 
 a {
   color: $color-two;
   text-decoration: none;
-  transition: all 0.3s ease-out;
+  @include transition(all 0.3s ease-out);
   &:hover {
     color: $color-one;
   }
@@ -170,24 +157,24 @@ a {
 }
 
 .logo {
-  text-shadow: $color-one 0px 0px 10px, $color-one 0 0 60px;
-  margin: 0px;
-  padding: 0;
-  color: $color-five;
-  text-transform: uppercase;
+	@include text-shadow($color-one 0px 0px 10px, $color-one 0 0 60px);
+	margin: 0px;
+	padding: 0;
+	color: $color-five;
+	text-transform: uppercase;
   font-family: $heading-font;
   font-weight: bold;
-  font-size: 5em;
+	font-size: 5em;
   //border-top: 1px solid $color-five;
-  #second-word {
+	#second-word {
     //@include text-shadow($color-five 0px 0px 10px, $color-five 0px 0px 50px);
-    text-shadow: $color-five 0px 0px 10px;
-    color: $color-one;
-    font-family: inherit;
+    @include text-shadow($color-five 0px 0px 10px);
+		color: $color-one;
+		font-family: inherit;
     font-weight: normal;
-    font-size: inherit;
+		font-size: inherit;
     //border-top: 1px solid $color-one;
-  }
+	}
 }
 
 #addthis {
@@ -200,12 +187,12 @@ a {
   z-index: 5;
   opacity: 0.8;
   margin-top: 20px;
-  // background-color: rgba($color-five, $section-opacity);
-  border-radius: $element-border-radius;
+  //background-color: rgba($color-five, $section-opacity);
+  @include border-radius($element-border-radius);
 
   &:hover {
-    opacity: 1;
-    transition: all ease-out 0.3s;
+    opacity: 1.0;
+    @include transition(all ease-out 0.3s);
   }
 
   a {
@@ -218,46 +205,38 @@ a {
   }
 }
 
-.at_item,
-#at_hover,
-#at15s,
-#addthis,
-#at16p {
-  p,
-  a,
-  span,
-  label,
-  input {
+.at_item, #at_hover, #at15s, #addthis, #at16p {
+  p, a, span, label, input {
     text-shadow: none;
     color: $color-five;
     font-size: 12px;
-    transition: none;
+    @include transition(none);
   }
   #at15ptc {
     font-size: 14px;
   }
-  transition: none;
+  @include transition(none);
 }
 
 #tagline {
-  text-shadow: $color-five 0px 0px 5px;
-  margin: 0px;
-  font-size: 1.6em;
+  @include text-shadow($color-five 0px 0px 5px);
+	margin: 0px;
+	font-size: 1.6em;
   font-style: italic;
 }
 
 section {
-  @include section-box;
-  margin: $section-margin 0 $section-margin 0;
-  padding: 30px 30px 10px 20px;
-  display: inline-block;
-  clear: both;
-  background-color: rgba($color-five, $section-opacity);
+	@include section-box;
+	margin: $section-margin 0 $section-margin 0;
+	padding: 30px 30px 10px 20px;
+	display: inline-block;
+	clear: both;
+	background-color: rgba($color-five, $section-opacity);
   position: relative;
   z-index: 5;
-  h1 {
+	h1 {
     text-align: center;
-  }
+	}
 }
 
 .api-result {
@@ -268,132 +247,119 @@ section {
     width: 100%;
     height: 100%;
     z-index: 10;
-    border-radius: $element-border-radius;
-    background: linear-gradient(
-      to top,
-      rgba($color-three, 0) 0%,
-      rgba($color-three, 0.5) 80%,
-      rgba($color-three, 1) 100%
-    );
+    @include border-radius($element-border-radius);
+    @include background(linear-gradient(top, rgba($color-three, 0) 0%, rgba($color-three, 0.5) 80%, rgba($color-three, 1) 100%));
   }
 }
 
 #usage-outer {
-  text-align: center;
-  position: relative;
+	text-align: center;
+	position: relative;
   padding-left: 0px;
   padding-right: 0px;
   padding-top: 10px;
   padding-bottom: 30px;
-  width: $body-width;
+	width: $body-width;
 }
 #usage {
-  .example {
-    width: 260px;
-    margin: 0 20px 0 20px;
-    padding-bottom: 10px;
-    display: inline-block;
+	.example {
+		width: 260px;
+		margin: 0 20px 0 20px;
+		padding-bottom: 10px;
+		display: inline-block;
 
-    h2 {
+		h2 {
       margin-bottom: 10px;
     }
 
-    .example-box {
-      width: 250px;
-      height: 125px;
-      display: inline-block;
-      vertical-align: top;
+		.example-box {
+			width: 250px;
+			height: 125px;
+			display: inline-block;
+			vertical-align: top;
 
-      a {
-        @include box-top;
-        display: block;
-        margin-top: 0;
-        margin-bottom: 0;
-        padding: ($url-height - 1) / 2;
-      }
-      .api-result {
-        @include box-bottom;
-        margin-top: 0;
-        margin-bottom: 0;
-        border-top: 0;
-        padding: 8px;
-        height: $example-height;
-      }
-    }
-  }
+			a {
+				@include box-top;
+				display: block;
+				margin-top: 0;
+				margin-bottom: 0;
+				padding: ($url-height - 1) / 2;
+			}
+			.api-result {
+				@include box-bottom;
+				margin-top: 0;
+				margin-bottom: 0;
+				border-top: 0;
+				padding: 8px;
+				height: $example-height;
+			}
+		}
+	}
 }
 
 // TODO: Remove hardcode
 $sandbox-result-height: 102px;
 #sandbox-outer {
-  position: relative;
-  float: right;
+	position: relative;
+	float: right;
 }
 #sandbox {
-  .arrow {
-    background: url("/img/arrow-short.png") no-repeat;
-    transform: rotate(50deg) scale(0.5, 0.4);
-    width: 301px;
-    height: 266px;
-    position: absolute;
-    top: -47px;
-    left: -187px;
+	.arrow {
+		@include background(image-url("/img/arrow-short.png") no-repeat);
+		@include transform(rotate(50deg) scale(0.5, 0.4));
+		width: 301px;
+		height: 266px;
+		position: absolute;
+		top: -47px;
+		left: -187px;
     //display: none;
-  }
-  #sandbox-text {
-    transform: rotate(-9deg);
-    writing-mode: lr-tb;
-    font-size: 70px;
-    font-family: pastel_crayon, $body-font;
-    font-weight: normal;
-    top: -32px;
-    left: -215px;
-    position: absolute;
-    text-shadow: none;
-  }
-  #counter {
-    display: inline-block;
+	}
+	#sandbox-text {
+		@include transform(rotate(-9deg));
+		writing-mode: lr-tb;
+		font-size: 70px;
+		font-family: pastel_crayon, $body-font;
+		font-weight: normal;
+		top: -32px;
+		left: -215px;
+		position: absolute;
+		text-shadow: none;
+	}
+	#counter {
+	  display: inline-block;
     //border: 5px solid rgba($color-five, 0.5);
-    margin-top: 5px;
-    margin-right: 12px;
-    padding: 3px 0px;
-    float: left;
-    border-radius: $element-border-radius $element-border-radius;
+		margin-top: 5px;
+		margin-right: 12px;
+		padding: 3px 0px;
+		float: left;
+    @include border-radius($element-border-radius $element-border-radius);
     $gradient-color: $color-three;
 
     .counter-container-outer {
       background: $color-four;
 
       .counter-button {
-        opacity: 0;
+        opacity: 0.0;
         background: $color-five;
         color: $color-two;
         text-shadow: none;
-        user-select: none;
-        transition: all 0.3s ease-out, text-shadow 0.3s ease-out;
+        @include user-select(none);
+        @include transition(all 0.3s ease-out, text-shadow 0.3s ease-out);
         &.counter-button-up {
-          background: linear-gradient(
-            to top,
-            rgba($color-five, 0.5),
-            $color-five
-          );
-          border-radius: $element-border-radius $element-border-radius 0 0;
+          @include background(linear-gradient(top, rgba($color-five, 0.5), $color-five));
+          @include border-radius($element-border-radius $element-border-radius 0 0);
         }
         &.counter-button-down {
-          background: linear-gradient(
-            to top,
-            $color-five,
-            rgba($color-five, 0.5)
-          );
-          border-radius: 0 0 $element-border-radius $element-border-radius;
+          @include background(linear-gradient(top, $color-five, rgba($color-five, 0.5)));
+          @include border-radius(0 0 $element-border-radius $element-border-radius);
         }
       }
       &:hover .counter-button {
         opacity: 0.8;
       }
       .counter-button:hover {
-        opacity: 1;
-        box-shadow: 0 0 5px $color-one;
+        opacity: 1.0;
+        @include box-shadow(0 0 5px $color-one);
         cursor: pointer;
       }
       .counter-button:active {
@@ -401,14 +367,14 @@ $sandbox-result-height: 102px;
         cursor: pointer;
       }
       .counter-container-inner {
-        box-shadow: 0 0 10px rgba($gradient-color, 0.7);
-        transition: all ease-out 0.3s;
+        @include box-shadow(0 0 10px rgba($gradient-color, 0.7));
+        @include transition(all ease-out 0.3s);
         &:hover {
           cursor: pointer;
-          box-shadow: 0 0 15px $color-one;
+          @include box-shadow(0 0 15px $color-one);
         }
         &:active {
-          box-shadow: 0 0 30px $color-one;
+          @include box-shadow(0 0 30px $color-one);
         }
       }
     }
@@ -420,49 +386,44 @@ $sandbox-result-height: 102px;
       background-color: $color-one;
     }
     .counter-mask {
-      background: linear-gradient(
-        to top,
-        $gradient-color 0%,
-        rgba($color-one, 0) 50%,
-        $gradient-color 100%
-      );
+      @include background(linear-gradient(top, $gradient-color 0%, rgba($color-one,0) 50%, $gradient-color 100%));
     }
   }
-  #outer-search {
-    #search {
-      $width: 551px;
-      float: left;
-      overflow: hidden;
-      height: 100%;
-      // TODO: remove hardcode
-      width: $width;
-      margin-left: 0px;
-      margin-right: 20px;
-      padding-left: 10px;
+	#outer-search {
+		#search {
+			$width: 551px;
+			float: left;
+			overflow: hidden;
+			height: 100%;
+			// TODO: remove hardcode
+			width: $width;
+			margin-left: 0px;
+			margin-right: 20px;
+			padding-left: 10px;
       padding-right: 10px;
 
-      #search-box {
+			#search-box {
         $search-box-height: 30px;
-        @include box-top;
-        display: table;
-        padding: 0px;
-        padding-right: 3px;
-        width: $width - 3;
-        height: $search-box-height;
+				@include box-top;
+				display: table;
+				padding: 0px;
+				padding-right: 3px;
+				width: $width - 3;
+				height: $search-box-height;
         font-size: 18px;
 
-        label {
-          overflow: auto;
-          display: table-cell;
-          width: 1px;
-          height: inherit;
-          white-space: nowrap;
-          padding: 8px;
-          padding-right: 0px;
-          margin: 0px;
-          margin-right: -5px;
-          vertical-align: middle;
-          line-height: $search-box-height;
+				label {
+					@include clearfix;
+					display: table-cell;
+					width: 1px;
+					height: inherit;
+					white-space: nowrap;
+					padding: 8px;
+					padding-right: 0px;
+					margin: 0px;
+					margin-right: -5px;
+					vertical-align: middle;
+					line-height: $search-box-height;
           color: $color-two;
           &:hover {
             text-decoration: underline;
@@ -470,60 +431,60 @@ $sandbox-result-height: 102px;
               color: $color-one;
             }
           }
-        }
+				}
 
-        label:hover + span > input {
+				label:hover + span > input {
           text-decoration: underline;
           color: $color-one;
-          transition: all ease-out 0.3s;
+          @include transition(all ease-out 0.3s);
         }
 
-        span {
-          display: table-cell;
-          height: inherit;
-          margin: 0px;
-          padding: 8px;
-          padding-left: 0px;
-          border: 0px;
-          input {
-            border-radius: 0 $element-border-radius 0 0;
-            width: 100%;
-            margin: 0px;
-            border: 0px;
-            outline: none;
-            line-height: $search-box-height;
-            text-shadow: none;
+				span {
+					display: table-cell;
+					height: inherit;
+					margin: 0px;
+					padding: 8px;
+					padding-left: 0px;
+					border: 0px;
+					input {
+						@include border-radius(0 $element-border-radius 0 0);
+						width: 100%;
+						margin: 0px;
+						border: 0px;
+						outline: none;
+						line-height: $search-box-height;
+						text-shadow: none;
             background-color: rgba($color-four, 0.5);
             color: $color-two;
-            transition: all ease-out 0.3s;
+            @include transition(all ease-out 0.3s);
             &:hover {
               background-color: rgba($color-four, 0.2);
               color: $color-one;
             }
-            border: 2px solid rgba(0, 0, 0, 0);
+            border: 2px solid rgba(0,0,0,0);
             border-left: 0px;
             &:focus {
-              background-color: rgba($color-four, 0);
+              background-color: rgba($color-four, 0.0);
               color: $color-one;
               border: 2px solid rgba($color-two, 0.8);
               border-left: 0px;
             }
-          }
-        }
-      }
-      #search-result {
-        @include box-bottom;
-        position: relative;
-        margin-top: 0px;
-        margin-bottom: 5px;
-        padding: 0 0 0 10px;
+					}
+				}
+			}
+			#search-result {
+				@include box-bottom;
+				position: relative;
+				margin-top: 0px;
+				margin-bottom: 5px;
+				padding: 0 0 0 10px;
         height: $sandbox-result-height;
 
-        //&.error {
-        //	color: $color-one;
-        //}
+				//&.error {
+				//	color: $color-one;
+				//}
 
-        .script {
+			  .script {
           @include code-font;
         }
         .boilerplate {
@@ -535,16 +496,16 @@ $sandbox-result-height: 102px;
           padding-right: 5px;
           left: 153px;
         }
-      }
+			}
 
-      #add-fact-area {
+			#add-fact-area {
         width: 385px;
         margin: 6px 0;
         float: left;
         background-color: rgba($color-four, 0.5);
-        border-radius: 0 0 $element-border-radius 0;
-        transition: all ease-out 0.3s;
-        border: 2px solid rgba($color-five, 0);
+        @include border-radius(0 0 $element-border-radius 0);
+        @include transition(all ease-out 0.3s);
+        border: 2px solid rgba($color-five, 0.0);
 
         &.focused {
           border: 2px solid rgba($color-five, 0.8);
@@ -564,6 +525,7 @@ $sandbox-result-height: 102px;
         &.focused #add-fact-prefix {
           background: url(/img/grainy-opacity-80.png);
         }
+
       }
 
       #add-fact-text {
@@ -575,50 +537,50 @@ $sandbox-result-height: 102px;
         font-family: $body-font;
         color: $color-one;
         outline: none;
-        transition: all ease-out 0.3s;
-        border-radius: 0 0 $element-border-radius 0;
-        background-color: rgba($color-five, 0);
+        @include transition(all ease-out 0.3s);
+        @include border-radius(0 0 $element-border-radius 0);
+        background-color: rgba($color-five, 0.0);
       }
 
-      #add-fact-label {
+			#add-fact-label {
         text-align: right;
         display: block;
         font-family: $heading-font;
         text-transform: uppercase;
         letter-spacing: 0.1em;
       }
-    }
-    #search-examples {
-      float: left;
-      margin-left: 0px;
-      margin-right: 0px;
-      h3 {
-        @include box-top;
-        margin-top: 0px;
-        margin-bottom: 0px;
-        padding: 5px;
+		}
+		#search-examples {
+			float: left;
+			margin-left: 0px;
+			margin-right: 0px;
+			h3 {
+				@include box-top;
+				margin-top: 0px;
+				margin-bottom: 0px;
+				padding: 5px;
         text-align: center;
-      }
-      ul {
-        @include box-bottom;
-        margin-top: 0px;
-        list-style-type: none;
-        padding-left: 0;
+			}
+			ul {
+				@include box-bottom;
+				margin-top: 0px;
+				list-style-type: none;
+				padding-left: 0;
         text-align: center;
-        li {
-          transition: all ease-out 0.3s;
+				li {
+          @include transition(all ease-out 0.3s);
 
           &:last-child {
-            border-radius: 0 0 $element-border-radius $element-border-radius;
+            @include border-radius(0 0 $element-border-radius $element-border-radius);
           }
 
-          a {
-            display: block;
+					a {
+						display: block;
             padding: 5px;
-            text-shadow: none;
-          }
+            @include text-shadow(none);
+					}
 
-          &:hover {
+					&:hover {
             background-color: rgba($color-one, 0.5);
             //@include background(radial-gradient(center, contain ellipse, $color-one 0%, rgba($color-one, 0) 100%));
             a {
@@ -626,16 +588,16 @@ $sandbox-result-height: 102px;
             }
           }
 
-          //&.selected {
-          //background-color: $color-one;
-          //a {
-          //color: $color-three;
-          //}
-          //}
-        }
-      }
-    }
-  }
+					//&.selected {
+						//background-color: $color-one;
+						//a {
+							//color: $color-three;
+						//}
+					//}
+				}
+			}
+		}
+	}
 }
 
 #visitors {
@@ -654,12 +616,8 @@ $sandbox-result-height: 102px;
     top: -350px;
     height: 800px;
     position: absolute;
-    background: radial-gradient(
-      closest-side,
-      rgba($color-one, 0.3) 0%,
-      rgba($color-one, 0) 100%
-    );
-    transform: scale(1.5, 1);
+    @include background(radial-gradient(center, closest-side circle, rgba($color-one, 0.30) 0%, rgba($color-one, 0.0) 100%));
+    @include transform(scale(1.5, 1.0));
     z-index: 0;
   }
 
@@ -669,10 +627,10 @@ $sandbox-result-height: 102px;
     text-align: center;
     margin: 15px 0;
     a {
-      color: $color-one;
-      &:hover {
-        color: $color-two;
-      }
+     color: $color-one;
+     &:hover {
+      color: $color-two;
+     }
     }
   }
 
@@ -681,43 +639,40 @@ $sandbox-result-height: 102px;
     width: 100%;
     height: 1px;
     z-index: 10;
-    background: linear-gradient(
-      to left,
+    @include background(linear-gradient(left,
       rgba($color-three, 0) 0%,
       rgba($color-one, 0.7) 50%,
-      rgba($color-three, 0) 100%
-    );
+      rgba($color-three, 0) 100%));
   }
 }
 
 #api-outer {
-  position: relative;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  background-color: rgba($color-five, 0);
+	position: relative;
+	padding-top: 0px;
+	padding-bottom: 0px;
+  background-color: rgba($color-five, 0.0);
 }
 #api {
-  pre,
-  code {
+  pre, code {
     @include code-font;
     background-color: rgba($color-five, 0.5);
   }
   code {
     line-height: 1.5em;
     padding: 0 0.3em;
-    border-radius: 0.2em;
+    @include border-radius(0.2em);
   }
   pre code {
     background-color: transparent;
     border: none;
     line-height: 1em;
     padding: 0;
-    border-radius: 0;
+    @include border-radius(0);
   }
   pre {
     padding: 10px 10px 10px 20px;
     border-left: 8px solid rgba($color-five, 0.5);
-    border-radius: 0 $element-border-radius $element-border-radius 0;
+    @include border-radius(0 $element-border-radius $element-border-radius 0);
   }
   h2 {
     border-top: 2px solid rgba($color-one, 0.8);
@@ -735,16 +690,11 @@ $sandbox-result-height: 102px;
 
 footer {
   margin-top: 60px;
-  background: linear-gradient(
-    to bottom,
-    rgba($color-five, 0) 0%,
-    rgba($color-five, 0.1) 20%,
-    rgba($color-five, 0.8) 100%
-  );
-  height: 150px;
-  width: 100%;
-  padding-top: 20px;
-  div {
+	@include background(linear-gradient(top, rgba($color-five, 0) 0%, rgba($color-five, 0.1) 20%, rgba($color-five, 0.8) 100%));
+	height: 150px;
+	width: 100%;
+	padding-top: 20px;
+	div {
     border-top: 2px solid rgba($color-five, 0.5);
     width: $body-width;
     margin-left: auto;
