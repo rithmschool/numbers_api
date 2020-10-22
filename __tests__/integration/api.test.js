@@ -18,9 +18,6 @@ describe("appendToFile()", () => {
 });
 
 describe("routes", () => {
-  // done() pattern needed for all tests
-  // without done() we get a jest TCPSERVERWRAP error
-
   // test for route "/:num(-?[0-9]+)"
 
   test("1st route", async function () {
@@ -64,7 +61,6 @@ describe("routes", () => {
 
   test("batch request with type 'year'", async function () {
     const res = await request(app).get("/3..5/year");
-    // has "is the year"
     expect(res.body[3]).toContain("is the year");
   });
 
