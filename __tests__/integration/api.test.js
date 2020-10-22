@@ -2,6 +2,7 @@ const { appendToFile } = require("../../routes/api");
 const fs = require("fs");
 const app = require("../../app");
 const request = require("supertest");
+const utils = require("../../public/js/shared_utils.js");
 
 describe("appendToFile()", () => {
   test("adds to a file", function () {
@@ -17,7 +18,7 @@ describe("appendToFile()", () => {
   });
 });
 
-describe("routes", () => {
+describe("non random routes", () => {
   // test for route "/:num(-?[0-9]+)"
 
   test("return data for one specific number", async function () {
@@ -97,64 +98,57 @@ describe("routes", () => {
     expect(res.statusCode).toBe(404);
   });
 
-  // tests for route "/random/:type?"
-
-  test("random with without type defined", async function () {
-    const res = await request(app).get("/random");
-    let resWords = res.text.split(" ");
-    expect(typeof Number(resWords[0])).toEqual("number");
-  });
-
-  test("random with type 'date'", async function () {
-    const res = await request(app).get("/random/date");
-    let resWords = res.text.split(" ");
-    let months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    expect(res.statusCode).toBe(200);
-    expect(months).toContain(resWords[0]);
-  });
-
-  test("random with type 'math'", async function () {
-    const res = await request(app).get("/random/math");
-    let resWords = res.text.split(" ");
-    expect(res.statusCode).toBe(200);
-    expect(typeof Number(resWords[0])).toEqual("number");
-  });
-
-  test("random with type 'trivia'", async function () {
-    const res = await request(app).get("/random/trivia");
-    let resWords = res.text.split(" ");
-    expect(res.statusCode).toBe(200);
-    expect(typeof Number(resWords[0])).toEqual("number");
-  });
-
-  test("random with type 'year'", async function () {
-    // can't test for year itself
-    // data contains years after the current year, eg
-    // 2058 is the year that the Beatles catalogue will enter
-    // the public domain, assuming that copyright is not extended again.
-    const res = await request(app).get("/random/year");
-    expect(res.statusCode).toBe(200);
-    expect(res.text).toContain("is the year");
-  });
-
   // tests for route "/:date([-0-9/.,]+)/:type(date)?"
 
   test("batch request for a range of dates", async function () {
     const res = await request(app).get("/10/15..10/31,12/31/date");
     expect(res.statusCode).toBe(200);
     expect(res.text).toContain("289");
+  });
+});
+
+describe("random routes", () => {
+  beforeEach(() => {
+    utils.randomIndex = jest.fn(() => 1);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // tests for route "/random/:type?"
+
+  test("random with without type defined", async function () {
+    const res = await request(app).get("/random");
+    let resWords = res.text.split(" ");
+    expect(resWords[0]).toEqual("0");
+  });
+
+  test("random with type 'date'", async function () {
+    const res = await request(app).get("/random/date");
+    let resWords = res.text.split(" ");
+    expect(res.statusCode).toBe(200);
+    expect(resWords[0] + " " + resWords[1]).toEqual("January 1st");
+  });
+
+  test("random with type 'math'", async function () {
+    const res = await request(app).get("/random/math");
+    let resWords = res.text.split(" ");
+    expect(res.statusCode).toBe(200);
+    expect(resWords[0]).toEqual("0");
+  });
+
+  test("random with type 'trivia'", async function () {
+    const res = await request(app).get("/random/trivia");
+    let resWords = res.text.split(" ");
+    expect(res.statusCode).toBe(200);
+    expect(resWords[0]).toEqual("0");
+  });
+
+  test("random with type 'year'", async function () {
+    const res = await request(app).get("/random/year");
+    let resWords = res.text.split(" ");
+    expect(res.statusCode).toBe(200);
+    expect(resWords[0] + " " + resWords[1]).toContain("1225 BC");
   });
 });
