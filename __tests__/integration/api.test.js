@@ -56,14 +56,14 @@ describe("routes", () => {
     const res = await request(app).get("/3..5/math");
     let resWords = res.body[3].split(" ");
     expect(res.statusCode).toBe(200);
-    expect(Number(resWords[0])).toEqual(3);
+    expect(+resWords[0]).toEqual(3);
   });
 
   test("batch request with type 'trivia'", async function () {
     const res = await request(app).get("/3..5/trivia");
     let resWords = res.body[3].split(" ");
     expect(res.statusCode).toBe(200);
-    expect(Number(resWords[0])).toEqual(3);
+    expect(+resWords[0]).toEqual(3);
   });
 
   test("batch request with type 'year'", async function () {
