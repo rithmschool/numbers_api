@@ -174,7 +174,7 @@ exports.route = function (app, fact) {
 
     var nums = getBatchNums(req.params.date, function (dateStr) {
       var splits = dateStr.split("/");
-      return exports.monthDayToDayOfYear(splits[0], splits[1]);
+      return utils.monthDayToDayOfYear(splits[0], splits[1]);
     });
     req.params.type = "date";
     factsResponse(fact, req, res, nums);
