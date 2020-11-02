@@ -10,7 +10,6 @@ const cors = require("cors");
 const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
 const nunjucks = require("nunjucks");
-
 const mousewheel = require("jquery-mousewheel");
 
 const fact = require("./models/fact.js");
