@@ -49,23 +49,25 @@ function getDefaultMsg({ number, type, options = {} }) {
     "an uninteresting number",
     "a boring number",
     "an unremarkable number",
-    "a number for which we're missing a fact (submit one to numbersapi at google mail!)",
+    "a number for which we're missing a fact",
+  ];
+
+  var yearMsgs = [
+    "nothing remarkable happened",
+    "the Earth probably went around the Sun",
+    "nothing interesting came to pass",
+    "we do not know what happened",
   ];
 
   var defaultMsgs = {
     math: mathMsgs,
     trivia: mathMsgs, // TODO Actually come up with trivia defaults
     date: ["no newsworthy events happened"],
-    year: [
-      "nothing remarkable happened",
-      "the Earth probably went around the Sun",
-      "nothing interesting came to pass",
-      "we do not know what happened",
-    ],
+    year: yearMsgs,
   }[type];
 
   var data = {
-    text: utils.randomChoice(defaultMsgs),
+    text: utils.randomChoice(defaultMsgs) + ". Have a better fact? Submit one at github.com/rithmschool/numbers_api",
   };
 
   return getSentence({
