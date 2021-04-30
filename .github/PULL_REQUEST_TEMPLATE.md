@@ -2,6 +2,7 @@ This pull request includes a
 
 - [ ] Bug fix
 - [ ] New feature
+- [ ] New number fact
 - [ ] Translation
 
 The following changes were made

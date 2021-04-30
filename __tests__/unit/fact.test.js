@@ -242,7 +242,7 @@ describe("getDefaultMsg() for all 4 types", function () {
       "9999999999 is an uninteresting number.",
       "9999999999 is a boring number.",
       "9999999999 is an unremarkable number.",
-      "9999999999 is a number for which we're missing a fact (submit one to numbersapi at google mail!).",
+      "9999999999 is a number for which we're missing a fact.",
     ];
     const sentence = getDefaultMsg({
       number: 9999999999,

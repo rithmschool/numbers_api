@@ -176,3 +176,8 @@ http://numbersapi.com/1..3,10
     "10": "10 is the highest score possible in Olympics gymnastics competitions."
 }
 </pre>
+
+
+## Contributing
+
+Numbers API is an evolving project. If you would like to contribute to the code base, suggest any ideas, or even just submit a number fact, please visit our <code><strong>[`Github`](https://github.com/rithmschool/numbers_api/blob/master/CONTRIBUTING.md)</strong></code>.
