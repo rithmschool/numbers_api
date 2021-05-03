@@ -128,59 +128,68 @@ exports.route = function (app, fact) {
     return nums;
   }
 
-  app.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
-    var number = parseInt(req.params.num, 10);
-    if (req.params.type === "date") {
-      number = utils.dateToDayOfYear(new Date(2004, 0, number));
-    }
-    factResponse(fact, req, res, number);
-  });
+  // app.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
+  //   var number = parseInt(req.params.num, 10);
+  //   if (req.params.type === "date") {
+  //     number = utils.dateToDayOfYear(new Date(2004, 0, number));
+  //   }
+  //   factResponse(fact, req, res, number);
+  // });
 
-  app.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
-    if (
-      !req.params.num.match(
-        /^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/
-      )
-    ) {
-      // 400: Bad request if bad match
-      res.send("Invalid url", 400);
-      return;
-    }
+  // app.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
+  //   if (
+  //     !req.params.num.match(
+  //       /^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/
+  //     )
+  //   ) {
+  //     // 400: Bad request if bad match
+  //     res.send("Invalid url", 400);
+  //     return;
+  //   }
 
-    var nums = getBatchNums(req.params.num, function (numStr) {
-      return parseInt(numStr, 0);
-    });
-    factsResponse(fact, req, res, nums);
-  });
+  //   var nums = getBatchNums(req.params.num, function (numStr) {
+  //     return parseInt(numStr, 0);
+  //   });
+  //   factsResponse(fact, req, res, nums);
+  // });
 
-  app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
-    var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
-    req.params.type = "date";
-    factResponse(fact, req, res, dayOfYear);
-  });
+  // app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
+  //   var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
+  //   req.params.type = "date";
+  //   factResponse(fact, req, res, dayOfYear);
+  // });
 
-  // TODO: currently returned json uses dayOfYear as key rather than "month/day".
-  // consider returning "month/day"
-  app.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
-    if (
-      !req.params.date.match(
-        /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
-      )
-    ) {
-      // 404 if bad match
-      res.send("Invalid url", 404);
-      return;
-    }
+  // // TODO: currently returned json uses dayOfYear as key rather than "month/day".
+  // // consider returning "month/day"
+  // app.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
+  //   if (
+  //     !req.params.date.match(
+  //       /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
+  //     )
+  //   ) {
+  //     // 404 if bad match
+  //     res.send("Invalid url", 404);
+  //     return;
+  //   }
 
-    var nums = getBatchNums(req.params.date, function (dateStr) {
-      var splits = dateStr.split("/");
-      return utils.monthDayToDayOfYear(splits[0], splits[1]);
-    });
-    req.params.type = "date";
-    factsResponse(fact, req, res, nums);
-  });
+  //   var nums = getBatchNums(req.params.date, function (dateStr) {
+  //     var splits = dateStr.split("/");
+  //     return utils.monthDayToDayOfYear(splits[0], splits[1]);
+  //   });
+  //   req.params.type = "date";
+  //   factsResponse(fact, req, res, nums);
+  // });
 
-  app.get("/random/:type?", function (req, res) {
-    factResponse(fact, req, res, "random");
-  });
+  // app.get("/random/:type?", function (req, res) {
+  //   factResponse(fact, req, res, "random");
+  // });
 };
+
+module.exports.factResponse = factResponse;
+module.exports.factsResponse = factsResponse;
+module.exports.setExpireHeaders = setExpireHeaders;
+
+// module.exports = {
+//    factResponse: factResponse,
+//    factsResponse: factsResponse
+// }
