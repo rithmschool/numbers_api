@@ -121,9 +121,15 @@ const dataPairs = (function () {
   });
   return ret;
 })();
+console.log('this datapairs', dataPairs);
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
 let dataKeys = {};
+// {math:
+//   [0,1,2,3],
+//  trivia:
+//   [0,1,2,3...]
+// }
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
     return pair.number;
@@ -161,7 +167,7 @@ function getFact({ number, type, options = {} }) {
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
 
-  if (!dataKeys[type]) {
+  if (!dataPairs[type]) {
     // TODO: Set HTTP status code as well
     return {
       text: "ERROR: Invalid type.",
@@ -178,7 +184,7 @@ function getFact({ number, type, options = {} }) {
   // TODO Better error handling (for out of dates), and for number is an invalid
   // number or NaN
 
-  var ret = data[type][number];
+  let ret = data[type][number];
 
   if (ret instanceof Array) {
     ret = utils.randomChoice(ret);
@@ -208,9 +214,10 @@ function getFact({ number, type, options = {} }) {
       type: type,
     };
   } else {
-    var index = _.sortedIndex(dataKeys[type], number);
+    // dataPairs[type][number+1]['number']
+    let index = _.sortedIndex(dataKeys[type], number);
     if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-    var adjustedNum = dataPairs[type][index].string;
+    let adjustedNum = dataPairs[type][index].string;
     ret = utils.randomChoice(data[type][adjustedNum]);
     return apiExtend(ret, {
       text: getSentence({
@@ -227,10 +234,10 @@ function getFact({ number, type, options = {} }) {
 }
 
 function dumpData(dirname) {
-  var fs = require("fs");
+  const fs = require("fs");
 
   _.each(data, function (typeObj, type) {
-    var text = _.map(typeObj, function (factList, number) {
+    let text = _.map(typeObj, function (factList, number) {
       return "" + number + "\n" + _.pluck(factList, "text").join("\n");
     }).join("\n\n");
     fs.writeFileSync(dirname + "/" + type + ".txt", text);
