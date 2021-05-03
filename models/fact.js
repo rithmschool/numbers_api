@@ -1,10 +1,10 @@
-var _ = require("underscore");
-var data = require("./data.js");
-var utils = require("../public/js/shared_utils.js");
+const _ = require("underscore");
+const data = require("./data.js");
+const utils = require("../public/js/shared_utils.js");
 
 function getRandomApiNum(options) {
-  var min = parseInt(options.min, 10);
-  var max = parseInt(options.max, 10);
+  let min = parseInt(options.min, 10);
+  let max = parseInt(options.max, 10);
 
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[options.type]);
@@ -16,7 +16,7 @@ function getRandomApiNum(options) {
     }
 
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[options.type], function (element) {
+    let valid_keys = _.filter(dataKeys[options.type], function (element) {
       return element >= min && element <= max;
     });
 
@@ -25,19 +25,19 @@ function getRandomApiNum(options) {
 }
 
 function getSentence({ wantFragment, number, type, data }) {
-  var text = data.text;
+  let text = data.text;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
     return text;
   }
 
-  var prefix = utils.getStandalonePrefix(number, type, data);
+  const prefix = utils.getStandalonePrefix(number, type, data);
 
   if (type === "year" && data.date) {
     // format is 'December 25th'
     // TODO: should not just be storing string in data.date
-    var month = data.date.replace(/(\w+) \d+/, "$1");
-    var day = parseInt(data.date.replace(/\w+ (\d+)/, "$1"), 10);
+    const month = data.date.replace(/(\w+) \d+/, "$1");
+    const day = parseInt(data.date.replace(/\w+ (\d+)/, "$1"), 10);
     text += " on " + month + " " + utils.getOrdinalSuffix(day);
   }
 
@@ -45,28 +45,28 @@ function getSentence({ wantFragment, number, type, data }) {
 }
 
 function getDefaultMsg({ number, type, options = {} }) {
-  var mathMsgs = [
+  const mathMsgs = [
     "an uninteresting number",
     "a boring number",
     "an unremarkable number",
     "a number for which we're missing a fact",
   ];
 
-  var yearMsgs = [
+  const yearMsgs = [
     "nothing remarkable happened",
     "the Earth probably went around the Sun",
     "nothing interesting came to pass",
     "we do not know what happened",
   ];
 
-  var defaultMsgs = {
+  const defaultMsgs = {
     math: mathMsgs,
     trivia: mathMsgs, // TODO Actually come up with trivia defaults
     date: ["no newsworthy events happened"],
     year: yearMsgs,
   }[type];
 
-  var data = {
+  const data = {
     text: utils.randomChoice(defaultMsgs) + ". Have a better fact? Submit one at github.com/rithmschool/numbers_api",
   };
 
@@ -79,7 +79,7 @@ function getDefaultMsg({ number, type, options = {} }) {
 }
 
 // Mapping of meaning to query param value name
-var NOT_FOUND = {
+const NOT_FOUND = {
   DEFAULT: "default",
   CEIL: "ceil",
   FLOOR: "floor",
@@ -87,8 +87,8 @@ var NOT_FOUND = {
 };
 
 // Query parameter keys
-var QUERY_NOT_FOUND = "notfound";
-var QUERY_DEFAULT = "default";
+const QUERY_NOT_FOUND = "notfound";
+const QUERY_DEFAULT = "default";
 
 // Keys of each of the data mappings for use in binary search (unfortunately,
 // _.map() on objects returns an array instead of an object). Pads with negative
@@ -96,8 +96,8 @@ var QUERY_DEFAULT = "default";
 // Stores both the number as well as string representation of number as number representation is needed.
 // Maybe this is not necessary, but too tired to think about it for now.
 // PRE: data is sorted
-var dataPairs = (function () {
-  var ret = {};
+const dataPairs = (function () {
+  let ret = {};
   _.each(data, function (numbers, category) {
     ret[category] = _.sortBy(
       _.flatten([
@@ -123,7 +123,7 @@ var dataPairs = (function () {
 })();
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
-var dataKeys = {};
+let dataKeys = {};
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
     return pair.number;
@@ -136,7 +136,7 @@ function filterObj(obj, whitelist) {
 
 // This is a list of keys on the lowest-level fact objects that we will return
 // with the API
-var API_WHITELIST = ["text", "year", "date"];
+const API_WHITELIST = ["text", "year", "date"];
 
 function apiExtend(obj, newObj) {
   return _.extend(filterObj(obj, API_WHITELIST), newObj);
@@ -157,7 +157,7 @@ function apiExtend(obj, newObj) {
 function getFact({ number, type, options = {} }) {
   // number, type
   // Default query param options
-  var defaults = {};
+  let defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
 
