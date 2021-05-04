@@ -1,6 +1,6 @@
 console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
-// Module dependencies.
 
+// Module dependencies.
 const fs = require("fs");
 const express = require("express");
 const https = require("https");
@@ -12,10 +12,13 @@ const nunjucks = require("nunjucks");
 const mousewheel = require("jquery-mousewheel");
 
 const fact = require("./models/fact.js");
-const numRoutes = require("./routes/numbers.js");
+const { numRoutes } = require("./routes/numbers.js");
 const secrets = require("./secrets.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
+
+const nodeEnv = process.env.NODE_ENV || "development";
+const app = new express();
 
 // fake number of viistors
 // var BASE_VISITOR_TIME = new Date(1330560000000);
@@ -89,9 +92,6 @@ if (_.contains(arguments, "--dump")) {
 // }
 // setInterval(updateNumShares, GET_NUM_SHARES_INTERVAL_MS);
 
-const nodeEnv = process.env.NODE_ENV || "development";
-const app = express();
-
 // Configuration and middleware
 
 nunjucks.configure("views/", {
@@ -118,7 +118,6 @@ if (nodeEnv === "development") {
 }
 
 // Routes
-
 app.use("/", numRoutes);
 app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
 

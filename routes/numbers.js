@@ -11,7 +11,7 @@ var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 var numShares = 15;
 
 function appendToFile(filePath, dataStr) {
-  var stream = fs.createWriteStream(filePath, {
+  let stream = fs.createWriteStream(filePath, {
     flags: "a",
     encoding: "utf8",
     mode: "0666",
@@ -232,14 +232,10 @@ router.post("/submit", function (req, res) {
   res.send(req.body);
 });
 
-/** #######################################  */
-
-module.exports.factResponse = factResponse;
-module.exports.factsResponse = factsResponse;
-module.exports.setExpireHeaders = setExpireHeaders;
-
 module.exports = {
-  appendToFile,
+  appendToFile: appendToFile,
+  numRoutes: router,
+  factResponse: factResponse,
+  factsResponse: factsResponse,
+  setExpireHeaders: setExpireHeaders,
 };
-
-module.exports = router;
