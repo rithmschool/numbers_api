@@ -1,4 +1,4 @@
-const { appendToFile } = require("../../routes/api");
+const { appendToFile } = require("../../routes/numbers");
 const fs = require("fs");
 const app = require("../../app");
 const request = require("supertest");

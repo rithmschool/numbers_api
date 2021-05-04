@@ -4,7 +4,6 @@ console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
 const fs = require("fs");
 const express = require("express");
 const https = require("https");
-const marked = require("marked");
 const _ = require("underscore");
 const cors = require("cors");
 const favicon = require("serve-favicon");
@@ -13,14 +12,10 @@ const nunjucks = require("nunjucks");
 const mousewheel = require("jquery-mousewheel");
 
 const fact = require("./models/fact.js");
-const router = require("./routes/api.js");
+const numRoutes = require("./routes/numbers.js");
 const secrets = require("./secrets.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
-
-//TODO - possible delete after route refactor
-const { factResponse, factsResponse } = require("./routes/api.js");
-var allTypesRegex = "/:type(date|year|trivia|math)?";
 
 // fake number of viistors
 // var BASE_VISITOR_TIME = new Date(1330560000000);
@@ -40,7 +35,6 @@ var allTypesRegex = "/:type(date|year|trivia|math)?";
 //   "&pubid=" +
 //   secrets.ADD_THIS_PUBID;
 // var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
-var numShares = 15;
 // var arguments = process.argv.splice(2);
 
 // Dump all facts data to a directory
@@ -125,105 +119,7 @@ if (nodeEnv === "development") {
 
 // Routes
 
-router.route(app, fact);
-
-// catch all routes having to do with numbers
-app.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
-  var number = parseInt(req.params.num, 10);
-  if (req.params.type === "date") {
-    number = utils.dateToDayOfYear(new Date(2004, 0, number));
-  }
-  factResponse(fact, req, res, number);
-});
-
-app.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
-  if (
-    !req.params.num.match(
-      /^-?[0-9]+(\.\.-?[0-9]+)?(,-?[0-9]+(\.\.-?[0-9]+)?)*$/
-    )
-  ) {
-    // 400: Bad request if bad match
-    res.send("Invalid url", 400);
-    return;
-  }
-
-  var nums = getBatchNums(req.params.num, function (numStr) {
-    return parseInt(numStr, 0);
-  });
-  factsResponse(fact, req, res, nums);
-});
-
-app.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (req, res) {
-  var dayOfYear = utils.monthDayToDayOfYear(req.params.month, req.params.day);
-  req.params.type = "date";
-  factResponse(fact, req, res, dayOfYear);
-});
-
-// TODO: currently returned json uses dayOfYear as key rather than "month/day".
-// consider returning "month/day"
-app.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
-  if (
-    !req.params.date.match(
-      /^(-?[0-9]+\/-?[0-9]+)(\.\.-?[0-9]+\/-?[0-9]+)?(,-?[0-9]+\/-?[0-9]+(\.\.-?[0-9]\/-?[0-9]+)?)*$/
-    )
-  ) {
-    // 404 if bad match
-    res.send("Invalid url", 404);
-    return;
-  }
-
-  var nums = getBatchNums(req.params.date, function (dateStr) {
-    var splits = dateStr.split("/");
-    return utils.monthDayToDayOfYear(splits[0], splits[1]);
-  });
-  req.params.type = "date";
-  factsResponse(fact, req, res, nums);
-});
-
-app.get("/random/:type?", function (req, res) {
-  factResponse(fact, req, res, "random");
-});
-
-/** #######################################  */
-
-var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
-
+app.use("/", numRoutes);
 app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
-
-// TODO: Precompile this template.
-app.get("/", function (req, res) {
-  var currDate = new Date();
-  res.render("index.html", {
-    docs: apiDocsHtml,
-    sharesFact: fact.getFact({
-      notfound: "floor",
-      fragment: true,
-      type: "trivia",
-      number: numShares,
-    }),
-    numShares: numShares,
-    dateFact: {
-      day: currDate.getDate(),
-      month: currDate.getMonth() + 1,
-      data: fact.getFact({
-        type: "date",
-        number: utils.dateToDayOfYear(currDate),
-      }),
-    },
-  });
-});
-
-// app.get("/type-time-highcharts", function (req, res) {
-//   res.json(highcharts.getTypeTimeHist());
-// });
-
-// app.get("/type-number-highcharts", function (req, res) {
-//   res.json(highcharts.getTypeNumberHist());
-// });
-
-app.post("/submit", function (req, res) {
-  router.appendToFile("./suggestions.json", JSON.stringify(req.body) + "\n");
-  res.send(req.body);
-});
 
 module.exports = app;
