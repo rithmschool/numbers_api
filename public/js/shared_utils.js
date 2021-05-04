@@ -88,9 +88,9 @@
       }
     } else if (type === "year") {
       let currYear = new Date().getFullYear();
-      return num < 0
+      return number < 0
         ? `${-number} BC is the year that`
-        : num > currYear
+        : number > currYear
         ? `${number} will be the year that`
         : `${number} is the year that`;
     }
