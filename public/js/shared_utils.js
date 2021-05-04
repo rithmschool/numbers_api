@@ -21,16 +21,19 @@
   };
 
   exports.getOrdinalSuffix = function (num) {
-    if (num === 11 || num == 12 || num == 13) {
-      return `${num}th`;
-    } else if (num % 10 === 1) {
-      return `${num}st`;
-    } else if (num % 10 === 2) {
-      return `${num}nd`;
-    } else if (num % 10 === 3) {
-      return `${num}rd`;
-    } else {
-      return `${num}th`;
+    switch (true) {
+      case num === 11:
+      case num === 12:
+      case num === 13:
+        return `${num}th`;
+      case num % 10 === 1:
+        return `${num}st`;
+      case num % 10 === 2:
+        return `${num}nd`;
+      case num % 10 === 3:
+        return `${num}rd`;
+      default:
+        return `${num}th`;
     }
   };
 
