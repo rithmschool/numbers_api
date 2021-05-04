@@ -1,10 +1,10 @@
-var _ = require("underscore");
-var data = require("./data.js");
-var utils = require("../public/js/shared_utils.js");
+const _ = require("underscore");
+const data = require("./data.js");
+const utils = require("../public/js/shared_utils.js");
 
 function getRandomApiNum(options) {
-  var min = parseInt(options.min, 10);
-  var max = parseInt(options.max, 10);
+  let min = parseInt(options.min, 10);
+  let max = parseInt(options.max, 10);
 
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[options.type]);
@@ -16,7 +16,7 @@ function getRandomApiNum(options) {
     }
 
     // TODO: Use binary search here instead of O(n) linear search
-    var valid_keys = _.filter(dataKeys[options.type], function (element) {
+    let valid_keys = _.filter(dataKeys[options.type], function (element) {
       return element >= min && element <= max;
     });
 
@@ -25,61 +25,62 @@ function getRandomApiNum(options) {
 }
 
 function getSentence({ wantFragment, number, type, data }) {
-  var text = data.text;
+  let { text, date } = data;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
     return text;
   }
 
-  var prefix = utils.getStandalonePrefix(number, type, data);
+  const prefix = utils.getStandalonePrefix(number, type, data);
 
-  if (type === "year" && data.date) {
+  if (type === "year" && date) {
     // format is 'December 25th'
     // TODO: should not just be storing string in data.date
-    var month = data.date.replace(/(\w+) \d+/, "$1");
-    var day = parseInt(data.date.replace(/\w+ (\d+)/, "$1"), 10);
-    text += " on " + month + " " + utils.getOrdinalSuffix(day);
+    const month = date.replace(/(\w+) \d+/, "$1");
+    const day = parseInt(date.replace(/\w+ (\d+)/, "$1"), 10);
+    text = `${text} on ${month} ${utils.getOrdinalSuffix(day)}`;
+
   }
 
-  return prefix + " " + text + ".";
+  return `${prefix} ${text}.`;
 }
 
 function getDefaultMsg({ number, type, options = {} }) {
-  var mathMsgs = [
+  const mathMsgs = [
     "an uninteresting number",
     "a boring number",
     "an unremarkable number",
     "a number for which we're missing a fact",
   ];
 
-  var yearMsgs = [
+  const yearMsgs = [
     "nothing remarkable happened",
     "the Earth probably went around the Sun",
     "nothing interesting came to pass",
     "we do not know what happened",
   ];
 
-  var defaultMsgs = {
+  const defaultMsgs = {
     math: mathMsgs,
     trivia: mathMsgs, // TODO Actually come up with trivia defaults
     date: ["no newsworthy events happened"],
     year: yearMsgs,
   }[type];
 
-  var data = {
-    text: utils.randomChoice(defaultMsgs) + ". Have a better fact? Submit one at github.com/rithmschool/numbers_api",
+  const data = {
+    text: `${utils.randomChoice(defaultMsgs)}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`
   };
 
   return getSentence({
     wantFragment: options.fragment,
-    number: number,
-    type: type,
-    data: data,
+    number,
+    type,
+    data,
   });
 }
 
 // Mapping of meaning to query param value name
-var NOT_FOUND = {
+const NOT_FOUND = {
   DEFAULT: "default",
   CEIL: "ceil",
   FLOOR: "floor",
@@ -87,8 +88,8 @@ var NOT_FOUND = {
 };
 
 // Query parameter keys
-var QUERY_NOT_FOUND = "notfound";
-var QUERY_DEFAULT = "default";
+const QUERY_NOT_FOUND = "notfound";
+const QUERY_DEFAULT = "default";
 
 // Keys of each of the data mappings for use in binary search (unfortunately,
 // _.map() on objects returns an array instead of an object). Pads with negative
@@ -96,8 +97,8 @@ var QUERY_DEFAULT = "default";
 // Stores both the number as well as string representation of number as number representation is needed.
 // Maybe this is not necessary, but too tired to think about it for now.
 // PRE: data is sorted
-var dataPairs = (function () {
-  var ret = {};
+const dataPairs = (function () {
+  let ret = {};
   _.each(data, function (numbers, category) {
     ret[category] = _.sortBy(
       _.flatten([
@@ -121,9 +122,11 @@ var dataPairs = (function () {
   });
   return ret;
 })();
+
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
-var dataKeys = {};
+let dataKeys = {};
+
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
     return pair.number;
@@ -136,7 +139,7 @@ function filterObj(obj, whitelist) {
 
 // This is a list of keys on the lowest-level fact objects that we will return
 // with the API
-var API_WHITELIST = ["text", "year", "date"];
+const API_WHITELIST = ["text", "year", "date"];
 
 function apiExtend(obj, newObj) {
   return _.extend(filterObj(obj, API_WHITELIST), newObj);
@@ -157,7 +160,7 @@ function apiExtend(obj, newObj) {
 function getFact({ number, type, options = {} }) {
   // number, type
   // Default query param options
-  var defaults = {};
+  let defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
 
@@ -165,8 +168,8 @@ function getFact({ number, type, options = {} }) {
     // TODO: Set HTTP status code as well
     return {
       text: "ERROR: Invalid type.",
-      number: number,
-      type: type,
+      number,
+      type,
     };
   }
 
@@ -178,7 +181,7 @@ function getFact({ number, type, options = {} }) {
   // TODO Better error handling (for out of dates), and for number is an invalid
   // number or NaN
 
-  var ret = data[type][number];
+  let ret = data[type][number];
 
   if (ret instanceof Array) {
     ret = utils.randomChoice(ret);
@@ -186,13 +189,13 @@ function getFact({ number, type, options = {} }) {
       return apiExtend(ret, {
         text: getSentence({
           wantFragment: options.fragment,
-          number: number,
-          type: type,
+          number,
+          type,
           data: ret,
         }),
-        number: number,
+        number,
         found: true,
-        type: type,
+        type,
       });
     }
   }
@@ -202,38 +205,39 @@ function getFact({ number, type, options = {} }) {
     return {
       text:
         options[QUERY_DEFAULT] ||
-        getDefaultMsg({ number: number, type: type, options: options }),
-      number: number,
+        getDefaultMsg({ number, type, options }),
+      number,
       found: false,
-      type: type,
+      type,
     };
   } else {
-    var index = _.sortedIndex(dataKeys[type], number);
+
+    let index = _.sortedIndex(dataKeys[type], number);
     if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
-    var adjustedNum = dataPairs[type][index].string;
+    let adjustedNum = dataPairs[type][index].string;
     ret = utils.randomChoice(data[type][adjustedNum]);
     return apiExtend(ret, {
       text: getSentence({
         wantFragment: options.fragment,
-        number: number,
-        type: type,
+        number,
+        type,
         data: ret,
       }),
       number: adjustedNum,
       found: false,
-      type: type,
+      type,
     });
   }
 }
 
 function dumpData(dirname) {
-  var fs = require("fs");
+  const fs = require("fs");
 
   _.each(data, function (typeObj, type) {
-    var text = _.map(typeObj, function (factList, number) {
-      return "" + number + "\n" + _.pluck(factList, "text").join("\n");
+    let text = _.map(typeObj, function (factList, number) {
+      return `${number}\n${_.pluck(factList, "text").join("\n")}`;
     }).join("\n\n");
-    fs.writeFileSync(dirname + "/" + type + ".txt", text);
+    fs.writeFileSync(`${dirname}/${type}.txt`, text);
   });
 }
 
