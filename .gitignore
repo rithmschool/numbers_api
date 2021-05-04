@@ -1,4 +1,5 @@
 *.pyc
+.env
 secrets.js
 suggestions.json
 node_modules
