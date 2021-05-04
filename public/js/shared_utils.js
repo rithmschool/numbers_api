@@ -22,73 +22,73 @@
 
   exports.getOrdinalSuffix = function (num) {
     if (num === 11 || num == 12 || num == 13) {
-      return "" + num + "th";
+      return `${num}th`;
     } else if (num % 10 === 1) {
-      return "" + num + "st";
+      return `${num}st`;
     } else if (num % 10 === 2) {
-      return "" + num + "nd";
+      return `${num}nd`;
     } else if (num % 10 === 3) {
-      return "" + num + "rd";
+      return `${num}rd`;
     } else {
-      return "" + num + "th";
+      return `${num}th`;
     }
   };
 
-  var MONTH_NAMES = "January February March April May June July August September October November December".split(
-    " "
-  );
+  const MONTH_NAMES = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
   exports.dateToString = function (date) {
-    return (
-      MONTH_NAMES[date.getMonth()] +
-      " " +
-      exports.getOrdinalSuffix(date.getDate())
-    );
+    return `${MONTH_NAMES[date.getMonth()]} ${exports.getOrdinalSuffix(
+      date.getDate()
+    )}`;
   };
 
-  var MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   exports.dateToDayOfYear = function (date) {
-    var day = 0;
-    for (var i = 0; i < date.getMonth(); ++i) {
+    let day = 0;
+    for (let i = 0; i < date.getMonth(); ++i) {
       day += MONTH_DAYS[i];
     }
     return day + date.getDate();
   };
 
   exports.monthDayToDayOfYear = function (month, day) {
-    var date = new Date(2004, month - 1, day);
+    const date = new Date(2004, month - 1, day);
     return exports.dateToDayOfYear(date);
   };
 
-  exports.getStandalonePrefix = function (number, type, data) {
-    data = data || {};
+  exports.getStandalonePrefix = function (number, type, data = {}) {
+    const { year } = data;
     if (type === "math") {
-      return "" + number + " is";
+      return `${number} is`;
     } else if (type === "trivia") {
-      return "" + number + " is";
+      return `${number} is`;
     } else if (type === "date") {
-      var date = new Date(2004, 0, number);
-      if (data.year) {
-        if (data.year < 0) {
-          return (
-            exports.dateToString(date) +
-            " is the day in " +
-            -data.year +
-            " BC that"
-          );
-        } else {
-          return (
-            exports.dateToString(date) + " is the day in " + data.year + " that"
-          );
-        }
+      const date = new Date(2004, 0, number);
+      if (year) {
+        return year < 0
+          ? `${exports.dateToString(date)} is the day in ${-year} BC that`
+          : `${exports.dateToString(date)} is the day in ${year} that`;
       } else {
-        return exports.dateToString(date) + " is the day that";
+        return `${exports.dateToString(date)} is the day that`;
       }
     } else if (type === "year") {
       // TODO: consider different grammar for year in the past vs. year in the future
       if (number < 0) {
-        return "" + -number + " BC is the year that";
+        return `${-number} BC is the year that`;
       } else {
-        return "" + number + " is the year that";
+        return `${number} is the year that`;
       }
     }
   };
