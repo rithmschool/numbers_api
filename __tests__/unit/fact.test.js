@@ -89,7 +89,7 @@ describe("getRandomApiNum() with type 'year'", () => {
 
   test("return random number greater than 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "year" });
-    expect(greaterThanMin).toBeGreaterThan(2010);
+    expect(greaterThanMin).toBeGreaterThan(2009);
   });
 
   test("return random number less than 2010", function () {
