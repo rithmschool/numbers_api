@@ -25,7 +25,7 @@ function getRandomApiNum(options) {
 }
 
 function getSentence({ wantFragment, number, type, data }) {
-  let text = data.text;
+  let { text, date } = data;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
     return text;
@@ -33,15 +33,16 @@ function getSentence({ wantFragment, number, type, data }) {
 
   const prefix = utils.getStandalonePrefix(number, type, data);
 
-  if (type === "year" && data.date) {
+  if (type === "year" && date) {
     // format is 'December 25th'
     // TODO: should not just be storing string in data.date
-    const month = data.date.replace(/(\w+) \d+/, "$1");
-    const day = parseInt(data.date.replace(/\w+ (\d+)/, "$1"), 10);
-    text += " on " + month + " " + utils.getOrdinalSuffix(day);
+    const month = date.replace(/(\w+) \d+/, "$1");
+    const day = parseInt(date.replace(/\w+ (\d+)/, "$1"), 10);
+    text = `${text} on ${month} ${utils.getOrdinalSuffix(day)}`;
+
   }
 
-  return prefix + " " + text + ".";
+  return `${prefix} ${text}.`;
 }
 
 function getDefaultMsg({ number, type, options = {} }) {
@@ -67,14 +68,14 @@ function getDefaultMsg({ number, type, options = {} }) {
   }[type];
 
   const data = {
-    text: utils.randomChoice(defaultMsgs) + ". Have a better fact? Submit one at github.com/rithmschool/numbers_api",
+    text: `${utils.randomChoice(defaultMsgs)}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`
   };
 
   return getSentence({
     wantFragment: options.fragment,
-    number: number,
-    type: type,
-    data: data,
+    number,
+    type,
+    data,
   });
 }
 
@@ -121,7 +122,7 @@ const dataPairs = (function () {
   });
   return ret;
 })();
-console.log('this datapairs', dataPairs);
+
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
 let dataKeys = {};
@@ -167,8 +168,8 @@ function getFact({ number, type, options = {} }) {
     // TODO: Set HTTP status code as well
     return {
       text: "ERROR: Invalid type.",
-      number: number,
-      type: type,
+      number,
+      type,
     };
   }
 
@@ -188,13 +189,13 @@ function getFact({ number, type, options = {} }) {
       return apiExtend(ret, {
         text: getSentence({
           wantFragment: options.fragment,
-          number: number,
-          type: type,
+          number,
+          type,
           data: ret,
         }),
-        number: number,
+        number,
         found: true,
-        type: type,
+        type,
       });
     }
   }
@@ -204,10 +205,10 @@ function getFact({ number, type, options = {} }) {
     return {
       text:
         options[QUERY_DEFAULT] ||
-        getDefaultMsg({ number: number, type: type, options: options }),
-      number: number,
+        getDefaultMsg({ number, type, options }),
+      number,
       found: false,
-      type: type,
+      type,
     };
   } else {
 
@@ -218,13 +219,13 @@ function getFact({ number, type, options = {} }) {
     return apiExtend(ret, {
       text: getSentence({
         wantFragment: options.fragment,
-        number: number,
-        type: type,
+        number,
+        type,
         data: ret,
       }),
       number: adjustedNum,
       found: false,
-      type: type,
+      type,
     });
   }
 }
@@ -234,9 +235,9 @@ function dumpData(dirname) {
 
   _.each(data, function (typeObj, type) {
     let text = _.map(typeObj, function (factList, number) {
-      return "" + number + "\n" + _.pluck(factList, "text").join("\n");
+      return `${number}\n${_.pluck(factList, "text").join("\n")}`;
     }).join("\n\n");
-    fs.writeFileSync(dirname + "/" + type + ".txt", text);
+    fs.writeFileSync(`${dirname}/${type}.txt`, text);
   });
 }
 
