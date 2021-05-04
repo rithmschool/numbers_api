@@ -87,12 +87,12 @@
         return `${exports.dateToString(date)} is the day that`;
       }
     } else if (type === "year") {
-      // TODO: consider different grammar for year in the past vs. year in the future
-      if (number < 0) {
-        return `${-number} BC is the year that`;
-      } else {
-        return `${number} is the year that`;
-      }
+      let currYear = new Date().getFullYear();
+      return num < 0
+        ? `${-number} BC is the year that`
+        : num > currYear
+        ? `${number} will be the year that`
+        : `${number} is the year that`;
     }
   };
 
