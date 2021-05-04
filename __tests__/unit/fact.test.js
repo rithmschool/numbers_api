@@ -160,7 +160,7 @@ describe("getSentence() for type 'year'", () => {
       },
     });
     expect(sentence).toBe(
-      "10000000000 is the year that nothing remarkable happened."
+      "10000000000 will be the year that nothing remarkable happened."
     );
   });
 });
@@ -223,15 +223,55 @@ describe("getSentence() for type 'date' ", function () {
 });
 
 describe("getDefaultMsg() for all 4 types", function () {
-  test("random default msg for type:'year'", function () {
+  test("random default msg for type:'year' in the future", function () {
     let yearMsgs = [
-      "9999999999 is the year that nothing remarkable happened.",
-      "9999999999 is the year that the Earth probably went around the Sun.",
-      "9999999999 is the year that nothing interesting came to pass.",
-      "9999999999 is the year that we do not know what happened.",
+      "9999999999 will be the year that nothing remarkable happened.",
+      "9999999999 will be the year that the Earth probably went around the Sun.",
+      "9999999999 will be the year that nothing interesting came to pass.",
+      "9999999999 will be the year that we do not know what happened.",
     ];
     const sentence = getDefaultMsg({
       number: 9999999999,
+      type: "year",
+    });
+
+    yearMsgs = yearMsgs.map(
+      (msg) =>
+        msg +
+        " Have a better fact? Submit one at github.com/rithmschool/numbers_api."
+    );
+    expect(yearMsgs.includes(sentence)).toEqual(true);
+  });
+
+  test("random default msg for type:'year' in the past AD", function () {
+    let yearMsgs = [
+      "696 is the year that nothing remarkable happened.",
+      "696 is the year that the Earth probably went around the Sun.",
+      "696 is the year that nothing interesting came to pass.",
+      "696 is the year that we do not know what happened.",
+    ];
+    const sentence = getDefaultMsg({
+      number: 696,
+      type: "year",
+    });
+
+    yearMsgs = yearMsgs.map(
+      (msg) =>
+        msg +
+        " Have a better fact? Submit one at github.com/rithmschool/numbers_api."
+    );
+    expect(yearMsgs.includes(sentence)).toEqual(true);
+  });
+
+  test("random default msg for type:'year' in the past BC", function () {
+    let yearMsgs = [
+      "696 BC is the year that nothing remarkable happened.",
+      "696 BC is the year that the Earth probably went around the Sun.",
+      "696 BC is the year that nothing interesting came to pass.",
+      "696 BC is the year that we do not know what happened.",
+    ];
+    const sentence = getDefaultMsg({
+      number: -696,
       type: "year",
     });
 
