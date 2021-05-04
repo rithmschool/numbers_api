@@ -88,11 +88,15 @@
       }
     } else if (type === "year") {
       let currYear = new Date().getFullYear();
-      return number < 0
-        ? `${-number} BC is the year that`
-        : number > currYear
-        ? `${number} will be the year that`
-        : `${number} is the year that`;
+
+      if (number < 0) {
+        return `${-number} BC is the year that`;
+      } else if (number > currYear) {
+        return `${number} will be the year that`;
+      } else {
+        return `${number} is the year that`;
+      }
+      
     }
   };
 
