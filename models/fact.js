@@ -125,11 +125,7 @@ console.log('this datapairs', dataPairs);
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
 let dataKeys = {};
-// {math:
-//   [0,1,2,3],
-//  trivia:
-//   [0,1,2,3...]
-// }
+
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
     return pair.number;
@@ -167,7 +163,7 @@ function getFact({ number, type, options = {} }) {
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
   _.defaults(options, defaults);
 
-  if (!dataPairs[type]) {
+  if (!dataKeys[type]) {
     // TODO: Set HTTP status code as well
     return {
       text: "ERROR: Invalid type.",
@@ -214,7 +210,7 @@ function getFact({ number, type, options = {} }) {
       type: type,
     };
   } else {
-    // dataPairs[type][number+1]['number']
+
     let index = _.sortedIndex(dataKeys[type], number);
     if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
     let adjustedNum = dataPairs[type][index].string;
