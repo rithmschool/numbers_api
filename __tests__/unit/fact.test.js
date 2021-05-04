@@ -224,7 +224,7 @@ describe("getSentence() for type 'date' ", function () {
 
 describe("getDefaultMsg() for all 4 types", function () {
   test("random default msg for type:'year'", function () {
-    const yearMsgs = [
+    let yearMsgs = [
       "9999999999 is the year that nothing remarkable happened.",
       "9999999999 is the year that the Earth probably went around the Sun.",
       "9999999999 is the year that nothing interesting came to pass.",
@@ -234,16 +234,28 @@ describe("getDefaultMsg() for all 4 types", function () {
       number: 9999999999,
       type: "year",
     });
+
+    yearMsgs = yearMsgs.map(
+      (msg) =>
+        msg +
+        " Have a better fact? Submit one at github.com/rithmschool/numbers_api."
+    );
     expect(yearMsgs.includes(sentence)).toEqual(true);
   });
 
   test("random default msg for type:'math' & type:'trivia'", function () {
-    const mathMsgs = [
+    let mathMsgs = [
       "9999999999 is an uninteresting number.",
       "9999999999 is a boring number.",
       "9999999999 is an unremarkable number.",
       "9999999999 is a number for which we're missing a fact.",
     ];
+    mathMsgs = mathMsgs.map(
+      (msg) =>
+        msg +
+        " Have a better fact? Submit one at github.com/rithmschool/numbers_api."
+    );
+
     const sentence = getDefaultMsg({
       number: 9999999999,
       type: "math",
@@ -257,7 +269,7 @@ describe("getDefaultMsg() for all 4 types", function () {
       type: "date",
     });
     expect(sentence).toBe(
-      "January 1st is the day that no newsworthy events happened."
+      "January 1st is the day that no newsworthy events happened. Have a better fact? Submit one at github.com/rithmschool/numbers_api."
     );
   });
 });
