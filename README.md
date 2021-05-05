@@ -38,8 +38,6 @@ JavaScript:
 
 Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). Live demo on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
-
-
 ## Query Parameter Options
 
 ### Fragment
@@ -112,8 +110,6 @@ http://numbersapi.com/random/year?json
 }
 </pre>
 
-
-
 <h2 id="batching">Batch Requests</h2>
 
 To get facts about multiple numbers in one request, specify ranges for <code><strong>number</strong></code> in <code>http://numbersapi.com/<strong>number</strong>/<strong>type</strong></code>.
@@ -132,7 +128,7 @@ http://numbersapi.com/1..3,10
 }
 </pre>
 
-<h2 style="color:yellow">Deprecated Features</h2>
+<h2 style="color:khaki">Deprecated Features</h2>
 
 ### Callback
 
