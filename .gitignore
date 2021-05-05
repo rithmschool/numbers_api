@@ -1,8 +1,5 @@
 *.pyc
-<<<<<<< HEAD
 .env
-=======
->>>>>>> 6f16479b5392613f7c5d86e321963b99c3890a21
 suggestions.json
 node_modules
 .sass-cache/
