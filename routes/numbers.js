@@ -3,12 +3,9 @@ var fs = require("fs");
 var utils = require("../public/js/shared_utils.js");
 const express = require("express");
 const router = new express.Router();
-const marked = require("marked");
 const fact = require("../models/fact.js");
 
 var BATCH_LIMIT = 100;
-var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
-var numShares = 15;
 
 function appendToFile(filePath, dataStr) {
   let stream = fs.createWriteStream(filePath, {
@@ -133,29 +130,6 @@ function getBatchNums(rangesStr, parseValue) {
   });
   return nums;
 }
-
-// TODO: Precompile this template.
-router.get("/", function (req, res) {
-  var currDate = new Date();
-  res.render("index.html", {
-    docs: apiDocsHtml,
-    sharesFact: fact.getFact({
-      notfound: "floor",
-      fragment: true,
-      type: "trivia",
-      number: numShares,
-    }),
-    numShares: numShares,
-    dateFact: {
-      day: currDate.getDate(),
-      month: currDate.getMonth() + 1,
-      data: fact.getFact({
-        type: "date",
-        number: utils.dateToDayOfYear(currDate),
-      }),
-    },
-  });
-});
 
 router.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
   var number = parseInt(req.params.num, 10);

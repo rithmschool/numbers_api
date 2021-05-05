@@ -10,10 +10,13 @@ const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
 const nunjucks = require("nunjucks");
 const mousewheel = require("jquery-mousewheel");
+const marked = require("marked");
+const apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
+const numShares = 15;
 
 const fact = require("./models/fact.js");
 const { numRoutes } = require("./routes/numbers.js");
-const secrets = require("./secrets.js");
+
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
 
@@ -119,6 +122,32 @@ if (nodeEnv === "development") {
 
 // Routes
 app.use("/", numRoutes);
+
+// TODO: Precompile this template.
+// Route that renders the home page html
+// source is ./README.md
+app.get("/", function (req, res) {
+  var currDate = new Date();
+  res.render("index.html", {
+    docs: apiDocsHtml,
+    sharesFact: fact.getFact({
+      notfound: "floor",
+      fragment: true,
+      type: "trivia",
+      number: numShares,
+    }),
+    numShares: numShares,
+    dateFact: {
+      day: currDate.getDate(),
+      month: currDate.getMonth() + 1,
+      data: fact.getFact({
+        type: "date",
+        number: utils.dateToDayOfYear(currDate),
+      }),
+    },
+  });
+});
+
 app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
 
 module.exports = app;
