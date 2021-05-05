@@ -64,6 +64,8 @@ function reader_norm(out, pathname, callback) {
           }
           // o -> array of number fact objects at the given key
           let o = out[float_key];
+
+          // iterate over each number fact in out property value
           number_data.forEach((element) => {
             if (!element.text || !element.text.length) {
               console.warn(
@@ -82,6 +84,7 @@ function reader_norm(out, pathname, callback) {
 
             o.push(element);
           });
+
           // TODO: should probably be performing this deletion also for early returns
           if (o.length === 0) {
             delete out[float_key];
@@ -219,7 +222,7 @@ function normalizeElement(element) {
 
   if (!element.manual) {
     if (element.text.length < MIN_LENGTH || element.text.length > MAX_LENGTH) {
-      return;
+      return undefined;
     }
   }
 
