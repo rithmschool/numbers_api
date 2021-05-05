@@ -58,9 +58,11 @@ function reader_norm(out, pathname, callback) {
         // if parsed data from numbers is valid
         // proceed to element normalization
         if (normalizeNumberData(float_key, number_data)) {
+          // if key doesnt current exist in object, create it.
           if (!(float_key in out)) {
             out[float_key] = [];
           }
+          // o -> array of number fact objects at the given key
           let o = out[float_key];
           number_data.forEach((element) => {
             if (!element.text || !element.text.length) {
@@ -98,6 +100,9 @@ function reader_manual(outs, pathname, callbacks) {
   let files = fs.readdirSync(pathname);
   files.forEach((file) => {
     let data;
+    if (!file.includes(".txt")) {
+      console.error(`Not a data file: ${pathname + file}`);
+    }
     try {
       data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
