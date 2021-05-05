@@ -168,6 +168,8 @@ Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
 
 ### Write
 
+We do not recommend using `document.write()` because of possible <a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html#example-dangerous-html-methods">cross-site scripting attacks</a>.
+
 Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
 
 <pre>
@@ -176,8 +178,6 @@ http://numbersapi.com/42/math?write
 </pre>
 
 <h3 id="single-script-tag">HTML Embed</h3>
-
-We do not recommend using `document.write()` because of possible <a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html#example-dangerous-html-methods">cross-site scripting attacks</a>.
 
 Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
 
