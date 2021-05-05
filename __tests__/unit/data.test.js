@@ -1,7 +1,7 @@
 const {
   reader_norm,
   reader_manual,
-  normalize_common,
+  normalizeElement,
 } = require("../../models/data");
 
 jest.mock("fs");
@@ -106,16 +106,16 @@ describe("Unit testing functions in `models/data.js`", function () {
     });
   });
 
-  describe("Testing normalize_common function", function () {
+  describe("Testing normalizeElement function", function () {
     test("function sets first letter in text to lowercase character when 'DET' tag is passed in", function () {
       let element = {
         date: "August 4",
         text:
-          "A newly passed U.S. tariff act creates the system of cutters for revenue enforcement (later named the United States Revenue Cutter Service), the forerunner of the Coast Guard.",
+          "In response to the German invasion of Belgium, Great Britain entered World War I, declaring war on Germany.",
         self: false,
         pos: "DET",
       };
-      element = normalize_common(element);
+      element = normalizeElement(element);
       expect(element.text[0]).toEqual(element.text[0].toLowerCase());
     });
 
@@ -126,7 +126,7 @@ describe("Unit testing functions in `models/data.js`", function () {
         self: true,
         pos: "DET",
       };
-      expect(normalize_common(element)).toBeUndefined();
+      expect(normalizeElement(element)).toBeUndefined();
     });
 
     test("function returns undefined if invalid character is passed in", function () {
@@ -137,7 +137,7 @@ describe("Unit testing functions in `models/data.js`", function () {
         pos: "NP",
       };
 
-      expect(normalize_common(element)).toBeUndefined();
+      expect(normalizeElement(element)).toBeUndefined();
     });
   });
 });
