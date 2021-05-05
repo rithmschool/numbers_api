@@ -85,7 +85,6 @@ function reader_norm(out, pathname, callback) {
             o.push(element);
           });
 
-          // TODO: should probably be performing this deletion also for early returns
           if (o.length === 0) {
             delete out[float_key];
           }
