@@ -38,35 +38,6 @@ JavaScript:
 
 Direct cross-origin requests like this are possible on browsers that support [CORS](http://en.wikipedia.org/wiki/Cross-Origin_Resource_Sharing). Live demo on [JSFiddle](http://jsfiddle.net/divad12/ffHEh/).
 
-### JSONP
-
-...is supported with the query field [`callback`](#callback):
-
-    <span id="number-fact"></span>
-
-    <script>
-        function showNumber(str) {
-            document.getElementById('number-fact').innerText = str;
-        }
-
-        (function() {
-            var scriptTag = document.createElement('script');
-            scriptTag.async = true;
-            scriptTag.src = "http://numbersapi.com/42/math?callback=showNumber";
-            document.body.appendChild(scriptTag);
-        })();
-    </script>
-
-Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
-
-<h3 id="single-script-tag">HTML Embed</h3>
-
-Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
-
-    Did you know 2012 is the year that <script src="http://numbersapi.com/2012/year?write&fragment"></script>?
-
-Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>. Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
-
 ## Query Parameter Options
 
 ### Fragment
@@ -104,26 +75,6 @@ The value of the `default` query field tells us what to return if we don't have 
 <pre>
 http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
 &rArr; Boring number is boring.
-</pre>
-
-### Callback
-
-To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
-
-<pre>
-http://numbersapi.com/42/math?callback=showNumber
-&rArr; showNumber("42 is the 5th Catalan number.");
-</pre>
-
-See the [JSONP usage example](#jsonp).
-
-### Write
-
-Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
-
-<pre>
-http://numbersapi.com/42/math?write
-&rArr; document.write("42 is the 5th Catalan number.");
 </pre>
 
 See the [HTML embed tag usage example](#single-script-tag).
@@ -177,6 +128,58 @@ http://numbersapi.com/1..3,10
 }
 </pre>
 
+<h2 style="color:khaki">Deprecated Features</h2>
+
+### Callback
+
+To use [JSONP](http://en.wikipedia.org/wiki/JSONP), pass to the `callback` query the name of the JavaScript function to be invoked. The response will be that function called on the fact text as a string literal.
+
+<pre>
+http://numbersapi.com/42/math?callback=showNumber
+&rArr; showNumber("42 is the 5th Catalan number.");
+</pre>
+
+See the [JSONP usage example](#jsonp).
+
+### JSONP
+
+...is supported with the query field [`callback`](#callback):
+
+    <span id="number-fact"></span>
+
+    <script>
+        function showNumber(str) {
+            document.getElementById('number-fact').innerText = str;
+        }
+
+        (function() {
+            var scriptTag = document.createElement('script');
+            scriptTag.async = true;
+            scriptTag.src = "http://numbersapi.com/42/math?callback=showNumber";
+            document.body.appendChild(scriptTag);
+        })();
+    </script>
+
+Live demo on [JSFiddle](http://jsfiddle.net/divad12/4A6Pw/).
+
+### Write
+
+We do not recommend using `document.write()` because of possible <a href="https://cheatsheetseries.owasp.org/cheatsheets/DOM_based_XSS_Prevention_Cheat_Sheet.html#example-dangerous-html-methods">cross-site scripting attacks</a>.
+
+Returns the text response wrapped in a call to [`document.write()`](https://developer.mozilla.org/en/document.write). Note that using this query parameter is equivalent to and just a shorthand of `?callback=document.write`.
+
+<pre>
+http://numbersapi.com/42/math?write
+&rArr; document.write("42 is the 5th Catalan number.");
+</pre>
+
+<h3 id="single-script-tag">HTML Embed</h3>
+
+Add `write` to your query string to have the response text wrapped in `document.write()`. Now you can stick just a single `<script>` directly where the fact should go.
+
+    Did you know 2012 is the year that <script src="http://numbersapi.com/2012/year?write&fragment"></script>?
+
+Note that this may <a href="http://developer.yahoo.com/performance/rules.html#js_bottom">degrade page load speed</a>. Live demo on [JSFiddle](http://jsfiddle.net/divad12/vd58j/).
 
 ## Contributing
 
