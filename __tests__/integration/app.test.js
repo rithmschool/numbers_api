@@ -1,7 +1,6 @@
 const app = require("../../app");
 const request = require("supertest");
 const fact = require("../../models/fact");
-const api = require("../../routes/api");
 
 describe("Integration/unit testing app.js", function () {
   describe("GET /", function () {
@@ -30,18 +29,6 @@ describe("Integration/unit testing app.js", function () {
       const response = await request(app).post("/submit").send(data);
       const { body } = response;
       expect(body).toEqual(data);
-    });
-
-    test("POST /submit request should call appendToFile method in our router", async () => {
-      const appendToFile = jest.spyOn(api, "appendToFile");
-      let data = {
-        trivia: true,
-        number: 5,
-        fact: "5 is an odd number",
-      };
-
-      const response = await request(app).post("/submit").send(data);
-      expect(appendToFile).toHaveBeenCalled();
     });
   });
 });
