@@ -29,6 +29,9 @@ function reader_norm(out, pathname, callback) {
   files.forEach((file) => {
     let data;
     let numbers;
+    if (!file.includes(".txt")) {
+      console.error(`Not a data file: ${pathname + file}`);
+    }
     try {
       data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
@@ -182,6 +185,7 @@ function reader_manual(outs, pathname, callbacks) {
 
 let countBad = 0;
 function normalize_common(element) {
+  console.log("ELEMENT!!!!", element);
   // do not return results that contain the number itself
   if (element.self) {
     return undefined;

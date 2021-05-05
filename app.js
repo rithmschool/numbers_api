@@ -14,7 +14,6 @@ const mousewheel = require("jquery-mousewheel");
 
 const fact = require("./models/fact.js");
 const router = require("./routes/api.js");
-const secrets = require("./secrets.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
 
