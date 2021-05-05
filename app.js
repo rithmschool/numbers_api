@@ -16,9 +16,9 @@ const numShares = 15;
 
 const fact = require("./models/fact.js");
 const { numRoutes } = require("./routes/numbers.js");
-
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
+require("dotenv").config();
 
 const nodeEnv = process.env.NODE_ENV || "development";
 const app = new express();
@@ -35,11 +35,11 @@ const app = new express();
 // var ADD_THIS_API_HOST = "api.addthis.com";
 // var ADD_THIS_API_SHARE_PATH =
 //   "/analytics/1.0/pub/shares.json?userid=" +
-//   secrets.ADD_THIS_USERNAME +
+//   process.env.ADD_THIS_USERNAME +
 //   "&password=" +
-//   secrets.ADD_THIS_PASSWORD +
+//   process.env.ADD_THIS_PASSWORD +
 //   "&pubid=" +
-//   secrets.ADD_THIS_PUBID;
+//   process.env.ADD_THIS_PUBID;
 // var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
 // var arguments = process.argv.splice(2);
 

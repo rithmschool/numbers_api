@@ -1,5 +1,5 @@
 *.pyc
-secrets.js
+.env
 suggestions.json
 node_modules
 .sass-cache/
