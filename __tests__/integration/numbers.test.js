@@ -1,4 +1,4 @@
-const { appendToFile } = require("../../routes/api");
+const { appendToFile } = require("../../routes/numbers");
 const fs = require("fs");
 const app = require("../../app");
 const request = require("supertest");
@@ -9,7 +9,8 @@ describe("appendToFile()", () => {
     let testFile = fs.writeFile("./facts-dump/test.txt", "", (err) => {
       if (err) throw err;
     });
-    let writeToTestFile = appendToFile("./facts-dump/test.txt", "hello world");
+
+    appendToFile("./facts-dump/test.txt", "hello world");
     fs.readFile("./facts-dump/test.txt", "utf8", (err, data) => {
       if (err) throw err;
 

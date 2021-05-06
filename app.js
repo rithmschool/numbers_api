@@ -1,22 +1,27 @@
 console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
-// Module dependencies.
 
+// Module dependencies.
 const fs = require("fs");
 const express = require("express");
 const https = require("https");
-const marked = require("marked");
 const _ = require("underscore");
 const cors = require("cors");
 const favicon = require("serve-favicon");
 const errorhandler = require("errorhandler");
 const nunjucks = require("nunjucks");
 const mousewheel = require("jquery-mousewheel");
+const marked = require("marked");
+const apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
+const numShares = 15;
 
 const fact = require("./models/fact.js");
-const router = require("./routes/api.js");
+const { numRoutes } = require("./routes/numbers.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
 require("dotenv").config();
+
+const nodeEnv = process.env.NODE_ENV || "development";
+const app = new express();
 
 // fake number of viistors
 // var BASE_VISITOR_TIME = new Date(1330560000000);
@@ -36,7 +41,6 @@ require("dotenv").config();
 //   "&pubid=" +
 //   process.env.ADD_THIS_PUBID;
 // var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
-var numShares = 15;
 // var arguments = process.argv.splice(2);
 
 // Dump all facts data to a directory
@@ -91,9 +95,6 @@ if (_.contains(arguments, "--dump")) {
 // }
 // setInterval(updateNumShares, GET_NUM_SHARES_INTERVAL_MS);
 
-const nodeEnv = process.env.NODE_ENV || "development";
-const app = express();
-
 // Configuration and middleware
 
 nunjucks.configure("views/", {
@@ -120,14 +121,11 @@ if (nodeEnv === "development") {
 }
 
 // Routes
-
-router.route(app, fact);
-
-var apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
-
-app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
+app.use("/", numRoutes);
 
 // TODO: Precompile this template.
+// Route that renders the home page html
+// source is ./README.md
 app.get("/", function (req, res) {
   var currDate = new Date();
   res.render("index.html", {
@@ -150,17 +148,6 @@ app.get("/", function (req, res) {
   });
 });
 
-// app.get("/type-time-highcharts", function (req, res) {
-//   res.json(highcharts.getTypeTimeHist());
-// });
-
-// app.get("/type-number-highcharts", function (req, res) {
-//   res.json(highcharts.getTypeNumberHist());
-// });
-
-app.post("/submit", function (req, res) {
-  router.appendToFile("./suggestions.json", JSON.stringify(req.body) + "\n");
-  res.send(req.body);
-});
+app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
 
 module.exports = app;

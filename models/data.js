@@ -24,7 +24,7 @@ const path = require("path");
 const [MIN_LENGTH, MAX_LENGTH] = [20, 150];
 
 function reader_norm(out, pathname, callback) {
-  // TODO: more reliable checking if file is data file
+  // TODO: more reliable checking if file is data file DONE
   let files = fs.readdirSync(pathname);
 
   files.forEach((file) => {
