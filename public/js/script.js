@@ -1,3 +1,4 @@
+
 (function () {
   // TODO: mvc to keep url, selected example, search text, and result in sync
   //		 +1 (david)
@@ -53,6 +54,7 @@
   }
 
   function update_result(url, $result) {
+    console.log('update result', url)
     $.ajax({
       url: url,
       dataType: "text",
@@ -82,7 +84,7 @@
       error: function () {
         setSandboxResult(
           "Uh oh, we don't understand that URL :( <br>" +
-            'Maybe read the <a href="#api">API docs</a> below?',
+          'Maybe read the <a href="#api">API docs</a> below?',
           false
         );
         $result.addClass("error");
@@ -95,7 +97,13 @@
       $("#search-text").val(url);
     }
     $("#search-link").prop("href", url);
-    update_result(url, $("#search-result"));
+    let debounceUpdate = _.debounce(function(a, b) {
+      update_result(a, b);
+    }, 1000);
+
+    debounceUpdate(url, $("#search-result"));
+
+    // update_result(url, $("#search-result"));
   }
 
   function update_history(hash) {
@@ -234,7 +242,7 @@
   $(function () {
     // Randomly pick a tagline to use
     setInterval(switchTagline, 30 * 1000);
-
+    
     // Initialize rolling counter widget
     $("#counter")
       .counter({
