@@ -116,7 +116,6 @@ describe("Unit testing functions in `models/data.js`", function () {
         pos: "DET",
       };
       element = normalizeElement(element);
-      console.log("ELEMENT!", element);
       expect(element.text[0]).toEqual(element.text[0].toLowerCase());
     });
 
