@@ -54,7 +54,6 @@
   }
 
   function update_result(url, $result) {
-    console.log('update result', url)
     $.ajax({
       url: url,
       dataType: "text",
