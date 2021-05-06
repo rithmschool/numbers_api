@@ -55,15 +55,17 @@ function reader_norm(out, pathname, callback) {
       _.each(numbers, function (number_data, number_key) {
         let float_key = parseFloat(number_key, 10);
 
-        // if data parsed from numbers is valid proceed to normalizing
-        // the elements of each value from numbers
+        // if parsed data from numbers is valid
+        // proceed to element normalization
         if (normalizeNumberData(float_key, number_data)) {
-          // if key doesn't currently exist in out object, create it.
+          // if key doesnt current exist in object, create it.
           if (!(float_key in out)) {
             out[float_key] = [];
           }
-
+          // o -> array of number fact objects at the given key
           let o = out[float_key];
+
+          // iterate over each number fact in out property value
           number_data.forEach((element) => {
             if (!element.text || !element.text.length) {
               console.warn(
@@ -79,18 +81,10 @@ function reader_norm(out, pathname, callback) {
             if (!element) {
               return;
             }
-            // const [MIN_LENGTH, MAX_LENGTH] = [20, 150];
-            // if (!element.manual) {
-            //   if (
-            //     element.text.length < MIN_LENGTH ||
-            //     element.text.length > MAX_LENGTH
-            //   ) {
-            //     return;
-            //   }
-            // }
+
             o.push(element);
           });
-          // TODO: should probably be performing this deletion also for early returns
+
           if (o.length === 0) {
             delete out[float_key];
           }
@@ -108,6 +102,9 @@ function reader_manual(outs, pathname, callbacks) {
   let files = fs.readdirSync(pathname);
   files.forEach((file) => {
     let data;
+    if (!file.includes(".txt")) {
+      console.error(`Not a data file: ${pathname + file}`);
+    }
     try {
       data = fs.readFileSync(pathname + file, {
         encoding: "utf8",
@@ -179,31 +176,21 @@ function reader_manual(outs, pathname, callbacks) {
   });
 }
 
-let countBad = 0;
-
 function normalizeNumberData(key, value) {
-  const numberKey = parseFloat(key, 10);
-  // is provided key a valid number
-  if (isNaN(numberKey)) {
+  if (isNaN(key)) {
     console.warn(
-      `Skipping invalid number_key, ${key} in file ${pathname + file}`
+      `Skipping invalid number_key, ${number_key} in file ${pathname + file}`
     );
     return false;
   }
 
-  // is provided value an array of fact objects with values present
   if (!value || value.length === 0) {
-    console.warn(
-      `Skipping empty number_data for numberKey ${numberKey} in file ${
-        pathname + file
-      }`
-    );
     return false;
   }
-
   return true;
 }
 
+let countBad = 0;
 function normalizeElement(element) {
   // do not return results that contain the number itself
   if (element.self) {
@@ -234,7 +221,7 @@ function normalizeElement(element) {
 
   if (!element.manual) {
     if (element.text.length < MIN_LENGTH || element.text.length > MAX_LENGTH) {
-      return;
+      return undefined;
     }
   }
 
