@@ -43,6 +43,8 @@ const app = new express();
 // var GET_NUM_SHARES_INTERVAL_MS = 1000 * 30;
 // var arguments = process.argv.splice(2);
 
+const API_URL_VISITS = `www.addthis.com/darkseid/analytics-api/${process.env.ADD_THIS_PUBID}/visits.json`;
+
 // Dump all facts data to a directory
 if (_.contains(arguments, "--dump")) {
   fact.dumpData("facts-dump");
