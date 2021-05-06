@@ -37,8 +37,7 @@ function factResponse(fact, req, res, num) {
   const type = req.params.type || "trivia";
   var factObj = fact.getFact({ number: num, type: type, options: req.query });
   var factStr = "" + factObj.text;
-  console.log(factObj);
-  console.log(factStr);
+
   var useJson =
     req.query.json !== undefined ||
     (req.header("Content-Type") || req.header("Accept") || "").includes(
