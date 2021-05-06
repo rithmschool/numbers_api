@@ -2,10 +2,19 @@ const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
 
+/**
+ *
+ * @param {object} options - if request has specified min or max they will be included here, otherwise options is an empty object.
+ * @returns a random number that has at least one associated fact in our database.
+ */
 function getRandomApiNum(options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
 
+  // console.log("MIN!!!", options.min);
+  // console.log("MAX!!!", options.max);
+
+  // random num
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[options.type]);
   } else {
@@ -17,6 +26,10 @@ function getRandomApiNum(options) {
 
     // TODO: Use binary search here instead of O(n) linear search
     let valid_keys = _.filter(dataKeys[options.type], function (element) {
+      // console.log("OPTIONS!!!", options);
+      // console.log('ELEMENT!!!', element);
+      // console.log("MIN!!!", options.min);
+      // console.log("MAX!!!", options.max);
       return element >= min && element <= max;
     });
 
@@ -25,6 +38,7 @@ function getRandomApiNum(options) {
 }
 
 function getSentence({ wantFragment, number, type, data }) {
+  console.log("WANT_FRAGMENT", wantFragment);
   let { text, date } = data;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -39,7 +53,6 @@ function getSentence({ wantFragment, number, type, data }) {
     const month = date.replace(/(\w+) \d+/, "$1");
     const day = parseInt(date.replace(/\w+ (\d+)/, "$1"), 10);
     text = `${text} on ${month} ${utils.getOrdinalSuffix(day)}`;
-
   }
 
   return `${prefix} ${text}.`;
@@ -68,7 +81,9 @@ function getDefaultMsg({ number, type, options = {} }) {
   }[type];
 
   const data = {
-    text: `${utils.randomChoice(defaultMsgs)}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`
+    text: `${utils.randomChoice(
+      defaultMsgs
+    )}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`,
   };
 
   return getSentence({
@@ -129,9 +144,11 @@ let dataKeys = {};
 
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
+    //console.log(pair)
     return pair.number;
   });
 });
+// console.log("DATAKEYS", dataKeys)
 
 function filterObj(obj, whitelist) {
   return _.pick(obj, whitelist);
@@ -162,6 +179,7 @@ function getFact({ number, type, options = {} }) {
   // Default query param options
   let defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
+  // console.log("DEFAULT OBJECT", defaults)
   _.defaults(options, defaults);
 
   if (!dataKeys[type]) {
@@ -203,15 +221,12 @@ function getFact({ number, type, options = {} }) {
   // Handle the case of number not found
   if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
     return {
-      text:
-        options[QUERY_DEFAULT] ||
-        getDefaultMsg({ number, type, options }),
+      text: options[QUERY_DEFAULT] || getDefaultMsg({ number, type, options }),
       number,
       found: false,
       type,
     };
   } else {
-
     let index = _.sortedIndex(dataKeys[type], number);
     if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
     let adjustedNum = dataPairs[type][index].string;
