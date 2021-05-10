@@ -40,11 +40,15 @@
       })();
     </script>
   </head>
+
   <body>
     <div id="body-inner">
       <div class="body-container">
         <div id="logo-outer">
-          <h1 class="logo">Numbers<span id="second-word">API</span></h1>
+          <h1 class="logo">
+            Numbers
+            <span id="second-word">API</span>
+          </h1>
         </div>
 
         <span id="tagline">
@@ -84,10 +88,9 @@
               <div class="example">
                 <h2>Date</h2>
                 <div class="example-box">
-                  <a href="#{{ dateFact.month }}/{{ dateFact.day }}/date"
-                    >numbersapi.com/{{ dateFact.month }}/{{ dateFact.day
-                    }}/date</a
-                  >
+                  <a href="#{{ dateFact.month }}/{{ dateFact.day }}/date">
+                    numbersapi.com/{{ dateFact.month }}/{{ dateFact.day }}/date
+                  </a>
                   <div class="api-result scroll">
                     {{ dateFact.data.text }}
                   </div>
@@ -114,17 +117,17 @@
                 <!-- TODO: fix scroll for sandbox. shouldn't be too much of an issue yet, since facts generally should not be long enough to overflow the container -->
                 <div id="search-result" class="api-result">
                   <div id="counter"></div>
-                  <span id="result-temporary-text"
-                    >Please enable JavaScript to use this API browser.</span
-                  >
+                  <span id="result-temporary-text">
+                    Please enable JavaScript to use this API browser.
+                  </span>
                   <div style="display: none;" id="add-fact-area">
                     <div id="add-fact-prefix">hello there</div>
                     <textarea id="add-fact-text" rows="3"></textarea>
                   </div>
                 </div>
-                <a id="add-fact-label" style="display: none;" href="#"
-                  >+ Add a fact</a
-                >
+                <a id="add-fact-label" style="display: none;" href="#">
+                  + Add a fact
+                </a>
               </div>
               <div id="search-examples">
                 <h3>Random</h3>
@@ -158,10 +161,9 @@
             class="visit-text"
             title="Generated using http://numbersapi.com/{{ sharesFact.number }}?notfound=floor&fragment"
           >
-            <a href="#{{ sharesFact.number }}?notfound=floor&fragment"
-              >This page has been shared more times than {{ sharesFact.text
-              }}.</a
-            >
+            <a href="#{{ sharesFact.number }}?notfound=floor&fragment">
+              This page has been shared more times than {{ sharesFact.text }}.
+            </a>
           </div>
           <div class="gradient-fill"></div>
         </section>
@@ -179,14 +181,20 @@
         <div>
           <p>
             Hacked up by
-            <a href="http://david-hu.com/2012/03/05/announcing-numbers-api.html"
-              >David</a
+            <a
+              href="http://david-hu.com/2012/03/05/announcing-numbers-api.html"
             >
-            and <a href="http://mduan.com">Mack</a>. Maintained by
-            <a href="https://www.rithmschool.com/">Rithm School</a>. <br />We
-            want your feedback! Visit our
-            <a href="https://github.com/rithmschool/numbers_api">Github</a> to
-            tell us what you use this for.
+              David
+            </a>
+            and
+            <a href="http://mduan.com">Mack</a>
+            . Maintained by
+            <a href="https://www.rithmschool.com/">Rithm School</a>
+            .
+            <br />
+            We want your feedback! Visit our
+            <a href="https://github.com/rithmschool/numbers_api">Github</a>
+            to tell us what you use this for.
           </p>
         </div>
       </footer>
@@ -230,16 +238,13 @@
         type="text/javascript"
         src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f52dad55e864066"
       ></script>
-
+      <script
+        src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"
+        type="text/javascript"
+      ></script>
       <script src="js/shared_utils.js"></script>
       <script src="js/script.js"></script>
     </div>
     <!-- #body-inner -->
-
-    <!-- Go to www.addthis.com/dashboard to customize your tools -->
-    <script
-      type="text/javascript"
-      src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5e4e232d004d763e"
-    ></script>
   </body>
 </html>
