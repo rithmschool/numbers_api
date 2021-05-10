@@ -1,4 +1,3 @@
-
 (function () {
   // TODO: mvc to keep url, selected example, search text, and result in sync
   //		 +1 (david)
@@ -83,7 +82,7 @@
       error: function () {
         setSandboxResult(
           "Uh oh, we don't understand that URL :( <br>" +
-          'Maybe read the <a href="#api">API docs</a> below?',
+            'Maybe read the <a href="#api">API docs</a> below?',
           false
         );
         $result.addClass("error");
@@ -91,7 +90,7 @@
     });
   }
 
-  // debounce makes it so mass scrolling/clicking the sandbox 
+  // debounce makes it so mass scrolling/clicking the sandbox
   // only calls the api after 300ms
   let debounceUpdate = _.debounce(update_result, 300);
 
@@ -239,7 +238,7 @@
   $(function () {
     // Randomly pick a tagline to use
     setInterval(switchTagline, 30 * 1000);
-    
+
     // Initialize rolling counter widget
     $("#counter")
       .counter({

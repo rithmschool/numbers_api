@@ -23,16 +23,21 @@ function setExpireHeaders(res) {
   res.set("Expires", 0);
 }
 
-/*
- * This is basically our "controllers" that's just an adapter between the URL
- * and the models. Allows for easier redesign of URLs and APIs and such. Extra
- * layer of indirection also lets us add other logic here.
- */
+/* This function is called within the routes. The function takes in the fact object
+*  from the fact.js file and a number, and sends a random fact about that number
+*  back to the frontend.
+   @param fact: This is the entire export from the fact.js file.
+   @param req: The request object from the frontend
+      - req.params.type can either be "undefined", "date", "trivia" or "math"
+   @param res: The response object sent to the frontend
+   @param num: The number for which a fact is being requested
+*/
 
 function factResponse(fact, req, res, num) {
   const type = req.params.type || "trivia";
   var factObj = fact.getFact({ number: num, type: type, options: req.query });
   var factStr = "" + factObj.text;
+
   var useJson =
     req.query.json !== undefined ||
     (req.header("Content-Type") || req.header("Accept") || "").includes(
@@ -67,6 +72,7 @@ function factResponse(fact, req, res, num) {
  * Similar to factResponse(), but supports returning facts for multiple numbers in order
  * support making batch requests
  */
+
 function factsResponse(fact, req, res, nums) {
   var useJson =
     req.params.json !== undefined ||
@@ -102,7 +108,14 @@ function factsResponse(fact, req, res, nums) {
 // exports.route = function (app, fact) {
 var allTypesRegex = "/:type(date|year|trivia|math)?";
 
-// parse a batch request string of (e.g. "1..3,10") into individual numbers
+/**
+/* Parses a batch request string into individual numbers.
+ * 
+ * @param rangesStr: This is the range of numbers (e.g. "1..3,10")
+ * @param {*} parseValue: This is the range of numbers (e.g. "1..3,10")
+ * @returns number facts
+ */
+
 function getBatchNums(rangesStr, parseValue) {
   var nums = [];
   var count = 0;
@@ -131,6 +144,20 @@ function getBatchNums(rangesStr, parseValue) {
   return nums;
 }
 
+/** GET /:num(-?[0-9]+) - gets a fact about a number or date (e.g. 5/4)
+ *
+ * Either returns a string with just the fact if no content-type specfication
+ * OR
+ * returns the JSON below if content-type "application/json" is specified
+ *
+ * => {
+ *        "text": "200 is degrees in a human\"s field of vision (approximately).",
+ *        "number": 200,
+ *        "found": true,
+ *        "type": "trivia"
+ *    }
+ **/
+
 router.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
   var number = parseInt(req.params.num, 10);
 
@@ -141,6 +168,29 @@ router.get("/:num(-?[0-9]+)" + allTypesRegex, function (req, res) {
 
   factResponse(fact, req, res, number);
 });
+
+/** GET /:num([-0-9.,]+) - gets facts about multiple numbers
+ *
+ * Either returns an object with just a key, value pair of number and fact
+ * (e.g. "1": "1 is the loneliest number.") if no content-type is specified
+ * OR
+ * returns the JSON below if content-type "application/json" is specified
+ *
+ * => {
+ *        "1": {
+ *        "text": "1 is the number of dimensions of a line.",
+ *        "number": 1,
+ *        "found": true,
+ *        "type": "trivia"
+ *        },
+ *        "2": {
+ *        "text": "2 is the first magic number in physics.",
+ *        "number": 2,
+ *        "found": true,
+ *        "type": "trivia"
+ *        }
+ *    }
+ **/
 
 router.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
   if (
@@ -159,6 +209,22 @@ router.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
   factsResponse(fact, req, res, nums);
 });
 
+/** GET /:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)? - gets a fact
+ *  about a date of the year
+ *
+ * Either returns a string with just the date fact if no content-type is specified
+ * OR
+ * returns the JSON below if content-type "application/json" is specified
+ *
+ * => {
+ *        "text": "February 11th is the day in 1919 that Friedrich Ebert (SPD), is elected President of Germany.",
+ *        "year": 1919,
+ *        "number": 42,
+ *        "found": true,
+ *        "type": "date"
+ *    }
+ **/
+
 router.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (
   req,
   res
@@ -168,8 +234,24 @@ router.get("/:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)?", function (
   factResponse(fact, req, res, dayOfYear);
 });
 
+/** GET /:month(-?[0-9]+)/:day(-?[0-9]+)/:type(date)? - gets a fact
+ *  about a date of the year
+ *
+ * Either returns a string with just the date fact if no content-type is specified
+ * OR
+ * returns the JSON below if content-type "application/json" is specified
+ *
+ * => {
+ *        "text": "February 11th is the day in 1919 that Friedrich Ebert (SPD), is elected President of Germany.",
+ *        "year": 1919,
+ *        "number": 42,
+ *        "found": true,
+ *        "type": "date"
+ *    }
+ **/
+
 // TODO: currently returned json uses dayOfYear as key rather than "month/day".
-// consider returning "month/day"
+// consider returning "month/day"eq
 router.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
   if (
     !req.params.date.match(
@@ -189,6 +271,19 @@ router.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
   factsResponse(fact, req, res, nums);
 });
 
+/** GET /random/:type? - gets a random fact
+ *
+ * Either returns a string with just the date fact if no content-type is specified
+ * OR 
+ * returns the JSON below if content-type "application/json" is specified
+ *
+ * => {
+        "text": "1446 is the number of graphs with 9 vertices and 5 edges.",
+        "number": 1446,
+        "found": true,
+        "type": "math"
+      }
+ **/
 router.get("/random/:type?", function (req, res) {
   factResponse(fact, req, res, "random");
 });

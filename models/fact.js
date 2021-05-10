@@ -2,10 +2,16 @@ const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
 
+/**
+ *
+ * @param {object} options - if request has specified min or max they will be included here, otherwise options is an empty object.
+ * @returns a random number that has at least one associated fact in our database.
+ */
 function getRandomApiNum(options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
 
+  // random num
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[options.type]);
   } else {
@@ -24,6 +30,18 @@ function getRandomApiNum(options) {
   }
 }
 
+/**
+ * Function takes in the fact object and returns the fact text with a standardized prefix attached
+ *
+ * @param {object}
+ *    wantFragment: if query param "fragment" exists, specifies that only text should be returned
+ *    number: number requested
+ *    type: date, math, trivia, or year
+ *    data: object containing the number fact
+ *
+ * @returns: The text string fact with a standardized prefix attached
+ */
+
 function getSentence({ wantFragment, number, type, data }) {
   let { text, date } = data;
   if (wantFragment !== undefined) {
@@ -39,11 +57,22 @@ function getSentence({ wantFragment, number, type, data }) {
     const month = date.replace(/(\w+) \d+/, "$1");
     const day = parseInt(date.replace(/\w+ (\d+)/, "$1"), 10);
     text = `${text} on ${month} ${utils.getOrdinalSuffix(day)}`;
-
   }
 
   return `${prefix} ${text}.`;
 }
+
+/**
+ * Function returns a standardized message (from getSentence()) if a number fact does not
+ * exist within the corresponding type.
+ *
+ * @param {object}
+ *    number: number requested
+ *    type: date, math, trivia, or year
+ *    options: If request has specified min or max they will be included here, otherwise options is an empty object.
+ *
+ * @returns: The text string fact with a standardized prefix attached
+ */
 
 function getDefaultMsg({ number, type, options = {} }) {
   const mathMsgs = [
@@ -68,7 +97,9 @@ function getDefaultMsg({ number, type, options = {} }) {
   }[type];
 
   const data = {
-    text: `${utils.randomChoice(defaultMsgs)}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`
+    text: `${utils.randomChoice(
+      defaultMsgs
+    )}. Have a better fact? Submit one at github.com/rithmschool/numbers_api`,
   };
 
   return getSentence({
@@ -91,12 +122,17 @@ const NOT_FOUND = {
 const QUERY_NOT_FOUND = "notfound";
 const QUERY_DEFAULT = "default";
 
-// Keys of each of the data mappings for use in binary search (unfortunately,
-// _.map() on objects returns an array instead of an object). Pads with negative
-// and positive infinity sentinels.
-// Stores both the number as well as string representation of number as number representation is needed.
-// Maybe this is not necessary, but too tired to think about it for now.
-// PRE: data is sorted
+/* Keys of each of the data mappings for use in binary search (unfortunately,
+   _.map() on objects returns an array instead of an object). Pads with negative
+   and positive infinity sentinels.
+   Stores both the number as well as string representation of number as number representation is needed.
+   Data is sorted in ascending order.
+   Maybe this is not necessary, but too tired to think about it for now.
+
+   @returns: An object with number categories as keys (e.g. "math"). The value for each key
+   is an array of objects which represent each of the possible numbers for each category 
+   (e.g. { number: 70, string: '70' }). 
+*/
 const dataPairs = (function () {
   let ret = {};
   _.each(data, function (numbers, category) {
@@ -127,12 +163,20 @@ const dataPairs = (function () {
 // _.sortedIndex() is working as expected. need to investigate
 let dataKeys = {};
 
+/**
+ * @param {object}
+ *    dataPairs: Full object containing number/string pairs for all categories (e.g. math)
+ *    pairs: the array of number/string objects for each category
+ *    category: e.g. math or trivia
+ * @returns: Just the number from the number/string object
+ */
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
     return pair.number;
   });
 });
 
+// Returns an object with the key "text". The value is the fact. Certain facts may also have a year key/value pair.
 function filterObj(obj, whitelist) {
   return _.pick(obj, whitelist);
 }
@@ -141,6 +185,7 @@ function filterObj(obj, whitelist) {
 // with the API
 const API_WHITELIST = ["text", "year", "date"];
 
+// Copies properties from newObj into the result of filterObj()
 function apiExtend(obj, newObj) {
   return _.extend(filterObj(obj, API_WHITELIST), newObj);
 }
@@ -203,15 +248,12 @@ function getFact({ number, type, options = {} }) {
   // Handle the case of number not found
   if (options[QUERY_NOT_FOUND] === NOT_FOUND.DEFAULT) {
     return {
-      text:
-        options[QUERY_DEFAULT] ||
-        getDefaultMsg({ number, type, options }),
+      text: options[QUERY_DEFAULT] || getDefaultMsg({ number, type, options }),
       number,
       found: false,
       type,
     };
   } else {
-
     let index = _.sortedIndex(dataKeys[type], number);
     if (options[QUERY_NOT_FOUND] === NOT_FOUND.FLOOR) index--;
     let adjustedNum = dataPairs[type][index].string;
@@ -230,6 +272,7 @@ function getFact({ number, type, options = {} }) {
   }
 }
 
+// Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
   const fs = require("fs");
 
