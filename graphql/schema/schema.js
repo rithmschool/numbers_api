@@ -56,9 +56,9 @@ const RootQuery = new GraphQLObjectType({
       args: { number: { type: GraphQLInt } },
       resolve(parent, args) {
         // code to get data from db / other source
-        // let num = args.number
-        // return getAllFacts(num)
-        return _.find(dummyData, { number: args.number });
+        let num = args.number;
+        return getAllFacts(num);
+        // return _.find(dummyData, { number: args.number });
       },
     },
   },

@@ -279,6 +279,7 @@ function getAllFacts(num) {
   for (let type of types) {
     res[type] = data[type][num].map(({ text }) => text);
   }
+  res.number = num;
   return res;
 }
 console.log(getAllFacts(24));
