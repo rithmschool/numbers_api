@@ -11,9 +11,6 @@ function getRandomApiNum(options) {
   let min = parseInt(options.min, 10);
   let max = parseInt(options.max, 10);
 
-  // console.log("MIN!!!", options.min);
-  // console.log("MAX!!!", options.max);
-
   // random num
   if (isNaN(min) && isNaN(max)) {
     return utils.randomChoice(dataKeys[options.type]);
@@ -37,8 +34,19 @@ function getRandomApiNum(options) {
   }
 }
 
+/**
+ * Function takes in the fact object and returns the fact text with a standardized prefix attached
+ *
+ * @param {object}
+ *    wantFragment: if query param "fragment" exists, specifies that only text should be returned
+ *    number: number requested
+ *    type: date, math, trivia, or year
+ *    data: object containing the number fact
+ *
+ * @returns: The text string fact with a standardized prefix attached
+ */
+
 function getSentence({ wantFragment, number, type, data }) {
-  console.log("WANT_FRAGMENT", wantFragment);
   let { text, date } = data;
   if (wantFragment !== undefined) {
     // Because wantFragment could be a query field value
@@ -57,6 +65,18 @@ function getSentence({ wantFragment, number, type, data }) {
 
   return `${prefix} ${text}.`;
 }
+
+/**
+ * Function returns a standardized message (from getSentence()) if a number fact does not
+ * exist within the corresponding type.
+ *
+ * @param {object}
+ *    number: number requested
+ *    type: date, math, trivia, or year
+ *    options: If request has specified min or max they will be included here, otherwise options is an empty object.
+ *
+ * @returns: The text string fact with a standardized prefix attached
+ */
 
 function getDefaultMsg({ number, type, options = {} }) {
   const mathMsgs = [
@@ -106,12 +126,17 @@ const NOT_FOUND = {
 const QUERY_NOT_FOUND = "notfound";
 const QUERY_DEFAULT = "default";
 
-// Keys of each of the data mappings for use in binary search (unfortunately,
-// _.map() on objects returns an array instead of an object). Pads with negative
-// and positive infinity sentinels.
-// Stores both the number as well as string representation of number as number representation is needed.
-// Maybe this is not necessary, but too tired to think about it for now.
-// PRE: data is sorted
+/* Keys of each of the data mappings for use in binary search (unfortunately,
+   _.map() on objects returns an array instead of an object). Pads with negative
+   and positive infinity sentinels.
+   Stores both the number as well as string representation of number as number representation is needed.
+   Data is sorted in ascending order.
+   Maybe this is not necessary, but too tired to think about it for now.
+
+   @returns: An object with number categories as keys (e.g. "math"). The value for each key
+   is an array of objects which represent each of the possible numbers for each category 
+   (e.g. { number: 70, string: '70' }). 
+*/
 const dataPairs = (function () {
   let ret = {};
   _.each(data, function (numbers, category) {
@@ -142,14 +167,20 @@ const dataPairs = (function () {
 // _.sortedIndex() is working as expected. need to investigate
 let dataKeys = {};
 
+/**
+ * @param {object}
+ *    dataPairs: Full object containing number/string pairs for all categories (e.g. math)
+ *    pairs: the array of number/string objects for each category
+ *    category: e.g. math or trivia
+ * @returns: Just the number from the number/string object
+ */
 _.each(dataPairs, function (pairs, category) {
   dataKeys[category] = _.map(pairs, function (pair) {
-    //console.log(pair)
     return pair.number;
   });
 });
-// console.log("DATAKEYS", dataKeys)
 
+// Returns an object with the key "text". The value is the fact. Certain facts may also have a year key/value pair.
 function filterObj(obj, whitelist) {
   return _.pick(obj, whitelist);
 }
@@ -158,6 +189,7 @@ function filterObj(obj, whitelist) {
 // with the API
 const API_WHITELIST = ["text", "year", "date"];
 
+// Copies properties from newObj into the result of filterObj()
 function apiExtend(obj, newObj) {
   return _.extend(filterObj(obj, API_WHITELIST), newObj);
 }
@@ -179,7 +211,6 @@ function getFact({ number, type, options = {} }) {
   // Default query param options
   let defaults = {};
   defaults[QUERY_NOT_FOUND] = NOT_FOUND.DEFAULT;
-  // console.log("DEFAULT OBJECT", defaults)
   _.defaults(options, defaults);
 
   if (!dataKeys[type]) {
@@ -245,6 +276,7 @@ function getFact({ number, type, options = {} }) {
   }
 }
 
+// Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
   const fs = require("fs");
 
