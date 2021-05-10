@@ -90,12 +90,16 @@
     });
   }
 
+  // debounce makes it so mass scrolling/clicking the sandbox
+  // only calls the api after 300ms
+  let debounceUpdate = _.debounce(update_result, 300);
+
   function update_query(url) {
     if ($("#search-text").val() !== url) {
       $("#search-text").val(url);
     }
     $("#search-link").prop("href", url);
-    update_result(url, $("#search-result"));
+    debounceUpdate(url, $("#search-result"));
   }
 
   function update_history(hash) {
