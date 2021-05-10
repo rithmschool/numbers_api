@@ -23,6 +23,13 @@ const fs = require("fs");
 const path = require("path");
 const [MIN_LENGTH, MAX_LENGTH] = [20, 150];
 
+/**
+ * generates an object containing a key for each number and an array of objects (number fact of that key) as the value
+ * @param {object} out - an empty object that will contain number facts for the number category
+ * @param {string} pathname - path to desired the local directory for .txt files that contain facts
+ * @param {function definition} callback - function for data normalization, standardizes and cleans data to desired format
+ */
+
 function reader_norm(out, pathname, callback) {
   // TODO: more reliable checking if file is data file DONE
   let files = fs.readdirSync(pathname);
@@ -84,7 +91,8 @@ function reader_norm(out, pathname, callback) {
 
             o.push(element);
           });
-
+          // if after iterating no facts were pushed to o
+          // delete the the object key/value
           if (o.length === 0) {
             delete out[float_key];
           }
@@ -96,7 +104,20 @@ function reader_norm(out, pathname, callback) {
   });
 }
 
-// Format is line separated facts of format <#> <t|m|d|y> <fact>
+/**
+ * generates a object where each property is an array of number facts for that number category
+ * 
+ * @param {object } outs -  object of objects where each property is the normalized fact data generated from reader norm. 
+ * e.g. -
+          * {
+              d: list of date number facts,
+              y: list of year number facts,
+              m: list of math number facts,
+              t: list of trivia number facts,
+            };
+ * @param {string} pathname - path to desired the local directory for .txt files that contain facts 
+ * @param {object} callback - object of callbacks for data normalization o f each data type.
+ */
 function reader_manual(outs, pathname, callbacks) {
   // TODO: more reliable checking if file is data file
   let files = fs.readdirSync(pathname);
@@ -176,6 +197,13 @@ function reader_manual(outs, pathname, callbacks) {
   });
 }
 
+/**
+ * validates and normalizes data from number data file.
+ *
+ * @param {num} key - parsed number from file
+ * @param {object} value - array of objects, where each obj is a number fact
+ * @returns true if data is valid, false otherwise
+ */
 function normalizeNumberData(key, value) {
   if (isNaN(key)) {
     console.warn(
@@ -191,6 +219,17 @@ function normalizeNumberData(key, value) {
 }
 
 let countBad = 0;
+/**
+ * 
+ * @param {object} element - value of number key 
+ *  -e.g. {
+            text: "the dominant Japanese brand name of NEC's personal computers in  the 1980s",
+            self: false,
+            manual: true
+          }
+ *      
+ * @returns normalized element
+ */
 function normalizeElement(element) {
   // do not return results that contain the number itself
   if (element.self) {

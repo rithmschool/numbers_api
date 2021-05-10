@@ -1,225 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Numbers API</title>
+    <!-- TODO: uncomment <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <meta
+      name="description"
+      content="An API for interesting facts about numbers."
+    />
+    <meta name="author" content="David Hu, Mack Duan" />
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Numbers API</title>
-  <!-- TODO: uncomment <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-  <meta name="description" content="An API for interesting facts about numbers." />
-  <meta name="author" content="David Hu, Mack Duan" />
-
-  <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-  <!--[if lt IE 9]>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-  <!-- Le styles -->
-  <link href="css/screen.css" rel="stylesheet" type="text/css" />
+    <!-- Le styles -->
+    <link href="css/screen.css" rel="stylesheet" type="text/css" />
 
-  <!-- Le fav and touch icons -->
-  <link rel="shortcut icon" href="img/favicon.ico" />
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
 
-  <!-- Le Google Analytics -->
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(["_setAccount", "UA-29155677-1"]);
-    _gaq.push(["_trackPageview"]);
+    <!-- Le Google Analytics -->
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(["_setAccount", "UA-29155677-1"]);
+      _gaq.push(["_trackPageview"]);
 
-    (function () {
-      var ga = document.createElement("script");
-      ga.type = "text/javascript";
-      ga.async = true;
-      ga.src =
-        ("https:" == document.location.protocol
-          ? "https://ssl"
-          : "http://www") + ".google-analytics.com/ga.js";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-</head>
-
-<body>
-  <div id="body-inner">
-    <div class="body-container">
-      <div id="logo-outer">
-        <h1 class="logo">Numbers<span id="second-word">API</span></h1>
-      </div>
-
-      <span id="tagline">
-        An API for interesting facts about numbers
-      </span>
-      <ul id="tagline-alternates" style="display: none;">
-        <li>Bring meaning to your metrics and stories to your dates</li>
-        <li>An API for interesting facts about numbers</li>
-        <li>Bring your metrics and dates to life</li>
-        <li>Let your metrics tell tales with our API of number facts</li>
-        <li>What tales do your metrics tell?</li>
-        <li>Let your statistics tell tales and dates come to life</li>
-      </ul>
-
-      <section id="usage-outer">
-        <div id="usage">
-          <div id="examples">
-            <div class="example">
-              <h2>Math</h2>
-              <div class="example-box">
-                <a href="#5/math">numbersapi.com/5/math</a>
-                <div class="api-result scroll">
-                  5 is the number of platonic solids.
-                </div>
-              </div>
-            </div>
-            <div class="example">
-              <h2>Trivia</h2>
-              <div class="example-box">
-                <a href="#42">numbersapi.com/42</a>
-                <div class="api-result scroll">
-                  42 is the number of little squares forming the left side
-                  trail of Microsoft's Windows 98 logo.
-                </div>
-              </div>
-            </div>
-            <div class="example">
-              <h2>Date</h2>
-              <div class="example-box">
-                <a href="#{{ dateFact.month }}/{{ dateFact.day }}/date">numbersapi.com/{{ dateFact.month }}/{{
-                  dateFact.day
-                  }}/date</a>
-                <div class="api-result scroll">
-                  {{ dateFact.data.text }}
-                </div>
-              </div>
-              <!-- example-box -->
-            </div>
-            <!-- example -->
-          </div>
-          <!-- examples -->
-        </div>
-        <!-- usage -->
-      </section>
-
-      <section id="sandbox-outer">
-        <div id="sandbox">
-          <div class="arrow"></div>
-          <div id="sandbox-text">Try it out!</div>
-          <div id="outer-search">
-            <div id="search">
-              <div id="search-box">
-                <label><a id="search-link">numbersapi.com/</a></label>
-                <span><input id="search-text" type="text" /></span>
-              </div>
-              <!-- TODO: fix scroll for sandbox. shouldn't be too much of an issue yet, since facts generally should not be long enough to overflow the container -->
-              <div id="search-result" class="api-result">
-                <div id="counter"></div>
-                <span id="result-temporary-text">Please enable JavaScript to use this API browser.</span>
-                <div style="display: none;" id="add-fact-area">
-                  <div id="add-fact-prefix">hello there</div>
-                  <textarea id="add-fact-text" rows="3"></textarea>
-                </div>
-              </div>
-              <a id="add-fact-label" style="display: none;" href="#">+ Add a fact</a>
-            </div>
-            <div id="search-examples">
-              <h3>Random</h3>
-              <ul>
-                <li><a href="#random/trivia">random/trivia</a></li>
-                <li><a href="#random/year">random/year</a></li>
-                <li><a href="#random/date">random/date</a></li>
-                <li><a href="#random/math">random/math</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="visitors">
-        <div class="gradient-fill"></div>
-        <div class="flare-background"></div>
-
-        <div id="addthis">
-          <div class="addthis_toolbox addthis_32x32_style">
-            <a class="addthis_button_preferred_1"></a>
-            <a class="addthis_button_preferred_2"></a>
-            <a class="addthis_button_preferred_3"></a>
-            <a class="addthis_button_preferred_4"></a>
-            <a class="addthis_button_compact"></a>
-            <a class="addthis_counter addthis_bubble_style"></a>
-          </div>
-        </div>
-
-        <div class="visit-text"
-          title="Generated using http://numbersapi.com/{{ sharesFact.number }}?notfound=floor&fragment">
-          <a href="#{{ sharesFact.number }}?notfound=floor&fragment">This page has been shared more times than {{
-            sharesFact.text
-            }}.</a>
-        </div>
-        <div class="gradient-fill"></div>
-      </section>
-
-      <section id="api-outer">
-        <div id="api">
-          <h1>API Reference</h1>
-          {{ docs|safe }}
-        </div>
-      </section>
-    </div>
-    <!-- /body-container -->
-
-    <footer>
-      <div>
-        <p>
-          Hacked up by
-          <a href="http://david-hu.com/2012/03/05/announcing-numbers-api.html">David</a>
-          and <a href="http://mduan.com">Mack</a>. Maintained by <a href="https://www.rithmschool.com/">Rithm
-            School</a>.
-          <br>We want your feedback! Visit our <a href="https://github.com/rithmschool/numbers_api">Github</a> to
-          tell us what you use this for.
-        </p>
-      </div>
-    </footer>
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="/js/jquery.mousewheel.js" type="text/javascript"></script>
-    <script src="/js/jquery.counter.js" type="text/javascript"></script>
-
-    <noscript>
-      <!-- TODO: figure out how to add styles via import stylesheet -->
-      <style type="text/css"></style>
-    </noscript>
-
-    <!-- AddThis sharing icons -->
-    <script>
-      var addthis_config = {
-        data_ga_tracker: "UA-29155677-1",
-        data_ga_property: "UA-29155677-1",
-        data_ga_social: true,
-        services_exclude: "print",
-        ui_cobrand: "Numbers API",
-        ui_header_color: "#02273f",
-        ui_header_background: "#cce4f4",
-      };
-      var addthis_share = {
-        url: "http://numbersapi.com",
-        description: "An API for interesting facts about numbers.",
-        templates: {
-          twitter:
-            "An API for interesting facts about numbers: http://numbersapi.com",
-        },
-      };
+      (function () {
+        var ga = document.createElement("script");
+        ga.type = "text/javascript";
+        ga.async = true;
+        ga.src =
+          ("https:" == document.location.protocol
+            ? "https://ssl"
+            : "http://www") + ".google-analytics.com/ga.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(ga, s);
+      })();
     </script>
-    <script type="text/javascript"
-      src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f52dad55e864066"></script>
-    <script src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js" 
-    type="text/javascript"
-    ></script>
-    <script src="js/shared_utils.js"></script>
-    <script src="js/script.js"></script>
-  </div>
-  <!-- #body-inner -->
-</body>
+  </head>
 
+  <body>
+    <div id="body-inner">
+      <div class="body-container">
+        <div id="logo-outer">
+          <h1 class="logo">
+            Numbers
+            <span id="second-word">API</span>
+          </h1>
+        </div>
+
+        <span id="tagline">
+          An API for interesting facts about numbers
+        </span>
+        <ul id="tagline-alternates" style="display: none;">
+          <li>Bring meaning to your metrics and stories to your dates</li>
+          <li>An API for interesting facts about numbers</li>
+          <li>Bring your metrics and dates to life</li>
+          <li>Let your metrics tell tales with our API of number facts</li>
+          <li>What tales do your metrics tell?</li>
+          <li>Let your statistics tell tales and dates come to life</li>
+        </ul>
+
+        <section id="usage-outer">
+          <div id="usage">
+            <div id="examples">
+              <div class="example">
+                <h2>Math</h2>
+                <div class="example-box">
+                  <a href="#5/math">numbersapi.com/5/math</a>
+                  <div class="api-result scroll">
+                    5 is the number of platonic solids.
+                  </div>
+                </div>
+              </div>
+              <div class="example">
+                <h2>Trivia</h2>
+                <div class="example-box">
+                  <a href="#42">numbersapi.com/42</a>
+                  <div class="api-result scroll">
+                    42 is the number of little squares forming the left side
+                    trail of Microsoft's Windows 98 logo.
+                  </div>
+                </div>
+              </div>
+              <div class="example">
+                <h2>Date</h2>
+                <div class="example-box">
+                  <a href="#{{ dateFact.month }}/{{ dateFact.day }}/date">
+                    numbersapi.com/{{ dateFact.month }}/{{ dateFact.day }}/date
+                  </a>
+                  <div class="api-result scroll">
+                    {{ dateFact.data.text }}
+                  </div>
+                </div>
+                <!-- example-box -->
+              </div>
+              <!-- example -->
+            </div>
+            <!-- examples -->
+          </div>
+          <!-- usage -->
+        </section>
+
+        <section id="sandbox-outer">
+          <div id="sandbox">
+            <div class="arrow"></div>
+            <div id="sandbox-text">Try it out!</div>
+            <div id="outer-search">
+              <div id="search">
+                <div id="search-box">
+                  <label><a id="search-link">numbersapi.com/</a></label>
+                  <span><input id="search-text" type="text" /></span>
+                </div>
+                <!-- TODO: fix scroll for sandbox. shouldn't be too much of an issue yet, since facts generally should not be long enough to overflow the container -->
+                <div id="search-result" class="api-result">
+                  <div id="counter"></div>
+                  <span id="result-temporary-text">
+                    Please enable JavaScript to use this API browser.
+                  </span>
+                  <div style="display: none;" id="add-fact-area">
+                    <div id="add-fact-prefix">hello there</div>
+                    <textarea id="add-fact-text" rows="3"></textarea>
+                  </div>
+                </div>
+                <a id="add-fact-label" style="display: none;" href="#">
+                  + Add a fact
+                </a>
+              </div>
+              <div id="search-examples">
+                <h3>Random</h3>
+                <ul>
+                  <li><a href="#random/trivia">random/trivia</a></li>
+                  <li><a href="#random/year">random/year</a></li>
+                  <li><a href="#random/date">random/date</a></li>
+                  <li><a href="#random/math">random/math</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="visitors">
+          <div class="gradient-fill"></div>
+          <div class="flare-background"></div>
+
+          <div id="addthis">
+            <div class="addthis_toolbox addthis_32x32_style">
+              <a class="addthis_button_preferred_1"></a>
+              <a class="addthis_button_preferred_2"></a>
+              <a class="addthis_button_preferred_3"></a>
+              <a class="addthis_button_preferred_4"></a>
+              <a class="addthis_button_compact"></a>
+              <a class="addthis_counter addthis_bubble_style"></a>
+            </div>
+          </div>
+
+          <div
+            class="visit-text"
+            title="Generated using http://numbersapi.com/{{ sharesFact.number }}?notfound=floor&fragment"
+          >
+            <a href="#{{ sharesFact.number }}?notfound=floor&fragment">
+              This page has been shared more times than {{ sharesFact.text }}.
+            </a>
+          </div>
+          <div class="gradient-fill"></div>
+        </section>
+
+        <section id="api-outer">
+          <div id="api">
+            <h1>API Reference</h1>
+            {{ docs|safe }}
+          </div>
+        </section>
+      </div>
+      <!-- /body-container -->
+
+      <footer>
+        <div>
+          <p>
+            Hacked up by
+            <a
+              href="http://david-hu.com/2012/03/05/announcing-numbers-api.html"
+            >
+              David
+            </a>
+            and
+            <a href="http://mduan.com">Mack</a>
+            . Maintained by
+            <a href="https://www.rithmschool.com/">Rithm School</a>
+            .
+            <br />
+            We want your feedback! Visit our
+            <a href="https://github.com/rithmschool/numbers_api">Github</a>
+            to tell us what you use this for.
+          </p>
+        </div>
+      </footer>
+
+      <!-- Le javascript
+    ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"
+        type="text/javascript"
+      ></script>
+      <script src="/js/jquery.mousewheel.js" type="text/javascript"></script>
+      <script src="/js/jquery.counter.js" type="text/javascript"></script>
+
+      <noscript>
+        <!-- TODO: figure out how to add styles via import stylesheet -->
+        <style type="text/css"></style>
+      </noscript>
+
+      <!-- AddThis sharing icons -->
+      <script>
+        var addthis_config = {
+          data_ga_tracker: "UA-29155677-1",
+          data_ga_property: "UA-29155677-1",
+          data_ga_social: true,
+          services_exclude: "print",
+          ui_cobrand: "Numbers API",
+          ui_header_color: "#02273f",
+          ui_header_background: "#cce4f4",
+        };
+        var addthis_share = {
+          url: "http://numbersapi.com",
+          description: "An API for interesting facts about numbers.",
+          templates: {
+            twitter:
+              "An API for interesting facts about numbers: http://numbersapi.com",
+          },
+        };
+      </script>
+      <script
+        type="text/javascript"
+        src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4f52dad55e864066"
+      ></script>
+      <script
+        src="https://cdn.jsdelivr.net/npm/underscore@1.13.1/underscore-umd-min.js"
+        type="text/javascript"
+      ></script>
+      <script src="js/shared_utils.js"></script>
+      <script src="js/script.js"></script>
+    </div>
+    <!-- #body-inner -->
+  </body>
 </html>
