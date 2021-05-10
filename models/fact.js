@@ -23,10 +23,6 @@ function getRandomApiNum(options) {
 
     // TODO: Use binary search here instead of O(n) linear search
     let valid_keys = _.filter(dataKeys[options.type], function (element) {
-      // console.log("OPTIONS!!!", options);
-      // console.log('ELEMENT!!!', element);
-      // console.log("MIN!!!", options.min);
-      // console.log("MAX!!!", options.max);
       return element >= min && element <= max;
     });
 
