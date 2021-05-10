@@ -1,7 +1,7 @@
 const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
-
+console.log('data here', data.math['0'][0].text);
 /**
  *
  * @param {object} options - if request has specified min or max they will be included here, otherwise options is an empty object.
@@ -271,6 +271,18 @@ function getFact({ number, type, options = {} }) {
     });
   }
 }
+
+// get all facts and types that contains a number
+function getFacts(num) {
+  let res = {};
+  let types = ['year', 'date', 'trivia', 'math'];
+  for (let type of types) {
+    res[type] = data[type][num].map(({text}) => text);
+  }
+  return res;
+}
+console.log(getFacts(24));
+
 
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
