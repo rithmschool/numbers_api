@@ -75,7 +75,6 @@ function getSentence({ wantFragment, number, type, data }) {
  */
 
 function getDefaultMsg({ number, type, options = {} }) {
-
   const mathMsgs = [
     "an uninteresting number",
     "a boring number",
@@ -277,23 +276,21 @@ function getFact({ number, type, options = {} }) {
 function getAllFacts(num) {
   let res = {};
   let types = ["year", "trivia", "math", "date"];
+  let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
+
   for (let type of types) {
-    if (type === "date") {
-      num = utils.dateToDayOfYear(new Date(2004, 0, num));      
-      let prefix = utils.getStandalonePrefix(num, type);
-      res[type] = data[type][num].map(({ text }) => `${prefix} ${text}`);
+    if (type === "date" && data[type][dateNum]) {
+      let prefix = utils.getStandalonePrefix(dateNum, type);
+      res[type] = data[type][dateNum].map(({ text }) => `${prefix} ${text}`);
     } else if (data[type][num]) {
-      console.log('num in getallfacts', num);
       res[type] = data[type][num].map(({ text }) => text);
     } else {
       res[type] = [getDefaultMsg({ number: num, type })];
     }
-
   }
   res.number = num;
   return res;
 }
-
 
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
