@@ -272,7 +272,19 @@ function getFact({ number, type, options = {} }) {
   }
 }
 
-// get all facts and types that contains a number
+/**
+ * getAllFacts() is used as the graphQL endpoint in lieu of querying a database
+ *
+ * @param num: is an int
+ * @returns {
+ *            number: num
+ *            year: string[],
+ *            trivia: string[],
+ *            math: string[],
+ *            date: string[]
+ *          }
+ * The return must conform to the GraphQL NumberType expected fields, which are currently {number, year, trivia, math, date}
+ */
 function getAllFacts(num) {
   let res = {};
   let types = ["year", "trivia", "math", "date"];
