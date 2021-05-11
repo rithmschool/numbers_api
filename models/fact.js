@@ -277,13 +277,13 @@ function getFact({ number, type, options = {} }) {
 function getAllFacts(num) {
   let res = {};
   let types = ["year", "trivia", "math", "date"];
-
   for (let type of types) {
-    if (type === "date" && data[type][num]) {
-      num = utils.dateToDayOfYear(new Date(2004, 0, num));
+    if (type === "date") {
+      num = utils.dateToDayOfYear(new Date(2004, 0, num));      
       let prefix = utils.getStandalonePrefix(num, type);
       res[type] = data[type][num].map(({ text }) => `${prefix} ${text}`);
     } else if (data[type][num]) {
+      console.log('num in getallfacts', num);
       res[type] = data[type][num].map(({ text }) => text);
     } else {
       res[type] = [getDefaultMsg({ number: num, type })];
