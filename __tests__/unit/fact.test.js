@@ -5,6 +5,7 @@ const {
   filterObj,
   apiExtend,
   getFact,
+  getAllFacts,
   dumpData,
   getDefaultMsg,
 } = require("../../models/fact");
@@ -435,6 +436,44 @@ describe("getFact()", () => {
       found: false,
       type: "math",
     });
+  });
+});
+
+describe("getAllFacts(num)", () => {
+  test("return all types of facts for given number", function () {
+    let validNum = getAllFacts(24);
+
+    expect(validNum.number).toBe(24);
+    expect(validNum.year.length).toBeGreaterThan(1);
+    expect(validNum.date.length).toBeGreaterThan(1);
+    expect(validNum.math.length).toBeGreaterThan(1);
+    expect(validNum.trivia.length).toBeGreaterThan(1);
+  });
+
+  test("return all types with default messages for missing facts", function () {
+    let validNum = getAllFacts(1932);
+
+    expect(validNum.number).toBe(1932);
+    expect(validNum.trivia[0]).toEqual(
+      expect.stringContaining(
+        "Submit one at github.com/rithmschool/numbers_api"
+      )
+    );
+    expect(validNum.year[0]).toEqual(
+      expect.stringContaining(
+        "Submit one at github.com/rithmschool/numbers_api"
+      )
+    );
+    expect(validNum.math[0]).toEqual(
+      expect.not.stringContaining(
+        "Submit one at github.com/rithmschool/numbers_api"
+      )
+    );
+    expect(validNum.date[0]).toEqual(
+      expect.not.stringContaining(
+        "Submit one at github.com/rithmschool/numbers_api"
+      )
+    );
   });
 });
 
