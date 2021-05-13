@@ -4,8 +4,7 @@
   "scripts": {
     "test": "jest",
     "start": "NODE_ENV=development nodemon server.js",
-    "start-graphql": "NODE_ENV=development nodemon graphql/graphql_server.js",
-    "start-apollo": "NODE_ENV=development nodemon graphql/index.js",
+    "start-graphql": "NODE_ENV=development nodemon graphql/index.js",
     "start-prod": "NODE_ENV=production forever -a start server.js",
     "stop": "forever stopall",
     "scss": "node-sass public/sass -o public/css",
@@ -32,7 +31,6 @@
     "easygraphql-tester": "^6.0.1",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "express-graphql": "^0.12.0",
     "forever": "^3.0.0",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.5",
