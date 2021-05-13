@@ -1,6 +1,7 @@
 const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
+const { type } = require("os");
 
 /**
  *
@@ -271,9 +272,35 @@ function getFact({ number, type, options = {} }) {
     });
   }
 }
+/**
+ * This function mutates the given empty object to add keys for each type
+ * This is a helper function for getAllFacts and getTypeFacts
+ *
+ * start {}
+ * ends {type: [], type:[]}
+ *
+ * @param types: string[],
+ * @param object: empty object
+ * @param dateNum: number converted to conform to date number
+ * @param num: current number
+ *
+ *
+ */
+function getFactTexts(types, object, dateNum, num) {
+  for (let type of types) {
+    if (type === "date" && data[type][dateNum]) {
+      let prefix = utils.getStandalonePrefix(dateNum, type);
+      object[type] = data[type][dateNum].map(({ text }) => `${prefix} ${text}`);
+    } else if (data[type][num]) {
+      object[type] = data[type][num].map(({ text }) => text);
+    } else {
+      object[type] = [getDefaultMsg({ number: num, type })];
+    }
+  }
+}
 
 /**
- * getAllFacts() is used as the graphQL endpoint in lieu of querying a database
+ * getAllFacts() is used as a graphQL endpoint in lieu of querying a database
  *
  * @param num: is an int
  * @returns {
@@ -290,19 +317,66 @@ function getAllFacts(num) {
   let types = ["year", "trivia", "math", "date"];
   let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
 
-  for (let type of types) {
-    if (type === "date" && data[type][dateNum]) {
-      let prefix = utils.getStandalonePrefix(dateNum, type);
-      res[type] = data[type][dateNum].map(({ text }) => `${prefix} ${text}`);
-    } else if (data[type][num]) {
-      res[type] = data[type][num].map(({ text }) => text);
-    } else {
-      res[type] = [getDefaultMsg({ number: num, type })];
-    }
-  }
+  getFactTexts(types, res, dateNum, num);
+
   res.number = num;
   return res;
 }
+/**
+ *  getTypeFacts() is used as a graphQL endpoint in leiru of querying a database
+ *
+ * @param types: string[], accepts "trivia", "math", "year", "date" as accepted strings
+ * @param numbers: int[]
+ *
+ * @returns
+ *  [
+ *    {
+ *      num: {
+ *         types:
+ *           {type: []},
+ *           {type: []}
+ *      },
+ *      num: {
+ *         types:
+ *           {type: []},
+ *           {type: []}
+ *      }
+ *    }
+ *  ]
+ *
+ *
+ *  example: types = ["math", "date"], numbers = [10, 12]
+ *
+ * return looks like:
+ * [
+ * {10: {types: {math: ["abc", "def"], date:["ghi", "jklm", "nop"]}},
+ * {12: {types: math: ["qrst", "uvw", "xyz"], date:["zyx, wvu", "tsr"]}}
+ * ]
+ * */
+
+function getTypeFacts(types, numbers) {
+  // types = string[]
+  //number = int[]
+
+  let res = [];
+
+  for (let num of numbers) {
+    let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
+
+    let numObj = {};
+    let typesObj = {};
+
+    getFactTexts(types, typesObj, dateNum, num);
+
+    numObj[num] = { types: typesObj };
+
+    res.push(numObj);
+  }
+
+  return res;
+}
+
+console.log(getTypeFacts(["math"], [4000])[0]["4000"]);
 
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
