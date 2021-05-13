@@ -2,17 +2,21 @@
 
 ### Getting Started
 
-To get the GraphQL server started, type `npm run start-graphql` in the terminal and go to localhost:4001/graphql. The GraphQL interface at this port is enabled by setting `graphiql: true` in the graphql_app.js file.
+To get the GraphQL server started, type `npm run start-graphql` in the terminal and go to localhost:3001/graphql.
 
-To get the endpoints that are currently available, click on the "< Docs" on the upper-right hand side of the screen to open the Documentation Explorer. This Documentation Explorer allows you to click through the different RootQueries and display the schema for those queries.
+To get the endpoints that are currently available, click on the "Docs" tab on the right hand side of the screen to open the documentation explorer. The documentation explorer allows you to click through the different available queries, display the type associated with that query, and the schema for each of the types.
 
-![Doc Explorer](documentation_images/graphql_docexplorer.gif)
+<img src="documentation_images/doc explorer.gif" width="300px"/>
+
+You can open a new tab inside the interface to make another query without losing your current one.
+
+<img src="documentation_images/newtab.gif" width="300px" />
 
 ---
 
 ### Querying
 
-Unlike RESTful APIs, GraphQL allows the client to determine what information the server returns. For example, our NumberQueryType _can_ pass back facts about the number as types: trivia, date, math, or year. But if the user only wants the math fact, they can specify only the math fact should be passed back.
+Unlike RESTful APIs, GraphQL allows the client to determine what information the server returns. For example, our NumberType _can_ pass back facts about the number as types: trivia, date, math, or year. But if the user only wants the math fact, they can specify only the math fact should be passed back.
 
 Example queries (user puts in number in place of int):
 
@@ -95,3 +99,30 @@ The expect output for this is:
   }
 }
 ```
+
+---
+
+### Dates
+
+A number for a date is based on what day of the year that day falls on within a leap year. If a number is larger than 366, the years increment as if moving to the next year.
+
+| Number | Date Conversion |
+| ------ | --------------- |
+| 1      | January 1       |
+| 31     | January 31      |
+| 60     | February 29     |
+| 366    | December 31     |
+| 367    | January 1       |
+| 425    | February 28     |
+| 426    | March 1         |
+| 1521   | February 29     |
+
+For zero and negative numbers, the date associated with the number assumes that 1 is January 1st of a leap year and moves backwards.
+
+| Number | Date Conversion |
+| ------ | --------------- |
+| 0      | December 31     |
+| -1     | December 30     |
+| -364   | January 1       |
+| -365   | December 31     |
+| -1401  | February 29     |
