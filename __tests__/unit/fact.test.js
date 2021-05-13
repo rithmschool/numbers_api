@@ -5,7 +5,9 @@ const {
   filterObj,
   apiExtend,
   getFact,
+  getFactTexts,
   getAllFacts,
+  getTypeFacts,
   dumpData,
   getDefaultMsg,
 } = require("../../models/fact");
@@ -439,6 +441,16 @@ describe("getFact()", () => {
   });
 });
 
+describe("getFactTexts", () => {
+  test("returns correctly mutated object with types and facts", function () {
+    let obj = {};
+    getFactTexts(['math', 'trivia'], obj, 0, 10)
+
+    expect(obj['math'].length).toEqual(9);
+    expect(obj['trivia'].length).toEqual(11);
+  });
+})
+
 describe("getAllFacts(num)", () => {
   test("return all types of facts for given number", function () {
     let validNum = getAllFacts(24);
@@ -476,6 +488,54 @@ describe("getAllFacts(num)", () => {
     );
   });
 });
+
+describe("getTypeFacts(types, numbers)", () => {
+  let result;
+
+  beforeEach(() => {
+    result = getTypeFacts(['math', 'trivia'], ['1000', '50']);
+  })
+
+  test("getTypeFacts is an array", function () {
+    expect(result.length).toEqual(2);
+    expect(Array.isArray(result)).toBe(true);
+  })
+
+  test("contains correct number keys", function () {
+    let keys1 = Object.keys(result[0]);
+    let keys2 = Object.keys(result[1]);
+
+    expect(keys1[0]).toEqual('1000');
+    expect(keys2[0]).toEqual('50');
+  })
+
+  test("contains correct types", function () {
+    let type1 = Object.keys(result[0]['1000']['types']);
+    let type2 = Object.keys(result[1]['50']['types']);
+
+    expect(type1.length).toEqual(2);
+    expect(type1.length).toEqual(2);
+    expect(type1).toEqual(['math', 'trivia']);
+    expect(type2).toEqual(['math', 'trivia']);
+  })
+
+  test("contains correct text", function () {
+    let mathTexts1 = result[0]['1000']['types']['math'][0];
+    let triviaTexts1 = result[0]['1000']['types']['trivia'][0];
+
+    expect(mathTexts1).toEqual(expect.stringContaining(
+      "Submit one at github.com/rithmschool/numbers_api"
+    ));
+    expect(triviaTexts1).toEqual('the number of words a picture is worth');
+
+    let mathTexts2 = result[1]['50']['types']['math'][0];
+    let triviaTexts2 = result[1]['50']['types']['trivia'][0];
+
+    expect(mathTexts2).toEqual('the smallest number that can be written as the sum of of 2 squares in 2 ways');
+    expect(triviaTexts2).toEqual('the traditional number of years in a jubilee period');
+
+  })
+})
 
 describe("dumpData()", () => {
   beforeEach(() => {
