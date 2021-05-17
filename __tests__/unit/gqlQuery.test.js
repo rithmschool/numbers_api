@@ -3,10 +3,12 @@ const EasyGraphQLTester = require("easygraphql-tester");
 const { typeDefs } = require("../../graphql/schema/TypeDefs");
 const { schema } = require("../../graphql/schema/Schema");
 
+
 describe("Test getNumberFacts queries", () => {
   let tester;
 
   beforeEach(() => {
+
     tester = new EasyGraphQLTester(schema);
   });
 
@@ -20,6 +22,7 @@ describe("Test getNumberFacts queries", () => {
                 }
             }
         `;
+
     let result = await tester.graphql(query);
     result = result.data.getNumberFacts;
 

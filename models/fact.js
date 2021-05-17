@@ -280,7 +280,6 @@ function getFact({ number, type, options = {} }) {
  * ends {type: [], type:[]}
  *
  * @param types: string[],
- * @param object: empty object
  * @param dateNum: number converted to conform to date number
  * @param num: current number
  *
@@ -322,59 +321,6 @@ function getAllFacts(num) {
 
   return res;
 }
-/**
- *  getTypeFacts() is used as a graphQL endpoint in leiru of querying a database
- *
- * @param types: string[], accepts "trivia", "math", "year", "date" as accepted strings
- * @param numbers: int[]
- *
- * @returns
- *  [
- *    {
- *      [num]: {
- *         types:
- *           {
- *              [type]: [],
- *              [type]: []
- *           }
- *      },
- *      [num]: {
- *         types:
- *           {
- *              [type]: [],
- *              [type]: []
- *           }
- *      }
- *    }
- *  ]
- *
- *
- *  example: types = ["math", "date"], numbers = [10, 12]
- *
- * return looks like:
- * [
- * {10: {types: {math: ["abc", "def"], date:["ghi", "jklm", "nop"]}},
- * {12: {types: {math: ["qrst", "uvw", "xyz"], date:["zyx, wvu", "tsr"]}}
- * ]
- * */
-
-function getTypeFacts(types, numbers) {
-  let res = [];
-
-  for (let num of numbers) {
-    let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
-
-    let numObj = {};
-
-    let typesObj = getFactTexts(types, dateNum, num);
-
-    numObj[num] = { types: typesObj };
-
-    res.push(numObj);
-  }
-
-  return res;
-}
 
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
@@ -399,5 +345,4 @@ module.exports = {
   getSentence,
   getAllFacts,
   getFactTexts,
-  getTypeFacts,
 };
