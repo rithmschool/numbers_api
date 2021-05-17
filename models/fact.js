@@ -1,7 +1,15 @@
 const _ = require("underscore");
-const data = require("./data.js");
+let data = require("./data.js");
+const testData = require("./dummyData.js");
 const utils = require("../public/js/shared_utils.js");
 const { type } = require("os");
+
+require("dotenv").config();
+const nodeEnv = process.env.NODE_ENV || "development";
+
+data = nodeEnv === "development" ? testData : data;
+
+console.log("data =====", data);
 
 /**
  *
