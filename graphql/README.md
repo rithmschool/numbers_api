@@ -24,7 +24,7 @@ Get all facts about a specific number
 
 ```
 query {
-  number(number: int) {
+  getNumberFacts(number: int) {
     trivia
     date
     math
@@ -37,7 +37,7 @@ Only get the math facts about a specific number
 
 ```
 query {
-  number(number: int) {
+  getNumberFacts(number: int) {
     math
   }
 }
@@ -51,7 +51,7 @@ The expected output is a JSON object, in which each fact type's value is an arra
 
 ```
 query {
-  number(number: 255) {
+  getNumberFacts(number: 255) {
     trivia
     math
   }
@@ -80,7 +80,7 @@ If there is not a valid fact for a number and a type, there will be a semi-rando
 
 ```
 query {
-  number(number: -99) {
+  getNumberFacts(number: -99) {
     year
   }
 }
