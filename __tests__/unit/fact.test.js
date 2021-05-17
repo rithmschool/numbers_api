@@ -454,7 +454,6 @@ describe("getAllFacts(num)", () => {
   test("return all types of facts for given number", function () {
     let validNum = getAllFacts(24);
 
-    expect(validNum.number).toBe(24);
     expect(validNum.year.length).toBeGreaterThan(1);
     expect(validNum.date.length).toBeGreaterThan(1);
     expect(validNum.math.length).toBeGreaterThan(1);
@@ -464,7 +463,6 @@ describe("getAllFacts(num)", () => {
   test("return all types with default messages for missing facts", function () {
     let validNum = getAllFacts(1932);
 
-    expect(validNum.number).toBe(1932);
     expect(validNum.trivia[0]).toEqual(
       expect.stringContaining(
         "Submit one at github.com/rithmschool/numbers_api"
