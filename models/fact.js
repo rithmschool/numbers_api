@@ -333,13 +333,17 @@ function getAllFacts(num) {
  *    {
  *      num: {
  *         types:
- *           {type: []},
- *           {type: []}
+ *           {
+ *              type: [],
+ *              type: []
+ *           }
  *      },
  *      num: {
  *         types:
- *           {type: []},
- *           {type: []}
+ *           {
+ *              type: [],
+ *              type: []
+ *           }
  *      }
  *    }
  *  ]
@@ -376,8 +380,6 @@ function getTypeFacts(types, numbers) {
   return res;
 }
 
-console.log(getTypeFacts(["math"], [4000])[0]["4000"]);
-
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
   const fs = require("fs");
@@ -400,4 +402,6 @@ module.exports = {
   getRandomApiNum,
   getSentence,
   getAllFacts,
+  getFactTexts,
+  getTypeFacts
 };
