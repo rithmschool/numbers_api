@@ -286,7 +286,8 @@ function getFact({ number, type, options = {} }) {
  *
  *
  */
-function getFactTexts(types, object, dateNum, num) {
+function getFactTexts(types, dateNum, num) {
+  let object = {};
   for (let type of types) {
     if (type === "date" && data[type][dateNum]) {
       let prefix = utils.getStandalonePrefix(dateNum, type);
@@ -297,6 +298,7 @@ function getFactTexts(types, object, dateNum, num) {
       object[type] = [getDefaultMsg({ number: num, type })];
     }
   }
+  return object;
 }
 
 /**
@@ -313,11 +315,10 @@ function getFactTexts(types, object, dateNum, num) {
  * The return must conform to the GraphQL NumberType expected fields, which are currently {number, year, trivia, math, date}
  */
 function getAllFacts(num) {
-  let res = {};
   let types = ["year", "trivia", "math", "date"];
   let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
 
-  getFactTexts(types, res, dateNum, num);
+  let res = getFactTexts(types, dateNum, num);
 
   res.number = num;
   return res;
@@ -331,18 +332,18 @@ function getAllFacts(num) {
  * @returns
  *  [
  *    {
- *      num: {
+ *      [num]: {
  *         types:
  *           {
- *              type: [],
- *              type: []
+ *              [type]: [],
+ *              [type]: []
  *           }
  *      },
- *      num: {
+ *      [num]: {
  *         types:
  *           {
- *              type: [],
- *              type: []
+ *              [type]: [],
+ *              [type]: []
  *           }
  *      }
  *    }
@@ -354,23 +355,19 @@ function getAllFacts(num) {
  * return looks like:
  * [
  * {10: {types: {math: ["abc", "def"], date:["ghi", "jklm", "nop"]}},
- * {12: {types: math: ["qrst", "uvw", "xyz"], date:["zyx, wvu", "tsr"]}}
+ * {12: {types: {math: ["qrst", "uvw", "xyz"], date:["zyx, wvu", "tsr"]}}
  * ]
  * */
 
 function getTypeFacts(types, numbers) {
-  // types = string[]
-  //number = int[]
-
   let res = [];
 
   for (let num of numbers) {
     let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
 
     let numObj = {};
-    let typesObj = {};
 
-    getFactTexts(types, typesObj, dateNum, num);
+    let typesObj = getFactTexts(types, dateNum, num);
 
     numObj[num] = { types: typesObj };
 
@@ -403,5 +400,5 @@ module.exports = {
   getSentence,
   getAllFacts,
   getFactTexts,
-  getTypeFacts
+  getTypeFacts,
 };
