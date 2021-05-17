@@ -320,7 +320,6 @@ function getAllFacts(num) {
 
   let res = getFactTexts(types, dateNum, num);
 
-  res.number = num;
   return res;
 }
 /**
