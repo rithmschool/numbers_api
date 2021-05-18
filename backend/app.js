@@ -2,6 +2,7 @@ console.log("\n\n\n=== ##### STARTING SERVER ##### ===\nat", new Date(), "\n");
 
 // Module dependencies.
 const fs = require("fs");
+const path = require('path');
 const express = require("express");
 const https = require("https");
 const _ = require("underscore");
@@ -108,7 +109,7 @@ app.use(
 app.use(express.json());
 // app.set("views", __dirname + "/views");
 app.enable("jsonp callback");
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "../frontend", "build")));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   favicon(__dirname + "/public/img/favicon.png", {
@@ -120,12 +121,7 @@ if (nodeEnv === "development") {
   app.use(errorhandler());
 }
 
-// Routes
 app.use("/", numRoutes);
-
-// TODO: Precompile this template.
-// Route that renders the home page html
-// source is ./README.md
 app.get("/", function (req, res) {
   var currDate = new Date();
   res.render("index.html", {
@@ -146,6 +142,10 @@ app.get("/", function (req, res) {
       }),
     },
   });
+});
+
+app.use((req, res, next) => {
+  res.redirect('/');
 });
 
 app.use("/js", express.static(__dirname + "/node_modules/jquery-mousewheel"));
