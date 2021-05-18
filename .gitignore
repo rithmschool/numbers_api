@@ -1,5 +1,0 @@
-*.pyc
-.env
-suggestions.json
-node_modules
-.sass-cache/

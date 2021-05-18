@@ -15,7 +15,7 @@ function UsageExamples() {
         <p>JavaScript:</p>
         <div className="doc-examples">
           <span>
-            {`$.get('http://numbersapi.com/1337/trivia?notfound=floor&fragment', function(data) {
+            {`$.get('http://numbersapi.com/api/1337/trivia?notfound=floor&fragment', function(data) {
             $('#number').text(data);
             });`}
           </span>
@@ -41,7 +41,7 @@ function UsageExamples() {
   (function() {
     var scriptTag = document.createElement('script');
     scriptTag.async = true;
-    scriptTag.src = "http://numbersapi.com/42/math?callback=showNumber";
+    scriptTag.src = "http://numbersapi.com/api/42/math?callback=showNumber";
     document.body.appendChild(scriptTag);
   })();
 </script>
@@ -56,13 +56,13 @@ function UsageExamples() {
       <p>Add <code>write</code> to your query string to have the response text wrapped in <code>document.write()</code>. Now you can stick just a single <code>&lt;script&gt;</code> directly where the fact should go.</p>
       <div className="doc-examples">
         <pre>
-          <code>{`Did you know 2012 is the year that <script src="http://numbersapi.com/2012/year?write&fragment">
+          <code>{`Did you know 2012 is the year that <script src="http://numbersapi.com/api/2012/year?write&fragment">
 </script>?`}
           </code>
         </pre>
       </div>
       <p>
-        Note that this may <a href='https://developer.yahoo.com/performance/rules.html#js_bottom'>degrade page load speed</a>. Live demo on <a href="http://jsfiddle.net/vd58j/">JSFiddle</a>.
+        Note that this may <a href='https://developer.yahoo.com/api/performance/rules.html#js_bottom'>degrade page load speed</a>. Live demo on <a href="http://jsfiddle.net/vd58j/">JSFiddle</a>.
       </p>
       </div>
     </div>

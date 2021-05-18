@@ -25,8 +25,15 @@ function APIResponse() {
     updateCurrNumberString(parameter, true)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
+  // if url contained json return the full json object
+  // else return the text property of numFact if it exists
+  // otherwise return the numFact object (this is for Batch Request handling)
   return (
-    <div className="API">{json ? JSON.stringify(numFact) : numFact.text}</div>
+    <div className="API">{
+      json ? 
+      JSON.stringify(numFact) :
+      numFact.text || JSON.stringify(numFact)
+      }</div>
   )
 }
 

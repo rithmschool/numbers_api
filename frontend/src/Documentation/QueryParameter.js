@@ -12,10 +12,10 @@ function QueryParameter() {
         </p>
         <div className="doc-examples">
           <pre>
-            <code>{`http://numbersapi.com/23/trivia?fragment
+            <code>{`http://numbersapi.com/api/23/trivia?fragment
 ⇒ the number of times Julius Caesar was stabbed
 
-http://numbersapi.com/1969/year?fragment
+http://numbersapi.com/api/1969/year?fragment
 ⇒ an estimated 500 million people worldwide watch Neil Armstrong take his historic first steps 
 on the Moon`}
             </code>
@@ -29,7 +29,7 @@ on the Moon`}
           <div className="doc-examples">
             <pre>
               <code>
-              {`http://numbersapi.com/314159265358979
+              {`http://numbersapi.com/api/314159265358979
 ⇒ 314159265358979 is a boring number.`}
               </code>
             </pre>
@@ -38,7 +38,7 @@ on the Moon`}
           <div className="doc-examples">
               <pre>
                 <code>
-                {`http://numbersapi.com/35353?notfound=floor
+                {`http://numbersapi.com/api/35353?notfound=floor
 ⇒ 35000 is the number of genes in a human being.`}
                 </code>
               </pre>
@@ -47,7 +47,7 @@ on the Moon`}
           <div className="doc-examples">
             <pre>
               <code>
-              {`http://numbersapi.com/-12344/year?notfound=ceil
+              {`http://numbersapi.com/api/-12344/year?notfound=ceil
 ⇒ 98 BC is the year that the Senate passes the Lex Caecilia Didia which bans omnibus bills.`}
               </code>
             </pre>
@@ -59,7 +59,7 @@ on the Moon`}
       <div className="doc-examples">
         <pre>
           <code>
-          {`http://numbersapi.com/1234567890987654321/year?default=Boring+number+is+boring.
+          {`http://numbersapi.com/api/1234567890987654321/year?default=Boring+number+is+boring.
 ⇒ Boring number is boring.`}
           </code>
         </pre>
@@ -69,7 +69,7 @@ on the Moon`}
       <div className="doc-examples">
         <pre>
           <code>
-          {`http://numbersapi.com/42/math?callback=showNumber
+          {`http://numbersapi.com/api/42/math?callback=showNumber
 ⇒ showNumber("42 is the 5th Catalan number.");`}
           </code>
         </pre>
@@ -80,7 +80,7 @@ on the Moon`}
       <div className="doc-examples">
         <pre>
           <code>
-          {`http://numbersapi.com/42/math?write
+          {`http://numbersapi.com/api/42/math?write
 ⇒ document.write("42 is the 5th Catalan number.");`}
           </code>
         </pre>
@@ -91,7 +91,7 @@ on the Moon`}
       <div className="doc-examples">
         <pre>
           <code>
-          {`http://numbersapi.com/random?min=10&max=20
+          {`http://numbersapi.com/api/random?min=10&max=20
 13 is the number of provinces and territories in Canada.`}
           </code>
         </pre>
@@ -109,7 +109,7 @@ on the Moon`}
       <div className="doc-examples">
         <pre>
           <code>
-          {`http://numbersapi.com/random/year?json
+          {`http://numbersapi.com/api/random/year?json
 ⇒ {
     "text": "2012 is the year that the century's second and last solar transit of Venus occurs 
 on June 6.",

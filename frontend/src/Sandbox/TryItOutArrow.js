@@ -14,7 +14,7 @@ import './TryItOutArrow.css'
 function TryItOutArrow() {
   return (
     <div>
-      <div id="sandbox-text">Try it out!</div>
+      <div id="sandbox-text" className="pastel_crayon">Try it out!</div>
       <div className="arrow"></div>
     </div>
   )

@@ -9,9 +9,6 @@ class Api {
     return res.data;
   }
 
-  //Obj = { 42: fact about 42} <- context throughout
-  //Obj.keys = 42
-
 }
 
 export default Api;

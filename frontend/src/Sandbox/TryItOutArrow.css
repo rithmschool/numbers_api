@@ -13,10 +13,15 @@
   color: white;
   writing-mode: lr-tb;
   font-size: 70px;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: pastel_crayon;
   font-weight: normal;
   top: -32px;
   left: -215px;
   position: absolute;
   text-shadow: none;
 }
+/* 
+@font-face {
+  font-family: pastel_crayon;
+  src: url('/font/pastel_crayon.tff');
+} */

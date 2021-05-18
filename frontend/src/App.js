@@ -36,7 +36,8 @@ const stringLength = window.location.pathname.startsWith('/api') ? 5 : 6
 
 function App() {
   // parsedUrl using url index
-  const string = window.location.pathname.substr(stringLength);
+  const string = window.location.pathname.substr(stringLength) + window.location.search;
+  console.log(string);
   const [numFact, setNumFact] = useState({text: "", number: 42, type: "trivia"});
   const [currNumberString, setCurrNumberString] = useState(string || 42);
   const json = window.location.search.endsWith('?json') ? true : false;
