@@ -1,7 +1,11 @@
 const _ = require("underscore");
-const data = require("./data.js");
+let data = require("./data.js");
+const testData = require("./dummyData.js");
 const utils = require("../public/js/shared_utils.js");
 const { type } = require("os");
+
+require("dotenv").config();
+data = process.env.NODE_ENV === "test" ? testData : data;
 
 /**
  *
@@ -159,6 +163,17 @@ const dataPairs = (function () {
   });
   return ret;
 })();
+
+// {
+//   data: [
+//     { number: -Infinity, string: '-Infinity' },
+//     { number: NaN, string: 'math' },
+//     { number: NaN, string: 'year' },
+//     { number: NaN, string: 'trivia' },
+//     { number: NaN, string: 'date' },
+//     { number: Infinity, string: 'Infinity' }
+//   ]
+// }
 
 // TODO: remove this, should be using dataPairs only. only reason this is here is because
 // _.sortedIndex() is working as expected. need to investigate
