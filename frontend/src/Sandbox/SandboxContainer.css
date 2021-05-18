@@ -1,0 +1,9 @@
+#sandbox-outer {
+  width: 771px;
+  align-self: flex-end;
+}
+
+#sandbox {
+  display: flex;
+  justify-content: space-evenly;
+}

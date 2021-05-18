@@ -1,0 +1,82 @@
+.body-container {
+  background: url('/src/img/graph-paper-5.png');
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  background: #1e6da0;
+  background: linear-gradient(rgba(30, 109, 160, 0.8) 0%, #1e6da0 90%),
+    url('/src/img/background.jpg');
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
+}
+
+a {
+  color: #86c9f4;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+}
+a:hover {
+  color: #cce4f4;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-shadow: #02273f 2px 2px 3px;
+  font-family: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica',
+    sans-serif;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #cce4f4;
+  text-transform: uppercase;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  width: 960px;
+
+}
+
+.logo {
+  text-shadow: #cce4f4 0px 0px 10px, #cce4f4 0 0 60px;
+  margin: 0px;
+  padding: 0;
+  color: #02273f;
+  text-transform: uppercase;
+  font-family: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica',
+    sans-serif;
+  font-weight: bold;
+  font-size: 5em;
+}
+.logo #second-word {
+  text-shadow: #02273f 0px 0px 10px;
+  color: #cce4f4;
+  font-family: inherit;
+  font-weight: normal;
+  font-size: inherit;
+}
+
+#tagline {
+  text-shadow: #02273f 0px 0px 5px;
+  margin: 0px;
+  font-size: 1.6em;
+  font-style: italic;
+  color: white;
+}
