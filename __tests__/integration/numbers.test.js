@@ -118,10 +118,20 @@ describe("random routes", () => {
   });
 
   // tests for route "/random/:type?"
+/**
+ * [
+      '0',        'is',
+      'the',      'coldest',
+      'possible', 'temperature',
+      'old',      'the',
+      'Kelvin',   'scale.'
+    ]
 
+ */
   test("random with without type defined", async function () {
     const res = await request(app).get("/random");
     let resWords = res.text.split(" ");
+    console.log('res', res, 'res Words here', resWords);
     expect(resWords[0]).toEqual("0");
   });
 
