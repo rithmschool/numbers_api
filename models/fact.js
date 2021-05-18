@@ -1,6 +1,7 @@
 const _ = require("underscore");
 const data = require("./data.js");
 const utils = require("../public/js/shared_utils.js");
+const { type } = require("os");
 
 /**
  *
@@ -271,6 +272,55 @@ function getFact({ number, type, options = {} }) {
     });
   }
 }
+/**
+ * This function mutates the given empty object to add keys for each type
+ * This is a helper function for getAllFacts and getTypeFacts
+ *
+ * start {}
+ * ends {type: [], type:[]}
+ *
+ * @param types: string[],
+ * @param dateNum: number converted to conform to date number
+ * @param num: current number
+ *
+ *
+ */
+function getFactTexts(types, dateNum, num) {
+  let object = {};
+  for (let type of types) {
+    if (type === "date" && data[type][dateNum]) {
+      let prefix = utils.getStandalonePrefix(dateNum, type);
+      object[type] = data[type][dateNum].map(({ text }) => `${prefix} ${text}`);
+    } else if (data[type][num]) {
+      object[type] = data[type][num].map(({ text }) => text);
+    } else {
+      object[type] = [getDefaultMsg({ number: num, type })];
+    }
+  }
+  return object;
+}
+
+/**
+ * getAllFacts() is used as a graphQL endpoint in lieu of querying a database
+ *
+ * @param num: is an int
+ * @returns {
+ *            number: num
+ *            year: string[],
+ *            trivia: string[],
+ *            math: string[],
+ *            date: string[]
+ *          }
+ * The return must conform to the GraphQL NumberType expected fields, which are currently {number, year, trivia, math, date}
+ */
+function getAllFacts(num) {
+  let types = ["year", "trivia", "math", "date"];
+  let dateNum = utils.dateToDayOfYear(new Date(2004, 0, num));
+
+  let res = getFactTexts(types, dateNum, num);
+
+  return res;
+}
 
 // Takes in a directory name, cleans data and writes that data to a new file.
 function dumpData(dirname) {
@@ -293,4 +343,6 @@ module.exports = {
   getFact,
   getRandomApiNum,
   getSentence,
+  getAllFacts,
+  getFactTexts,
 };
