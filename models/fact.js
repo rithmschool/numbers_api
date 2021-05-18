@@ -5,7 +5,7 @@ const utils = require("../public/js/shared_utils.js");
 const { type } = require("os");
 
 require("dotenv").config();
-// data = process.env.NODE_ENV === "test" ? testData: data;
+data = process.env.NODE_ENV === "test" ? testData : data;
 
 /**
  *

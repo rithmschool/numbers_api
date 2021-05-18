@@ -13,7 +13,7 @@ describe("Test getNumberFacts queries", () => {
   it("Should return the correct query result", async () => {
     const query = `
             {
-                getNumberFacts(number: 100) {
+                getNumberFacts(number: 1) {
                     trivia
                     math
                     year
@@ -25,9 +25,9 @@ describe("Test getNumberFacts queries", () => {
     result = result.data.getNumberFacts;
 
     expect(Object.keys(result).length).toEqual(3);
-    expect(result.trivia.length).toEqual(9);
-    expect(result.math.length).toEqual(5);
-    expect(result.year.length).toEqual(15);
+    expect(result.trivia.length).toEqual(4);
+    expect(result.math.length).toEqual(4);
+    expect(result.year.length).toEqual(4);
   });
 
   it("If number does not have fact, response includes default message ", async () => {
@@ -52,7 +52,7 @@ describe("Test getNumberFacts queries", () => {
   it("Result includes specific entry", async () => {
     const query = `
             {
-                getNumberFacts(number: 6) {
+                getNumberFacts(number: 2010) {
                     math
                 }
             }
@@ -61,7 +61,9 @@ describe("Test getNumberFacts queries", () => {
     result = result.data.getNumberFacts;
 
     expect(Object.keys(result).length).toEqual(1);
-    expect(result.math[0]).toEqual("the smallest perfect number");
+    expect(result.math[0]).toEqual(
+      "the number of trees on 15 vertices with diameter 7"
+    );
   });
 
   it("Should return the correct date for first leap year", async () => {
@@ -106,7 +108,7 @@ describe("Test getNumberFacts queries", () => {
     expect(result.length).toBeGreaterThan(1);
   });
 
-  it("Should return the correct date for first leap year", async () => {
+  it("Should return the correct date for numbers past first year", async () => {
     const query = `
     {
         getNumberFacts(number: 4000) {

@@ -118,7 +118,7 @@ describe("random routes", () => {
   });
 
   // tests for route "/random/:type?"
-/**
+  /**
  * [
       '0',        'is',
       'the',      'coldest',
@@ -128,10 +128,15 @@ describe("random routes", () => {
     ]
 
  */
+
+  // 0 = -infinity
+  // 1 = infinity
+  // 2 = day -1
+  // 3 = day 0
+
   test("random with without type defined", async function () {
     const res = await request(app).get("/random");
     let resWords = res.text.split(" ");
-    console.log('res', res, 'res Words here', resWords);
     expect(resWords[0]).toEqual("0");
   });
 

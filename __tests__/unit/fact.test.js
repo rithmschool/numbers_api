@@ -10,17 +10,18 @@ const {
   dumpData,
   getDefaultMsg,
 } = require("../../models/fact");
+
 const fs = require("fs");
 
 describe("getRandomApiNum() with type 'date'", () => {
   test("return random number greater than or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "date" });
-    expect(greaterThanMin).toBeGreaterThan(2010);
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "date" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -35,14 +36,14 @@ describe("getRandomApiNum() with type 'date'", () => {
 });
 
 describe("getRandomApiNum() with type 'trivia'", () => {
-  test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum({ min: 2011, type: "trivia" });
-    expect(greaterThanMin).toBeGreaterThan(2011);
+  test("return random number greater than or equal to 2010", function () {
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "trivia" });
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than  or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "trivia" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -63,14 +64,14 @@ describe("getRandomApiNum() with type 'math'", () => {
     expect(sameAsMinMax).toEqual(2010);
   });
 
-  test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum({ min: 2011, type: "math" });
-    expect(greaterThanMin).toBeGreaterThan(2011);
+  test("return random number greater than  or equal to 2010", function () {
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "math" });
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum({ max: 2011, type: "math" });
-    expect(lessThanMax).toBeLessThan(2011);
+  test("return random number less than  or equal to 2010", function () {
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "math" });
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -90,14 +91,14 @@ describe("getRandomApiNum() with type 'year'", () => {
     expect(sameAsMinMax).toEqual(2010);
   });
 
-  test("return random number greater than 2010", function () {
-    let greaterThanMin = getRandomApiNum({ min: 2011, type: "year" });
-    expect(greaterThanMin).toBeGreaterThan(2011);
+  test("return random number greater than  or equal to 2010", function () {
+    let greaterThanMin = getRandomApiNum({ min: 2010, type: "year" });
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
-    let lessThanMax = getRandomApiNum({ max: 2011, type: "year" });
-    expect(lessThanMax).toBeLessThan(2011);
+  test("return random number less than  or equal to 2010", function () {
+    let lessThanMax = getRandomApiNum({ max: 2010, type: "year" });
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
