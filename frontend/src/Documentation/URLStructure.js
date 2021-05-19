@@ -23,7 +23,7 @@ function URLStructure() {
             <li>an integer, or</li>
             <li>the keyword <code>random</code>, for which we will try to return a random available fact, or</li>
             <li>a day of year in the form <code><strong>month</strong>/<strong>day</strong></code> (eg. <code>2/29</code>, <code>1/09</code>, <code>04/1</code>), if <strong><code>type</code></strong> is <code>date</code></li>
-            <li><a href="#batching">ranges of numbers</a></li>
+            <li><a href="#batch-request">ranges of numbers</a></li>
           </ul>
         </li>
       </ul>

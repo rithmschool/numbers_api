@@ -1,8 +1,9 @@
 import './Home.css';
 import CategoryContainer from './Category/CategoryContainer';
 import SandboxContainer from './Sandbox/SandboxContainer';
-import Footer from './Footer';
+import SocialIcons from './SocialIcons';
 import APIDocumentation from './Documentation/APIDocumentation';
+import Footer from './Footer';
 
 /**
 * Container for all website components
@@ -14,8 +15,9 @@ import APIDocumentation from './Documentation/APIDocumentation';
 *
 *  (Home) -> CategoryContainer
 *         -> SandboxContainer
-*         -> Footer
+*         -> SocialIcons
 *         -> APIDocumentation
+          -> Footer
 */    
 
 function Home() {
@@ -33,8 +35,9 @@ function Home() {
         </header>
         <CategoryContainer />
         <SandboxContainer/>
-        <Footer/>
+        <SocialIcons/>
         <APIDocumentation/>
+        <Footer />
       </div>
     </div>
   )
