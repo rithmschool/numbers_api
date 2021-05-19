@@ -1,7 +1,7 @@
 const attractions = require("./attractionsRawData.js");
 
-function getLocation() {
-  let names = attractions.map((a) => {
+function getLocation(list) {
+  let names = list.map((a) => {
     let nonName = /q[0-9]/i;
     if (!a["locationLabel"].match(nonName)) {
       return a["locationLabel"];
@@ -31,10 +31,8 @@ function getVisitors() {
     } else if (names[name][0] === "t") {
       names[name] = names[name].substring(1);
     } else {
-      let mean =
-        names[name].reduce((acc, curr) => (acc += parseInt(curr)), 0) /
-        names[name].length;
-      names[name] = parseInt(mean);
+      let medianIdx = Math.floor(names[name].length / 2);
+      names[name] = names[name][medianIdx];
     }
   }
 
@@ -67,4 +65,4 @@ function makeObjs() {
   });
 }
 
-module.exports = getLocation;
+module.exports = makeObjs;
