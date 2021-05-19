@@ -1,0 +1,17 @@
+0
+0
+
+1
+the multiplicative identity
+the first figurate number of every kind, such as triangular number, pentagonal number and centered hexagonal number, to name just a few
+also the first and second numbers in the Fibonacci sequence and is the first number in many other mathematical sequences
+the most common leading digit in many sets of data, a consequence of Benford's law
+
+2010
+the number of trees on 15 vertices with diameter 7
+
+-Infinity
+negative infinity
+
+Infinity
+infinity
