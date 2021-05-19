@@ -1,7 +1,4 @@
 const skyscrapers = 
-// 20210518162502
-// http://localhost:3000/locations/skyscrapers
-
     [
       {
         "location": {
