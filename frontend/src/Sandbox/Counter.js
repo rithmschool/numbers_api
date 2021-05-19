@@ -9,24 +9,24 @@ import { useContext } from 'react';
  * - None
  * Context:
  * - numFact 
- * - updateCurrNumberString
+ * - updatePathOrNumFact
  *
  * SandboxCard -> (Counter)
  */
 const leapYear = 2020; // any year that has 366 days is suitable
 
 function Counter() {
-  const { numFact, updateCurrNumberString } = useContext(NumberContext)
+  const { numFact, updatePathOrNumFact } = useContext(NumberContext)
   const category = numFact.type;
 
   function handleChange(evt) {
     const { value } = evt.target;  
     if(numFact.type === 'date') {
       let date = dateFromDay(leapYear, value);
-      updateCurrNumberString(`${date}/${category}`, true)
+      updatePathOrNumFact(`${date}/${category}`, true)
     }
     else  {
-      updateCurrNumberString(`${value}/${category}`, true)
+      updatePathOrNumFact(`${value}/${category}`, true)
     }
   }
   // given a DD/YYYY date, resolve what day of the year 

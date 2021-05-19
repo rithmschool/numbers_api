@@ -11,27 +11,27 @@ import { Link } from 'react-router-dom';
 * - None
 *
 * Context:
-* - currNumberString
+* - path
 * - numFact
-* - updateCurrNumberString
+* - updatePathOrNumFact
 * - json
 *
 *  SandboxContainer -> (SandboxCard) -> Counter
 */
 
 function SandboxCard() {
-  const {currNumberString, numFact, updateCurrNumberString, json} = useContext(NumberContext);
+  const {path, numFact, updatePathOrNumFact, json} = useContext(NumberContext);
 
   function handleChange(evt) {
     const {value} = evt.target
-    updateCurrNumberString(value)
+    updatePathOrNumFact(value)
   }
   
   // treat 'Enter' as submit, update context and url
   function handleEnter(evt) {
     if(evt.key === 'Enter') {
       let value = evt.target.value
-      updateCurrNumberString(value, true)
+      updatePathOrNumFact(value, true)
       //updates url to append pathname to end of hostname
       window.history.replaceState({}, document.title, `/fact/${value}`)
     }
@@ -41,13 +41,13 @@ function SandboxCard() {
       <div className="search-box">
         <div id="search-box">
           <label>
-            <Link to={`/API/${currNumberString}`}>numbersapi.com/</Link></label>
+            <Link to={`/API/${path}`}>numbersapi.com/</Link></label>
             <span>
               <input 
                 id="search-text" 
                 name="search"
                 type="text" 
-                value={currNumberString} 
+                value={path} 
                 onChange={handleChange} 
                 onKeyDown={handleEnter}
               />

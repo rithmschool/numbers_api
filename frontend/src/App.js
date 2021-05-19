@@ -12,7 +12,7 @@ import { BrowserRouter } from 'react-router-dom';
  * - None
  * 
  * State: 
- * - currNumberString - string of pathname after '/fact/' or '/api/'
+ * - path - string of pathname after '/fact/' or '/api/'
  * - numFact - object of the API response. 
  *      {
  *        found: boolean
@@ -24,7 +24,7 @@ import { BrowserRouter } from 'react-router-dom';
  * - json - boolean of whether or not the url is requesting the number fact return
  *    as a json object or text
  * - numFact
- * - currNumberString + setCurrNumberString
+ * - path + setPath
  * 
  * (App) -> Routes -> Home
  *                 -> APIResponse
@@ -32,24 +32,23 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 // url index for whether user wants to interact with /api (5) or /fact(6)
-const stringLength = window.location.pathname.startsWith('/api') ? 5 : 6
+const pathStartIndex = window.location.pathname.startsWith('/api') ? 5 : 6
 
 function App() {
-  // parsedUrl using url index
-  const string = window.location.pathname.substr(stringLength) + window.location.search;
+  const parsedURL = window.location.pathname.substr(pathStartIndex) + window.location.search;
   const [numFact, setNumFact] = useState({text: "", number: 42, type: "trivia"});
-  const [currNumberString, setCurrNumberString] = useState(string || 42);
+  const [path, setPath] = useState(parsedURL || 42);
   const json = window.location.search.endsWith('?json') ? true : false;
 
   // on initial render set numFact
-  useEffect(function updateString() {
-    updateCurrNumberString(currNumberString, true);
+  useEffect(() => {
+    updatePathOrNumFact(path, true);
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
-  // set state for currNumberString or numFact  
-  async function updateCurrNumberString(val, action=false) {
-    if(currNumberString !== val) {
-      setCurrNumberString(val);
+  // set state for path or numFact  
+  async function updatePathOrNumFact(val, action=false) {
+    if(path !== val) {
+      setPath(val);
     }
     if(action || !numFact) {
       let resp = await Api.getNumberFact(val);
@@ -59,7 +58,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NumberContext.Provider value={{ json, currNumberString, numFact, setCurrNumberString, updateCurrNumberString }}>
+      <NumberContext.Provider value={{ json, path, numFact, setPath, updatePathOrNumFact }}>
         <div className="App">
           <Routes />
         </div>

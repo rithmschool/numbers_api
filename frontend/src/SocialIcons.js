@@ -1,5 +1,4 @@
 import './SocialIcons.css'
-const numShares = 15;
 
 /**
 * Render icons for sharing the website

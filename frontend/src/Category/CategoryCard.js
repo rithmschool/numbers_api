@@ -9,7 +9,7 @@ import NumberContext from '../NumberContext';
 * - title - category type (i.e. - math, date, trivia)
 * - facts(default): object where each key value is a category and a fact from within that category
 * Context:
-* - updateCurrNumberString
+* - updatePathOrNumFact
 *
 *  CategoryContainer -> (CategoryCard)
 */
@@ -17,7 +17,7 @@ import NumberContext from '../NumberContext';
 const BASE_URL = 'numbersapi.com';
 function CategoryCard(props) {
   let type = props.title;
-  const { updateCurrNumberString } = useContext(NumberContext)
+  const { updatePathOrNumFact } = useContext(NumberContext)
   let pathname = generateHref()
 
   //generate an href for the a tag within the card
@@ -31,7 +31,7 @@ function CategoryCard(props) {
     evt.preventDefault()
     // parsed path for numstring
     let string = pathname.substr(6)
-    updateCurrNumberString(string, true);
+    updatePathOrNumFact(string, true);
     //updates url to append pathname to end of hostname
     window.history.replaceState({}, document.title, pathname)
   }

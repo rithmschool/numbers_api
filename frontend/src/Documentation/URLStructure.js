@@ -1,5 +1,3 @@
-//import;
-
 function URLStructure() {
   return (
     <div>

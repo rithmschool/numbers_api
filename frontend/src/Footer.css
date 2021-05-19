@@ -1,14 +1,14 @@
 footer {
-  margin-top: 60px;
+  color: white;
   height: 150px;
   width: 100%;
+  margin-top: 60px;
   padding-top: 20px;
-  color: white;
 }
 footer div {
   border-top: 2px solid rgba(2, 39, 63, 0.5);
-  width: 960px;
+  line-height: 10px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 10px;
+  width: 960px;
 }

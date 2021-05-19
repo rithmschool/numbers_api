@@ -8,18 +8,18 @@ import './RandomCard.css'
 * Props: 
 * - None
 * Context:
-* - updateCurrNumberString
+* - updatePathOrNumFact
 *
 * SandboxContainer -> (RandomCard)
 */
 
 function RandomCard() {
-  const {updateCurrNumberString} = useContext(NumberContext)
+  const {updatePathOrNumFact} = useContext(NumberContext)
   
   function handleClick(evt) {
     evt.preventDefault()
     let value = evt.target.innerHTML;
-    updateCurrNumberString(value, true);
+    updatePathOrNumFact(value, true);
     //updates url to append pathname to end of hostname
     window.history.replaceState({}, document.title, `/fact/${value}`)
   }

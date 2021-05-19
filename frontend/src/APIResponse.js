@@ -12,17 +12,17 @@ import { useParams } from 'react-router-dom';
 * Context:
 * - json
 * - numFact
-* - updateCurrNumberString
+* - setPath
 *
 * Router -> (APIResponse)
 */
 
 function APIResponse() {
   const { parameter } = useParams();
-  const {numFact, updateCurrNumberString, json} = useContext(NumberContext);
+  const {numFact, setPath, json} = useContext(NumberContext);
   
   useEffect(() => {
-    updateCurrNumberString(parameter, true)
+    setPath(parameter, true)
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   // if url contained json return the full json object

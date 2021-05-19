@@ -1,5 +1,3 @@
-//import;
-
 function UsageExamples() {
   return (
     <div>
