@@ -10,17 +10,18 @@ const {
   dumpData,
   getDefaultMsg,
 } = require("../../models/fact");
+
 const fs = require("fs");
 
 describe("getRandomApiNum() with type 'date'", () => {
   test("return random number greater than or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "date" });
-    expect(greaterThanMin).toBeGreaterThan(2010);
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "date" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -35,14 +36,14 @@ describe("getRandomApiNum() with type 'date'", () => {
 });
 
 describe("getRandomApiNum() with type 'trivia'", () => {
-  test("return random number greater than 2010", function () {
+  test("return random number greater than or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "trivia" });
-    expect(greaterThanMin).toBeGreaterThan(2010);
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than  or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "trivia" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -59,17 +60,18 @@ describe("getRandomApiNum() with type 'trivia'", () => {
 describe("getRandomApiNum() with type 'math'", () => {
   test("return same number as min and max", function () {
     let sameAsMinMax = getRandomApiNum({ min: 2010, max: 2010, type: "math" });
+
     expect(sameAsMinMax).toEqual(2010);
   });
 
-  test("return random number greater than 2010", function () {
+  test("return random number greater than  or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "math" });
-    expect(greaterThanMin).toBeGreaterThan(2010);
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than  or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "math" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -89,14 +91,14 @@ describe("getRandomApiNum() with type 'year'", () => {
     expect(sameAsMinMax).toEqual(2010);
   });
 
-  test("return random number greater than 2010", function () {
+  test("return random number greater than  or equal to 2010", function () {
     let greaterThanMin = getRandomApiNum({ min: 2010, type: "year" });
-    expect(greaterThanMin).toBeGreaterThan(2009);
+    expect(greaterThanMin).toBeGreaterThanOrEqual(2010);
   });
 
-  test("return random number less than 2010", function () {
+  test("return random number less than  or equal to 2010", function () {
     let lessThanMax = getRandomApiNum({ max: 2010, type: "year" });
-    expect(lessThanMax).toBeLessThan(2010);
+    expect(lessThanMax).toBeLessThanOrEqual(2010);
   });
 
   test("return random number when min and max are NaN", function () {
@@ -442,16 +444,16 @@ describe("getFact()", () => {
 
 describe("getFactTexts", () => {
   test("returns correctly object with types and facts", function () {
-    let res = getFactTexts(["math", "trivia"], 0, 10);
+    let res = getFactTexts(["math", "trivia"], 0, 1);
 
-    expect(res["math"].length).toEqual(9);
-    expect(res["trivia"].length).toEqual(11);
+    expect(res["math"].length).toEqual(4);
+    expect(res["trivia"].length).toEqual(4);
   });
 });
 
 describe("getAllFacts(num)", () => {
   test("return all types of facts for given number", function () {
-    let validNum = getAllFacts(24);
+    let validNum = getAllFacts(1);
 
     expect(validNum.year.length).toBeGreaterThan(1);
     expect(validNum.date.length).toBeGreaterThan(1);
@@ -469,16 +471,6 @@ describe("getAllFacts(num)", () => {
     );
     expect(validNum.year[0]).toEqual(
       expect.stringContaining(
-        "Submit one at github.com/rithmschool/numbers_api"
-      )
-    );
-    expect(validNum.math[0]).toEqual(
-      expect.not.stringContaining(
-        "Submit one at github.com/rithmschool/numbers_api"
-      )
-    );
-    expect(validNum.date[0]).toEqual(
-      expect.not.stringContaining(
         "Submit one at github.com/rithmschool/numbers_api"
       )
     );
