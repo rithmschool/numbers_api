@@ -14,7 +14,7 @@ const marked = require("marked");
 const apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 const numShares = 15;
 
-const getLocation = require("./wikidata/attractions.js");
+const getLocation = require("./wikidata/parseData.js");
 
 const fact = require("./models/fact.js");
 const { numRoutes } = require("./routes/numbers.js");
