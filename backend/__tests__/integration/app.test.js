@@ -8,14 +8,6 @@ describe("Integration/unit testing app.js", function () {
       const response = await request(app).get("/");
       const { statusCode, text } = response;
       expect(statusCode).toBe(200);
-      const titleDescription = `An API for interesting facts about numbers`;
-      expect(text).toContain(titleDescription);
-    });
-
-    test("GET request should call fact.getFact()", async () => {
-      const getFact = jest.spyOn(fact, "getFact");
-      const response = await request(app).get("/");
-      expect(getFact).toHaveBeenCalled();
     });
   });
 

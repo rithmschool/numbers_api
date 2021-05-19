@@ -94,9 +94,9 @@ describe("non random routes", () => {
     expect(res.text).toContain("January 8th");
   });
 
-  test("invalid month/day form", async function () {
+  test("invalid month/day should redirect", async function () {
     const res = await request(app).get("/2/3/math");
-    expect(res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(302);
   });
 
   // tests for route "/:date([-0-9/.,]+)/:type(date)?"
