@@ -117,8 +117,6 @@ describe("random routes", () => {
     jest.clearAllMocks();
   });
 
-  // tests for route "/random/:type?"
-
   test("random with without type defined", async function () {
     const res = await request(app).get("/random");
     let resWords = res.text.split(" ");
@@ -127,9 +125,9 @@ describe("random routes", () => {
 
   test("random with type 'date'", async function () {
     const res = await request(app).get("/random/date");
-    let resWords = res.text.split(" ");
+    const date = res.text.slice(0, 11);
     expect(res.statusCode).toBe(200);
-    expect(resWords[0] + " " + resWords[1]).toEqual("January 1st");
+    expect(date).toEqual("January 1st");
   });
 
   test("random with type 'math'", async function () {
@@ -148,8 +146,8 @@ describe("random routes", () => {
 
   test("random with type 'year'", async function () {
     const res = await request(app).get("/random/year");
-    let resWords = res.text.split(" ");
+    let date = res.text.slice(0, 7);
     expect(res.statusCode).toBe(200);
-    expect(resWords[0] + " " + resWords[1]).toContain("1225 BC");
+    expect(date).toEqual("1225 BC");
   });
 });
