@@ -3,15 +3,14 @@ body {
   padding: 0;
 }
 
-/* @font-face {
-  font-family: 'pastel_crayon';
-  src: local('GoldmanBold'),
-    url('./fonts/Goldman/Goldman-Bold.ttf') format('truetype');
-  font-weight: bold;
-} */
-
 @font-face {
   font-family: 'pastel_crayon';
   src: local('pastel_crayon'),
     url('./font/pastel_crayon.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'museo_sans_rounded';
+  src: local('museo_sans_rounded'),
+    url('./font/museo_sans_rounded.ttf') format('truetype');
 }

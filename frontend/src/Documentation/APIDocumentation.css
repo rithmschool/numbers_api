@@ -7,6 +7,10 @@
   max-width: 960px;
 }
 
+#api-outer h1 {
+  text-align: center;
+}
+
 .doc-examples,
 code {
   font-family: Monaco, 'Lucida Console', monospace;
@@ -38,6 +42,13 @@ code {
   margin-top: 60px;
 }
 
+h1,
+h2 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
 h3 {
   margin-top: 30px;
 }
@@ -52,4 +63,10 @@ h3 {
 
 #last-div-documentation {
   padding-bottom: 60px;
+}
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

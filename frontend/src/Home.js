@@ -1,4 +1,5 @@
 import './Home.css';
+
 import CategoryContainer from './Category/CategoryContainer';
 import SandboxContainer from './Sandbox/SandboxContainer';
 import SocialIcons from './SocialIcons';
@@ -21,16 +22,13 @@ import Footer from './Footer';
 */    
 
 function Home() {
-  
-
-
   return (
     <div className="body-container">
       <div className="inner-container">
         <header>
-          <h1 
+          <div 
             className="logo"> Numbers <span id="second-word">API</span>
-          </h1>
+          </div>
           <h3 id="tagline"> 
             An API for interesting facts about numbers facts
           </h3>

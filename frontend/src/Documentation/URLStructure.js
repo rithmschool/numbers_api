@@ -26,15 +26,17 @@ function URLStructure() {
         </li>
       </ul>
       <div className="doc-examples">
-        <span >http://numbersapi.com/api/42
-          ⇒ 42 is the result given by Google and Bing for the query "the answer to life the universe and everything".
+        <pre>
+          <code >{`http://numbersapi.com/api/42
+⇒ 42 is the result given by Google and Bing for the query "the answer to life the universe and everything".
 
-          http://numbersapi.com/api/2/29/date
-          ⇒ February 29 is the day in 1504 that Christopher Columbus uses his knowledge of a lunar eclipse to convince Native Americans to provide him with supplies.
+http://numbersapi.com/api/2/29/date
+⇒ February 29 is the day in 1504 that Christopher Columbus uses his knowledge of a lunar eclipse to convince Native Americans to provide him with supplies.
 
-          http://numbersapi.com/api/random/year
-          ⇒ 2013 is the year that China will attempt its first unmanned Moon landing.
-        </span>
+http://numbersapi.com/api/random/year
+⇒ 2013 is the year that China will attempt its first unmanned Moon landing.`}
+          </code>
+        </pre>
       </div>
     </div>
   )

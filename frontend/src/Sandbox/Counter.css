@@ -4,7 +4,6 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  /* outline: 1px solid white; */
   width: 115px;
   height: 75px;
   display: inline-block;
@@ -31,7 +30,6 @@
   text-shadow: none;
   font-size: 28px;
   text-align: center;
-  /* background-color: #cce4f4; */
   font-weight: bold;
   font-family: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica',
     sans-serif;
@@ -40,15 +38,12 @@
 .number {
   height: 25px;
   text-align: center;
-  /* outline: 1px solid red; */
 }
 .increment {
   height: 25px;
   text-align: center;
-  /* outline: 3px solid green; */
 }
 .decrement {
   height: 25px;
   text-align: center;
-  /* outline: 3px solid green; */
 }
