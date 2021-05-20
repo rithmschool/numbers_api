@@ -1,4 +1,14 @@
-.body-container {
+@media screen and (max-width: 600px) {
+  #api-outer {
+    font-size: 0.5vw;
+  }
+
+  .example {
+    border: 1px solid red;
+  }
+}
+
+.wrapper {
   background: url('/src/img/graph-paper-5.png');
   min-height: 100vh;
   display: flex;
@@ -13,6 +23,7 @@
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
+  /* overflow-x: hidden; */
 }
 
 a {

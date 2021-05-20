@@ -18,12 +18,12 @@ import Footer from './Footer';
 *         -> SandboxContainer
 *         -> SocialIcons
 *         -> APIDocumentation
-          -> Footer
+*         -> Footer
 */    
 
 function Home() {
   return (
-    <div className="body-container">
+    <div className="wrapper">
       <div className="inner-container">
         <header>
           <div 
