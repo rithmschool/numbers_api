@@ -14,8 +14,6 @@ const marked = require("marked");
 const apiDocsHtml = marked(fs.readFileSync("README.md", "utf8"));
 const numShares = 15;
 
-const getLocation = require("./wikidata/parseData.js");
-
 const fact = require("./models/fact.js");
 const { numRoutes } = require("./routes/numbers.js");
 // const highcharts = require("./logs_highcharts.js");
@@ -25,8 +23,6 @@ require("dotenv").config();
 
 const nodeEnv = process.env.NODE_ENV || "development";
 const app = new express();
-
-getLocation();
 
 // fake number of viistors
 // var BASE_VISITOR_TIME = new Date(1330560000000);
