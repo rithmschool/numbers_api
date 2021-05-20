@@ -1,4 +1,4 @@
-const { dummyAttractionsData } = require("./dummyData.js");
+const { dummyAttractionsData } = require("../dummyData.js");
 const {
   getLocation,
   getVisitors,

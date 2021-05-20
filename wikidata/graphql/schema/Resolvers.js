@@ -2,10 +2,7 @@ const { fieldToFieldConfig } = require("@graphql-tools/utils");
 const { collateDataToObj } = require("../../parseData");
 const attractions = require("../../attractionsRawData");
 const museums = require("../../museumsRawData");
-const {
-  dummyMuseumsData,
-  dummyAttractionsData,
-} = require("../../__tests__/dummyData");
+const { dummyMuseumsData, dummyAttractionsData } = require("../../dummyData");
 
 require("dotenv").config();
 let attractionsData =
