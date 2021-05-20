@@ -97,12 +97,13 @@ function getCoords(list) {
   return array;
 }
 
+// create objects from arrays, adding all results to larger array
+// sample array looks like: ["White House", 10, "Point(12, 34)"]
+// output object looks like: {name: "White House", visitors: 10, coordinates: "Point(12, 34)"}
+
 function collateDataToObj(list) {
   let arrays = getCoords(list);
 
-  // create objects from arrays, adding all results to larger array
-  // sample array looks like: ["White House", 10, "Point(12, 34)"]
-  // output object looks like: {name: "White House", visitors: 10, coordinates: "Point(12, 34)"}
   return arrays.map((a) => {
     let obj = {};
     obj["name"] = a[0];
