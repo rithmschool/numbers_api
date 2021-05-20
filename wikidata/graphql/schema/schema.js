@@ -1,13 +1,12 @@
-const { resolvers } = require('./Resolvers');
-const { typeDefs } = require('./TypeDefs');
-const { makeExecutableSchema } = require('graphql-tools');
+const { resolvers } = require("./resolvers");
+const { typeDefs } = require("./typeDefs");
+const { makeExecutableSchema } = require("graphql-tools");
 
 const schema = makeExecutableSchema({
   typeDefs,
-  resolvers
+  resolvers,
 });
 
 module.exports = {
-  schema
-}
-
+  schema,
+};

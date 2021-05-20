@@ -1,10 +1,21 @@
 const { fieldToFieldConfig } = require("@graphql-tools/utils");
-const parseData = require("../../parseData");
+const { collateDataToObj } = require("../../parseData");
 const attractions = require("../../attractionsRawData");
 const museums = require("../../museumsRawData");
+const {
+  dummyMuseumsData,
+  dummyAttractionsData,
+} = require("../../__tests__/dummyData");
 
-let attractionsData = parseData(attractions);
-let museumsData = parseData(museums);
+require("dotenv").config();
+let attractionsData =
+  process.env.NODE_ENV === "test"
+    ? collateDataToObj(dummyAttractionsData)
+    : collateDataToObj(attractions);
+let museumsData =
+  process.env.NODE_ENV === "test"
+    ? collateDataToObj(dummyMuseumsData)
+    : collateDataToObj(museums);
 
 const resolvers = {
   Query: {
@@ -31,9 +42,11 @@ const resolvers = {
         dataType = attractionsData;
       }
 
-      // compares visitors to count using ">" ">=" "<" "<=" 
-      return dataType.filter(data => eval(`${data['visitors']} ${operator} ${count}`));
-    }
+      // compares visitors to count using ">" ">=" "<" "<="
+      return dataType.filter((data) =>
+        eval(`${data["visitors"]} ${operator} ${count}`)
+      );
+    },
   },
 };
 

@@ -11,8 +11,8 @@ const museums = require("./museumsRawData.js");
  *
  * @returns:
  *    {
- *      {"jeff's museum": []},
- *      {"art place": []},
+ *      "jeff's museum": [],
+ *      "art place": [],
  *      ...
  *    }
  */
@@ -46,8 +46,8 @@ function getLocation(list) {
  *
  * @returns:
  *    {
- *      {"jeff's museum": 1},
- *      {"art place": 10}
+ *      "jeff's museum": 1,
+ *      "art place": 10
  *    }
  */
 function getVisitors(list) {
@@ -84,11 +84,10 @@ function getVisitors(list) {
   return names;
 }
 
-
 /**
  * @params:
  *    [{location, cordinates, locationLabel, *visitor*}, {}]
- * @returns 
+ * @returns
  * array with objects that includes name, visitors, and coordinates
  * [["jeff's museum", 1, "Point(12, 35)"], ...]
  */
@@ -108,15 +107,13 @@ function getCoords(list) {
   return array;
 }
 
-
-
 /**
  * @params:
  *    [{location, cordinates, locationLabel, *visitor*}, {}]
  * create objects from arrays, adding all results to larger array
  * sample array looks like: ["White House", 10, "Point(12, 34)"]
- * 
- * @returns 
+ *
+ * @returns
  * [
  *  {name: "White House", visitors: 10, coordinates: "Point(12, 34)"},
  *  {name: "jeff's museum", visitors: 1, coordinates: "Point(12,35"},
@@ -134,4 +131,4 @@ function collateDataToObj(list) {
   });
 }
 
-module.exports = collateDataToObj;
+module.exports = { getLocation, getVisitors, getCoords, collateDataToObj };
