@@ -22,6 +22,18 @@ const resolvers = {
       );
       return filtered;
     },
+    getVisitors(parent, args) {
+      const { type, operator, count } = args;
+      let dataType;
+      if (type === "museums") {
+        dataType = museumsData;
+      } else if (type === "attractions") {
+        dataType = attractionsData;
+      }
+
+      // compares visitors to count using ">" ">=" "<" "<=" 
+      return dataType.filter(data => eval(`${data['visitors']} ${operator} ${count}`));
+    }
   },
 };
 

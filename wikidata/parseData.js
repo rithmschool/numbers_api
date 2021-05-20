@@ -11,7 +11,9 @@ const museums = require("./museumsRawData.js");
  *
  * @returns:
  *    {
- *      for each valid location label: locationLabel: []
+ *      {"jeff's museum": []},
+ *      {"art place": []},
+ *      ...
  *    }
  */
 
@@ -44,7 +46,8 @@ function getLocation(list) {
  *
  * @returns:
  *    {
- *      for each valid location label: locationLabel: visitors(as int)
+ *      {"jeff's museum": 1},
+ *      {"art place": 10}
  *    }
  */
 function getVisitors(list) {
@@ -81,6 +84,14 @@ function getVisitors(list) {
   return names;
 }
 
+
+/**
+ * @params:
+ *    [{location, cordinates, locationLabel, *visitor*}, {}]
+ * @returns 
+ * array with objects that includes name, visitors, and coordinates
+ * [["jeff's museum", 1, "Point(12, 35)"], ...]
+ */
 function getCoords(list) {
   //converts object into array
   let array = Object.entries(getVisitors(list));
@@ -97,10 +108,20 @@ function getCoords(list) {
   return array;
 }
 
-// create objects from arrays, adding all results to larger array
-// sample array looks like: ["White House", 10, "Point(12, 34)"]
-// output object looks like: {name: "White House", visitors: 10, coordinates: "Point(12, 34)"}
 
+
+/**
+ * @params:
+ *    [{location, cordinates, locationLabel, *visitor*}, {}]
+ * create objects from arrays, adding all results to larger array
+ * sample array looks like: ["White House", 10, "Point(12, 34)"]
+ * 
+ * @returns 
+ * [
+ *  {name: "White House", visitors: 10, coordinates: "Point(12, 34)"},
+ *  {name: "jeff's museum", visitors: 1, coordinates: "Point(12,35"},
+ * ]
+ */
 function collateDataToObj(list) {
   let arrays = getCoords(list);
 
