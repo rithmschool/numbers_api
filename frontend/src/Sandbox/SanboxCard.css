@@ -1,0 +1,128 @@
+.outer-search {
+  margin-right: 25px;
+}
+
+#search {
+  float: left;
+  overflow: hidden;
+  height: 100%;
+  width: 551px;
+  margin-left: 0px;
+  margin-right: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#search-box {
+  border-radius: 5px 5px 0 0;
+  background-color: #02273f;
+  background: url('/src/img/grainy-opacity-80.png');
+  display: table;
+  padding: 0px;
+  width: 548px;
+  height: 30px;
+  font-size: 18px;
+}
+
+#search-box label {
+  overflow: auto;
+  display: table-cell;
+  width: 1px;
+  height: inherit;
+  white-space: nowrap;
+  padding: 8px;
+  padding-right: 0px;
+  margin: 0px;
+  margin-right: -5px;
+  vertical-align: middle;
+  line-height: 30px;
+  color: #86c9f4;
+}
+
+#search-box label:hover {
+  text-decoration: underline;
+}
+
+#search-box label:hover a {
+  color: #cce4f4;
+}
+
+#search-box label:hover + span > input {
+  text-decoration: underline;
+  color: #cce4f4;
+  transition: all ease-out 0.3s;
+}
+
+#search-box span {
+  display: table-cell;
+  height: inherit;
+  margin: 0px;
+  padding: 8px;
+  padding-left: 0px;
+  border: 0px;
+}
+
+#search-box span input {
+  border-radius: 0 5px 0 0;
+  width: 100%;
+  margin: 0px;
+  border: 0px;
+  outline: none;
+  line-height: 30px;
+  text-shadow: none;
+  background-color: rgba(49, 74, 91, 0.5);
+  color: #86c9f4;
+  transition: all ease-out 0.3s;
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-left: 0px;
+}
+
+#search-box span input:hover {
+  background-color: rgba(49, 74, 91, 0.2);
+  color: #cce4f4;
+}
+
+#search-box span input:focus {
+  background-color: rgba(49, 74, 91, 0);
+  color: #cce4f4;
+  border: 2px solid rgba(134, 201, 244, 0.8);
+  border-left: 0px;
+}
+
+#search-result {
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  align-items: center;
+  background-color: rgba(30, 109, 160, 0.5);
+  background: radial-gradient(
+    ellipse farthest-side,
+    rgba(93, 173, 225, 0.5) 0%,
+    rgba(38, 138, 203, 0.5) 100%
+  );
+  box-shadow: inset 0 0 3px rgba(2, 39, 63, 0.3);
+  border: 2px solid rgba(2, 39, 63, 0.9);
+  border-top: 0px solid white;
+  position: relative;
+  margin-top: 0px;
+  padding: 0 0 0 10px;
+  height: 102px;
+}
+
+#search-result .script {
+  font-family: Monaco, 'Lucida Console', monospace;
+  font-size: 15px;
+}
+
+#result-temporary-text {
+  position: absolute;
+  padding-right: 5px;
+  left: 153px;
+}
+
+#counter {
+  display: inline-block;
+  margin-right: 12px;
+  margin-top: -5px;
+  padding: 3px 0px;
+  border-radius: 5px 5px;
+}

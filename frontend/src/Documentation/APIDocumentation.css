@@ -1,0 +1,72 @@
+#api-outer {
+  color: white;
+  position: relative;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background-color: rgba(2, 39, 63, 0);
+  max-width: 960px;
+}
+
+#api-outer h1 {
+  text-align: center;
+}
+
+.doc-examples,
+code {
+  font-family: Monaco, 'Lucida Console', monospace;
+  font-size: 1em;
+  background-color: rgba(2, 39, 63, 0.5);
+}
+
+code {
+  line-height: 1.5em;
+  padding: 0 0.3em;
+  border-radius: 0.2em;
+}
+
+.doc-examples code {
+  background-color: transparent;
+  border: none;
+  line-height: 1em;
+  padding: 0;
+  border-radius: 0;
+}
+.doc-examples {
+  padding: 10px 10px 10px 20px;
+  border-left: 8px solid rgba(2, 39, 63, 0.5);
+  border-radius: 0 5px 5px 0;
+}
+.doc-section-title {
+  border-top: 2px solid rgba(204, 228, 244, 0.8);
+  padding-top: 5px;
+  margin-top: 60px;
+}
+
+h1,
+h2 {
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: bold;
+}
+
+h3 {
+  margin-top: 30px;
+}
+
+#changelog {
+  margin-top: 100px;
+}
+
+.space-between li {
+  margin: 15px 0px;
+}
+
+#last-div-documentation {
+  padding-bottom: 60px;
+}
+
+pre {
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}

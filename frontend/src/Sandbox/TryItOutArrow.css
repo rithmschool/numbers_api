@@ -1,0 +1,22 @@
+.arrow {
+  background: url('/src/img/arrow-short.png') no-repeat;
+  transform: rotate(50deg) scale(0.5, 0.4);
+  width: 301px;
+  height: 266px;
+  position: absolute;
+  top: -47px;
+  left: -187px;
+}
+
+#sandbox-text {
+  transform: rotate(-9deg);
+  color: white;
+  writing-mode: lr-tb;
+  font-size: 70px;
+  font-family: pastel_crayon;
+  font-weight: normal;
+  top: -32px;
+  left: -215px;
+  position: absolute;
+  text-shadow: none;
+}

@@ -1,0 +1,36 @@
+section {
+  border-radius: 8px;
+  margin: 20px 0 20px 0;
+  padding: 30px 30px 10px 20px;
+  display: block;
+  clear: both;
+  background-color: rgba(2, 39, 63, 0.5);
+  position: relative;
+  z-index: 5;
+}
+
+#usage-outer {
+  text-align: center;
+  position: relative;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  width: 960px;
+}
+
+#usage {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+}
+
+.example h2 {
+  margin-bottom: 10px;
+  text-shadow: #02273f 2px 2px 3px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: #cce4f4;
+  text-transform: uppercase;
+}

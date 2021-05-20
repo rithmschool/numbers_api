@@ -1,0 +1,49 @@
+.counter-container {
+  touch-action: none;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 115px;
+  height: 75px;
+  display: inline-block;
+  margin-top: 5px;
+  margin-right: 12px;
+  position: relative;
+  left: 10px;
+}
+
+.counter {
+  background: linear-gradient(
+    to top,
+    rgba(204, 228, 244, 0) 0%,
+    #cce4f4 50%,
+    rgba(204, 228, 244, 0) 100%
+  );
+  border-radius: 5px 5px;
+  border-style: solid;
+  border-color: #02273f;
+  outline: #314a5b;
+  height: 70px;
+  width: 110px;
+  color: #02273f;
+  text-shadow: none;
+  font-size: 28px;
+  text-align: center;
+  font-weight: bold;
+  font-family: museo_sans, 'Lucida Grande', 'Lucida Sans', 'Helvetica',
+    sans-serif;
+}
+
+.number {
+  height: 25px;
+  text-align: center;
+}
+.increment {
+  height: 25px;
+  text-align: center;
+}
+.decrement {
+  height: 25px;
+  text-align: center;
+}
