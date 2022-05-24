@@ -1,5 +1,3 @@
-# crawl Wikipedia for dates
-
 import os
 import re
 import json
@@ -7,6 +5,7 @@ import sys
 import traceback
 import num2eng
 
+#Natural Language ToolKit Library
 import nltk
 from nltk.tag.simplify import simplify_wsj_tag
 
@@ -21,6 +20,7 @@ def idx(obj, index, default=None):
 		return default
 
 def get_words_tags(str):
+	"""Tag words with its lexical category."""
 	text = nltk.word_tokenize(str)
 	word_tags = nltk.pos_tag(text)
 	return [(word, simplify_wsj_tag(tag)) for word, tag in word_tags]
@@ -91,6 +91,7 @@ def normalize_pre(all_facts):
 		for fact in facts:
 			try:
 				text = fact['text']
+				# filters lexical token for the first word of text only
 				text = nltk.sent_tokenize(text)[0]
 
 				# strip leading and trailing whitespace
@@ -159,6 +160,7 @@ def normalize_date(all_facts):
 				text = match.group(3)
 				# remove hardcode, currently needed to speed things up
 				words_tags = get_words_tags(text)
+
 				if words_tags[0][1] != 'DET' and words_tags[0][1] != 'NP':
 					# print 'date match failed: [{0}: {1}]'.format(number, fact['text'])
 					continue
@@ -357,6 +359,7 @@ def normalize_number(all_facts):
 				text = capitalize_head(text)
 				words_tags = get_words_tags(text)
 				word_number_len = len(get_words_tags(word_number))
+				#DET is determinator (lexical category)
 				if words_tags[0][1] =='DET':
 					offset = 0
 				elif word_number and text.startswith(word_number) and words_tags[word_number_len][1] =='V':
