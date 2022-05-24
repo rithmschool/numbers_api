@@ -114,10 +114,10 @@ function factsResponse(fact, req, res, nums) {
 var allTypesRegex = "/:type(date|year|trivia|math)?";
 
 /**
-/* Parses a batch request string into individual numbers.
- * 
+/* Parses a batch request string into and array of individual numbers.
+ *
  * @param rangesStr: This is the range of numbers (e.g. "1..3,10")
- * @param {*} parseValue: Accepts a callback function which parses data into a number
+ * @param {*} parseValue: Callback function that parses string data to a number
  * @returns an array of numbers
  */
 
@@ -278,7 +278,7 @@ router.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
 /** GET /random/:type? - gets a random fact
  *
  * Either returns a string with just the date fact if no content-type is specified
- * OR 
+ * OR
  * returns the JSON below if content-type "application/json" is specified
  *
  * => {
