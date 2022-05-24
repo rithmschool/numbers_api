@@ -158,9 +158,9 @@ def normalize_date(all_facts):
 
 				if year:
 					fact['year'] = year
-					fact['pos'] = words_tags[0][1]
-					fact['text'] = text
-					all_normalized_facts[number].append(fact)
+				fact['pos'] = words_tags[0][1]
+				fact['text'] = text
+				all_normalized_facts[number].append(fact)
 
 			except:
 				print 'Error parsing date [{0}: {1}]'.format(number, fact['text'])
