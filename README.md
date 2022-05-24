@@ -1,4 +1,30 @@
-Bring meaning to your metrics and stories to your dates with our API of interesting number facts.
+## Bring meaning to your metrics and stories to your dates with our API of interesting number facts.
+
+## Getting Started
+
+### Installing Dependencies
+
+```
+npm install
+```
+
+Run script to implement SASS styling from compass.
+
+```
+npm run scss
+```
+
+Start server on http://localhost:8124/
+
+```
+npm start
+```
+
+### Running into issues
+
+This API was built with Node version 10. If you experience issues while installing npm dependencies, try running install process with an older version of node. Versions 15 and 12 are able to run server.
+
+See [Node Version Manager](https://github.com/nvm-sh/nvm) for a great tool for switching between node versions.
 
 ## URL Structure
 
