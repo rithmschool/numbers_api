@@ -28,39 +28,39 @@ const [MIN_LENGTH, MAX_LENGTH] = [20, 150];
  * @param {object} out - an empty object that will contain number facts for the number category
  * @param {string} pathname - path to desired the local directory for .txt files that contain facts
  * @param {function definition} callback - function for data normalization, standardizes and cleans data to desired format
- * 
+ *
  * RETURNS:
  * Each object has these keys at minimum:
  *  { “12”: [ {”text”, “self”, “pos”, }, ... ]}
- * 
+ *
  * EXAMPLE FACTS:
- * 
- * DATE: { 
- * date: 'June 8', 
- * text: 'The discovery of the Comstock Lode in the western Utah Territory setting off the Rush to Washoe.',
- * self: false, 
- * pos: 'DET' 
+ *
+ * DATE: {
+ *   date: 'June 8',
+ *   text: 'The discovery of the Comstock Lode in the western Utah Territory setting off the Rush to Washoe.',
+ *   self: false,
+ *   pos: 'DET'
  * }
- * 
- * YEAR: { 
- * text: 'Nelson Mandela is elected deputy President of the African National Congress.', 
- * self: false, 
- * pos: 'NP', 
- * year: 1990 
+ *
+ * YEAR: {
+ *   text: 'Nelson Mandela is elected deputy President of the African National Congress.',
+ *   self: false,
+ *   pos: 'NP',
+ *   year: 1990
  * }
- * 
+ *
  * MATH: {
- * text: 'The fifty-ninth prime number, following 271 and preceding 281.',
- * self: false,
- * pos: 'DET'
+ *   text: 'The fifty-ninth prime number, following 271 and preceding 281.',
+ *   self: false,
+ *   pos: 'DET'
  * }
- * 
+ *
  * TRIVIA: {
- *  text: 'the number of entries of distinct astronomical objects in The Guide Star Catalog II',
- *  manual: true
- *  }
- * 
- * 
+ *   text: 'the number of entries of distinct astronomical objects in The Guide Star Catalog II',
+ *   manual: true
+ * }
+ *
+ *
  */
 
 function reader_norm(out, pathname, callback) {
@@ -323,7 +323,7 @@ reader_norm(trivia, "models/trivia/norm/", function (element) {
   }
 });
 
-console.log(trivia)
+console.log(trivia);
 let math = {};
 reader_norm(math, "models/math/norm/", function (element) {
   return normalizeElement(element);
