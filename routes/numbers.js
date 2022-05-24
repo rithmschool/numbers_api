@@ -23,6 +23,15 @@ function setExpireHeaders(res) {
   res.set("Expires", 0);
 }
 
+/**
+ * Helper function to stringify a fact/facts object
+ * @param: either a fact or facts object
+ * @returns: returns a JSON object.
+ */
+function stringifyObj(obj) {
+  return JSON.stringify(obj, null, " ");
+}
+
 /* This function is called within the routes. The function takes in the fact object
 *  from the fact.js file and a number, and sends a random fact about that number
 *  back to the frontend.
@@ -43,9 +52,6 @@ function factResponse(fact, req, res, num) {
     (req.header("Content-Type") || req.header("Accept") || "").includes(
       "application/json"
     ) === true;
-  function factObjStr() {
-    return JSON.stringify(factObj, null, " ");
-  }
 
   res.set("X-Numbers-API-Number", factObj.number);
   res.set("X-Numbers-API-Type", factObj.type);
@@ -55,12 +61,12 @@ function factResponse(fact, req, res, num) {
     // JSONP
     res.json(useJson ? factObj : factStr);
   } else if (req.query.write !== undefined) {
-    var arg = useJson ? factObjStr() : '"' + _.escape(factStr) + '"';
+    var arg = useJson ? stringifyObj(factObj) : '"' + _.escape(factStr) + '"';
     var script = "document.write(" + arg + ");";
     res.set("Content-Type", "text/javascript").send(script);
   } else {
     if (useJson) {
-      res.set("Content-Type", "application/json").send(factObjStr());
+      res.set("Content-Type", "application/json").send(stringifyObj(factObj));
     } else {
       res.set("Content-Type", 'text/plain; charset="UTF-8"').send(factStr);
     }
@@ -88,20 +94,19 @@ function factsResponse(fact, req, res, nums) {
     }
   });
 
-  function factsObjStr() {
-    return JSON.stringify(factsObj, null, " ");
-  }
-
   setExpireHeaders(res);
 
   if (req.query.callback) {
     // JSONP
     res.json(factsObj);
   } else if (req.query.write !== undefined) {
-    var script = "document.write(" + factsObjStr() + ");";
+    var script = "document.write(" + stringifyObj(factsObj) + ");";
     res.status(200).set("Content-Type", "text/javascript").send(script);
   } else {
-    res.status(200).set("Content-Type", "application/json").send(factsObjStr());
+    res
+      .status(200)
+      .set("Content-Type", "application/json")
+      .send(stringifyObj(factsObj));
   }
 }
 
@@ -109,11 +114,11 @@ function factsResponse(fact, req, res, nums) {
 var allTypesRegex = "/:type(date|year|trivia|math)?";
 
 /**
-/* Parses a batch request string into individual numbers.
- * 
+/* Parses a batch request string into and array of individual numbers.
+ *
  * @param rangesStr: This is the range of numbers (e.g. "1..3,10")
- * @param {*} parseValue: This is the range of numbers (e.g. "1..3,10")
- * @returns number facts
+ * @param {*} parseValue: Callback function that parses string data to a number
+ * @returns an array of numbers
  */
 
 function getBatchNums(rangesStr, parseValue) {
@@ -202,7 +207,6 @@ router.get("/:num([-0-9.,]+)" + allTypesRegex, function (req, res) {
     res.send("Invalid url", 400);
     return;
   }
-
   var nums = getBatchNums(req.params.num, function (numStr) {
     return parseInt(numStr, 0);
   });
@@ -274,7 +278,7 @@ router.get("/:date([-0-9/.,]+)/:type(date)?", function (req, res) {
 /** GET /random/:type? - gets a random fact
  *
  * Either returns a string with just the date fact if no content-type is specified
- * OR 
+ * OR
  * returns the JSON below if content-type "application/json" is specified
  *
  * => {
