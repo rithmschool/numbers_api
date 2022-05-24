@@ -44,6 +44,13 @@ def normalize():
 	#normalize_wikipedia_year()
 
 def flatten(path, ignore_topics):
+	""" Given a file path and a list of topics to ignore,
+		create an dicts that stores all of the facts from the raw files
+		into this new dicts with a key that represents the number of day in the
+		year and a list containing dicts containing the facts.
+
+		{"1": [{text: fact...}, ...]} """
+
 	f = open(path, 'r')
 	all_facts = json.load(f)
 	f.close()
@@ -51,16 +58,18 @@ def flatten(path, ignore_topics):
 	all_flattened_facts = {}
 	for number, facts in all_facts.items():
 		all_flattened_facts[number] = []
+		""" Compares categories in raw to ignore_topics """
 		for topic, topic_items in facts.items():
 			topic = topic.lower()
 			ignore = False
+			""" If topic is in the ignore, ignore that category """
 			for ignore_topic in ignore_topics:
 				if topic in ignore_topic:
 					ignore = True
 					break
 			if ignore:
 				continue
-
+			""" If the topic is not listed as ignore, add the fact to the dict"""
 			for topic_item in topic_items:
 				all_flattened_facts[number].append({'text': topic_item})
 
