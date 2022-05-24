@@ -323,7 +323,6 @@ reader_norm(trivia, "models/trivia/norm/", function (element) {
   }
 });
 
-console.log(trivia);
 let math = {};
 reader_norm(math, "models/math/norm/", function (element) {
   return normalizeElement(element);
