@@ -138,9 +138,9 @@ function reader_norm(out, pathname, callback) {
 }
 
 /**
- * generates a object where each property is an array of number facts for that number category
- * 
- * @param {object } outs -  object of objects where each property is the normalized fact data generated from reader norm. 
+ * generates an object where each property is an array of number facts for that number category
+ *
+ * @param {object } outs -  object of objects where each property is the normalized fact data generated from reader norm.
  * e.g. -
           * {
               d: list of date number facts,
@@ -148,7 +148,7 @@ function reader_norm(out, pathname, callback) {
               m: list of math number facts,
               t: list of trivia number facts,
             };
- * @param {string} pathname - path to desired the local directory for .txt files that contain facts 
+ * @param {string} pathname - path to desired the local directory for .txt files that contain facts
  * @param {object} callback - object of callbacks for data normalization o f each data type.
  */
 function reader_manual(outs, pathname, callbacks) {
@@ -175,6 +175,10 @@ function reader_manual(outs, pathname, callbacks) {
       if (line.toUpperCase().indexOf("SENTINEL") >= 0) {
         break;
       }
+      // 'matches' is an array broken up into six elements:
+      // ["the line itself", "the number", "number type", "number fact", index, input, groups]
+      //
+      // Ex: ["9801 m the square of 99", "9801", "m", "the square of 99", index: 0, input: '9801 m the square of 99', groups: undefined]
       let matches = regex.exec(line);
       if (!matches) {
         console.warn(
@@ -192,6 +196,7 @@ function reader_manual(outs, pathname, callbacks) {
         continue;
       }
       let type = matches[2];
+      // y -> year, d -> date, m -> math, t -> trivia
       if (type !== "y" && type !== "d" && type !== "m" && type !== "t") {
         console.error(
           `Invalid fact type in file: ${pathname + file} on line: ${line}`
@@ -201,6 +206,7 @@ function reader_manual(outs, pathname, callbacks) {
 
       let text = matches[3];
       if (!text || text.length === 0) {
+        // checks to see if a fact exists
         console.warn(
           `Skipping empty fact in file: ${pathname + file} on line: ${line}`
         );
@@ -213,6 +219,7 @@ function reader_manual(outs, pathname, callbacks) {
         manual: true,
       };
 
+      // checks if the type is one of these four types: y, d, m, t
       if (type in callbacks) {
         let callback = callbacks[type];
         element = callback(element);
@@ -220,12 +227,12 @@ function reader_manual(outs, pathname, callbacks) {
       if (!element) {
         continue;
       }
-      let out = outs[type];
+      let out = outs[type]; // sets 'out' based on the type of the object
       if (!(number in out)) {
         out[number] = [];
       }
       let o = out[number];
-      o.push(element);
+      o.push(element); // adds to the list of facts depending on the number
     }
   });
 }
@@ -253,14 +260,14 @@ function normalizeNumberData(key, value) {
 
 let countBad = 0;
 /**
- * 
- * @param {object} element - value of number key 
+ *
+ * @param {object} element - value of number key
  *  -e.g. {
             text: "the dominant Japanese brand name of NEC's personal computers in  the 1980s",
             self: false,
             manual: true
           }
- *      
+ *
  * @returns normalized element
  */
 function normalizeElement(element) {
