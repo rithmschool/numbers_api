@@ -57,6 +57,12 @@
     )}`;
   };
 
+  /** Takes in date object and converts it to the day number
+   *
+   * ex: Date object(Jan 1) -> 1
+   * ex: Dat object(Feb 1) -> 32
+   */
+
   const MONTH_DAYS = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   exports.dateToDayOfYear = function (date) {
     let day = 0;
@@ -65,6 +71,13 @@
     }
     return day + date.getDate();
   };
+
+  /** Converts month and day into a date in 2004 (leap year)
+   * Uses dateToDayOfYear() helper function to get the day number in that year
+   *
+   * Input: month (number), day (number)
+   * Output: day number
+   */
 
   exports.monthDayToDayOfYear = function (month, day) {
     const date = new Date(2004, month - 1, day);
@@ -96,7 +109,6 @@
       } else {
         return `${number} is the year that`;
       }
-      
     }
   };
 
