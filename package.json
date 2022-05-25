@@ -5,6 +5,7 @@
     "test": "jest",
     "start": "NODE_ENV=development nodemon server.js",
     "start-graphql": "NODE_ENV=development nodemon graphql/index.js",
+    "start-wiki-gql": "NODE_ENV=development nodemon wikidata/graphql/index.js",
     "start-prod": "NODE_ENV=production forever -a start server.js",
     "stop": "forever stopall",
     "scss": "node-sass public/sass -o public/css",

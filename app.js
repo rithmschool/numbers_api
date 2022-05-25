@@ -18,6 +18,7 @@ const fact = require("./models/fact.js");
 const { numRoutes } = require("./routes/numbers.js");
 // const highcharts = require("./logs_highcharts.js");
 const utils = require("./public/js/shared_utils.js");
+
 require("dotenv").config();
 
 const nodeEnv = process.env.NODE_ENV || "development";
