@@ -31,7 +31,7 @@
     "easygraphql-tester": "^6.0.1",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
-    "forever": "^3.0.0",
+    "forever": "^3.0.4",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.5",
     "jquery-mousewheel": "^3.1.4",
